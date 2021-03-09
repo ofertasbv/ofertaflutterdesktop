@@ -1,0 +1,80 @@
+name: nosso
+description: sistema de e-commerce
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+androidX: true
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  dio: ^3.0.10
+  mobx: ^1.2.1+4
+  flutter_mobx:
+  build_runner:
+  mobx_codegen:
+  get_it:
+  shared_preferences: ^0.5.8
+
+  steps: ^1.0.1
+  carousel_pro: ^1.0.0
+  fluttertoast: ^3.1.0
+  image_picker: ^0.6.1+11
+  #flutter_web_image_picker: ^0.0.2
+  image_cropper: ^1.3.1
+
+  #search_map_place: ^0.3.0
+  #flutter_google_places: ^0.2.3
+  #google_maps_flutter: ^0.5.28
+
+  #geolocator: ^5.1.4+1
+  geolocator: ^6.1.7
+  geocoding: ^1.0.5
+  flutter_polyline_points: ^0.2.4
+
+  google_maps_flutter_web: ^0.1.0
+  google_maps_flutter: ^1.0.6
+  geocoder: ^0.2.1
+  location: ^3.1.0
+
+
+  barcode_scan: ^1.0.0
+  webview_flutter: ^1.0.7
+  url_launcher: ^5.0.2
+  launchers: ^0.4.6
+  audioplayers: 0.13.2
+  path_provider: ^1.6.27
+
+  masked_text_input_formatter: ^0.0.1
+  datetime_picker_formfield:
+  flutter_masked_text: ^0.8.0
+  mask_text_input_formatter: ^1.1.0
+  intl:
+#  brasil_fields: ^0.4.0
+  google_fonts: ^1.1.1
+
+  cupertino_icons: ^1.0.0
+  flutter_launcher_icons: "^0.8.0"
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/logo/logo.png"
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
+    - assets/audios/

@@ -1,0 +1,4 @@
+enum CaixaStatus {
+  ABERTO,
+  FECHADO,
+}

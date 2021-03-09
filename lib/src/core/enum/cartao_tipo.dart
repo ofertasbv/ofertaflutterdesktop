@@ -1,0 +1,4 @@
+enum CartaoTipo {
+  DEBITO,
+  CREDITO,
+}

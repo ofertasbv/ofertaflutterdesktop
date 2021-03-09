@@ -1,0 +1,4 @@
+enum PagamentoTipo {
+  VISTA,
+  PRAZO,
+}
