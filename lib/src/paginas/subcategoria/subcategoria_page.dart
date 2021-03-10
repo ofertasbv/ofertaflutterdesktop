@@ -28,6 +28,7 @@ class _SubcategoriaPageState extends State<SubcategoriaPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        titleSpacing: 50,
         title: Text("Subcategorias"),
         actions: <Widget>[
           Observer(
@@ -49,10 +50,13 @@ class _SubcategoriaPageState extends State<SubcategoriaPage> {
               );
             },
           ),
-          SizedBox(width: 20),
+          SizedBox(width: 100),
         ],
       ),
-      body: SubCategoriaTable(),
+      body: Container(
+        padding: EdgeInsets.only(left: 100, right: 100, top: 10),
+        child: SubCategoriaTable(),
+      ),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[

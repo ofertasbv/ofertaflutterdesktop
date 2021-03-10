@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:nosso/src/core/controller/vendedor_controller.dart';
-import 'package:nosso/src/paginas/cliente/cliente_list.dart';
 import 'package:nosso/src/paginas/vendedor/vendedor_create_page.dart';
-import 'package:nosso/src/paginas/vendedor/vendedor_list.dart';
 import 'package:nosso/src/paginas/vendedor/vendedor_table.dart';
 
 class VendedorPage extends StatelessWidget {
@@ -15,6 +13,7 @@ class VendedorPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        titleSpacing: 50,
         title: Text("Vendedores"),
         actions: <Widget>[
           Observer(
@@ -36,10 +35,13 @@ class VendedorPage extends StatelessWidget {
               );
             },
           ),
-          SizedBox(width: 20),
+          SizedBox(width: 100),
         ],
       ),
-      body: VendedorTable(),
+      body: Container(
+        padding: EdgeInsets.only(left: 100, right: 100, top: 10),
+        child: VendedorTable(),
+      ),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[

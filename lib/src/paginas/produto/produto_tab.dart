@@ -6,8 +6,6 @@ import 'package:nosso/src/core/controller/subcategoria_controller.dart';
 import 'package:nosso/src/core/controller/produto_controller.dart';
 import 'package:nosso/src/core/model/subcategoria.dart';
 import 'package:nosso/src/paginas/produto/produto_create_page.dart';
-import 'package:nosso/src/paginas/produto/produto_grid.dart';
-import 'package:nosso/src/paginas/produto/produto_list.dart';
 import 'package:nosso/src/paginas/produto/produto_search.dart';
 import 'package:nosso/src/paginas/produto/produto_table.dart';
 import 'package:nosso/src/util/filter/produto_filter.dart';
@@ -41,6 +39,7 @@ class _ProdutoTabState extends State<ProdutoTab> {
   @override
   void initState() {
     produtoController.getAll();
+    subCategoriaController.getAll();
     super.initState();
   }
 
@@ -50,6 +49,7 @@ class _ProdutoTabState extends State<ProdutoTab> {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
+          titleSpacing: 50,
           elevation: 1,
           title: Text("Produtos"),
           actions: <Widget>[
@@ -104,6 +104,19 @@ class _ProdutoTabState extends State<ProdutoTab> {
               ),
             ),
             SizedBox(width: 10),
+            CircleAvatar(
+              backgroundColor: Theme.of(context).accentColor.withOpacity(0.4),
+              foregroundColor: Colors.black,
+              child: IconButton(
+                icon: Icon(
+                  Icons.refresh,
+                ),
+                onPressed: () {
+                  produtoController.getAll();
+                },
+              ),
+            ),
+            SizedBox(width: 100),
           ],
         ),
         body: Container(
@@ -123,7 +136,10 @@ class _ProdutoTabState extends State<ProdutoTab> {
                 ),
               ),
               Expanded(
-                child: Center(child: lista[elementIndex]),
+                child: Container(
+                  padding: EdgeInsets.only(left: 100, right: 100),
+                  child: Center(child: lista[elementIndex]),
+                ),
               ),
             ],
           ),
@@ -167,7 +183,7 @@ class _ProdutoTabState extends State<ProdutoTab> {
     );
   }
 
-  List lista = [ProdutoTable(), ProdutoTable()];
+  List lista = [ProdutoTable()];
 
   changeIndex(int index) {
     setState(() {

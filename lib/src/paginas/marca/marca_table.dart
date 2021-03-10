@@ -4,39 +4,40 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
-import 'package:nosso/src/core/controller/promocao_controller.dart';
-import 'package:nosso/src/core/model/promocao.dart';
-import 'package:nosso/src/paginas/promocao/promocao_create_page.dart';
+import 'package:nosso/src/core/controller/marca_controller.dart';
+import 'package:nosso/src/core/model/categoria.dart';
+import 'package:nosso/src/core/model/marca.dart';
+import 'package:nosso/src/paginas/marca/marca_create_page.dart';
 import 'package:nosso/src/util/load/circular_progresso.dart';
 
-class PromocaoTable extends StatefulWidget {
+class MarcaTable extends StatefulWidget {
   @override
-  _PromocaoTableState createState() => _PromocaoTableState();
+  _MarcaTableState createState() => _MarcaTableState();
 }
 
-class _PromocaoTableState extends State<PromocaoTable>
-    with AutomaticKeepAliveClientMixin<PromocaoTable> {
-  var promocaoController = GetIt.I.get<PromoCaoController>();
+class _MarcaTableState extends State<MarcaTable>
+    with AutomaticKeepAliveClientMixin<MarcaTable> {
+  var marcaController = GetIt.I.get<MarcaController>();
   var nomeController = TextEditingController();
 
   @override
   void initState() {
-    promocaoController.getAll();
+    marcaController.getAll();
     super.initState();
   }
 
   Future<void> onRefresh() {
-    return promocaoController.getAll();
+    return marcaController.getAll();
   }
 
   bool isLoading = true;
 
   filterByNome(String nome) {
     if (nome.trim().isEmpty) {
-      promocaoController.getAll();
+      marcaController.getAll();
     } else {
       nome = nomeController.text;
-      promocaoController.getAllByNome(nome);
+      marcaController.getAllByNome(nome);
     }
   }
 
@@ -58,7 +59,7 @@ class _PromocaoTableState extends State<PromocaoTable>
               subtitle: TextFormField(
                 controller: nomeController,
                 decoration: InputDecoration(
-                  labelText: "busca por promoções",
+                  labelText: "busca por nome",
                   prefixIcon: Icon(Icons.search_outlined),
                   suffixIcon: IconButton(
                     onPressed: () => nomeController.clear(),
@@ -85,41 +86,38 @@ class _PromocaoTableState extends State<PromocaoTable>
       padding: EdgeInsets.only(top: 0),
       child: Observer(
         builder: (context) {
-          List<Promocao> promocoes = promocaoController.promocoes;
-          if (promocaoController.error != null) {
+          List<Marca> marcas = marcaController.marcas;
+          if (marcaController.error != null) {
             return Text("Não foi possível carregados dados");
           }
 
-          if (promocoes == null) {
+          if (marcas == null) {
             return CircularProgressor();
           }
 
           return RefreshIndicator(
             onRefresh: onRefresh,
-            child: builderTable(promocoes),
+            child: builderTable(marcas),
           );
         },
       ),
     );
   }
 
-  builderTable(List<Promocao> promocoes) {
+  builderTable(List<Marca> marcas) {
     return DataTable(
       sortAscending: true,
       showCheckboxColumn: true,
       showBottomBorder: true,
-      columnSpacing: 70,
+      columnSpacing: 250,
       columns: [
         DataColumn(label: Text("Código")),
-        DataColumn(label: Text("Foto")),
         DataColumn(label: Text("Nome")),
-        DataColumn(label: Text("Tipo")),
-        DataColumn(label: Text("Loja")),
+        DataColumn(label: Text("Visualizar")),
         DataColumn(label: Text("Editar")),
-        DataColumn(label: Text("Detalhes")),
         DataColumn(label: Text("Produtos")),
       ],
-      rows: promocoes
+      rows: marcas
           .map(
             (p) => DataRow(
               onSelectChanged: (i) {
@@ -129,24 +127,15 @@ class _PromocaoTableState extends State<PromocaoTable>
               },
               cells: [
                 DataCell(Text("${p.id}")),
-                DataCell(CircleAvatar(
-                  backgroundColor: Colors.grey[100],
-                  radius: 20,
-                  backgroundImage: NetworkImage(
-                    "${promocaoController.arquivo + p.foto}",
-                  ),
-                )),
                 DataCell(Text("${p.nome}")),
-                DataCell(Text("${p.promocaoTipo.descricao}")),
-                DataCell(Text(p.loja.nome)),
                 DataCell(IconButton(
-                  icon: Icon(Icons.edit),
+                  icon: Icon(Icons.search),
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (BuildContext context) {
-                          return PromocaoCreatePage(
-                            promocao: p,
+                          return MarcaCreatePage(
+                            marca: p,
                           );
                         },
                       ),
@@ -154,13 +143,13 @@ class _PromocaoTableState extends State<PromocaoTable>
                   },
                 )),
                 DataCell(IconButton(
-                  icon: Icon(Icons.search),
+                  icon: Icon(Icons.edit),
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (BuildContext context) {
-                          return PromocaoCreatePage(
-                            promocao: p,
+                          return MarcaCreatePage(
+                            marca: p,
                           );
                         },
                       ),
@@ -173,8 +162,8 @@ class _PromocaoTableState extends State<PromocaoTable>
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (BuildContext context) {
-                          return PromocaoCreatePage(
-                            promocao: p,
+                          return MarcaCreatePage(
+                            marca: p,
                           );
                         },
                       ),

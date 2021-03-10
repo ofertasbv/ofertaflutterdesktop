@@ -6,7 +6,6 @@ import 'package:nosso/src/core/controller/promocao_controller.dart';
 import 'package:nosso/src/core/model/loja.dart';
 import 'package:nosso/src/paginas/promocao/promocao_create_page.dart';
 import 'package:nosso/src/paginas/promocao/promocao_table.dart';
-import 'promocao_list.dart';
 
 class PromocaoPage extends StatefulWidget {
   Loja p;
@@ -28,6 +27,7 @@ class _PromocaoPageState extends State<PromocaoPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        titleSpacing: 50,
         title: Text("Ofertas"),
         actions: <Widget>[
           Observer(
@@ -49,10 +49,13 @@ class _PromocaoPageState extends State<PromocaoPage> {
               );
             },
           ),
-          SizedBox(width: 20),
+          SizedBox(width: 100),
         ],
       ),
-      body: PromocaoTable(),
+      body: Container(
+        padding: EdgeInsets.only(left: 100, right: 100, top: 10),
+        child: PromocaoTable(),
+      ),
       floatingActionButton: FloatingActionButton(
         elevation: 10,
         child: Icon(Icons.add),

@@ -108,13 +108,18 @@ class _VendedorTableState extends State<VendedorTable>
       sortAscending: true,
       showCheckboxColumn: true,
       showBottomBorder: true,
+      columnSpacing: 45,
       columns: [
         DataColumn(label: Text("Código")),
+        DataColumn(label: Text("Foto")),
         DataColumn(label: Text("Nome")),
         DataColumn(label: Text("Email")),
+        DataColumn(label: Text("Telefone")),
         DataColumn(label: Text("Cpf")),
         DataColumn(label: Text("Editar")),
         DataColumn(label: Text("Detalhes")),
+        DataColumn(label: Text("Pedidos")),
+        DataColumn(label: Text("Endereços")),
       ],
       rows: vendedores
           .map(
@@ -125,15 +130,14 @@ class _VendedorTableState extends State<VendedorTable>
                 });
               },
               cells: [
-                DataCell(
-                  Text("${p.id}"),
-                ),
-                DataCell(
-                  Text("${p.nome}"),
-                ),
-                DataCell(
-                  Text("${p.usuario.email}"),
-                ),
+                DataCell(Text("${p.id}")),
+                DataCell(CircleAvatar(
+                  backgroundColor: Colors.grey[200],
+                  radius: 20,
+                )),
+                DataCell(Text("${p.nome}")),
+                DataCell(Text("${p.telefone}")),
+                DataCell(Text("${p.usuario.email}")),
                 DataCell(Text(p.cpf)),
                 DataCell(IconButton(
                   icon: Icon(Icons.edit),
@@ -151,6 +155,34 @@ class _VendedorTableState extends State<VendedorTable>
                 )),
                 DataCell(IconButton(
                   icon: Icon(Icons.search),
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (BuildContext context) {
+                          return VendedorCreatePage(
+                            vendedor: p,
+                          );
+                        },
+                      ),
+                    );
+                  },
+                )),
+                DataCell(IconButton(
+                  icon: Icon(Icons.shopping_basket_outlined),
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (BuildContext context) {
+                          return VendedorCreatePage(
+                            vendedor: p,
+                          );
+                        },
+                      ),
+                    );
+                  },
+                )),
+                DataCell(IconButton(
+                  icon: Icon(Icons.location_on_outlined),
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(

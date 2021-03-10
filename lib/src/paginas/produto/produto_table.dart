@@ -96,85 +96,115 @@ class _ProdutoTableState extends State<ProdutoTable>
 
           return RefreshIndicator(
             onRefresh: onRefresh,
-            child: builderTable(produtos),
+            child: buildTable(produtos),
           );
         },
       ),
     );
   }
 
-  builderTable(List<Produto> produtos) {
-    return DataTable(
-      sortAscending: true,
-      showCheckboxColumn: true,
-      showBottomBorder: true,
-      columns: [
-        DataColumn(label: Text("Código")),
-        DataColumn(label: Text("Nome")),
-        DataColumn(label: Text("Descrição")),
-        DataColumn(label: Text("SubCategoria")),
-        DataColumn(label: Text("Loja")),
-        DataColumn(label: Text("Marca")),
-        DataColumn(label: Text("Editar")),
-        DataColumn(label: Text("Detalhes")),
+  buildTable(List<Produto> produtos) {
+    return ListView(
+      children: [
+        PaginatedDataTable(
+          rowsPerPage: 8,
+          showCheckboxColumn: true,
+          sortColumnIndex: 1,
+          columns: [
+            DataColumn(label: Text("Nome")),
+            DataColumn(label: Text("Foto")),
+            DataColumn(label: Text("Descrição")),
+            DataColumn(label: Text("Categoria")),
+            DataColumn(label: Text("Loja")),
+            DataColumn(label: Text("Marca")),
+            DataColumn(label: Text("Visualizar")),
+            DataColumn(label: Text("Editar")),
+          ],
+          source: DataSource(produtos, context),
+        ),
       ],
-      rows: produtos
-          .map(
-            (p) => DataRow(
-              onSelectChanged: (i) {
-                setState(() {
-                  // selecionaItem(p);
-                });
-              },
-              cells: [
-                DataCell(
-                  Text("${p.id}"),
-                ),
-                DataCell(
-                  Text("${p.nome}"),
-                ),
-                DataCell(
-                  Text("${p.descricao}"),
-                ),
-                DataCell(Text(p.subCategoria.nome)),
-                DataCell(Text(p.loja.nome)),
-                DataCell(Text(p.marca.nome)),
-                DataCell(IconButton(
-                  icon: Icon(Icons.edit),
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (BuildContext context) {
-                          return ProdutoCreatePage(
-                            produto: p,
-                          );
-                        },
-                      ),
-                    );
-                  },
-                )),
-                DataCell(IconButton(
-                  icon: Icon(Icons.search),
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (BuildContext context) {
-                          return ProdutoCreatePage(
-                            produto: p,
-                          );
-                        },
-                      ),
-                    );
-                  },
-                )),
-              ],
-            ),
-          )
-          .toList(),
     );
   }
 
   @override
   // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
+}
+
+class DataSource extends DataTableSource {
+  var produtoController = GetIt.I.get<ProdutoController>();
+  BuildContext context;
+  List<Produto> produtos;
+  int selectedCount = 0;
+  DataSource(this.produtos, this.context);
+
+  @override
+  DataRow getRow(int index) {
+    assert(index >= 0);
+    if (index >= produtos.length) return null;
+    Produto p = produtos[index];
+    return DataRow.byIndex(
+      index: index,
+      selected: p.destaque,
+      onSelectChanged: (value) {
+        if (p.destaque != value) {
+          selectedCount += value ? 1 : -1;
+          assert(selectedCount >= 0);
+          p.destaque = value;
+          notifyListeners();
+        }
+      },
+      cells: [
+        DataCell(Text(p.nome)),
+        DataCell(CircleAvatar(
+          backgroundColor: Colors.grey[100],
+          radius: 20,
+          backgroundImage: NetworkImage(
+            "${produtoController.arquivo + p.foto}",
+          ),
+        )),
+        DataCell(Text(p.descricao)),
+        DataCell(Text(p.subCategoria.nome)),
+        DataCell(Text(p.loja.nome)),
+        DataCell(Text(p.marca.nome)),
+        DataCell(IconButton(
+          icon: Icon(Icons.search),
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return ProdutoCreatePage(
+                    produto: p,
+                  );
+                },
+              ),
+            );
+          },
+        )),
+        DataCell(IconButton(
+          icon: Icon(Icons.edit),
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return ProdutoCreatePage(
+                    produto: p,
+                  );
+                },
+              ),
+            );
+          },
+        )),
+      ],
+    );
+  }
+
+  @override
+  int get rowCount => produtos.length;
+
+  @override
+  bool get isRowCountApproximate => false;
+
+  @override
+  int get selectedRowCount => selectedCount;
 }

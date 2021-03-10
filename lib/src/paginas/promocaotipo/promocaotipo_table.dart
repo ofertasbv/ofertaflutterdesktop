@@ -64,10 +64,13 @@ class _PromocaoTipoTableState extends State<PromocaoTipoTable>
       sortAscending: true,
       showCheckboxColumn: true,
       showBottomBorder: true,
+      columnSpacing: 230,
       columns: [
         DataColumn(label: Text("Código")),
         DataColumn(label: Text("Nome")),
+        DataColumn(label: Text("Visualizar")),
         DataColumn(label: Text("Editar")),
+        DataColumn(label: Text("Promoções")),
       ],
       rows: promocaoTipos
           .map(
@@ -85,7 +88,35 @@ class _PromocaoTipoTableState extends State<PromocaoTipoTable>
                   Text("${p.descricao}"),
                 ),
                 DataCell(IconButton(
+                  icon: Icon(Icons.search),
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (BuildContext context) {
+                          return PromocaoTipoCreatePage(
+                            promocaoTipo: p,
+                          );
+                        },
+                      ),
+                    );
+                  },
+                )),
+                DataCell(IconButton(
                   icon: Icon(Icons.edit),
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (BuildContext context) {
+                          return PromocaoTipoCreatePage(
+                            promocaoTipo: p,
+                          );
+                        },
+                      ),
+                    );
+                  },
+                )),
+                DataCell(IconButton(
+                  icon: Icon(Icons.list),
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(

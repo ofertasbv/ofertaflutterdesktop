@@ -58,15 +58,6 @@ class _MarcaListState extends State<MarcaList>
     );
   }
 
-  DataTable builderDataTable(){
-    return DataTable(
-      columns: [
-
-      ],
-    );
-
-  }
-
   ListView builderList(List<Marca> marcas) {
     double containerWidth = 160;
     double containerHeight = 30;

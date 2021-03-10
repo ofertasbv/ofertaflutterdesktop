@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:nosso/src/core/controller/promocaotipo_controller.dart';
-import 'package:nosso/src/paginas/cor/cor_list.dart';
-import 'package:nosso/src/paginas/promocao/promocao_table.dart';
 import 'package:nosso/src/paginas/promocaotipo/promocaotipo_create_page.dart';
 import 'package:nosso/src/paginas/promocaotipo/promocaotipo_table.dart';
 
@@ -15,6 +13,7 @@ class PromocaoTipoPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        titleSpacing: 50,
         title: Text("Tipos promoções"),
         actions: <Widget>[
           Observer(
@@ -36,10 +35,13 @@ class PromocaoTipoPage extends StatelessWidget {
               );
             },
           ),
-          SizedBox(width: 20),
+          SizedBox(width: 100),
         ],
       ),
-      body: PromocaoTipoTable(),
+      body: Container(
+        padding: EdgeInsets.only(left: 100, right: 100, top: 10),
+        child: PromocaoTipoTable(),
+      ),
       floatingActionButton: FloatingActionButton(
         elevation: 10,
         child: Icon(Icons.add),

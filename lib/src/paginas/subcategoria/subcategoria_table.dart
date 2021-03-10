@@ -109,11 +109,13 @@ class _SubCategoriaTableState extends State<SubCategoriaTable>
       sortAscending: true,
       showCheckboxColumn: true,
       showBottomBorder: true,
+      columnSpacing: 210,
       columns: [
         DataColumn(label: Text("Código")),
         DataColumn(label: Text("Nome")),
         DataColumn(label: Text("Categoria")),
         DataColumn(label: Text("Editar")),
+        DataColumn(label: Text("Categorias")),
       ],
       rows: subcategorias
           .map(
@@ -135,6 +137,20 @@ class _SubCategoriaTableState extends State<SubCategoriaTable>
                 ),
                 DataCell(IconButton(
                   icon: Icon(Icons.edit),
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (BuildContext context) {
+                          return SubCategoriaCreatePage(
+                            subCategoria: p,
+                          );
+                        },
+                      ),
+                    );
+                  },
+                )),
+                DataCell(IconButton(
+                  icon: Icon(Icons.list),
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(

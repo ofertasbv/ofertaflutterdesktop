@@ -5,6 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:nosso/src/core/controller/marca_controller.dart';
 import 'package:nosso/src/paginas/marca/marca_create_page.dart';
 import 'package:nosso/src/paginas/marca/marca_list.dart';
+import 'package:nosso/src/paginas/marca/marca_table.dart';
 
 class MarcaPage extends StatelessWidget {
   var marcaController = GetIt.I.get<MarcaController>();
@@ -37,7 +38,10 @@ class MarcaPage extends StatelessWidget {
           SizedBox(width: 20),
         ],
       ),
-      body: MarcaList(),
+      body: Container(
+        padding: EdgeInsets.only(left: 100, right: 100, top: 10),
+        child: MarcaTable(),
+      ),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[

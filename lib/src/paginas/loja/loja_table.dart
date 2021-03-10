@@ -108,13 +108,16 @@ class _LojaTableState extends State<LojaTable>
       sortAscending: true,
       showCheckboxColumn: true,
       showBottomBorder: true,
+      columnSpacing: 70,
       columns: [
         DataColumn(label: Text("Código")),
+        DataColumn(label: Text("Foto")),
         DataColumn(label: Text("Nome")),
-        DataColumn(label: Text("Razão Social")),
         DataColumn(label: Text("Cnpj")),
         DataColumn(label: Text("Editar")),
         DataColumn(label: Text("Detalhes")),
+        DataColumn(label: Text("Produtos")),
+        DataColumn(label: Text("Promoções")),
       ],
       rows: lojas
           .map(
@@ -125,15 +128,12 @@ class _LojaTableState extends State<LojaTable>
                 });
               },
               cells: [
-                DataCell(
-                  Text("${p.id}"),
-                ),
-                DataCell(
-                  Text("${p.nome}"),
-                ),
-                DataCell(
-                  Text("${p.razaoSocial}"),
-                ),
+                DataCell(Text("${p.id}")),
+                DataCell(CircleAvatar(
+                  backgroundColor: Colors.grey[200],
+                  radius: 20,
+                )),
+                DataCell(Text("${p.nome}")),
                 DataCell(Text(p.cnpj)),
                 DataCell(IconButton(
                   icon: Icon(Icons.edit),
@@ -151,6 +151,34 @@ class _LojaTableState extends State<LojaTable>
                 )),
                 DataCell(IconButton(
                   icon: Icon(Icons.search),
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (BuildContext context) {
+                          return LojaCreatePage(
+                            loja: p,
+                          );
+                        },
+                      ),
+                    );
+                  },
+                )),
+                DataCell(IconButton(
+                  icon: Icon(Icons.list),
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (BuildContext context) {
+                          return LojaCreatePage(
+                            loja: p,
+                          );
+                        },
+                      ),
+                    );
+                  },
+                )),
+                DataCell(IconButton(
+                  icon: Icon(Icons.list),
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(

@@ -244,16 +244,19 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
       appBar: AppBar(
         title: p.nome == null ? Text("Cadastro de produtos") : Text(p.nome),
       ),
-      body: Observer(
-        builder: (context) {
-          if (produtoController.dioError == null) {
-            return buildListViewForm(context);
-          } else {
-            print("Erro: ${produtoController.mensagem}");
-            showToast("${produtoController.mensagem}");
-            return buildListViewForm(context);
-          }
-        },
+      body: Container(
+        padding: EdgeInsets.only(left: 100, right: 100, top: 10),
+        child: Observer(
+          builder: (context) {
+            if (produtoController.dioError == null) {
+              return buildListViewForm(context);
+            } else {
+              print("Erro: ${produtoController.mensagem}");
+              showToast("${produtoController.mensagem}");
+              return buildListViewForm(context);
+            }
+          },
+        ),
       ),
     );
   }

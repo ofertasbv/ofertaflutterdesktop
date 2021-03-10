@@ -43,6 +43,16 @@ abstract class MarcaControllerBase with Store {
   }
 
   @action
+  Future<List<Marca>> getAllByNome(String nome) async {
+    try {
+      marcas = await marcaRepository.getAllByNome(nome);
+      return marcas;
+    } catch (e) {
+      error = e;
+    }
+  }
+
+  @action
   Future<int> create(Marca p) async {
     try {
       marca = await marcaRepository.create(p.toJson());

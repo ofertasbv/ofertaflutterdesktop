@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:nosso/src/api/constants/constant_api.dart';
 import 'package:nosso/src/home/home.dart';
 import 'package:nosso/src/paginas/arquivo/arquivo_page.dart';
 import 'package:nosso/src/paginas/caixacontrole/caixa_controle_page.dart';
@@ -42,31 +43,32 @@ class _ConfigPageState extends State<ConfigPage> {
     double altura = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text("PAINEL DE CONTROLE"),
-        actions: <Widget>[
-          IconButton(
-            icon: new Icon(
-              Icons.home,
-            ),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => HomePage()),
-              );
-            },
-          ),
-        ],
-      ),
       body: Stack(
         children: <Widget>[
           builderBodyBack(),
           Container(
+            padding: EdgeInsets.only(left: 100, right: 100),
             child: Column(
               children: [
+                Container(
+                  height: 70,
+                  width: double.infinity,
+                  color: Colors.grey[100],
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      backgroundColor: Colors.indigo,
+                      radius: 20,
+                      backgroundImage: AssetImage(ConstantApi.urlLogo),
+                    ),
+                    title: Text("DASHBOARD - PAINEL DE CONTROLE"),
+                    subtitle: Text("Novo Repartimento - PÁ, 10-03-2021"),
+                  ),
+                ),
                 SizedBox(height: 10),
                 Expanded(
                   child: Container(
+                    padding: EdgeInsets.only(top: 20),
+                    color: Colors.grey[100],
                     child: buildGridViewConfig(context),
                   ),
                 )
@@ -119,6 +121,7 @@ class _ConfigPageState extends State<ConfigPage> {
             children: <Widget>[
               Container(
                 decoration: BoxDecoration(
+                  color: Colors.white,
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: CircleAvatar(
@@ -132,6 +135,8 @@ class _ConfigPageState extends State<ConfigPage> {
                   ),
                 ),
                 padding: EdgeInsets.all(10),
+                height: 50,
+                width: 100,
               ),
               Text("Code bar", style: TextStyle(fontSize: 12)),
             ],

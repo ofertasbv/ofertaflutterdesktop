@@ -4,7 +4,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:nosso/src/core/controller/cliente_controller.dart';
 import 'package:nosso/src/paginas/cliente/cliente_create_page.dart';
-import 'package:nosso/src/paginas/cliente/cliente_list.dart';
 import 'package:nosso/src/paginas/cliente/cliente_table.dart';
 
 class ClientePage extends StatelessWidget {
@@ -14,6 +13,7 @@ class ClientePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        titleSpacing: 50,
         title: Text("Clientes"),
         actions: <Widget>[
           Observer(
@@ -35,10 +35,13 @@ class ClientePage extends StatelessWidget {
               );
             },
           ),
-          SizedBox(width: 20),
+          SizedBox(width: 100),
         ],
       ),
-      body: ClienteTable(),
+      body: Container(
+        padding: EdgeInsets.only(left: 100, right: 100, top: 10),
+        child: ClienteTable(),
+      ),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[

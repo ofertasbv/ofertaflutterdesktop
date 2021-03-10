@@ -19,6 +19,17 @@ class MarcaRepository {
     return null;
   }
 
+  Future<List<Marca>> getAllByNome(String nome) async {
+    try {
+      print("carregando marcas by nome");
+      var response = await dio.client.get("/marcas/nome/${nome}");
+      return (response.data as List).map((c) => Marca.fromJson(c)).toList();
+    } on DioError catch (e) {
+      print(e.message);
+    }
+    return null;
+  }
+
   Future<List<Marca>> getAll() async {
     try {
       print("carregando marcas");
