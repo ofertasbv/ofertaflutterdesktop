@@ -82,7 +82,7 @@ class _PromocaoListHomeState extends State<PromocaoListHome>
 
         return GestureDetector(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 2),
+            padding: EdgeInsets.symmetric(horizontal: 10),
             child: Card(
               shape: RoundedRectangleBorder(
                 borderRadius: new BorderRadius.circular(10),
@@ -94,7 +94,7 @@ class _PromocaoListHomeState extends State<PromocaoListHome>
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      Colors.grey[100].withOpacity(0.1),
+                      Colors.grey[200].withOpacity(0.1),
                       Colors.grey[300].withOpacity(0.5),
                     ],
                     begin: Alignment.topLeft,

@@ -5,6 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:nosso/src/core/controller/categoria_controller.dart';
 import 'package:nosso/src/paginas/categoria/categoria_create_page.dart';
 import 'package:nosso/src/paginas/categoria/categoria_list.dart';
+import 'package:nosso/src/paginas/categoria/categoria_table.dart';
 
 class CategoriaPage extends StatelessWidget {
   var categoriaController = GetIt.I.get<CategoriaController>();
@@ -37,7 +38,7 @@ class CategoriaPage extends StatelessWidget {
           SizedBox(width: 20),
         ],
       ),
-      body: CategoriaList(),
+      body: CategoriaTable(),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[

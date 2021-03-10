@@ -5,6 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:nosso/src/core/controller/promocao_controller.dart';
 import 'package:nosso/src/core/model/loja.dart';
 import 'package:nosso/src/paginas/promocao/promocao_create_page.dart';
+import 'package:nosso/src/paginas/promocao/promocao_table.dart';
 import 'promocao_list.dart';
 
 class PromocaoPage extends StatefulWidget {
@@ -51,7 +52,7 @@ class _PromocaoPageState extends State<PromocaoPage> {
           SizedBox(width: 20),
         ],
       ),
-      body: PromocaoList(p: p),
+      body: PromocaoTable(),
       floatingActionButton: FloatingActionButton(
         elevation: 10,
         child: Icon(Icons.add),

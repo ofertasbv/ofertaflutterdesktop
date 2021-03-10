@@ -4,7 +4,9 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:nosso/src/core/controller/promocaotipo_controller.dart';
 import 'package:nosso/src/paginas/cor/cor_list.dart';
+import 'package:nosso/src/paginas/promocao/promocao_table.dart';
 import 'package:nosso/src/paginas/promocaotipo/promocaotipo_create_page.dart';
+import 'package:nosso/src/paginas/promocaotipo/promocaotipo_table.dart';
 
 class PromocaoTipoPage extends StatelessWidget {
   var promocaoTipoController = GetIt.I.get<PromocaoTipoController>();
@@ -37,7 +39,7 @@ class PromocaoTipoPage extends StatelessWidget {
           SizedBox(width: 20),
         ],
       ),
-      body: CorList(),
+      body: PromocaoTipoTable(),
       floatingActionButton: FloatingActionButton(
         elevation: 10,
         child: Icon(Icons.add),

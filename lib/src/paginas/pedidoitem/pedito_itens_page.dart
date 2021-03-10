@@ -115,8 +115,8 @@ class _PedidoItensListState extends State<PedidoItensList> {
       itemCount: itens.length,
       itemBuilder: (context, index) {
         PedidoItem p = itens[index];
-        // p.valorUnitario = p.produto.estoque.valorUnitario;
-        // p.valorTotal = (p.quantidade * p.valorUnitario);
+        p.valorUnitario = p.produto.estoque.valorUnitario;
+        p.valorTotal = (p.quantidade * p.valorUnitario);
 
         return GestureDetector(
           child: Column(

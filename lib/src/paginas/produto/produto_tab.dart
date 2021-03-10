@@ -9,6 +9,7 @@ import 'package:nosso/src/paginas/produto/produto_create_page.dart';
 import 'package:nosso/src/paginas/produto/produto_grid.dart';
 import 'package:nosso/src/paginas/produto/produto_list.dart';
 import 'package:nosso/src/paginas/produto/produto_search.dart';
+import 'package:nosso/src/paginas/produto/produto_table.dart';
 import 'package:nosso/src/util/filter/produto_filter.dart';
 import 'package:nosso/src/util/load/circular_progresso_mini.dart';
 
@@ -112,11 +113,14 @@ class _ProdutoTabState extends State<ProdutoTab> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
-                height: 80,
-                width: double.infinity,
-                color: Colors.transparent,
-                padding: EdgeInsets.all(2),
-                child: builderConteudoListSubCategoria(),
+                padding: EdgeInsets.only(left: 100, right: 100, top: 1),
+                child: Container(
+                  height: 80,
+                  width: double.infinity,
+                  color: Colors.transparent,
+                  padding: EdgeInsets.all(2),
+                  child: builderConteudoListSubCategoria(),
+                ),
               ),
               Expanded(
                 child: Center(child: lista[elementIndex]),
@@ -139,27 +143,31 @@ class _ProdutoTabState extends State<ProdutoTab> {
             );
           },
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.grid_on_outlined),
-              title: Text('grid'),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.list_alt_outlined),
-              title: Text('list'),
-            ),
-          ],
-          currentIndex: elementIndex,
-          onTap: changeIndex,
-          elevation: 4,
-        ),
+        // bottomNavigationBar: buildBottomNavigationBar(),
       ),
     );
   }
 
-  List lista = [ProdutoGrid(), ProdutoList()];
+  BottomNavigationBar buildBottomNavigationBar() {
+    return BottomNavigationBar(
+      type: BottomNavigationBarType.fixed,
+      items: const <BottomNavigationBarItem>[
+        BottomNavigationBarItem(
+          icon: Icon(Icons.grid_on_outlined),
+          title: Text('grid'),
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.list_alt_outlined),
+          title: Text('list'),
+        ),
+      ],
+      currentIndex: elementIndex,
+      onTap: changeIndex,
+      elevation: 4,
+    );
+  }
+
+  List lista = [ProdutoTable(), ProdutoTable()];
 
   changeIndex(int index) {
     setState(() {

@@ -228,9 +228,9 @@ class _ProdutoDetalhesTabState extends State<ProdutoDetalhesTab>
                       .isExisteItem(new PedidoItem(produto: p))) {
                     showSnackbar(context, "${p.nome} já existe");
                   } else {
-                    pedidoItemController.adicionar(new PedidoItem(produto: p));
                     showSnackbar(context, "${p.nome} adicionado");
                     setState(() {
+                      pedidoItemController.adicionar(new PedidoItem(produto: p));
                       animationController.forward();
                     });
                   }

@@ -85,6 +85,16 @@ abstract class ProdutoControllerBase with Store {
   }
 
   @action
+  Future<List<Produto>> getAllByNome(String nome) async {
+    try {
+      produtos = await produtoRepository.getAllByNome(nome);
+      return produtos;
+    } catch (e) {
+      error = e;
+    }
+  }
+
+  @action
   Future<List<Produto>> getAllBySubCategoriaById(int id) async {
     try {
       produtos = await produtoRepository.getAllBySubCategoriaById(id);

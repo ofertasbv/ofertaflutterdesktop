@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:mobx/mobx.dart';
 import 'package:nosso/src/core/model/pedidoitem.dart';
-import 'package:nosso/src/core/model/produto.dart';
 import 'package:nosso/src/core/repository/pedidoItem_repository.dart';
+import 'package:nosso/src/paginas/pedidoitem/carrinho_item.dart';
 
 part 'pedidoItem_controller.g.dart';
 
@@ -11,8 +11,10 @@ class PedidoItemController = PedidoItemControllerBase
 
 abstract class PedidoItemControllerBase with Store {
   PedidoItemRepository _pedidoItemRepository;
+  CarrinhoItem carrinhoItem;
 
   PedidoItemControllerBase() {
+    carrinhoItem = CarrinhoItem();
     _pedidoItemRepository = PedidoItemRepository();
   }
 
@@ -53,15 +55,6 @@ abstract class PedidoItemControllerBase with Store {
   String mensagem;
 
   @action
-  List<PedidoItem> pedidosItens() {
-    try {
-      return itens;
-    } catch (e) {
-      error = e;
-    }
-  }
-
-  @action
   Future<List<PedidoItem>> getAll() async {
     try {
       pedidoItens = await _pedidoItemRepository.getAll();
@@ -98,73 +91,47 @@ abstract class PedidoItemControllerBase with Store {
   }
 
   @action
-  adicionar(PedidoItem item) {
-    item.quantidade = quantidade;
-    print("Qunatidade: ${item.quantidade}");
-    if (item.quantidade > 0) {
-      item.valorUnitario = item.produto.estoque.valorUnitario;
-      item.valorTotal = item.quantidade * item.valorUnitario;
-      itens.add(item);
-      calculateTotal();
+  List<PedidoItem> pedidosItens() {
+    try {
+      return itens = carrinhoItem.itens;
+    } catch (e) {
+      error = e;
     }
   }
 
   @action
-  isExiste(Produto p) {
-    var result = false;
-    for (PedidoItem p in itens) {
-      if (p.produto.id == p.id) {
-        return result = true;
-      }
-    }
-    return result;
+  adicionar(PedidoItem item) {
+    carrinhoItem.adicionar(item);
   }
 
   @action
   isExisteItem(PedidoItem item) {
-    var result = false;
-    for (PedidoItem p in itens) {
-      if (item.produto.nome == p.produto.nome) {
-        return result = true;
-      }
-    }
-    return result;
+    return carrinhoItem.isExisteItem(item);
   }
 
   @action
   incremento(PedidoItem item) {
-    if (item.quantidade < 10) {
-      item.quantidade++;
-      calculateTotal();
-    }
+    carrinhoItem.incremento(item);
   }
 
   @action
   decremento(PedidoItem item) {
-    if (item.quantidade > 1) {
-      item.quantidade--;
-      calculateTotal();
-    }
+    carrinhoItem.decremento(item);
   }
 
   @action
   remove(PedidoItem item) {
-    itens.remove(item);
-    calculateTotal();
+    carrinhoItem.itens.remove(item);
+    carrinhoItem.calculateTotal();
   }
 
   @action
   calculateTotal() {
-    this.total = 0.0;
-    itens.forEach((p) {
-      total += p.valorTotal;
-    });
-    return total;
+    return this.total = carrinhoItem.calculateTotal();
   }
 
   @action
   calculateDesconto() {
-    this.totalDesconto = total - desconto;
-    return totalDesconto;
+    carrinhoItem.calculateDesconto();
   }
 }

@@ -6,6 +6,7 @@ import 'package:nosso/src/core/controller/subcategoria_controller.dart';
 import 'package:nosso/src/core/model/categoria.dart';
 import 'package:nosso/src/paginas/subcategoria/subcategoria_create_page.dart';
 import 'package:nosso/src/paginas/subcategoria/subcategoria_list.dart';
+import 'package:nosso/src/paginas/subcategoria/subcategoria_table.dart';
 
 class SubcategoriaPage extends StatefulWidget {
   Categoria c;
@@ -51,7 +52,7 @@ class _SubcategoriaPageState extends State<SubcategoriaPage> {
           SizedBox(width: 20),
         ],
       ),
-      body: SubCategoriaList(),
+      body: SubCategoriaTable(),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[

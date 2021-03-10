@@ -27,8 +27,8 @@ class ContainerProduto extends StatelessWidget {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Colors.grey[100].withOpacity(0.1),
-              Colors.grey[100].withOpacity(0.4),
+              Colors.grey[200].withOpacity(0.1),
+              Colors.grey[300].withOpacity(0.4),
             ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,

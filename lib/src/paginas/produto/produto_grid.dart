@@ -145,149 +145,155 @@ class _ProdutoGridState extends State<ProdutoGrid>
   }
 
   builderGrid(List<Produto> produtos) {
-    return GridView.builder(
-      padding: EdgeInsets.only(top: 5),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        crossAxisSpacing: 2,
-        mainAxisSpacing: 2,
-        childAspectRatio: MediaQuery.of(context).size.aspectRatio * 1.2,
-      ),
-      itemCount: produtos.length,
-      itemBuilder: (context, index) {
-        Produto p = produtos[index];
-        return GestureDetector(
-          child: AnimatedContainer(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Colors.grey[100].withOpacity(0.1),
-                  Colors.grey[300].withOpacity(0.3),
-                ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-              border: Border.all(color: Colors.transparent),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            duration: Duration(seconds: 2),
-            curve: Curves.bounceIn,
-            child: Column(
-              children: <Widget>[
-                Stack(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: Image.network(
-                        produtoController.arquivo + p.foto,
-                        fit: BoxFit.cover,
-                        width: double.infinity,
-                        height: 150,
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 10, right: 10),
-                      child: Align(
-                        alignment: Alignment.centerRight,
-                        child: CircleAvatar(
-                          backgroundColor: Colors.grey[300],
-                          foregroundColor: Colors.redAccent,
-                          radius: 15,
-                          child: IconButton(
-                            splashColor: Colors.black,
-                            icon: (this.favorito.status == false
-                                ? Icon(
-                                    Icons.favorite_border,
-                                    color: Colors.redAccent,
-                                    size: 15,
-                                  )
-                                : Icon(
-                                    Icons.favorite_outlined,
-                                    color: Colors.redAccent,
-                                    size: 15,
-                                  )),
-                            onPressed: () {
-                              setState(() {
-                                print("Favoritar: ${p.nome}");
-                                // favoritar();
-                              });
-
-                              // if (favorito.id == null) {
-                              //   favorito.produto = p;
-                              //   favorito.status = isFavorito;
-                              //   favoritoController.create(favorito);
-                              //   print("Adicionar: ${p.nome}");
-                              // } else {
-                              //   favorito.produto = p;
-                              //   favorito.status = isFavorito;
-                              //   favoritoController.update(
-                              //       favorito.id, favorito);
-                              //   print("Alterar: ${p.nome}");
-                              //   showSnackbar(context, "favorito");
-                              // }
-                            },
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+    return Container(
+      padding: EdgeInsets.only(left: 100, right: 100, top: 1),
+      child: Container(
+        color: Colors.transparent,
+        child: GridView.builder(
+          padding: EdgeInsets.only(top: 5),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 4,
+            crossAxisSpacing: 10,
+            mainAxisSpacing: 10,
+            childAspectRatio: MediaQuery.of(context).size.aspectRatio * 0.4,
+          ),
+          itemCount: produtos.length,
+          itemBuilder: (context, index) {
+            Produto p = produtos[index];
+            return GestureDetector(
+              child: AnimatedContainer(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Colors.grey[200].withOpacity(0.1),
+                      Colors.grey[400].withOpacity(0.3),
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  border: Border.all(color: Colors.transparent),
+                  borderRadius: BorderRadius.circular(10),
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisAlignment: MainAxisAlignment.center,
+                duration: Duration(seconds: 2),
+                curve: Curves.bounceIn,
+                child: Column(
                   children: <Widget>[
-                    Container(
-                      height: 30,
-                      padding: EdgeInsets.all(6),
-                      child: Text("${p.nome}", overflow: TextOverflow.ellipsis),
-                    ),
-                    Container(
-                      height: 60,
-                      child: ListTile(
-                        title: Text(
-                          "${formatMoeda.format(p.estoque.valorUnitario)}",
-                          style: TextStyle(
-                            fontSize: 12,
-                            decoration: TextDecoration.lineThrough,
-                            decorationStyle: TextDecorationStyle.dashed,
+                    Stack(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image.network(
+                            produtoController.arquivo + p.foto,
+                            fit: BoxFit.cover,
+                            width: double.infinity,
+                            height: 300,
                           ),
                         ),
-                        subtitle: Text(
-                          "R\$ ${formatMoeda.format(p.estoque.valorUnitario - ((p.estoque.valorUnitario * p.promocao.desconto) / 100))}",
-                          style: TextStyle(
-                            color: Colors.green,
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        trailing: Chip(
-                          label: Text(
-                            "${formatMoeda.format(p.promocao.desconto)} OFF",
-                            style: TextStyle(
-                              fontSize: 10,
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
+                        Padding(
+                          padding: EdgeInsets.only(top: 10, right: 10),
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: CircleAvatar(
+                              backgroundColor: Colors.grey[300],
+                              foregroundColor: Colors.redAccent,
+                              radius: 15,
+                              child: IconButton(
+                                splashColor: Colors.black,
+                                icon: (this.favorito.status == false
+                                    ? Icon(
+                                        Icons.favorite_border,
+                                        color: Colors.redAccent,
+                                        size: 15,
+                                      )
+                                    : Icon(
+                                        Icons.favorite_outlined,
+                                        color: Colors.redAccent,
+                                        size: 15,
+                                      )),
+                                onPressed: () {
+                                  setState(() {
+                                    print("Favoritar: ${p.nome}");
+                                    // favoritar();
+                                  });
+
+                                  // if (favorito.id == null) {
+                                  //   favorito.produto = p;
+                                  //   favorito.status = isFavorito;
+                                  //   favoritoController.create(favorito);
+                                  //   print("Adicionar: ${p.nome}");
+                                  // } else {
+                                  //   favorito.produto = p;
+                                  //   favorito.status = isFavorito;
+                                  //   favoritoController.update(
+                                  //       favorito.id, favorito);
+                                  //   print("Alterar: ${p.nome}");
+                                  //   showSnackbar(context, "favorito");
+                                  // }
+                                },
+                              ),
                             ),
                           ),
                         ),
-                      ),
+                      ],
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Container(
+                          height: 30,
+                          padding: EdgeInsets.all(6),
+                          child: Text("${p.nome}", overflow: TextOverflow.ellipsis),
+                        ),
+                        Container(
+                          height: 60,
+                          child: ListTile(
+                            title: Text(
+                              "${formatMoeda.format(p.estoque.valorUnitario)}",
+                              style: TextStyle(
+                                fontSize: 12,
+                                decoration: TextDecoration.lineThrough,
+                                decorationStyle: TextDecorationStyle.dashed,
+                              ),
+                            ),
+                            subtitle: Text(
+                              "R\$ ${formatMoeda.format(p.estoque.valorUnitario - ((p.estoque.valorUnitario * p.promocao.desconto) / 100))}",
+                              style: TextStyle(
+                                color: Colors.green,
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            trailing: Chip(
+                              label: Text(
+                                "${formatMoeda.format(p.promocao.desconto)} OFF",
+                                style: TextStyle(
+                                  fontSize: 10,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
-              ],
-            ),
-          ),
-          onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return ProdutoDetalhesTab(p);
-                },
               ),
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (BuildContext context) {
+                      return ProdutoDetalhesTab(p);
+                    },
+                  ),
+                );
+              },
             );
           },
-        );
-      },
+        ),
+      ),
     );
   }
 

@@ -33,6 +33,17 @@ class ProdutoRepository {
     return null;
   }
 
+  Future<List<Produto>> getAllByNome(String nome) async {
+    try {
+      print("carregando produtos by nome");
+      var response = await dio.client.get("/produtos/nome/${nome}");
+      return (response.data as List).map((c) => Produto.fromJson(c)).toList();
+    } on DioError catch (e) {
+      print(e.message);
+    }
+    return null;
+  }
+
   Future<List<Produto>> getAll() async {
     try {
       print("carregando produtos");

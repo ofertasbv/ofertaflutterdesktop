@@ -5,6 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:nosso/src/core/controller/loja_controller.dart';
 import 'package:nosso/src/paginas/loja/loja_create_page.dart';
 import 'package:nosso/src/paginas/loja/loja_list.dart';
+import 'package:nosso/src/paginas/loja/loja_table.dart';
 
 class LojaPage extends StatelessWidget {
   var lojaController = GetIt.I.get<LojaController>();
@@ -37,7 +38,7 @@ class LojaPage extends StatelessWidget {
           SizedBox(width: 20),
         ],
       ),
-      body: LojaList(),
+      body: LojaTable(),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[

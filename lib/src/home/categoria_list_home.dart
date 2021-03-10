@@ -97,22 +97,22 @@ class _CategoriaListHomeState extends State<CategoriaListHome>
 
         return GestureDetector(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 2),
+            padding: EdgeInsets.symmetric(horizontal: 10),
             child: Card(
               shape: RoundedRectangleBorder(
                 borderRadius: new BorderRadius.circular(10),
                 side: BorderSide(color: Colors.grey[100], width: 1),
               ),
               child: AnimatedContainer(
-                width: 90,
-                height: 150,
+                width: 200,
+                height: 300,
                 alignment: Alignment.center,
                 duration: Duration(seconds: 1),
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      Colors.grey[100].withOpacity(0.1),
-                      Colors.grey[300].withOpacity(0.5),
+                      Colors.grey[300].withOpacity(0.1),
+                      Colors.grey[400].withOpacity(0.5),
                     ],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
@@ -134,11 +134,11 @@ class _CategoriaListHomeState extends State<CategoriaListHome>
                           color: Colors.black,
                           width: 1,
                         ),
-                        borderRadius: BorderRadius.circular(35),
+                        borderRadius: BorderRadius.circular(50),
                       ),
                       child: CircleAvatar(
                         backgroundColor: Colors.grey[100],
-                        radius: 30,
+                        radius: 50,
                         backgroundImage: NetworkImage(
                           "${categoriaController.arquivo + c.foto}",
                         ),

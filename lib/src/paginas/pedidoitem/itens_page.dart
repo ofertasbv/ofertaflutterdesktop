@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -17,6 +19,16 @@ class ItemPage extends StatefulWidget {
 class _ItemPageState extends State<ItemPage> {
   var pedidoItemController = GetIt.I.get<PedidoItemController>();
   var formatMoeda = new NumberFormat("#,##0.00", "pt_BR");
+
+  void initState() {
+    super.initState();
+    Timer(Duration(seconds: 2), () {
+      setState(() {
+        pedidoItemController.calculateTotal();
+        pedidoItemController.carrinhoItem.total;
+      });
+    });
+  }
 
   showToast(String cardTitle) {
     Fluttertoast.showToast(
@@ -80,13 +92,16 @@ class _ItemPageState extends State<ItemPage> {
                   color: Colors.black,
                 ),
               ),
-              subtitle: Text(
-                "R\$ ${formatMoeda.format(pedidoItemController.total)}",
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16,
-                  color: Colors.black,
-                ),
+              subtitle: Observer(
+                builder: (context) {
+                  return Text(
+                      "R\$ ${formatMoeda.format(pedidoItemController.total)}",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 16,
+                        color: Colors.black,
+                      ));
+                },
               ),
               trailing: Text(
                 "No boleto ou dinheiro",

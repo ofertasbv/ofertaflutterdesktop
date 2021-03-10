@@ -59,10 +59,13 @@ dependencies:
   mask_text_input_formatter: ^1.1.0
   intl:
 #  brasil_fields: ^0.4.0
-  google_fonts: ^1.1.1
 
   cupertino_icons: ^1.0.0
   flutter_launcher_icons: "^0.8.0"
+  flutter_feather_icons:
+  google_fonts:
+
+  bitsdojo_window: ^0.0.9
 
 dev_dependencies:
   flutter_test:

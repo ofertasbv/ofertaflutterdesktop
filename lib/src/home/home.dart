@@ -124,40 +124,44 @@ class _HomePageState extends State<HomePage>
             ],
           ),
           body: Center(child: lista[elementIndex]),
-          bottomNavigationBar: BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            items: const <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home_outlined),
-                title: Text('home'),
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.list_alt_outlined),
-                title: Text('categorias'),
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.local_convenience_store_outlined),
-                title: Text('lojas'),
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.add_alert_outlined),
-                title: Text('ofertas'),
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.account_circle_outlined),
-                title: Text('conta'),
-              ),
-            ],
-            currentIndex: elementIndex,
-            onTap: changeIndex,
-            elevation: 4,
-          ),
+          // bottomNavigationBar: buildBottomNavigationBar(),
 
 /* ======================= Menu lateral ======================= */
           drawer: DrawerList(),
 /* ======================= Botão Flutuante ======================= */
         ),
       ),
+    );
+  }
+
+  BottomNavigationBar buildBottomNavigationBar() {
+    return BottomNavigationBar(
+      type: BottomNavigationBarType.fixed,
+      items: const <BottomNavigationBarItem>[
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home_outlined),
+          title: Text('home'),
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.list_alt_outlined),
+          title: Text('categorias'),
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.local_convenience_store_outlined),
+          title: Text('lojas'),
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.add_alert_outlined),
+          title: Text('ofertas'),
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.account_circle_outlined),
+          title: Text('conta'),
+        ),
+      ],
+      currentIndex: elementIndex,
+      onTap: changeIndex,
+      elevation: 4,
     );
   }
 

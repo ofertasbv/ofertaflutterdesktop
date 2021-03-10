@@ -6,6 +6,7 @@ import 'package:nosso/src/core/controller/vendedor_controller.dart';
 import 'package:nosso/src/paginas/cliente/cliente_list.dart';
 import 'package:nosso/src/paginas/vendedor/vendedor_create_page.dart';
 import 'package:nosso/src/paginas/vendedor/vendedor_list.dart';
+import 'package:nosso/src/paginas/vendedor/vendedor_table.dart';
 
 class VendedorPage extends StatelessWidget {
   var vendedorController = GetIt.I.get<VendedorController>();
@@ -38,7 +39,7 @@ class VendedorPage extends StatelessWidget {
           SizedBox(width: 20),
         ],
       ),
-      body: VendedorList(),
+      body: VendedorTable(),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
