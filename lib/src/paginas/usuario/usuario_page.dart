@@ -13,6 +13,7 @@ class UsuarioPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        titleSpacing: 50,
         title: Text("Usuários"),
         actions: <Widget>[
           Observer(
@@ -34,7 +35,7 @@ class UsuarioPage extends StatelessWidget {
               );
             },
           ),
-          SizedBox(width: 20),
+          SizedBox(width: 100),
         ],
       ),
       body: UsuarioList(),

@@ -13,6 +13,7 @@ class CaixaPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        titleSpacing: 50,
         title: Text("Caixas"),
         actions: <Widget>[
           Observer(
@@ -34,10 +35,13 @@ class CaixaPage extends StatelessWidget {
               );
             },
           ),
-          SizedBox(width: 20),
+          SizedBox(width: 100),
         ],
       ),
-      body: CaixaList(),
+      body: Container(
+        padding: EdgeInsets.only(left: 100, right: 100, top: 10),
+        child: CaixaList(),
+      ),
       floatingActionButton: FloatingActionButton(
         elevation: 10,
         child: Icon(Icons.add),

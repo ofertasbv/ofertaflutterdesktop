@@ -79,6 +79,7 @@ class _ProdutoDetalhesTabState extends State<ProdutoDetalhesTab>
       child: Scaffold(
         key: GlobalScaffold.instance.scaffkey,
         appBar: AppBar(
+          titleSpacing: 50,
           title: p.nome == null ? Text("Detalhes do produto") : Text(p.nome),
           actions: <Widget>[
             CircleAvatar(
@@ -144,7 +145,7 @@ class _ProdutoDetalhesTabState extends State<ProdutoDetalhesTab>
                 );
               },
             ),
-            SizedBox(width: 10),
+            SizedBox(width: 100),
           ],
           bottom: TabBar(
             indicatorPadding: EdgeInsets.only(right: 6, left: 6),
@@ -159,12 +160,15 @@ class _ProdutoDetalhesTabState extends State<ProdutoDetalhesTab>
             ],
           ),
         ),
-        body: TabBarView(
-          physics: NeverScrollableScrollPhysics(),
-          children: <Widget>[
-            ProdutoDetalhesView(p),
-            ProdutoDetalhesInfo(p),
-          ],
+        body: Container(
+          padding: EdgeInsets.only(left: 100, right: 100, top: 10),
+          child: TabBarView(
+            physics: NeverScrollableScrollPhysics(),
+            children: <Widget>[
+              ProdutoDetalhesView(p),
+              ProdutoDetalhesInfo(p),
+            ],
+          ),
         ),
         bottomNavigationBar: buildBottomNavigationBar(context),
       ),
@@ -173,18 +177,20 @@ class _ProdutoDetalhesTabState extends State<ProdutoDetalhesTab>
 
   buildBottomNavigationBar(BuildContext context) {
     return Container(
+      padding: EdgeInsets.only(left: 100, right: 100, top: 10),
       color: Colors.grey[100],
       width: MediaQuery.of(context).size.width,
       height: 60,
       child: Container(
+        color: Colors.grey[200],
         padding: EdgeInsets.all(5),
         child: Row(
           mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Flexible(
               fit: FlexFit.tight,
-              flex: 2,
+              flex: 1,
               child: FlatButton.icon(
                 icon: Icon(Icons.list_alt),
                 shape: RoundedRectangleBorder(
@@ -213,7 +219,8 @@ class _ProdutoDetalhesTabState extends State<ProdutoDetalhesTab>
             ),
             SizedBox(width: 10),
             Flexible(
-              flex: 2,
+              fit: FlexFit.tight,
+              flex: 1,
               child: FlatButton.icon(
                 icon: Icon(Icons.shopping_basket),
                 shape: RoundedRectangleBorder(

@@ -4,8 +4,8 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:nosso/src/core/controller/favorito_controller.dart';
 import 'package:nosso/src/paginas/favorito/favorito_list.dart';
+import 'package:nosso/src/paginas/favorito/favorito_table.dart';
 import 'package:nosso/src/paginas/marca/marca_create_page.dart';
-import 'package:nosso/src/paginas/marca/marca_list.dart';
 
 class FavoritoPage extends StatelessWidget {
   var favoritoController = GetIt.I.get<FavoritoController>();
@@ -14,6 +14,7 @@ class FavoritoPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        titleSpacing: 50,
         title: Text("Favoritos"),
         actions: <Widget>[
           Observer(
@@ -35,10 +36,13 @@ class FavoritoPage extends StatelessWidget {
               );
             },
           ),
-          SizedBox(width: 20),
+          SizedBox(width: 100),
         ],
       ),
-      body: FavoritoList(),
+      body: Container(
+        padding: EdgeInsets.only(left: 100, right: 100, top: 10),
+        child: FavoritoTable(),
+      ),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[

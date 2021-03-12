@@ -63,7 +63,7 @@ ThemeData getTheme(BuildContext context) {
       actionTextColor: Colors.black,
       backgroundColor: Colors.yellow[900],
     ),
-    scaffoldBackgroundColor: Colors.grey[200],
+    scaffoldBackgroundColor: Colors.grey[100],
     bottomSheetTheme: BottomSheetThemeData(
       modalElevation: 1,
       backgroundColor: Colors.yellow[900],

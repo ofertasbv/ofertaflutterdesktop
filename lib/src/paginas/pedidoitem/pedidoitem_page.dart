@@ -5,6 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:nosso/src/core/controller/pedidoItem_controller.dart';
 import 'package:nosso/src/paginas/pdv/caixa_pdv_page.dart';
 import 'package:nosso/src/paginas/pedidoitem/pedidoitem_list.dart';
+import 'package:nosso/src/paginas/pedidoitem/pedidoitem_table.dart';
 
 class PedidoItemPage extends StatelessWidget {
   var pedidoItemController = GetIt.I.get<PedidoItemController>();
@@ -13,6 +14,7 @@ class PedidoItemPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        titleSpacing: 50,
         title: Text("Itens pedido"),
         actions: <Widget>[
           Observer(
@@ -34,10 +36,13 @@ class PedidoItemPage extends StatelessWidget {
               );
             },
           ),
-          SizedBox(width: 20),
+          SizedBox(width: 100),
         ],
       ),
-      body: PedidoItemList(),
+      body: Container(
+        padding: EdgeInsets.only(left: 100, right: 100, top: 10),
+        child: PedidoItemList(),
+      ),
       floatingActionButton: FloatingActionButton(
         elevation: 10,
         child: Icon(Icons.add),

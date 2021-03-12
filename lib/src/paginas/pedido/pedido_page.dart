@@ -5,7 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:nosso/src/core/controller/pedido_controller.dart';
 import 'package:nosso/src/paginas/pedido/pedido_create_page.dart';
 import 'package:nosso/src/paginas/pedido/pedido_list.dart';
-import 'package:nosso/src/paginas/permissao/permissao_list.dart';
+import 'package:nosso/src/paginas/pedido/pedido_table.dart';
 
 class PedidoPage extends StatelessWidget {
   var pedidoController = GetIt.I.get<PedidoController>();
@@ -14,6 +14,7 @@ class PedidoPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        titleSpacing: 50,
         title: Text("Pedidos"),
         actions: <Widget>[
           Observer(
@@ -35,10 +36,13 @@ class PedidoPage extends StatelessWidget {
               );
             },
           ),
-          SizedBox(width: 20),
+          SizedBox(width: 100),
         ],
       ),
-      body: PedidoList(),
+      body: Container(
+        padding: EdgeInsets.only(left: 100, right: 100, top: 10),
+        child: PedidoTable(),
+      ),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[

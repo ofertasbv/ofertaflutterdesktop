@@ -108,7 +108,7 @@ class _PedidoItensListState extends State<PedidoItensList> {
   }
 
   ListView builderList(List<PedidoItem> itens) {
-    double containerWidth = 200;
+    double containerWidth = 300;
     double containerHeight = 20;
 
     return ListView.builder(
@@ -125,8 +125,8 @@ class _PedidoItensListState extends State<PedidoItensList> {
                 padding: EdgeInsets.symmetric(vertical: 2),
                 child: Card(
                   child: Container(
-                    color: Colors.grey[100],
-                    padding: EdgeInsets.all(5),
+                    color: Colors.grey[200],
+                    padding: EdgeInsets.all(10),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -228,15 +228,15 @@ class _PedidoItensListState extends State<PedidoItensList> {
                                     ),
                                   ),
                                   Container(
-                                    width: 110,
+                                    width: 200,
                                     height: 30,
                                     decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: Colors.grey[200],
+                                      borderRadius: BorderRadius.circular(0),
+                                      color: Colors.grey[300],
                                     ),
                                     child: Row(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
+                                          MainAxisAlignment.spaceAround,
                                       crossAxisAlignment:
                                           CrossAxisAlignment.stretch,
                                       children: <Widget>[

@@ -52,6 +52,7 @@ class CarrinhoItem extends ChangeNotifier {
   }
 
   incremento(PedidoItem item) {
+    item.quantidade;
     if (item.quantidade < 10) {
       item.quantidade++;
       calculateTotal();

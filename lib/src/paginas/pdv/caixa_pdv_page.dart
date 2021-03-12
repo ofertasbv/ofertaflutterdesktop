@@ -142,6 +142,7 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
         print("Valor total: ${pedidoItem.valorTotal}");
         print("Valor total: ${valorTotalController.text}");
         print("Descrição: ${p.descricao}");
+        adicionaItem(pedidoItem);
       });
     }
   }
@@ -199,6 +200,7 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
     return Scaffold(
       key: GlobalScaffold.instance.scaffkey,
       appBar: AppBar(
+        titleSpacing: 50,
         title: Text("PDV2020"),
         actions: <Widget>[
           Observer(
@@ -250,23 +252,29 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
               barcodeScanning();
             },
           ),
-          SizedBox(width: 5),
+          SizedBox(width: 100),
         ],
       ),
-      body: Observer(
-        builder: (context) {
-          if (pedidoItemController.dioError == null) {
-            return buildForm(dateFormat, context);
-          } else {
-            print("Erro: ${pedidoItemController.mensagem}");
-            return buildForm(dateFormat, context);
-          }
-        },
+      body: Container(
+        padding: EdgeInsets.only(left: 100, right: 100, top: 10),
+        child: Container(
+          color: Colors.grey[300],
+          child: Observer(
+            builder: (context) {
+              if (pedidoItemController.dioError == null) {
+                return buildForm(dateFormat, context);
+              } else {
+                print("Erro: ${pedidoItemController.mensagem}");
+                return buildForm(dateFormat, context);
+              }
+            },
+          ),
+        ),
       ),
     );
   }
 
-  Form buildForm(DateFormat dateFormat, BuildContext context) {
+  buildForm(DateFormat dateFormat, BuildContext context) {
     return Form(
       key: controller.formKey,
       child: ListView(
@@ -326,6 +334,20 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
                   maxLength: 20,
                 ),
                 SizedBox(height: 5),
+                RaisedButton.icon(
+                  elevation: 0.0,
+                  icon: Icon(Icons.photo_camera_outlined),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(30),
+                    side: BorderSide(color: Colors.transparent),
+                  ),
+                  label: Text("Scanner"),
+                  onPressed: () {
+                    setState(() {
+                      buscarByCodigoDeBarra(codigoBarraController.text);
+                    });
+                  },
+                ),
                 Text(
                   "QUANTIDADE",
                   style: TextStyle(
@@ -470,6 +492,7 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
               ],
             ),
           ),
+          builderConteudoList(),
           Container(
             padding: EdgeInsets.all(15),
             child: RaisedButton.icon(

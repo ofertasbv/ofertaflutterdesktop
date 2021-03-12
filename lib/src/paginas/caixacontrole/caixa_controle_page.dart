@@ -15,6 +15,7 @@ class CaixaControlePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        titleSpacing: 50,
         title: Text("Controle de caixa"),
         actions: <Widget>[
           SizedBox(width: 2),
@@ -34,102 +35,105 @@ class CaixaControlePage extends StatelessWidget {
               },
             ),
           ),
-          SizedBox(width: 10),
+          SizedBox(width: 100),
         ],
       ),
       body: Container(
-        child: Column(
-          children: [
-            Container(
-              padding: EdgeInsets.all(15),
-              child: Container(
-                height: 150,
-                decoration: new BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      Theme.of(context).primaryColor,
-                      Theme.of(context).accentColor
-                    ],
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      offset: Offset(0, 21),
-                      blurRadius: 54,
-                      color: Colors.black.withOpacity(0.05),
-                    )
-                  ],
-                  border: Border.all(
-                    color: Colors.transparent,
-                    width: 1,
-                  ),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Column(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.all(15),
-                      child: Row(
-                        children: [
-                          Text(
-                            "CONTROLE DE CAIXA - OFERTAS",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontSize: 16,
-                            ),
-                          ),
-                          Icon(Icons.dashboard_outlined),
-                        ],
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    Container(
-                      padding: EdgeInsets.all(15),
-                      child: Row(
-                        children: [
-                          Text(
-                            "${dateFormat.format(DateTime.now())}",
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Icon(Icons.calculate_outlined),
-                        ],
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                  ],
-                ),
-              ),
-            ),
-            Expanded(
-              child: Container(
+        padding: EdgeInsets.only(left: 100, right: 100, top: 10),
+        child: Container(
+          child: Column(
+            children: [
+              Container(
                 padding: EdgeInsets.all(15),
                 child: Container(
-                  padding: EdgeInsets.all(10),
+                  height: 150,
                   decoration: new BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
-                        Colors.grey[200],
-                        Colors.grey[400],
+                        Theme.of(context).primaryColor,
+                        Theme.of(context).accentColor
                       ],
                     ),
+                    boxShadow: [
+                      BoxShadow(
+                        offset: Offset(0, 21),
+                        blurRadius: 54,
+                        color: Colors.black.withOpacity(0.05),
+                      )
+                    ],
                     border: Border.all(
                       color: Colors.transparent,
                       width: 1,
                     ),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: buildGridViewConfig(context),
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.all(15),
+                        child: Row(
+                          children: [
+                            Text(
+                              "CONTROLE DE CAIXA - OFERTAS",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                                fontSize: 16,
+                              ),
+                            ),
+                            Icon(Icons.dashboard_outlined),
+                          ],
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Container(
+                        padding: EdgeInsets.all(15),
+                        child: Row(
+                          children: [
+                            Text(
+                              "${dateFormat.format(DateTime.now())}",
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Icon(Icons.calculate_outlined),
+                          ],
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+              Expanded(
+                child: Container(
+                  padding: EdgeInsets.all(15),
+                  child: Container(
+                    padding: EdgeInsets.all(10),
+                    decoration: new BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          Colors.grey[200],
+                          Colors.grey[400],
+                        ],
+                      ),
+                      border: Border.all(
+                        color: Colors.transparent,
+                        width: 1,
+                      ),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: buildGridViewConfig(context),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

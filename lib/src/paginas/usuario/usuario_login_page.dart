@@ -11,9 +11,13 @@ class _UsuarioLoginPageState extends State<UsuarioLoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        titleSpacing: 50,
         title: Text("Login"),
       ),
-      body: UsuarioLogin(),
+      body: Container(
+        padding: EdgeInsets.only(left: 500, right: 500, top: 100),
+        child: UsuarioLogin(),
+      ),
     );
   }
 }

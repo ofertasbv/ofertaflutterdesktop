@@ -38,7 +38,6 @@ class _ProdutoTabState extends State<ProdutoTab> {
 
   @override
   void initState() {
-    produtoController.getAll();
     subCategoriaController.getAll();
     super.initState();
   }
@@ -112,7 +111,7 @@ class _ProdutoTabState extends State<ProdutoTab> {
                   Icons.refresh,
                 ),
                 onPressed: () {
-                  produtoController.getAll();
+                  produtoController.getFilter(filter);
                 },
               ),
             ),
@@ -125,19 +124,9 @@ class _ProdutoTabState extends State<ProdutoTab> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Container(
-                padding: EdgeInsets.only(left: 100, right: 100, top: 1),
-                child: Container(
-                  height: 80,
-                  width: double.infinity,
-                  color: Colors.transparent,
-                  padding: EdgeInsets.all(2),
-                  child: builderConteudoListSubCategoria(),
-                ),
-              ),
               Expanded(
                 child: Container(
-                  padding: EdgeInsets.only(left: 100, right: 100),
+                  padding: EdgeInsets.only(left: 100, right: 100, top: 20),
                   child: Center(child: lista[elementIndex]),
                 ),
               ),
@@ -320,7 +309,7 @@ class _ProdutoTabState extends State<ProdutoTab> {
                   color: Colors.yellow[900],
                   elevation: 0,
                   onPressed: () {
-                    produtoController.getFilter(filter, size, page);
+                    produtoController.getFilter(filter);
                     Navigator.of(context).pop();
                   },
                 ),

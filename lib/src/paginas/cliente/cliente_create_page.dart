@@ -103,18 +103,22 @@ class _ClienteCreatePageState extends State<ClienteCreatePage>
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
+        titleSpacing: 50,
         title: p.nome == null ? Text("Cadastro de cliente") : Text(p.nome),
       ),
-      body: Observer(
-        builder: (context) {
-          if (clienteController.dioError == null) {
-            return buildListViewForm(context);
-          } else {
-            print("Erro: ${clienteController.mensagem}");
-            showToast("${clienteController.mensagem}");
-            return buildListViewForm(context);
-          }
-        },
+      body: Container(
+        padding: EdgeInsets.only(left: 100, right: 100, top: 10),
+        child: Observer(
+          builder: (context) {
+            if (clienteController.dioError == null) {
+              return buildListViewForm(context);
+            } else {
+              print("Erro: ${clienteController.mensagem}");
+              showToast("${clienteController.mensagem}");
+              return buildListViewForm(context);
+            }
+          },
+        ),
       ),
     );
   }

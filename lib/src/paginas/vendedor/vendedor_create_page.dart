@@ -104,18 +104,22 @@ class _VendedorCreatePageState extends State<VendedorCreatePage>
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
+        titleSpacing: 50,
         title: p.nome == null ? Text("Cadastro de vendedor") : Text(p.nome),
       ),
-      body: Observer(
-        builder: (context) {
-          if (vendedorController.dioError == null) {
-            return buildListViewForm(context);
-          } else {
-            print("Erro: ${vendedorController.mensagem}");
-            showToast("${vendedorController.mensagem}");
-            return buildListViewForm(context);
-          }
-        },
+      body: Container(
+        padding: EdgeInsets.only(left: 100, right: 100, top: 10),
+        child: Observer(
+          builder: (context) {
+            if (vendedorController.dioError == null) {
+              return buildListViewForm(context);
+            } else {
+              print("Erro: ${vendedorController.mensagem}");
+              showToast("${vendedorController.mensagem}");
+              return buildListViewForm(context);
+            }
+          },
+        ),
       ),
     );
   }

@@ -68,11 +68,13 @@ class ProdutoRepository {
     return null;
   }
 
-  Future<List<Produto>> getFilter(
-      ProdutoFilter filter, int size, int page) async {
+  Future<List<Produto>> getFilter(ProdutoFilter filter) async {
     try {
       print("carregando produtos filtrados");
-      var response = await dio.client.get("/produtos");
+      var response = await dio.client.get("/produtos/filter", queryParameters: {
+        "nomeProduto": filter.nomeProduto,
+        "subCategoria": filter.subCategoria
+      });
       return (response.data as List).map((c) => Produto.fromJson(c)).toList();
     } on DioError catch (e) {
       print(e.message);

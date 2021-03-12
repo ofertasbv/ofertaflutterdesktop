@@ -28,12 +28,12 @@ class _ProdutoListHomeState extends State<ProdutoListHome>
 
   @override
   void initState() {
-    produtoController.getFilter(filter, size, page);
+    produtoController.getFilter(filter);
     super.initState();
   }
 
   Future<void> onRefresh() {
-    produtoController.getFilter(filter, size, page);
+    produtoController.getFilter(filter);
   }
 
   bool isLoading = true;

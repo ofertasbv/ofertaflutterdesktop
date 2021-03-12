@@ -6,6 +6,7 @@ import 'package:nosso/src/core/controller/cartao_controller.dart';
 import 'package:nosso/src/paginas/cartao/cartao_create_page.dart';
 import 'package:nosso/src/paginas/pagamento/pagamento_create_page.dart';
 import 'package:nosso/src/paginas/pagamento/pagamento_list.dart';
+import 'package:nosso/src/paginas/pagamento/pagamento_table.dart';
 
 class PagamentoPage extends StatelessWidget {
   var cartaoController = GetIt.I.get<CartaoController>();
@@ -14,6 +15,7 @@ class PagamentoPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        titleSpacing: 50,
         title: Text("Pagamentos"),
         actions: <Widget>[
           Observer(
@@ -35,10 +37,13 @@ class PagamentoPage extends StatelessWidget {
               );
             },
           ),
-          SizedBox(width: 20),
+          SizedBox(width: 100),
         ],
       ),
-      body: PagamentoList(),
+      body: Container(
+        padding: EdgeInsets.only(left: 100, right: 100, top: 10),
+        child: PagamentoTable(),
+      ),
       floatingActionButton: FloatingActionButton(
         elevation: 10,
         child: Icon(Icons.add),

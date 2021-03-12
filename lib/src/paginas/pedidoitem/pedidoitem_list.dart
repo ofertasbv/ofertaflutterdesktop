@@ -17,12 +17,12 @@ class _PedidoItemListState extends State<PedidoItemList>
 
   @override
   void initState() {
-    pedidoItemController.getAll();
+    pedidoItemController.pedidosItens();
     super.initState();
   }
 
   Future<void> onRefresh() {
-    return pedidoItemController.getAll();
+    pedidoItemController.pedidosItens();
   }
 
   @override
@@ -58,13 +58,17 @@ class _PedidoItemListState extends State<PedidoItemList>
         PedidoItem c = itens[index];
 
         return Container(
+          color: Colors.grey[200],
           child: ListTile(
             isThreeLine: true,
             leading: Container(
               padding: EdgeInsets.all(1),
               decoration: new BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [Theme.of(context).primaryColor, Theme.of(context).primaryColor],
+                  colors: [
+                    Theme.of(context).primaryColor,
+                    Theme.of(context).primaryColor
+                  ],
                 ),
                 border: Border.all(
                   color: Colors.black,

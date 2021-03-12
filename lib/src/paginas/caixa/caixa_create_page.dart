@@ -90,6 +90,7 @@ class _CaixaCreatePageState extends State<CaixaCreatePage>
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
+        titleSpacing: 50,
         title: Text("Caixa cadastro"),
         actions: <Widget>[
           SizedBox(width: 20),
@@ -101,19 +102,23 @@ class _CaixaCreatePageState extends State<CaixaCreatePage>
             onPressed: () {
               showSearch(context: context, delegate: ProdutoSearchDelegate());
             },
-          )
+          ),
+          SizedBox(width: 100),
         ],
       ),
-      body: Observer(
-        builder: (context) {
-          if (caixaController.dioError == null) {
-            return buildListViewForm(context);
-          } else {
-            print("Erro: ${caixaController.mensagem}");
-            showToast("${caixaController.mensagem}");
-            return buildListViewForm(context);
-          }
-        },
+      body: Container(
+        padding: EdgeInsets.only(left: 100, right: 100, top: 10),
+        child: Observer(
+          builder: (context) {
+            if (caixaController.dioError == null) {
+              return buildListViewForm(context);
+            } else {
+              print("Erro: ${caixaController.mensagem}");
+              showToast("${caixaController.mensagem}");
+              return buildListViewForm(context);
+            }
+          },
+        ),
       ),
     );
   }

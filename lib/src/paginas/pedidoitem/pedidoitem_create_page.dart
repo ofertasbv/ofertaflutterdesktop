@@ -77,18 +77,22 @@ class _PedidoItemCreatePageState extends State<PedidoItemCreatePage> {
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
-        title: Text("Permissão cadastros"),
+        titleSpacing: 50,
+        title: Text("Pedidos itens cadastros"),
       ),
-      body: Observer(
-        builder: (context) {
-          if (pedidoItemController.dioError == null) {
-            return buildListViewForm(context);
-          } else {
-            print("Erro: ${pedidoItemController.mensagem}");
-            showToast("${pedidoItemController.mensagem}");
-            return buildListViewForm(context);
-          }
-        },
+      body: Container(
+        padding: EdgeInsets.only(left: 100, right: 100, top: 10),
+        child: Observer(
+          builder: (context) {
+            if (pedidoItemController.dioError == null) {
+              return buildListViewForm(context);
+            } else {
+              print("Erro: ${pedidoItemController.mensagem}");
+              showToast("${pedidoItemController.mensagem}");
+              return buildListViewForm(context);
+            }
+          },
+        ),
       ),
     );
   }
@@ -178,7 +182,7 @@ class _PedidoItemCreatePageState extends State<PedidoItemCreatePage> {
     return Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => PermissaoPage(),
+        builder: (context) => PedidoItemCreatePage(),
       ),
     );
   }

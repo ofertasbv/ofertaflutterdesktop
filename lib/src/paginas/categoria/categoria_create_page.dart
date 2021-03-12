@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:core';
 import 'dart:io';
 
@@ -17,6 +16,7 @@ import 'package:nosso/src/paginas/categoria/categoria_page.dart';
 import 'package:nosso/src/util/componentes/image_source_sheet.dart';
 import 'package:nosso/src/util/dialogs/dialogs.dart';
 import 'package:nosso/src/util/upload/upload_response.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
 class CategoriaCreatePage extends StatefulWidget {
   Categoria categoria;
@@ -44,6 +44,19 @@ class _CategoriaCreatePageState extends State<CategoriaCreatePage> {
   _CategoriaCreatePageState({this.c});
 
   var controllerNome = TextEditingController();
+
+  // create some values
+  Color pickerColor = Color(0xff443a49);
+  Color currentColor = Color(0xff443a49);
+
+// ValueChanged<Color> callback
+  void changeColor(Color color) {
+    setState(() {
+      pickerColor = color;
+      c.color = pickerColor.toString();
+      print("Cor selecionada: ${pickerColor.toString()}");
+    });
+  }
 
   @override
   void initState() {
@@ -128,18 +141,22 @@ class _CategoriaCreatePageState extends State<CategoriaCreatePage> {
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
+        titleSpacing: 50,
         title: c.nome == null ? Text("Cadastro de categoria") : Text(c.nome),
       ),
-      body: Observer(
-        builder: (context) {
-          if (categoriaController.dioError == null) {
-            return buildListViewForm(context);
-          } else {
-            print("Erro: ${categoriaController.mensagem}");
-            showToast("${categoriaController.mensagem}");
-            return buildListViewForm(context);
-          }
-        },
+      body: Container(
+        padding: EdgeInsets.only(left: 100, right: 100, top: 10),
+        child: Observer(
+          builder: (context) {
+            if (categoriaController.dioError == null) {
+              return buildListViewForm(context);
+            } else {
+              print("Erro: ${categoriaController.mensagem}");
+              showToast("${categoriaController.mensagem}");
+              return buildListViewForm(context);
+            }
+          },
+        ),
       ),
     );
   }
@@ -303,6 +320,12 @@ class _CategoriaCreatePageState extends State<CategoriaCreatePage> {
               ],
             ),
           ),
+        ),
+        ColorPicker(
+          pickerColor: pickerColor,
+          onColorChanged: changeColor,
+          showLabel: true,
+          pickerAreaHeightPercent: 0.8,
         ),
         ExpansionTile(
           title: Text("Descrição"),
