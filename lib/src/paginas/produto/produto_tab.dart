@@ -28,8 +28,8 @@ class _ProdutoTabState extends State<ProdutoTab> {
   var produtoController = GetIt.I.get<ProdutoController>();
   var subCategoriaController = GetIt.I.get<SubCategoriaController>();
 
-  SubCategoria s;
   ProdutoFilter filter;
+  SubCategoria s;
   int size = 0;
   int page = 0;
   bool destaque = false;
@@ -60,7 +60,12 @@ class _ProdutoTabState extends State<ProdutoTab> {
 
                 if (produtoController.produtos == null) {
                   return Center(
-                    child: Icon(Icons.warning_amber_outlined),
+                    child: CircleAvatar(
+                      backgroundColor:
+                      Theme.of(context).accentColor.withOpacity(0.4),
+                      foregroundColor: Colors.black,
+                      child: Icon(Icons.warning_amber_outlined),
+                    ),
                   );
                 }
 
@@ -99,19 +104,6 @@ class _ProdutoTabState extends State<ProdutoTab> {
                 onPressed: () {
                   showSearch(
                       context: context, delegate: ProdutoSearchDelegate());
-                },
-              ),
-            ),
-            SizedBox(width: 10),
-            CircleAvatar(
-              backgroundColor: Theme.of(context).accentColor.withOpacity(0.4),
-              foregroundColor: Colors.black,
-              child: IconButton(
-                icon: Icon(
-                  Icons.refresh,
-                ),
-                onPressed: () {
-                  produtoController.getFilter(filter);
                 },
               ),
             ),

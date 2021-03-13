@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get_it/get_it.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:nosso/src/core/controller/arquivo_controller.dart';
 import 'package:nosso/src/core/controller/caixa_controller.dart';
 import 'package:nosso/src/core/controller/caixafluxo_controller.dart';
@@ -80,7 +79,6 @@ void main() async {
       //
       systemNavigationBarDividerColor: Colors.black,
       // ícones da barra inferior
-
       statusBarBrightness: Brightness.dark,
     ),
   );

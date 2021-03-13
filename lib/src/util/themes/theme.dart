@@ -4,9 +4,9 @@ import 'package:google_fonts/google_fonts.dart';
 ThemeData getTheme(BuildContext context) {
   return ThemeData(
     brightness: Brightness.light,
-    primaryColor: Colors.indigo[900],
+    primaryColor: Colors.deepOrangeAccent,
     accentColor: Colors.white,
-    primarySwatch: Colors.indigo,
+    primarySwatch: Colors.purple,
     textTheme: GoogleFonts.sourceSansProTextTheme().copyWith(
       headline1: TextStyle(
         fontSize: 72.0,
@@ -36,7 +36,7 @@ ThemeData getTheme(BuildContext context) {
       height: 50,
       padding: EdgeInsets.all(10),
       alignedDropdown: true,
-      buttonColor: Colors.grey[700],
+      buttonColor: Colors.purple[700],
       shape: RoundedRectangleBorder(
         borderRadius: new BorderRadius.circular(0),
         side: BorderSide(color: Colors.transparent),
@@ -55,9 +55,9 @@ ThemeData getTheme(BuildContext context) {
       isDense: true,
       filled: true,
     ),
-    hintColor: Colors.brown[500],
+    hintColor: Colors.purple[500],
     iconTheme: IconThemeData(
-      color: Colors.indigo[800],
+      color: Colors.purple[800],
     ),
     snackBarTheme: SnackBarThemeData(
       actionTextColor: Colors.black,
@@ -70,9 +70,9 @@ ThemeData getTheme(BuildContext context) {
     ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       elevation: 0,
-      selectedItemColor: Colors.indigo[900],
+      selectedItemColor: Colors.purple[900],
       unselectedItemColor: Colors.black,
-      unselectedLabelStyle: TextStyle(color: Colors.indigo[900]),
+      unselectedLabelStyle: TextStyle(color: Colors.purple[900]),
       backgroundColor: Colors.grey[100],
     ),
   );

@@ -24,8 +24,7 @@ class ProdutoTable extends StatefulWidget {
   _ProdutoTableState createState() => _ProdutoTableState();
 }
 
-class _ProdutoTableState extends State<ProdutoTable>
-    with AutomaticKeepAliveClientMixin<ProdutoTable> {
+class _ProdutoTableState extends State<ProdutoTable> {
   var produtoController = GetIt.I.get<ProdutoController>();
   var promocaoController = GetIt.I.get<PromoCaoController>();
   var subCategoriaController = GetIt.I.get<SubCategoriaController>();
@@ -33,39 +32,62 @@ class _ProdutoTableState extends State<ProdutoTable>
   var lojaController = GetIt.I.get<LojaController>();
   var nomeController = TextEditingController();
 
-  ProdutoFilter filter;
+  ProdutoFilter filter = ProdutoFilter();
   SubCategoria subCategoria;
   Promocao promocao;
   Marca marca;
   Loja loja;
+  Produto produto;
 
   @override
   void initState() {
-    produtoController.getFilter(filter);
+    if (filter == null) {
+      filter = ProdutoFilter();
+      subCategoria = SubCategoria();
+      promocao = Promocao();
+      marca = Marca();
+      loja = Loja();
+      produto = Produto();
+    }
+
     subCategoriaController.getAll();
     lojaController.getAll();
     marcaController.getAll();
     promocaoController.getAll();
-    super.initState();
-  }
 
-  Future<void> onRefresh() {
-    return produtoController.getFilter(filter);
+    produtoController.getAll();
+    super.initState();
   }
 
   bool isLoading = true;
 
-  filterByNome(String nome) {
-    filter = ProdutoFilter();
-    if (nome.trim().isEmpty) {
-      produtoController.getFilter(filter);
-    } else {
-      nome = nomeController.text;
-      filter.nomeProduto = nome;
-      filter.subCategoria = 1;
-      print("nomeProduto: ${filter.nomeProduto}");
-      produtoController.getFilter(filter);
-    }
+  pesquisarFilter() {
+    // filter = ProdutoFilter();
+    // if (filter.nomeProduto == null) {
+    //   filter.nomeProduto = produto.nome;
+      print("pesquisa nomeProduto: ${filter.nomeProduto}");
+    // }
+    // if (filter.subCategoria == null) {
+    //   filter.subCategoria = subCategoria.id;
+      print("pesquisa subCategoria: ${filter.subCategoria}");
+    // }
+    //
+    // if (filter.promocao == null) {
+    //   filter.promocao = promocao.id;
+      print("pesquisa promoção: ${filter.promocao}");
+    // }
+    //
+    // if (filter.marca == null) {
+    //   filter.marca = marca.id;
+      print("pesquisa marca: ${filter.marca}");
+    // }
+    //
+    // if (filter.loja == null) {
+    //   filter.loja = loja.id;
+      print("pesquisa loja: ${filter.loja}");
+    // }
+    print("pesquisa...");
+    produtoController.getFilter(filter);
   }
 
   @override
@@ -77,7 +99,7 @@ class _ProdutoTableState extends State<ProdutoTable>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
-            height: 80,
+            height: 60,
             width: double.infinity,
             color: Colors.grey[100],
             padding: EdgeInsets.all(0),
@@ -91,7 +113,12 @@ class _ProdutoTableState extends State<ProdutoTable>
                   icon: Icon(Icons.clear),
                 ),
               ),
-              onChanged: filterByNome,
+              // onChanged: (nome){
+              //   nomeController.text = nome;
+              //   produto.nome = nomeController.text;
+              //   filter.nomeProduto = produto.nome;
+              //   print("produto filter: ${produto.nome}");
+              // },
             ),
           ),
           Container(
@@ -138,9 +165,19 @@ class _ProdutoTableState extends State<ProdutoTable>
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 RaisedButton.icon(
-                  onPressed: (){},
+                  onPressed: () {
+                    pesquisarFilter();
+                  },
                   icon: Icon(Icons.search),
                   label: Text("Realizar pesquisa"),
+                ),
+
+                RaisedButton.icon(
+                  onPressed: () {
+                    produtoController.getAll();
+                  },
+                  icon: Icon(Icons.refresh),
+                  label: Text("Atualizar pesquisa"),
                 )
               ],
             ),
@@ -177,8 +214,13 @@ class _ProdutoTableState extends State<ProdutoTable>
             items: lojas,
             showSearchBox: true,
             itemAsString: (Loja s) => s.nome,
-            onChanged: (Loja s) {
-              print(s.nome);
+            onChanged: (Loja l) {
+              setState(() {
+                loja = l;
+                filter.loja = loja.id;
+                print("loja nome: ${loja.nome}");
+                print("loja filter: ${filter.id}");
+              });
             },
             searchBoxDecoration: InputDecoration(
               border: OutlineInputBorder(),
@@ -212,7 +254,12 @@ class _ProdutoTableState extends State<ProdutoTable>
             showSearchBox: true,
             itemAsString: (Promocao s) => s.nome,
             onChanged: (Promocao s) {
-              print(s.nome);
+              setState(() {
+                promocao = s;
+                filter.promocao = promocao.id;
+                print("promoção: ${promocao.nome}");
+                print("promoção filter: ${filter.promocao}");
+              });
             },
             searchBoxDecoration: InputDecoration(
               border: OutlineInputBorder(),
@@ -245,8 +292,13 @@ class _ProdutoTableState extends State<ProdutoTable>
             items: marcas,
             showSearchBox: true,
             itemAsString: (Marca s) => s.nome,
-            onChanged: (Marca s) {
-              print(s.nome);
+            onChanged: (Marca m) {
+              setState(() {
+                marca = m;
+                filter.marca = marca.id;
+                print("marca: ${marca.nome}");
+                print("marca filter: ${filter.marca}");
+              });
             },
             searchBoxDecoration: InputDecoration(
               border: OutlineInputBorder(),
@@ -281,7 +333,12 @@ class _ProdutoTableState extends State<ProdutoTable>
             showSearchBox: true,
             itemAsString: (SubCategoria s) => s.nome,
             onChanged: (SubCategoria s) {
-              print(s.nome);
+              setState(() {
+                subCategoria = s;
+                filter.subCategoria = s.id;
+                print("SubCategoria: ${subCategoria.nome}");
+                print("SubCategoria filter: ${filter.subCategoria}");
+              });
             },
             searchBoxDecoration: InputDecoration(
               border: OutlineInputBorder(),
@@ -308,10 +365,7 @@ class _ProdutoTableState extends State<ProdutoTable>
             return CircularProgressor();
           }
 
-          return RefreshIndicator(
-            onRefresh: onRefresh,
-            child: buildTable(produtos),
-          );
+          return buildTable(produtos);
         },
       ),
     );
@@ -324,10 +378,12 @@ class _ProdutoTableState extends State<ProdutoTable>
           rowsPerPage: 8,
           showCheckboxColumn: true,
           sortColumnIndex: 1,
+          sortAscending: true,
+          showFirstLastButtons: true,
           columns: [
-            DataColumn(label: Text("Nome")),
             DataColumn(label: Text("Foto")),
-            DataColumn(label: Text("Descrição")),
+            DataColumn(label: Text("Nome")),
+            DataColumn(label: Text("Promoção")),
             DataColumn(label: Text("Categoria")),
             DataColumn(label: Text("Loja")),
             DataColumn(label: Text("Marca")),
@@ -370,7 +426,6 @@ class DataSource extends DataTableSource {
         }
       },
       cells: [
-        DataCell(Text(p.nome)),
         DataCell(CircleAvatar(
           backgroundColor: Colors.grey[100],
           radius: 20,
@@ -378,7 +433,8 @@ class DataSource extends DataTableSource {
             "${produtoController.arquivo + p.foto}",
           ),
         )),
-        DataCell(Text(p.descricao)),
+        DataCell(Text(p.nome)),
+        DataCell(Text(p.promocao.nome)),
         DataCell(Text(p.subCategoria.nome)),
         DataCell(Text(p.loja.nome)),
         DataCell(Text(p.marca.nome)),
