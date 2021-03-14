@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:nosso/src/api/constants/constant_api.dart';
 import 'package:nosso/src/api/dio/custon_dio.dart';
 import 'package:nosso/src/core/model/promocao.dart';
+import 'package:nosso/src/util/filter/promocao_filter.dart';
 
 class PromocaoRepository {
   CustonDio dio = CustonDio();
@@ -23,6 +24,26 @@ class PromocaoRepository {
     try {
       print("carregando promoções by id");
       var response = await dio.client.get("/promocoes/${id}");
+      return (response.data as List).map((c) => Promocao.fromJson(c)).toList();
+    } on DioError catch (e) {
+      print(e.message);
+    }
+    return null;
+  }
+
+  Future<List<Promocao>> getFilter(PromocaoFilter filter) async {
+    try {
+      print("carregando promocoes filtrados");
+      var response = await dio.client.get(
+        "/promocoes/filter",
+        queryParameters: {
+          "nomePromocao": filter.nomePromocao,
+          "dataInicio": filter.dataInicio,
+          "dataEncerramento": filter.dataEncerramento,
+          "promocaoTipo": filter.promocaoTipo,
+          "loja": filter.loja,
+        },
+      );
       return (response.data as List).map((c) => Promocao.fromJson(c)).toList();
     } on DioError catch (e) {
       print(e.message);

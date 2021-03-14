@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
+import 'package:intl/intl.dart';
 import 'package:nosso/src/core/controller/loja_controller.dart';
 import 'package:nosso/src/core/controller/marca_controller.dart';
 import 'package:nosso/src/core/controller/produto_controller.dart';
@@ -39,6 +40,9 @@ class _ProdutoTableState extends State<ProdutoTable> {
   Loja loja;
   Produto produto;
 
+  var formatMoeda = new NumberFormat("#,##0.00", "pt_BR");
+  RangeValues ragerValores = const RangeValues(00, 100);
+
   @override
   void initState() {
     if (filter == null) {
@@ -62,30 +66,13 @@ class _ProdutoTableState extends State<ProdutoTable> {
   bool isLoading = true;
 
   pesquisarFilter() {
-    // filter = ProdutoFilter();
-    // if (filter.nomeProduto == null) {
-    //   filter.nomeProduto = produto.nome;
-      print("pesquisa nomeProduto: ${filter.nomeProduto}");
-    // }
-    // if (filter.subCategoria == null) {
-    //   filter.subCategoria = subCategoria.id;
-      print("pesquisa subCategoria: ${filter.subCategoria}");
-    // }
-    //
-    // if (filter.promocao == null) {
-    //   filter.promocao = promocao.id;
-      print("pesquisa promoção: ${filter.promocao}");
-    // }
-    //
-    // if (filter.marca == null) {
-    //   filter.marca = marca.id;
-      print("pesquisa marca: ${filter.marca}");
-    // }
-    //
-    // if (filter.loja == null) {
-    //   filter.loja = loja.id;
-      print("pesquisa loja: ${filter.loja}");
-    // }
+    print("pesquisa valor mínimo: ${filter.valorMinimo}");
+    print("pesquisa valor máximo: ${filter.valorMaximo}");
+    print("pesquisa nomeProduto: ${filter.nomeProduto}");
+    print("pesquisa subCategoria: ${filter.subCategoria}");
+    print("pesquisa promoção: ${filter.promocao}");
+    print("pesquisa marca: ${filter.marca}");
+    print("pesquisa loja: ${filter.loja}");
     print("pesquisa...");
     produtoController.getFilter(filter);
   }
@@ -99,7 +86,38 @@ class _ProdutoTableState extends State<ProdutoTable> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
-            height: 60,
+            padding: new EdgeInsets.all(0),
+            color: Colors.grey[200],
+            child: Column(
+              children: <Widget>[
+                RangeSlider(
+                  values: ragerValores,
+                  min: 0,
+                  max: 100,
+                  labels: RangeLabels(
+                    ragerValores.start.round().toString(),
+                    ragerValores.end.round().toString(),
+                  ),
+                  onChanged: (values) {
+                    setState(() {
+                      ragerValores = values;
+                      double valorMinimo = ragerValores.start;
+                      double valorMaximo = ragerValores.end;
+
+                      filter.valorMinimo = double.tryParse(valorMinimo.toStringAsFixed(0));
+                      filter.valorMaximo = double.tryParse(valorMaximo.toStringAsFixed(0));;
+
+                      print("Valor mínimo: ${filter.valorMinimo}");
+                      print("Valor máximo: ${filter.valorMaximo}");
+                    });
+                  },
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 10),
+          Container(
+            height: 50,
             width: double.infinity,
             color: Colors.grey[100],
             padding: EdgeInsets.all(0),
@@ -113,14 +131,14 @@ class _ProdutoTableState extends State<ProdutoTable> {
                   icon: Icon(Icons.clear),
                 ),
               ),
-              // onChanged: (nome){
-              //   nomeController.text = nome;
-              //   produto.nome = nomeController.text;
-              //   filter.nomeProduto = produto.nome;
-              //   print("produto filter: ${produto.nome}");
-              // },
+              onChanged: (nome) {
+                filter.nomeProduto = nomeController.text;
+                print("produto nome: ${nome}");
+                print("produto filter: ${filter.nomeProduto}");
+              },
             ),
           ),
+          SizedBox(height: 10),
           Container(
             width: double.infinity,
             child: Row(
@@ -171,7 +189,6 @@ class _ProdutoTableState extends State<ProdutoTable> {
                   icon: Icon(Icons.search),
                   label: Text("Realizar pesquisa"),
                 ),
-
                 RaisedButton.icon(
                   onPressed: () {
                     produtoController.getAll();

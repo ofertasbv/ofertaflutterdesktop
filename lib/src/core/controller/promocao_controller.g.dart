@@ -153,6 +153,14 @@ mixin _$PromoCaoController on PromoCaoControllerBase, Store {
     return _$getAllAsyncAction.run(() => super.getAll());
   }
 
+  final _$getFilterAsyncAction =
+      AsyncAction('PromoCaoControllerBase.getFilter');
+
+  @override
+  Future<List<Promocao>> getFilter(PromocaoFilter filter) {
+    return _$getFilterAsyncAction.run(() => super.getFilter(filter));
+  }
+
   final _$getAllByNomeAsyncAction =
       AsyncAction('PromoCaoControllerBase.getAllByNome');
 

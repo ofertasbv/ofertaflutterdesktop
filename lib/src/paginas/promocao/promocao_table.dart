@@ -1,12 +1,15 @@
-import 'dart:async';
-
+import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
+import 'package:intl/intl.dart';
 import 'package:nosso/src/core/controller/promocao_controller.dart';
+import 'package:nosso/src/core/model/loja.dart';
 import 'package:nosso/src/core/model/promocao.dart';
+import 'package:nosso/src/core/model/promocaotipo.dart';
 import 'package:nosso/src/paginas/promocao/promocao_create_page.dart';
+import 'package:nosso/src/util/filter/promocao_filter.dart';
 import 'package:nosso/src/util/load/circular_progresso.dart';
 
 class PromocaoTable extends StatefulWidget {
@@ -14,64 +17,175 @@ class PromocaoTable extends StatefulWidget {
   _PromocaoTableState createState() => _PromocaoTableState();
 }
 
-class _PromocaoTableState extends State<PromocaoTable>
-    with AutomaticKeepAliveClientMixin<PromocaoTable> {
+class _PromocaoTableState extends State<PromocaoTable> {
   var promocaoController = GetIt.I.get<PromoCaoController>();
   var nomeController = TextEditingController();
 
+  PromocaoFilter filter = PromocaoFilter();
+  Promocao promocao;
+  PromocaoTipo promocaoTipo;
+  Loja loja;
+
   @override
   void initState() {
+    if (filter == null) {
+      filter = PromocaoFilter();
+      promocao = Promocao();
+      promocaoTipo = PromocaoTipo();
+      loja = Loja();
+    }
+
     promocaoController.getAll();
     super.initState();
   }
 
-  Future<void> onRefresh() {
-    return promocaoController.getAll();
-  }
-
-  bool isLoading = true;
-
-  filterByNome(String nome) {
-    if (nome.trim().isEmpty) {
-      promocaoController.getAll();
-    } else {
-      nome = nomeController.text;
-      promocaoController.getAllByNome(nome);
-    }
+  pesquisarFilter() {
+    print("pesquisa data inicio: ${filter.dataInicio}");
+    print("pesquisa data encerramento: ${filter.dataEncerramento}");
+    print("pesquisa nomePrmoção: ${filter.nomePromocao}");
+    print("pesquisa promocaoTipo: ${filter.promocaoTipo}");
+    print("pesquisa loja: ${filter.loja}");
+    print("pesquisa...");
+    promocaoController.getFilter(filter);
   }
 
   @override
   Widget build(BuildContext context) {
+    var dateFormat = DateFormat('dd/MM/yyyy');
     return Container(
       width: double.infinity,
       height: double.infinity,
+      color: Colors.grey[200],
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          SizedBox(height: 0),
           Container(
-            height: 80,
+            height: 50,
             width: double.infinity,
             color: Colors.grey[100],
-            padding: EdgeInsets.all(5),
-            child: ListTile(
-              subtitle: TextFormField(
-                controller: nomeController,
-                decoration: InputDecoration(
-                  labelText: "busca por promoções",
-                  prefixIcon: Icon(Icons.search_outlined),
-                  suffixIcon: IconButton(
-                    onPressed: () => nomeController.clear(),
-                    icon: Icon(Icons.clear),
-                  ),
+            padding: EdgeInsets.all(0),
+            child: TextFormField(
+              controller: nomeController,
+              decoration: InputDecoration(
+                labelText: "busca por promoções",
+                prefixIcon: Icon(Icons.search_outlined),
+                suffixIcon: IconButton(
+                  onPressed: () => nomeController.clear(),
+                  icon: Icon(Icons.clear),
                 ),
-                onChanged: filterByNome,
               ),
+              onChanged: (nome) {
+                filter.nomePromocao = nomeController.text;
+                print("promoção nome: ${nome}");
+                print("promoção filter: ${filter.nomePromocao}");
+              },
             ),
           ),
+          SizedBox(height: 10),
+          Container(
+            width: double.infinity,
+            height: 50,
+            color: Colors.grey[200],
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  width: 500,
+                  color: Colors.grey[200],
+                  child: DateTimeField(
+                    format: dateFormat,
+                    decoration: InputDecoration(
+                      labelText: "data inicio",
+                      hintText: "99-09-9999",
+                      prefixIcon: Icon(
+                        Icons.calendar_today,
+                        color: Colors.grey,
+                      ),
+                      suffixIcon: Icon(Icons.close),
+                      contentPadding:
+                          EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5.0)),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.purple[900]),
+                        gapPadding: 1,
+                        borderRadius: BorderRadius.circular(5.0),
+                      ),
+                    ),
+                    onShowPicker: (context, currentValue) {
+                      return showDatePicker(
+                        context: context,
+                        firstDate: DateTime(2000),
+                        initialDate: currentValue ?? DateTime.now(),
+                        locale: Locale('pt', 'BR'),
+                        lastDate: DateTime(2030),
+                      );
+                    },
+                  ),
+                ),
+                Container(
+                  width: 500,
+                  color: Colors.grey[200],
+                  child: DateTimeField(
+                    format: dateFormat,
+                    decoration: InputDecoration(
+                      labelText: "data inicio",
+                      hintText: "99-09-9999",
+                      prefixIcon: Icon(
+                        Icons.calendar_today,
+                        color: Colors.grey,
+                      ),
+                      suffixIcon: Icon(Icons.close),
+                      contentPadding:
+                          EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5.0)),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.purple[900]),
+                        gapPadding: 1,
+                        borderRadius: BorderRadius.circular(5.0),
+                      ),
+                    ),
+                    onShowPicker: (context, currentValue) {
+                      return showDatePicker(
+                        context: context,
+                        firstDate: DateTime(2000),
+                        initialDate: currentValue ?? DateTime.now(),
+                        locale: Locale('pt', 'BR'),
+                        lastDate: DateTime(2030),
+                      );
+                    },
+                  ),
+                )
+              ],
+            ),
+          ),
+          SizedBox(height: 10),
+          Container(
+            width: double.infinity,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                RaisedButton.icon(
+                  onPressed: () {
+                    promocaoController.getFilter(filter);
+                  },
+                  icon: Icon(Icons.search),
+                  label: Text("Realizar pesquisa"),
+                ),
+                RaisedButton.icon(
+                  onPressed: () {
+                    promocaoController.getAll();
+                  },
+                  icon: Icon(Icons.refresh),
+                  label: Text("Atualizar pesquisa"),
+                )
+              ],
+            ),
+          ),
+          SizedBox(height: 20),
           Expanded(
             child: Container(
-              color: Colors.transparent,
               child: builderConteudoList(),
             ),
           ),
@@ -94,101 +208,100 @@ class _PromocaoTableState extends State<PromocaoTable>
             return CircularProgressor();
           }
 
-          return RefreshIndicator(
-            onRefresh: onRefresh,
-            child: builderTable(promocoes),
-          );
+          return builderTable(promocoes);
         },
       ),
     );
   }
 
   builderTable(List<Promocao> promocoes) {
-    return DataTable(
-      sortAscending: true,
-      showCheckboxColumn: true,
-      showBottomBorder: true,
-      columnSpacing: 70,
-      columns: [
-        DataColumn(label: Text("Código")),
-        DataColumn(label: Text("Foto")),
-        DataColumn(label: Text("Nome")),
-        DataColumn(label: Text("Tipo")),
-        DataColumn(label: Text("Loja")),
-        DataColumn(label: Text("Editar")),
-        DataColumn(label: Text("Detalhes")),
-        DataColumn(label: Text("Produtos")),
+    return ListView(
+      children: [
+        PaginatedDataTable(
+          rowsPerPage: 8,
+          showCheckboxColumn: true,
+          sortColumnIndex: 1,
+          sortAscending: true,
+          showFirstLastButtons: true,
+          columns: [
+            DataColumn(label: Text("Foto")),
+            DataColumn(label: Text("Nome")),
+            DataColumn(label: Text("Descrição")),
+            DataColumn(label: Text("Loja")),
+            DataColumn(label: Text("Visualizar")),
+            DataColumn(label: Text("Editar")),
+          ],
+          source: DataSource(promocoes, context),
+        ),
       ],
-      rows: promocoes
-          .map(
-            (p) => DataRow(
-              onSelectChanged: (i) {
-                setState(() {
-                  // selecionaItem(p);
-                });
-              },
-              cells: [
-                DataCell(Text("${p.id}")),
-                DataCell(CircleAvatar(
-                  backgroundColor: Colors.grey[100],
-                  radius: 20,
-                  backgroundImage: NetworkImage(
-                    "${promocaoController.arquivo + p.foto}",
-                  ),
-                )),
-                DataCell(Text("${p.nome}")),
-                DataCell(Text("${p.promocaoTipo.descricao}")),
-                DataCell(Text(p.loja.nome)),
-                DataCell(IconButton(
-                  icon: Icon(Icons.edit),
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (BuildContext context) {
-                          return PromocaoCreatePage(
-                            promocao: p,
-                          );
-                        },
-                      ),
-                    );
-                  },
-                )),
-                DataCell(IconButton(
-                  icon: Icon(Icons.search),
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (BuildContext context) {
-                          return PromocaoCreatePage(
-                            promocao: p,
-                          );
-                        },
-                      ),
-                    );
-                  },
-                )),
-                DataCell(IconButton(
-                  icon: Icon(Icons.list),
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (BuildContext context) {
-                          return PromocaoCreatePage(
-                            promocao: p,
-                          );
-                        },
-                      ),
-                    );
-                  },
-                )),
-              ],
-            ),
-          )
-          .toList(),
+    );
+  }
+}
+
+class DataSource extends DataTableSource {
+  var promocaoController = GetIt.I.get<PromoCaoController>();
+  BuildContext context;
+  List<Promocao> promocoes;
+  int selectedCount = 0;
+
+  DataSource(this.promocoes, this.context);
+
+  @override
+  DataRow getRow(int index) {
+    assert(index >= 0);
+    if (index >= promocoes.length) return null;
+    Promocao p = promocoes[index];
+    return DataRow.byIndex(
+      index: index,
+      cells: [
+        DataCell(CircleAvatar(
+          backgroundColor: Colors.grey[100],
+          radius: 20,
+          backgroundImage: NetworkImage(
+            "${promocaoController.arquivo + p.foto}",
+          ),
+        )),
+        DataCell(Text(p.nome)),
+        DataCell(Text(p.descricao)),
+        DataCell(Text(p.loja.nome)),
+        DataCell(IconButton(
+          icon: Icon(Icons.search),
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return PromocaoCreatePage(
+                    promocao: p,
+                  );
+                },
+              ),
+            );
+          },
+        )),
+        DataCell(IconButton(
+          icon: Icon(Icons.edit),
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return PromocaoCreatePage(
+                    promocao: p,
+                  );
+                },
+              ),
+            );
+          },
+        )),
+      ],
     );
   }
 
   @override
-  // TODO: implement wantKeepAlive
-  bool get wantKeepAlive => true;
+  int get rowCount => promocoes.length;
+
+  @override
+  bool get isRowCountApproximate => false;
+
+  @override
+  int get selectedRowCount => selectedCount;
 }

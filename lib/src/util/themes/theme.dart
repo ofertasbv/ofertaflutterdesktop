@@ -4,9 +4,9 @@ import 'package:google_fonts/google_fonts.dart';
 ThemeData getTheme(BuildContext context) {
   return ThemeData(
     brightness: Brightness.light,
-    primaryColor: Colors.deepOrangeAccent,
-    accentColor: Colors.white,
-    primarySwatch: Colors.purple,
+    primaryColor: Colors.grey[300],
+    accentColor: Colors.purple,
+    primarySwatch: Colors.deepOrange,
     textTheme: GoogleFonts.sourceSansProTextTheme().copyWith(
       headline1: TextStyle(
         fontSize: 72.0,
@@ -43,14 +43,14 @@ ThemeData getTheme(BuildContext context) {
       ),
     ),
     inputDecorationTheme: InputDecorationTheme(
-      labelStyle: TextStyle(color: Colors.black),
-      prefixStyle: TextStyle(color: Colors.green[900]),
-      hintStyle: TextStyle(color: Colors.yellow[900]),
+      labelStyle: TextStyle(color: Colors.purple),
+      prefixStyle: TextStyle(color: Colors.purple),
+      hintStyle: TextStyle(color: Colors.deepOrange),
       fillColor: Colors.grey[200],
       alignLabelWithHint: true,
       focusColor: Colors.red[900],
       hoverColor: Colors.grey[100],
-      suffixStyle: TextStyle(color: Colors.green),
+      suffixStyle: TextStyle(color: Colors.deepOrange),
       errorStyle: TextStyle(color: Colors.red),
       isDense: true,
       filled: true,

@@ -5,6 +5,7 @@ import 'package:mobx/mobx.dart';
 import 'package:nosso/src/api/constants/constant_api.dart';
 import 'package:nosso/src/core/model/promocao.dart';
 import 'package:nosso/src/core/repository/promocao_repository.dart';
+import 'package:nosso/src/util/filter/promocao_filter.dart';
 
 part 'promocao_controller.g.dart';
 
@@ -48,6 +49,16 @@ abstract class PromoCaoControllerBase with Store {
   Future<List<Promocao>> getAll() async {
     try {
       promocoes = await promocaoRepository.getAll();
+      return promocoes;
+    } catch (e) {
+      error = e;
+    }
+  }
+
+  @action
+  Future<List<Promocao>> getFilter(PromocaoFilter filter) async {
+    try {
+      promocoes = await promocaoRepository.getFilter(filter);
       return promocoes;
     } catch (e) {
       error = e;

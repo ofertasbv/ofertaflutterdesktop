@@ -75,6 +75,8 @@ class ProdutoRepository {
         "/produtos/filter",
         queryParameters: {
           "nomeProduto": filter.nomeProduto,
+          "valorMinimo": filter.valorMinimo,
+          "valorMaximo": filter.valorMaximo,
           "subCategoria": filter.subCategoria,
           "loja": filter.loja,
           "marca": filter.marca,

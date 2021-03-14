@@ -142,18 +142,22 @@ class _PromocaoCreatePageState extends State<PromocaoCreatePage>
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
+        titleSpacing: 50,
         title: p.nome == null ? Text("Cadastro de promoção") : Text(p.nome),
       ),
-      body: Observer(
-        builder: (context) {
-          if (promocaoController.dioError == null) {
-            return buildListViewForm(context);
-          } else {
-            print("Erro: ${promocaoController.mensagem}");
-            showToast("${promocaoController.mensagem}");
-            return buildListViewForm(context);
-          }
-        },
+      body: Container(
+        padding: EdgeInsets.only(left: 100, right: 100, top: 10),
+        child: Observer(
+          builder: (context) {
+            if (promocaoController.dioError == null) {
+              return buildListViewForm(context);
+            } else {
+              print("Erro: ${promocaoController.mensagem}");
+              showToast("${promocaoController.mensagem}");
+              return buildListViewForm(context);
+            }
+          },
+        ),
       ),
     );
   }

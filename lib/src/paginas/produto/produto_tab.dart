@@ -112,7 +112,7 @@ class _ProdutoTabState extends State<ProdutoTab> {
         ),
         body: Container(
           height: MediaQuery.of(context).size.height,
-          color: Colors.transparent,
+          color: Colors.grey[300],
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
