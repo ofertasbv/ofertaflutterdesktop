@@ -20,14 +20,14 @@ ThemeData getTheme(BuildContext context) {
       headline1: TextStyle(color: Colors.cyan),
     ),
     cardTheme: CardTheme(
-      elevation: 0,
-      color: Colors.transparent,
+      elevation: 1,
+      color: Colors.white,
       margin: EdgeInsets.all(0),
-      shadowColor: Colors.white,
-      shape: RoundedRectangleBorder(
-        borderRadius: new BorderRadius.circular(10),
-        side: BorderSide(color: Colors.grey[100], width: 1),
-      ),
+      // shadowColor: Colors.white,
+      // shape: RoundedRectangleBorder(
+      //   borderRadius: new BorderRadius.circular(0),
+      //   side: BorderSide(color: Colors.white, width: 1),
+      // ),
     ),
     buttonTheme: ButtonThemeData(
       splashColor: Colors.black,
@@ -62,7 +62,7 @@ ThemeData getTheme(BuildContext context) {
       actionTextColor: Colors.black,
       backgroundColor: Colors.yellow[900],
     ),
-    scaffoldBackgroundColor: Colors.grey[100],
+    // scaffoldBackgroundColor: Colors.grey[100],
     bottomSheetTheme: BottomSheetThemeData(
       modalElevation: 1,
       backgroundColor: Colors.yellow[900],

@@ -17,7 +17,7 @@ class ContainerProduto extends StatelessWidget {
 
     return Card(
       shape: RoundedRectangleBorder(
-        borderRadius: new BorderRadius.circular(10),
+        borderRadius: new BorderRadius.circular(0),
         side: BorderSide(color: Colors.grey[200], width: 1),
       ),
       child: AnimatedContainer(
@@ -25,16 +25,9 @@ class ContainerProduto extends StatelessWidget {
         height: 150,
         duration: Duration(seconds: 1),
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Colors.grey[200].withOpacity(0.1),
-              Colors.grey[300].withOpacity(0.4),
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
+          color: Colors.white,
           border: Border.all(color: Colors.transparent),
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(0),
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -43,13 +36,13 @@ class ContainerProduto extends StatelessWidget {
             Container(
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(0),
               ),
               child: Stack(
                 alignment: Alignment.bottomRight,
                 children: [
                   ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(0),
                     child: Image.network(
                       produtoController.arquivo + p.foto,
                       fit: BoxFit.cover,

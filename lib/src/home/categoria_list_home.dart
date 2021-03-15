@@ -99,26 +99,15 @@ class _CategoriaListHomeState extends State<CategoriaListHome>
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 10),
             child: Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: new BorderRadius.circular(10),
-                side: BorderSide(color: Colors.grey[100], width: 1),
-              ),
               child: AnimatedContainer(
                 width: 200,
                 height: 300,
                 alignment: Alignment.center,
                 duration: Duration(seconds: 1),
                 decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      Colors.grey[300].withOpacity(0.1),
-                      Colors.grey[400].withOpacity(0.5),
-                    ],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
+                  color: Colors.white,
                   border: Border.all(color: Colors.transparent),
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(0),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -126,16 +115,6 @@ class _CategoriaListHomeState extends State<CategoriaListHome>
                   children: <Widget>[
                     Container(
                       padding: EdgeInsets.all(1),
-                      decoration: new BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [Theme.of(context).primaryColor, Theme.of(context).primaryColor],
-                        ),
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 1,
-                        ),
-                        borderRadius: BorderRadius.circular(50),
-                      ),
                       child: CircleAvatar(
                         backgroundColor: Colors.grey[100],
                         radius: 50,

@@ -36,6 +36,19 @@ class PromocaoTipoPage extends StatelessWidget {
               );
             },
           ),
+          SizedBox(width: 10),
+          CircleAvatar(
+            backgroundColor: Theme.of(context).accentColor.withOpacity(0.4),
+            foregroundColor: Colors.black,
+            child: IconButton(
+              icon: Icon(
+                Icons.refresh,
+              ),
+              onPressed: () {
+                promocaoTipoController.getAll();
+              },
+            ),
+          ),
           SizedBox(width: 100),
         ],
       ),

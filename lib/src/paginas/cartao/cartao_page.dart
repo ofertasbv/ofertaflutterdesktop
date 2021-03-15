@@ -13,6 +13,8 @@ class CartaoPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
+        titleSpacing: 50,
         title: Text("Cartões"),
         actions: <Widget>[
           Observer(
@@ -34,7 +36,7 @@ class CartaoPage extends StatelessWidget {
               );
             },
           ),
-          SizedBox(width: 20),
+          SizedBox(width: 100),
         ],
       ),
       body: CartaoList(),

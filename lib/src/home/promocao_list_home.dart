@@ -85,23 +85,16 @@ class _PromocaoListHomeState extends State<PromocaoListHome>
             padding: EdgeInsets.symmetric(horizontal: 10),
             child: Card(
               shape: RoundedRectangleBorder(
-                borderRadius: new BorderRadius.circular(10),
+                borderRadius: new BorderRadius.circular(0),
                 side: BorderSide(color: Colors.grey[100], width: 1),
               ),
               child: AnimatedContainer(
                 width: containerWidth,
                 duration: Duration(seconds: 1),
                 decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      Colors.grey[200].withOpacity(0.1),
-                      Colors.grey[300].withOpacity(0.5),
-                    ],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
+                  color: Colors.white,
                   border: Border.all(color: Colors.transparent),
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(0),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -109,12 +102,12 @@ class _PromocaoListHomeState extends State<PromocaoListHome>
                     Container(
                       decoration: BoxDecoration(
                         color: Colors.grey[200],
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(0),
                       ),
                       child: ClipRRect(
                         borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          topRight: Radius.circular(10),
+                          topLeft: Radius.circular(0),
+                          topRight: Radius.circular(0),
                           bottomRight: Radius.circular(0),
                           bottomLeft: Radius.circular(0),
                         ),
