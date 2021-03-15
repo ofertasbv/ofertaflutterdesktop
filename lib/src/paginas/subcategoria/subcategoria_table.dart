@@ -50,9 +50,9 @@ class _SubCategoriaTableState extends State<SubCategoriaTable>
         children: <Widget>[
           SizedBox(height: 0),
           Container(
-            height: 80,
+            height: 60,
             width: double.infinity,
-            color: Colors.grey[100],
+            color: Colors.grey[200],
             padding: EdgeInsets.all(5),
             child: ListTile(
               subtitle: TextFormField(
@@ -97,80 +97,102 @@ class _SubCategoriaTableState extends State<SubCategoriaTable>
 
           return RefreshIndicator(
             onRefresh: onRefresh,
-            child: builderTable(subcategorias),
+            child: buildTable(subcategorias),
           );
         },
       ),
     );
   }
 
-  builderTable(List<SubCategoria> subcategorias) {
-    return DataTable(
-      sortAscending: true,
-      showCheckboxColumn: true,
-      showBottomBorder: true,
-      columnSpacing: 210,
-      columns: [
-        DataColumn(label: Text("Código")),
-        DataColumn(label: Text("Nome")),
-        DataColumn(label: Text("Categoria")),
-        DataColumn(label: Text("Editar")),
-        DataColumn(label: Text("Categorias")),
+  buildTable(List<SubCategoria> subcategorias) {
+    return ListView(
+      children: [
+        PaginatedDataTable(
+          rowsPerPage: 8,
+          showCheckboxColumn: true,
+          sortColumnIndex: 1,
+          sortAscending: true,
+          showFirstLastButtons: true,
+          columns: [
+            DataColumn(label: Text("Código")),
+            DataColumn(label: Text("Nome")),
+            DataColumn(label: Text("Categoria")),
+            DataColumn(label: Text("Editar")),
+            DataColumn(label: Text("Categorias")),
+          ],
+          source: DataSource(subcategorias, context),
+        ),
       ],
-      rows: subcategorias
-          .map(
-            (p) => DataRow(
-              onSelectChanged: (i) {
-                setState(() {
-                  // selecionaItem(p);
-                });
-              },
-              cells: [
-                DataCell(
-                  Text("${p.id}"),
-                ),
-                DataCell(
-                  Text("${p.nome}"),
-                ),
-                DataCell(
-                  Text("${p.categoria.nome}"),
-                ),
-                DataCell(IconButton(
-                  icon: Icon(Icons.edit),
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (BuildContext context) {
-                          return SubCategoriaCreatePage(
-                            subCategoria: p,
-                          );
-                        },
-                      ),
-                    );
-                  },
-                )),
-                DataCell(IconButton(
-                  icon: Icon(Icons.list),
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (BuildContext context) {
-                          return SubCategoriaCreatePage(
-                            subCategoria: p,
-                          );
-                        },
-                      ),
-                    );
-                  },
-                )),
-              ],
-            ),
-          )
-          .toList(),
     );
   }
 
   @override
   // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
+}
+
+class DataSource extends DataTableSource {
+  BuildContext context;
+  List<SubCategoria> subcategorias;
+  int selectedCount = 0;
+
+  DataSource(this.subcategorias, this.context);
+
+  @override
+  DataRow getRow(int index) {
+    assert(index >= 0);
+    if (index >= subcategorias.length) return null;
+    SubCategoria p = subcategorias[index];
+    return DataRow.byIndex(
+      index: index,
+      cells: [
+        DataCell(
+          Text("${p.id}"),
+        ),
+        DataCell(
+          Text("${p.nome}"),
+        ),
+        DataCell(
+          Text("${p.categoria.nome}"),
+        ),
+        DataCell(IconButton(
+          icon: Icon(Icons.edit),
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return SubCategoriaCreatePage(
+                    subCategoria: p,
+                  );
+                },
+              ),
+            );
+          },
+        )),
+        DataCell(IconButton(
+          icon: Icon(Icons.list),
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return SubCategoriaCreatePage(
+                    subCategoria: p,
+                  );
+                },
+              ),
+            );
+          },
+        )),
+      ],
+    );
+  }
+
+  @override
+  int get rowCount => subcategorias.length;
+
+  @override
+  bool get isRowCountApproximate => false;
+
+  @override
+  int get selectedRowCount => selectedCount;
 }

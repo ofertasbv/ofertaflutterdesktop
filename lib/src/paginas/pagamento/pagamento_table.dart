@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
+import 'package:intl/intl.dart';
 import 'package:nosso/src/core/controller/pagamento_controller.dart';
 import 'package:nosso/src/core/model/pagamento.dart';
 import 'package:nosso/src/util/load/circular_progresso.dart';
@@ -40,9 +41,9 @@ class _PagamentoTableState extends State<PagamentoTable>
         children: <Widget>[
           SizedBox(height: 0),
           Container(
-            height: 80,
+            height: 60,
             width: double.infinity,
-            color: Colors.grey[100],
+            color: Colors.grey[200],
             padding: EdgeInsets.all(5),
             child: ListTile(
               subtitle: TextFormField(
@@ -85,65 +86,88 @@ class _PagamentoTableState extends State<PagamentoTable>
 
           return RefreshIndicator(
             onRefresh: onRefresh,
-            child: builderTable(pagamentos),
+            child: buildTable(pagamentos),
           );
         },
       ),
     );
   }
 
-  builderTable(List<Pagamento> pagamentos) {
-    return DataTable(
-      sortAscending: true,
-      showCheckboxColumn: true,
-      showBottomBorder: true,
-      columnSpacing: 55,
-      columns: [
-        DataColumn(label: Text("Código")),
-        DataColumn(label: Text("Quantidade")),
-        DataColumn(label: Text("Forma")),
-        DataColumn(label: Text("Tipo")),
-        DataColumn(label: Text("Valor")),
-        DataColumn(label: Text("Registro")),
-        DataColumn(label: Text("Visualizar")),
-        DataColumn(label: Text("Editar")),
-        DataColumn(label: Text("Faturas")),
+  buildTable(List<Pagamento> pagamentos) {
+    return ListView(
+      children: [
+        PaginatedDataTable(
+          rowsPerPage: 8,
+          showCheckboxColumn: true,
+          sortColumnIndex: 1,
+          sortAscending: true,
+          showFirstLastButtons: true,
+          columns: [
+            DataColumn(label: Text("Código")),
+            DataColumn(label: Text("Quantidade")),
+            DataColumn(label: Text("Forma")),
+            DataColumn(label: Text("Tipo")),
+            DataColumn(label: Text("Valor")),
+            DataColumn(label: Text("Registro")),
+            DataColumn(label: Text("Visualizar")),
+            DataColumn(label: Text("Editar")),
+            DataColumn(label: Text("Faturas")),
+          ],
+          source: DataSource(pagamentos, context),
+        ),
       ],
-      rows: pagamentos
-          .map(
-            (p) => DataRow(
-              onSelectChanged: (i) {
-                setState(() {
-                  // selecionaItem(p);
-                });
-              },
-              cells: [
-                DataCell(Text("${p.id}")),
-                DataCell(Text("${p.quantidade}")),
-                DataCell(Text(p.pagamentoForma)),
-                DataCell(Text("${p.pagamentoTipo}")),
-                DataCell(Text("${p.valor}")),
-                DataCell(Text("${p.dataPagamento}")),
-                DataCell(IconButton(
-                  icon: Icon(Icons.search),
-                  onPressed: () {},
-                )),
-                DataCell(IconButton(
-                  icon: Icon(Icons.edit),
-                  onPressed: () {},
-                )),
-                DataCell(IconButton(
-                  icon: Icon(Icons.monetization_on_outlined),
-                  onPressed: () {},
-                )),
-              ],
-            ),
-          )
-          .toList(),
     );
   }
 
   @override
   // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
+}
+
+class DataSource extends DataTableSource {
+  BuildContext context;
+  List<Pagamento> pagamentos;
+  int selectedCount = 0;
+  var dateFormat = DateFormat('dd/MM/yyyy');
+
+  DataSource(this.pagamentos, this.context);
+
+  @override
+  DataRow getRow(int index) {
+    assert(index >= 0);
+    if (index >= pagamentos.length) return null;
+    Pagamento p = pagamentos[index];
+    return DataRow.byIndex(
+      index: index,
+      cells: [
+        DataCell(Text("${p.id}")),
+        DataCell(Text("${p.quantidade}")),
+        DataCell(Text(p.pagamentoForma)),
+        DataCell(Text("${p.pagamentoTipo}")),
+        DataCell(Text("${p.valor}")),
+        DataCell(Text("${dateFormat.format(p.dataPagamento)}")),
+        DataCell(IconButton(
+          icon: Icon(Icons.search),
+          onPressed: () {},
+        )),
+        DataCell(IconButton(
+          icon: Icon(Icons.edit),
+          onPressed: () {},
+        )),
+        DataCell(IconButton(
+          icon: Icon(Icons.monetization_on_outlined),
+          onPressed: () {},
+        )),
+      ],
+    );
+  }
+
+  @override
+  int get rowCount => pagamentos.length;
+
+  @override
+  bool get isRowCountApproximate => false;
+
+  @override
+  int get selectedRowCount => selectedCount;
 }

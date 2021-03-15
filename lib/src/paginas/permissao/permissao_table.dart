@@ -4,41 +4,33 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
-import 'package:nosso/src/core/controller/vendedor_controller.dart';
-import 'package:nosso/src/core/model/vendedor.dart';
-import 'package:nosso/src/paginas/vendedor/vendedor_create_page.dart';
+import 'package:intl/intl.dart';
+import 'package:nosso/src/core/controller/permissao_controller.dart';
+import 'package:nosso/src/core/model/permissao.dart';
+import 'package:nosso/src/paginas/permissao/permissao_create_page.dart';
 import 'package:nosso/src/util/load/circular_progresso.dart';
 
-class VendedorTable extends StatefulWidget {
+class PermissaoTable extends StatefulWidget {
   @override
-  _VendedorTableState createState() => _VendedorTableState();
+  _PermissaoTableState createState() => _PermissaoTableState();
 }
 
-class _VendedorTableState extends State<VendedorTable>
-    with AutomaticKeepAliveClientMixin<VendedorTable> {
-  var vendedorController = GetIt.I.get<VendedorController>();
+class _PermissaoTableState extends State<PermissaoTable>
+    with AutomaticKeepAliveClientMixin<PermissaoTable> {
+  var permissaoController = GetIt.I.get<PermissaoController>();
   var nomeController = TextEditingController();
 
   @override
   void initState() {
-    vendedorController.getAll();
+    permissaoController.getAll();
     super.initState();
   }
 
   Future<void> onRefresh() {
-    return vendedorController.getAll();
+    return permissaoController.getAll();
   }
 
   bool isLoading = true;
-
-  filterByNome(String nome) {
-    if (nome.trim().isEmpty) {
-      vendedorController.getAll();
-    } else {
-      nome = nomeController.text;
-      vendedorController.getAllByNome(nome);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +45,7 @@ class _VendedorTableState extends State<VendedorTable>
             height: 60,
             width: double.infinity,
             color: Colors.grey[200],
-            padding: EdgeInsets.all(5),
+            padding: EdgeInsets.all(0),
             child: ListTile(
               subtitle: TextFormField(
                 controller: nomeController,
@@ -65,7 +57,6 @@ class _VendedorTableState extends State<VendedorTable>
                     icon: Icon(Icons.clear),
                   ),
                 ),
-                onChanged: filterByNome,
               ),
             ),
           ),
@@ -85,25 +76,27 @@ class _VendedorTableState extends State<VendedorTable>
       padding: EdgeInsets.only(top: 0),
       child: Observer(
         builder: (context) {
-          List<Vendedor> vendedores = vendedorController.vendedores;
-          if (vendedorController.error != null) {
-            return Text("Não foi possível carregados dados");
+          List<Permissao> permissoes = permissaoController.permissoes;
+          if (permissaoController.error != null) {
+            return Text("Não foi possível buscar permissões");
           }
 
-          if (vendedores == null) {
-            return CircularProgressor();
+          if (permissoes == null) {
+            return Center(
+              child: CircularProgressor(),
+            );
           }
 
           return RefreshIndicator(
             onRefresh: onRefresh,
-            child: buildTable(vendedores),
+            child: buildTable(permissoes),
           );
         },
       ),
     );
   }
 
-  buildTable(List<Vendedor> vendedores) {
+  buildTable(List<Permissao> permissoes) {
     return ListView(
       children: [
         PaginatedDataTable(
@@ -113,17 +106,12 @@ class _VendedorTableState extends State<VendedorTable>
           sortAscending: true,
           showFirstLastButtons: true,
           columns: [
-            DataColumn(label: Text("Cód.")),
-            DataColumn(label: Text("Foto")),
+            DataColumn(label: Text("Código")),
             DataColumn(label: Text("Nome")),
-            DataColumn(label: Text("Telefone")),
-            DataColumn(label: Text("Email")),
+            DataColumn(label: Text("Visualizar")),
             DataColumn(label: Text("Editar")),
-            DataColumn(label: Text("Detalhes")),
-            DataColumn(label: Text("Pedidos")),
-            DataColumn(label: Text("Endereços")),
           ],
-          source: DataSource(vendedores, context),
+          source: DataSource(permissoes, context),
         ),
       ],
     );
@@ -135,51 +123,31 @@ class _VendedorTableState extends State<VendedorTable>
 }
 
 class DataSource extends DataTableSource {
-  var vendedorController = GetIt.I.get<VendedorController>();
   BuildContext context;
-  List<Vendedor> vendedores;
+  List<Permissao> permissoes;
   int selectedCount = 0;
+  var dateFormat = DateFormat('dd/MM/yyyy');
 
-  DataSource(this.vendedores, this.context);
+  DataSource(this.permissoes, this.context);
 
   @override
   DataRow getRow(int index) {
     assert(index >= 0);
-    if (index >= vendedores.length) return null;
-    Vendedor p = vendedores[index];
+    if (index >= permissoes.length) return null;
+    Permissao p = permissoes[index];
     return DataRow.byIndex(
       index: index,
       cells: [
         DataCell(Text("${p.id}")),
-        DataCell(CircleAvatar(
-          backgroundColor: Colors.grey[200],
-          radius: 20,
-        )),
-        DataCell(Text("${p.nome}")),
-        DataCell(Text("${p.telefone}")),
-        DataCell(Text("${p.usuario.email}")),
-        DataCell(IconButton(
-          icon: Icon(Icons.edit),
-          onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return VendedorCreatePage(
-                    vendedor: p,
-                  );
-                },
-              ),
-            );
-          },
-        )),
+        DataCell(Text("${p.descricao}")),
         DataCell(IconButton(
           icon: Icon(Icons.search),
           onPressed: () {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (BuildContext context) {
-                  return VendedorCreatePage(
-                    vendedor: p,
+                  return PermissaoCreatePage(
+                    permissao: p,
                   );
                 },
               ),
@@ -187,27 +155,13 @@ class DataSource extends DataTableSource {
           },
         )),
         DataCell(IconButton(
-          icon: Icon(Icons.shopping_basket_outlined),
+          icon: Icon(Icons.edit),
           onPressed: () {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (BuildContext context) {
-                  return VendedorCreatePage(
-                    vendedor: p,
-                  );
-                },
-              ),
-            );
-          },
-        )),
-        DataCell(IconButton(
-          icon: Icon(Icons.location_on_outlined),
-          onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return VendedorCreatePage(
-                    vendedor: p,
+                  return PermissaoCreatePage(
+                    permissao: p,
                   );
                 },
               ),
@@ -219,7 +173,7 @@ class DataSource extends DataTableSource {
   }
 
   @override
-  int get rowCount => vendedores.length;
+  int get rowCount => permissoes.length;
 
   @override
   bool get isRowCountApproximate => false;

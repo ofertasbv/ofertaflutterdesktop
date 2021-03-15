@@ -5,6 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:nosso/src/core/controller/permissao_controller.dart';
 import 'package:nosso/src/paginas/permissao/permissao_create_page.dart';
 import 'package:nosso/src/paginas/permissao/permissao_list.dart';
+import 'package:nosso/src/paginas/permissao/permissao_table.dart';
 
 class PermissaoPage extends StatelessWidget {
   var permissaoController = GetIt.I.get<PermissaoController>();
@@ -38,7 +39,10 @@ class PermissaoPage extends StatelessWidget {
           SizedBox(width: 20),
         ],
       ),
-      body: PermissaoList(),
+      body: Container(
+        padding: EdgeInsets.only(left: 100, right: 100, top: 10),
+        child: PermissaoTable(),
+      ),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[

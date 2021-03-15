@@ -116,6 +116,8 @@ class _LojaLocationState extends State<LojaLocation> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
+        titleSpacing: 50,
         title: Text("Localzação comercial"),
       ),
       body: Stack(

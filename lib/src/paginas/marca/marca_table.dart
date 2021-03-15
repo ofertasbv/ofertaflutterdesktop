@@ -4,8 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
+import 'package:intl/intl.dart';
 import 'package:nosso/src/core/controller/marca_controller.dart';
-import 'package:nosso/src/core/model/categoria.dart';
 import 'package:nosso/src/core/model/marca.dart';
 import 'package:nosso/src/paginas/marca/marca_create_page.dart';
 import 'package:nosso/src/util/load/circular_progresso.dart';
@@ -51,10 +51,10 @@ class _MarcaTableState extends State<MarcaTable>
         children: <Widget>[
           SizedBox(height: 0),
           Container(
-            height: 80,
+            height: 60,
             width: double.infinity,
-            color: Colors.grey[100],
-            padding: EdgeInsets.all(5),
+            color: Colors.grey[200],
+            padding: EdgeInsets.all(0),
             child: ListTile(
               subtitle: TextFormField(
                 controller: nomeController,
@@ -97,87 +97,111 @@ class _MarcaTableState extends State<MarcaTable>
 
           return RefreshIndicator(
             onRefresh: onRefresh,
-            child: builderTable(marcas),
+            child: buildTable(marcas),
           );
         },
       ),
     );
   }
 
-  builderTable(List<Marca> marcas) {
-    return DataTable(
-      sortAscending: true,
-      showCheckboxColumn: true,
-      showBottomBorder: true,
-      columnSpacing: 250,
-      columns: [
-        DataColumn(label: Text("Código")),
-        DataColumn(label: Text("Nome")),
-        DataColumn(label: Text("Visualizar")),
-        DataColumn(label: Text("Editar")),
-        DataColumn(label: Text("Produtos")),
+  buildTable(List<Marca> marcas) {
+    return ListView(
+      children: [
+        PaginatedDataTable(
+          rowsPerPage: 8,
+          showCheckboxColumn: true,
+          sortColumnIndex: 1,
+          sortAscending: true,
+          showFirstLastButtons: true,
+          columns: [
+            DataColumn(label: Text("Código")),
+            DataColumn(label: Text("Nome")),
+            DataColumn(label: Text("Visualizar")),
+            DataColumn(label: Text("Editar")),
+            DataColumn(label: Text("Produtos")),
+          ],
+          source: DataSource(marcas, context),
+        ),
       ],
-      rows: marcas
-          .map(
-            (p) => DataRow(
-              onSelectChanged: (i) {
-                setState(() {
-                  // selecionaItem(p);
-                });
-              },
-              cells: [
-                DataCell(Text("${p.id}")),
-                DataCell(Text("${p.nome}")),
-                DataCell(IconButton(
-                  icon: Icon(Icons.search),
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (BuildContext context) {
-                          return MarcaCreatePage(
-                            marca: p,
-                          );
-                        },
-                      ),
-                    );
-                  },
-                )),
-                DataCell(IconButton(
-                  icon: Icon(Icons.edit),
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (BuildContext context) {
-                          return MarcaCreatePage(
-                            marca: p,
-                          );
-                        },
-                      ),
-                    );
-                  },
-                )),
-                DataCell(IconButton(
-                  icon: Icon(Icons.list),
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (BuildContext context) {
-                          return MarcaCreatePage(
-                            marca: p,
-                          );
-                        },
-                      ),
-                    );
-                  },
-                )),
-              ],
-            ),
-          )
-          .toList(),
     );
   }
 
   @override
   // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
+}
+
+class DataSource extends DataTableSource {
+  var marcaController = GetIt.I.get<MarcaController>();
+  BuildContext context;
+  List<Marca> marcas;
+  int selectedCount = 0;
+  var dateFormat = DateFormat('dd/MM/yyyy');
+
+  DataSource(this.marcas, this.context);
+
+  @override
+  DataRow getRow(int index) {
+    assert(index >= 0);
+    if (index >= marcas.length) return null;
+    Marca p = marcas[index];
+    return DataRow.byIndex(
+      index: index,
+      cells: [
+        DataCell(Text("${p.id}")),
+        DataCell(Text("${p.nome}")),
+        DataCell(IconButton(
+          icon: Icon(Icons.search),
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return MarcaCreatePage(
+                    marca: p,
+                  );
+                },
+              ),
+            );
+          },
+        )),
+        DataCell(IconButton(
+          icon: Icon(Icons.edit),
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return MarcaCreatePage(
+                    marca: p,
+                  );
+                },
+              ),
+            );
+          },
+        )),
+        DataCell(IconButton(
+          icon: Icon(Icons.list),
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return MarcaCreatePage(
+                    marca: p,
+                  );
+                },
+              ),
+            );
+          },
+        )),
+      ],
+    );
+  }
+
+  @override
+  int get rowCount => marcas.length;
+
+  @override
+  bool get isRowCountApproximate => false;
+
+  @override
+  int get selectedRowCount => selectedCount;
 }

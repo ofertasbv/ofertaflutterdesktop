@@ -50,10 +50,10 @@ class _UsuarioTableState extends State<UsuarioTable>
         children: <Widget>[
           SizedBox(height: 0),
           Container(
-            height: 80,
+            height: 60,
             width: double.infinity,
-            color: Colors.grey[100],
-            padding: EdgeInsets.all(5),
+            color: Colors.grey[200],
+            padding: EdgeInsets.all(0),
             child: ListTile(
               subtitle: TextFormField(
                 controller: nomeController,

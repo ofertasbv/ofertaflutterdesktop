@@ -403,7 +403,6 @@ class _ProdutoTableState extends State<ProdutoTable> {
             DataColumn(label: Text("Promoção")),
             DataColumn(label: Text("Categoria")),
             DataColumn(label: Text("Loja")),
-            DataColumn(label: Text("Marca")),
             DataColumn(label: Text("Visualizar")),
             DataColumn(label: Text("Editar")),
           ],
@@ -454,7 +453,6 @@ class DataSource extends DataTableSource {
         DataCell(Text(p.promocao.nome)),
         DataCell(Text(p.subCategoria.nome)),
         DataCell(Text(p.loja.nome)),
-        DataCell(Text(p.marca.nome)),
         DataCell(IconButton(
           icon: Icon(Icons.search),
           onPressed: () {

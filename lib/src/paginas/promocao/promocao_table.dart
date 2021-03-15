@@ -226,7 +226,6 @@ class _PromocaoTableState extends State<PromocaoTable> {
           columns: [
             DataColumn(label: Text("Foto")),
             DataColumn(label: Text("Nome")),
-            DataColumn(label: Text("Descrição")),
             DataColumn(label: Text("Registro")),
             DataColumn(label: Text("Início")),
             DataColumn(label: Text("Encerramento")),
@@ -267,7 +266,6 @@ class DataSource extends DataTableSource {
           ),
         )),
         DataCell(Text(p.nome)),
-        DataCell(Text(p.descricao)),
         DataCell(Text("${dateFormat.format(p.dataRegistro)}")),
         DataCell(Text("${dateFormat.format(p.dataInicio)}")),
         DataCell(Text("${dateFormat.format(p.dataFinal)}")),

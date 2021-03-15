@@ -4,7 +4,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:nosso/src/core/controller/tamanho_controller.dart';
 import 'package:nosso/src/paginas/tamanho/tamanho_create_page.dart';
-import 'package:nosso/src/paginas/tamanho/tamanho_list.dart';
+import 'package:nosso/src/paginas/tamanho/tamanho_table.dart';
 
 class TamanhoPage extends StatelessWidget {
   var tamanhoController = GetIt.I.get<TamanhoController>();
@@ -36,10 +36,13 @@ class TamanhoPage extends StatelessWidget {
               );
             },
           ),
-          SizedBox(width: 20),
+          SizedBox(width: 100),
         ],
       ),
-      body: TamanhoList(),
+      body: Container(
+        padding: EdgeInsets.only(left: 100, right: 100, top: 10),
+        child: TamanhoTable(),
+      ),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[

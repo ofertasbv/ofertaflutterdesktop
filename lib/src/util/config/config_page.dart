@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:nosso/src/api/constants/constant_api.dart';
 import 'package:nosso/src/home/home.dart';
 import 'package:nosso/src/paginas/arquivo/arquivo_page.dart';
+import 'package:nosso/src/paginas/caixa/caixa_page.dart';
 import 'package:nosso/src/paginas/caixacontrole/caixa_controle_page.dart';
 import 'package:nosso/src/paginas/caixafluxo/caixafluxo_page.dart';
 import 'package:nosso/src/paginas/cartao/cartao_page.dart';
@@ -728,12 +729,36 @@ class _ConfigPageState extends State<ConfigPage> {
             width: 200,
             child: ListTile(
               leading: Icon(
-                Icons.account_box_sharp,
+                Icons.recent_actors_outlined,
                 size: 40,
                 color: Theme.of(context).accentColor.withOpacity(1),
               ),
               title: Text("Fluxos"),
-              subtitle: Text("lista de fluxosde caixas"),
+              subtitle: Text("lista de fluxos de caixas"),
+            ),
+          ),
+        ),
+
+        GestureDetector(
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return CaixaPage();
+                },
+              ),
+            );
+          },
+          child: Container(
+            width: 200,
+            child: ListTile(
+              leading: Icon(
+                Icons.recent_actors,
+                size: 40,
+                color: Theme.of(context).accentColor.withOpacity(1),
+              ),
+              title: Text("Caixas"),
+              subtitle: Text("lista de caixas"),
             ),
           ),
         ),

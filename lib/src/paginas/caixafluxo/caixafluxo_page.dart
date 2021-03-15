@@ -5,6 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:nosso/src/core/controller/caixafluxo_controller.dart';
 import 'package:nosso/src/paginas/caixafluxo/caixafluxo_create_page.dart';
 import 'package:nosso/src/paginas/caixafluxo/caixafluxo_list.dart';
+import 'package:nosso/src/paginas/caixafluxo/caixafluxo_table.dart';
 
 class CaixaFluxoPage extends StatelessWidget {
   var caixafluxoController = GetIt.I.get<CaixafluxoController>();
@@ -14,6 +15,7 @@ class CaixaFluxoPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
+        titleSpacing: 50,
         title: Text("Caixa fluxos"),
         actions: <Widget>[
           Observer(
@@ -28,17 +30,33 @@ class CaixaFluxoPage extends StatelessWidget {
                 );
               }
 
-              return Chip(
-                label: Text(
+              return CircleAvatar(
+                child: Text(
                   (caixafluxoController.caixaFluxos.length ?? 0).toString(),
                 ),
               );
             },
           ),
-          SizedBox(width: 20),
+          SizedBox(width: 10),
+          CircleAvatar(
+            backgroundColor: Theme.of(context).accentColor.withOpacity(0.4),
+            foregroundColor: Colors.black,
+            child: IconButton(
+              icon: Icon(
+                Icons.refresh,
+              ),
+              onPressed: () {
+                caixafluxoController.getAll();
+              },
+            ),
+          ),
+          SizedBox(width: 100),
         ],
       ),
-      body: CaixaFluxoList(),
+      body: Container(
+        padding: EdgeInsets.only(left: 100, right: 100, top: 10),
+        child: CaixaFluxoTable(),
+      ),
       floatingActionButton: FloatingActionButton(
         elevation: 10,
         child: Icon(Icons.add),

@@ -4,41 +4,33 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
-import 'package:nosso/src/core/controller/vendedor_controller.dart';
-import 'package:nosso/src/core/model/vendedor.dart';
-import 'package:nosso/src/paginas/vendedor/vendedor_create_page.dart';
+import 'package:intl/intl.dart';
+import 'package:nosso/src/core/controller/tamanho_controller.dart';
+import 'package:nosso/src/core/model/tamanho.dart';
+import 'package:nosso/src/paginas/tamanho/tamanho_create_page.dart';
 import 'package:nosso/src/util/load/circular_progresso.dart';
 
-class VendedorTable extends StatefulWidget {
+class TamanhoTable extends StatefulWidget {
   @override
-  _VendedorTableState createState() => _VendedorTableState();
+  _TamanhoTableState createState() => _TamanhoTableState();
 }
 
-class _VendedorTableState extends State<VendedorTable>
-    with AutomaticKeepAliveClientMixin<VendedorTable> {
-  var vendedorController = GetIt.I.get<VendedorController>();
+class _TamanhoTableState extends State<TamanhoTable>
+    with AutomaticKeepAliveClientMixin<TamanhoTable> {
+  var tamanhoController = GetIt.I.get<TamanhoController>();
   var nomeController = TextEditingController();
 
   @override
   void initState() {
-    vendedorController.getAll();
+    tamanhoController.getAll();
     super.initState();
   }
 
   Future<void> onRefresh() {
-    return vendedorController.getAll();
+    return tamanhoController.getAll();
   }
 
   bool isLoading = true;
-
-  filterByNome(String nome) {
-    if (nome.trim().isEmpty) {
-      vendedorController.getAll();
-    } else {
-      nome = nomeController.text;
-      vendedorController.getAllByNome(nome);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +57,6 @@ class _VendedorTableState extends State<VendedorTable>
                     icon: Icon(Icons.clear),
                   ),
                 ),
-                onChanged: filterByNome,
               ),
             ),
           ),
@@ -85,25 +76,25 @@ class _VendedorTableState extends State<VendedorTable>
       padding: EdgeInsets.only(top: 0),
       child: Observer(
         builder: (context) {
-          List<Vendedor> vendedores = vendedorController.vendedores;
-          if (vendedorController.error != null) {
+          List<Tamanho> tamanhos = tamanhoController.tamanhos;
+          if (tamanhoController.error != null) {
             return Text("Não foi possível carregados dados");
           }
 
-          if (vendedores == null) {
+          if (tamanhos == null) {
             return CircularProgressor();
           }
 
           return RefreshIndicator(
             onRefresh: onRefresh,
-            child: buildTable(vendedores),
+            child: buildTable(tamanhos),
           );
         },
       ),
     );
   }
 
-  buildTable(List<Vendedor> vendedores) {
+  buildTable(List<Tamanho> tamanhos) {
     return ListView(
       children: [
         PaginatedDataTable(
@@ -113,17 +104,12 @@ class _VendedorTableState extends State<VendedorTable>
           sortAscending: true,
           showFirstLastButtons: true,
           columns: [
-            DataColumn(label: Text("Cód.")),
-            DataColumn(label: Text("Foto")),
-            DataColumn(label: Text("Nome")),
-            DataColumn(label: Text("Telefone")),
-            DataColumn(label: Text("Email")),
+            DataColumn(label: Text("Código")),
+            DataColumn(label: Text("Descrição")),
+            DataColumn(label: Text("Visualizar")),
             DataColumn(label: Text("Editar")),
-            DataColumn(label: Text("Detalhes")),
-            DataColumn(label: Text("Pedidos")),
-            DataColumn(label: Text("Endereços")),
           ],
-          source: DataSource(vendedores, context),
+          source: DataSource(tamanhos, context),
         ),
       ],
     );
@@ -135,51 +121,32 @@ class _VendedorTableState extends State<VendedorTable>
 }
 
 class DataSource extends DataTableSource {
-  var vendedorController = GetIt.I.get<VendedorController>();
   BuildContext context;
-  List<Vendedor> vendedores;
+  List<Tamanho> tamanhos;
   int selectedCount = 0;
+  var dateFormat = DateFormat('dd/MM/yyyy');
 
-  DataSource(this.vendedores, this.context);
+  DataSource(this.tamanhos, this.context);
 
   @override
   DataRow getRow(int index) {
     assert(index >= 0);
-    if (index >= vendedores.length) return null;
-    Vendedor p = vendedores[index];
+    if (index >= tamanhos.length) return null;
+    Tamanho p = tamanhos[index];
     return DataRow.byIndex(
       index: index,
       cells: [
         DataCell(Text("${p.id}")),
-        DataCell(CircleAvatar(
-          backgroundColor: Colors.grey[200],
-          radius: 20,
-        )),
-        DataCell(Text("${p.nome}")),
-        DataCell(Text("${p.telefone}")),
-        DataCell(Text("${p.usuario.email}")),
-        DataCell(IconButton(
-          icon: Icon(Icons.edit),
-          onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return VendedorCreatePage(
-                    vendedor: p,
-                  );
-                },
-              ),
-            );
-          },
-        )),
+        DataCell(Text("${p.descricao}")),
         DataCell(IconButton(
           icon: Icon(Icons.search),
           onPressed: () {
+            Navigator.of(context).pop();
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (BuildContext context) {
-                  return VendedorCreatePage(
-                    vendedor: p,
+                  return TamanhoCreatePage(
+                    tamanho: p,
                   );
                 },
               ),
@@ -187,27 +154,14 @@ class DataSource extends DataTableSource {
           },
         )),
         DataCell(IconButton(
-          icon: Icon(Icons.shopping_basket_outlined),
+          icon: Icon(Icons.edit),
           onPressed: () {
+            Navigator.of(context).pop();
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (BuildContext context) {
-                  return VendedorCreatePage(
-                    vendedor: p,
-                  );
-                },
-              ),
-            );
-          },
-        )),
-        DataCell(IconButton(
-          icon: Icon(Icons.location_on_outlined),
-          onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return VendedorCreatePage(
-                    vendedor: p,
+                  return TamanhoCreatePage(
+                    tamanho: p,
                   );
                 },
               ),
@@ -219,7 +173,7 @@ class DataSource extends DataTableSource {
   }
 
   @override
-  int get rowCount => vendedores.length;
+  int get rowCount => tamanhos.length;
 
   @override
   bool get isRowCountApproximate => false;

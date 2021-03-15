@@ -30,12 +30,25 @@ class CategoriaPage extends StatelessWidget {
                 );
               }
 
-              return Chip(
-                label: Text(
+              return CircleAvatar(
+                child: Text(
                   (categoriaController.categorias.length ?? 0).toString(),
                 ),
               );
             },
+          ),
+          SizedBox(width: 10),
+          CircleAvatar(
+            backgroundColor: Theme.of(context).accentColor.withOpacity(0.4),
+            foregroundColor: Colors.black,
+            child: IconButton(
+              icon: Icon(
+                Icons.refresh,
+              ),
+              onPressed: () {
+                categoriaController.getAll();
+              },
+            ),
           ),
           SizedBox(width: 100),
         ],

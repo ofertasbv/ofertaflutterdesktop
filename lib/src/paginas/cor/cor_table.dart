@@ -5,30 +5,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
-import 'package:nosso/src/core/controller/favorito_controller.dart';
-import 'package:nosso/src/core/controller/produto_controller.dart';
-import 'package:nosso/src/core/model/favorito.dart';
+import 'package:nosso/src/core/controller/cor_controller.dart';
+import 'package:nosso/src/core/model/cor.dart';
 import 'package:nosso/src/util/load/circular_progresso.dart';
 
-class FavoritoTable extends StatefulWidget {
+class CorTable extends StatefulWidget {
   @override
-  _FavoritoTableState createState() => _FavoritoTableState();
+  _CorTableState createState() => _CorTableState();
 }
 
-class _FavoritoTableState extends State<FavoritoTable>
-    with AutomaticKeepAliveClientMixin<FavoritoTable> {
-  var favoritoController = GetIt.I.get<FavoritoController>();
-  var produtoController = GetIt.I.get<ProdutoController>();
-  var nomeController = TextEditingController();
+class _CorTableState extends State<CorTable>
+    with AutomaticKeepAliveClientMixin<CorTable> {
+  var corController = GetIt.I.get<CorController>();
 
   @override
   void initState() {
-    favoritoController.getAll();
+    corController.getAll();
     super.initState();
   }
 
   Future<void> onRefresh() {
-    return favoritoController.getAll();
+    return corController.getAll();
   }
 
   bool isLoading = true;
@@ -47,19 +44,6 @@ class _FavoritoTableState extends State<FavoritoTable>
             width: double.infinity,
             color: Colors.grey[200],
             padding: EdgeInsets.all(5),
-            child: ListTile(
-              subtitle: TextFormField(
-                controller: nomeController,
-                decoration: InputDecoration(
-                  labelText: "busca por nome",
-                  prefixIcon: Icon(Icons.search_outlined),
-                  suffixIcon: IconButton(
-                    onPressed: () => nomeController.clear(),
-                    icon: Icon(Icons.clear),
-                  ),
-                ),
-              ),
-            ),
           ),
           Expanded(
             child: Container(
@@ -77,25 +61,25 @@ class _FavoritoTableState extends State<FavoritoTable>
       padding: EdgeInsets.only(top: 0),
       child: Observer(
         builder: (context) {
-          List<Favorito> favoritos = favoritoController.favoritos;
-          if (favoritoController.error != null) {
+          List<Cor> cores = corController.cores;
+          if (corController.error != null) {
             return Text("Não foi possível carregados dados");
           }
 
-          if (favoritos == null) {
+          if (cores == null) {
             return CircularProgressor();
           }
 
           return RefreshIndicator(
             onRefresh: onRefresh,
-            child: buildTable(favoritos),
+            child: buildTable(cores),
           );
         },
       ),
     );
   }
 
-  buildTable(List<Favorito> favoritos) {
+  buildTable(List<Cor> cores) {
     return ListView(
       children: [
         PaginatedDataTable(
@@ -106,14 +90,12 @@ class _FavoritoTableState extends State<FavoritoTable>
           showFirstLastButtons: true,
           columns: [
             DataColumn(label: Text("Código")),
-            DataColumn(label: Text("Foto")),
-            DataColumn(label: Text("Produto")),
-            DataColumn(label: Text("Cliente")),
-            DataColumn(label: Text("Status")),
+            DataColumn(label: Text("Color")),
+            DataColumn(label: Text("Descrição")),
             DataColumn(label: Text("Visualizar")),
             DataColumn(label: Text("Editar")),
           ],
-          source: DataSource(favoritos, context),
+          source: DataSource(cores, context),
         ),
       ],
     );
@@ -125,19 +107,18 @@ class _FavoritoTableState extends State<FavoritoTable>
 }
 
 class DataSource extends DataTableSource {
-  var produtoController = GetIt.I.get<ProdutoController>();
   BuildContext context;
-  List<Favorito> favoritos;
+  List<Cor> cores;
   int selectedCount = 0;
   var dateFormat = DateFormat('dd/MM/yyyy');
 
-  DataSource(this.favoritos, this.context);
+  DataSource(this.cores, this.context);
 
   @override
   DataRow getRow(int index) {
     assert(index >= 0);
-    if (index >= favoritos.length) return null;
-    Favorito p = favoritos[index];
+    if (index >= cores.length) return null;
+    Cor p = cores[index];
     return DataRow.byIndex(
       index: index,
       cells: [
@@ -145,13 +126,8 @@ class DataSource extends DataTableSource {
         DataCell(CircleAvatar(
           backgroundColor: Colors.grey[100],
           radius: 20,
-          backgroundImage: NetworkImage(
-            "${produtoController.arquivo + p.produto.foto}",
-          ),
         )),
-        DataCell(Text("${p.produto.nome}")),
-        DataCell(Text(p.cliente.nome)),
-        DataCell(Text("${p.status}")),
+        DataCell(Text("${p.descricao}")),
         DataCell(IconButton(
           icon: Icon(Icons.search),
           onPressed: () {},
@@ -165,7 +141,7 @@ class DataSource extends DataTableSource {
   }
 
   @override
-  int get rowCount => favoritos.length;
+  int get rowCount => cores.length;
 
   @override
   bool get isRowCountApproximate => false;

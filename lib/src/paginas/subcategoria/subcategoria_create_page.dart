@@ -85,18 +85,22 @@ class _SubCategoriaCreatePageState extends State<SubCategoriaCreatePage> {
       key: scaffoldKey,
       appBar: AppBar(
         elevation: 0,
+        titleSpacing: 50,
         title: s.nome == null ? Text("Cadastro de departamento") : Text(s.nome),
       ),
-      body: Observer(
-        builder: (context) {
-          if (subCategoriaController.dioError == null) {
-            return buildListViewForm(context);
-          } else {
-            print("Erro: ${subCategoriaController.mensagem}");
-            showToast("${subCategoriaController.mensagem}");
-            return buildListViewForm(context);
-          }
-        },
+      body: Container(
+        padding: EdgeInsets.only(left: 100, right: 100, top: 10),
+        child: Observer(
+          builder: (context) {
+            if (subCategoriaController.dioError == null) {
+              return buildListViewForm(context);
+            } else {
+              print("Erro: ${subCategoriaController.mensagem}");
+              showToast("${subCategoriaController.mensagem}");
+              return buildListViewForm(context);
+            }
+          },
+        ),
       ),
     );
   }

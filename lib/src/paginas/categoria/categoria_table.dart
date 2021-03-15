@@ -50,9 +50,9 @@ class _CategoriaTableState extends State<CategoriaTable>
         children: <Widget>[
           SizedBox(height: 0),
           Container(
-            height: 80,
+            height: 60,
             width: double.infinity,
-            color: Colors.grey[100],
+            color: Colors.grey[200],
             padding: EdgeInsets.all(5),
             child: ListTile(
               subtitle: TextFormField(
@@ -96,82 +96,109 @@ class _CategoriaTableState extends State<CategoriaTable>
 
           return RefreshIndicator(
             onRefresh: onRefresh,
-            child: builderTable(categorias),
+            child: buildTable(categorias),
           );
         },
       ),
     );
   }
 
-  builderTable(List<Categoria> categorias) {
-    return DataTable(
-      sortAscending: true,
-      showCheckboxColumn: true,
-      showBottomBorder: true,
-      columnSpacing: 150,
-      columns: [
-        DataColumn(label: Text("Código")),
-        DataColumn(label: Text("Foto")),
-        DataColumn(label: Text("Nome")),
-        DataColumn(label: Text("Color")),
-        DataColumn(label: Text("Visualizar")),
-        DataColumn(label: Text("Editar")),
+  buildTable(List<Categoria> categorias) {
+    return ListView(
+      children: [
+        PaginatedDataTable(
+          rowsPerPage: 8,
+          showCheckboxColumn: true,
+          sortColumnIndex: 1,
+          sortAscending: true,
+          showFirstLastButtons: true,
+          columns: [
+            DataColumn(label: Text("Código")),
+            DataColumn(label: Text("Foto")),
+            DataColumn(label: Text("Nome")),
+            DataColumn(label: Text("Color")),
+            DataColumn(label: Text("Visualizar")),
+            DataColumn(label: Text("Editar")),
+          ],
+          source: DataSource(categorias, context),
+        ),
       ],
-      rows: categorias
-          .map(
-            (p) => DataRow(
-              onSelectChanged: (i) {
-                setState(() {
-                  // selecionaItem(p);
-                });
-              },
-              cells: [
-                DataCell(Text("${p.id}")),
-                DataCell(CircleAvatar(
-                  backgroundColor: Colors.grey[100],
-                  radius: 20,
-                  backgroundImage: NetworkImage(
-                    "${categoriaController.arquivo + p.foto}",
-                  ),
-                )),
-                DataCell(Text("${p.nome}")),
-                DataCell(Text(p.color)),
-                DataCell(IconButton(
-                  icon: Icon(Icons.search),
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (BuildContext context) {
-                          return CategoriaCreatePage(
-                            categoria: p,
-                          );
-                        },
-                      ),
-                    );
-                  },
-                )),
-                DataCell(IconButton(
-                  icon: Icon(Icons.edit),
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (BuildContext context) {
-                          return CategoriaCreatePage(
-                            categoria: p,
-                          );
-                        },
-                      ),
-                    );
-                  },
-                )),
-              ],
-            ),
-          )
-          .toList(),
     );
   }
 
   @override
   // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
+}
+
+class DataSource extends DataTableSource {
+  var categoriaController = GetIt.I.get<CategoriaController>();
+  BuildContext context;
+  List<Categoria> categorias;
+  int selectedCount = 0;
+
+  DataSource(this.categorias, this.context);
+
+  @override
+  DataRow getRow(int index) {
+    assert(index >= 0);
+    if (index >= categorias.length) return null;
+    Categoria p = categorias[index];
+    return DataRow.byIndex(
+      index: index,
+      cells: [
+        DataCell(Text("${p.id}")),
+        DataCell(
+          p.foto != null
+              ? CircleAvatar(
+                  backgroundColor: Colors.grey[100],
+                  radius: 20,
+                  backgroundImage: NetworkImage(
+                    "${categoriaController.arquivo + p.foto}",
+                  ),
+                )
+              : CircleAvatar(),
+        ),
+        DataCell(Text("${p.nome}")),
+        DataCell(Text(p.color.toString())),
+        DataCell(IconButton(
+          icon: Icon(Icons.search),
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return CategoriaCreatePage(
+                    categoria: p,
+                  );
+                },
+              ),
+            );
+          },
+        )),
+        DataCell(IconButton(
+          icon: Icon(Icons.edit),
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return CategoriaCreatePage(
+                    categoria: p,
+                  );
+                },
+              ),
+            );
+          },
+        )),
+      ],
+    );
+  }
+
+  @override
+  int get rowCount => categorias.length;
+
+  @override
+  bool get isRowCountApproximate => false;
+
+  @override
+  int get selectedRowCount => selectedCount;
 }

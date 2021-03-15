@@ -4,7 +4,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:nosso/src/core/controller/caixa_controller.dart';
 import 'package:nosso/src/paginas/caixa/caixa_create_page.dart';
-import 'package:nosso/src/paginas/caixa/caixa_list.dart';
+import 'package:nosso/src/paginas/caixa/caixa_table.dart';
 
 class CaixaPage extends StatelessWidget {
   var caixaController = GetIt.I.get<CaixaController>();
@@ -29,19 +29,32 @@ class CaixaPage extends StatelessWidget {
                 );
               }
 
-              return Chip(
-                label: Text(
+              return CircleAvatar(
+                child: Text(
                   (caixaController.caixas.length ?? 0).toString(),
                 ),
               );
             },
+          ),
+          SizedBox(width: 10),
+          CircleAvatar(
+            backgroundColor: Theme.of(context).accentColor.withOpacity(0.4),
+            foregroundColor: Colors.black,
+            child: IconButton(
+              icon: Icon(
+                Icons.refresh,
+              ),
+              onPressed: () {
+                caixaController.getAll();
+              },
+            ),
           ),
           SizedBox(width: 100),
         ],
       ),
       body: Container(
         padding: EdgeInsets.only(left: 100, right: 100, top: 10),
-        child: CaixaList(),
+        child: CaixaTable(),
       ),
       floatingActionButton: FloatingActionButton(
         elevation: 10,

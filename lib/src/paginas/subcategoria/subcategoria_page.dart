@@ -44,12 +44,25 @@ class _SubcategoriaPageState extends State<SubcategoriaPage> {
                 );
               }
 
-              return Chip(
-                label: Text(
+              return CircleAvatar(
+                child: Text(
                   (subCategoriaController.subCategorias.length ?? 0).toString(),
                 ),
               );
             },
+          ),
+          SizedBox(width: 10),
+          CircleAvatar(
+            backgroundColor: Theme.of(context).accentColor.withOpacity(0.4),
+            foregroundColor: Colors.black,
+            child: IconButton(
+              icon: Icon(
+                Icons.refresh,
+              ),
+              onPressed: () {
+                subCategoriaController.getAll();
+              },
+            ),
           ),
           SizedBox(width: 100),
         ],

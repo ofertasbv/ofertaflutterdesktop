@@ -12,10 +12,11 @@ class _UsuarioLoginPageState extends State<UsuarioLoginPage> {
     return Scaffold(
       appBar: AppBar(
         titleSpacing: 50,
+        elevation: 0,
         title: Text("Login"),
       ),
       body: Container(
-        padding: EdgeInsets.only(left: 500, right: 500, top: 100),
+        padding: EdgeInsets.only(left: 550, right: 550, top: 100),
         child: UsuarioLogin(),
       ),
     );

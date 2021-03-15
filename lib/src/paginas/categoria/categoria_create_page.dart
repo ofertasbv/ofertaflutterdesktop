@@ -54,7 +54,7 @@ class _CategoriaCreatePageState extends State<CategoriaCreatePage> {
     setState(() {
       pickerColor = color;
       c.color = pickerColor.toString();
-      print("Cor selecionada: ${pickerColor.toString()}");
+      print("Cor selecionada: ${c.color}");
     });
   }
 

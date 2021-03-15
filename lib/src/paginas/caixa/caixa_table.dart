@@ -4,41 +4,32 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
-import 'package:nosso/src/core/controller/vendedor_controller.dart';
-import 'package:nosso/src/core/model/vendedor.dart';
-import 'package:nosso/src/paginas/vendedor/vendedor_create_page.dart';
+import 'package:nosso/src/core/controller/caixa_controller.dart';
+import 'package:nosso/src/core/model/caixa.dart';
+import 'package:nosso/src/paginas/caixa/caixa_create_page.dart';
 import 'package:nosso/src/util/load/circular_progresso.dart';
 
-class VendedorTable extends StatefulWidget {
+class CaixaTable extends StatefulWidget {
   @override
-  _VendedorTableState createState() => _VendedorTableState();
+  _CaixaTableState createState() => _CaixaTableState();
 }
 
-class _VendedorTableState extends State<VendedorTable>
-    with AutomaticKeepAliveClientMixin<VendedorTable> {
-  var vendedorController = GetIt.I.get<VendedorController>();
+class _CaixaTableState extends State<CaixaTable>
+    with AutomaticKeepAliveClientMixin<CaixaTable> {
+  var caixaController = GetIt.I.get<CaixaController>();
   var nomeController = TextEditingController();
 
   @override
   void initState() {
-    vendedorController.getAll();
+    caixaController.getAll();
     super.initState();
   }
 
   Future<void> onRefresh() {
-    return vendedorController.getAll();
+    return caixaController.getAll();
   }
 
   bool isLoading = true;
-
-  filterByNome(String nome) {
-    if (nome.trim().isEmpty) {
-      vendedorController.getAll();
-    } else {
-      nome = nomeController.text;
-      vendedorController.getAllByNome(nome);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +56,6 @@ class _VendedorTableState extends State<VendedorTable>
                     icon: Icon(Icons.clear),
                   ),
                 ),
-                onChanged: filterByNome,
               ),
             ),
           ),
@@ -85,25 +75,25 @@ class _VendedorTableState extends State<VendedorTable>
       padding: EdgeInsets.only(top: 0),
       child: Observer(
         builder: (context) {
-          List<Vendedor> vendedores = vendedorController.vendedores;
-          if (vendedorController.error != null) {
+          List<Caixa> caixas = caixaController.caixas;
+          if (caixaController.error != null) {
             return Text("Não foi possível carregados dados");
           }
 
-          if (vendedores == null) {
+          if (caixas == null) {
             return CircularProgressor();
           }
 
           return RefreshIndicator(
             onRefresh: onRefresh,
-            child: buildTable(vendedores),
+            child: buildTable(caixas),
           );
         },
       ),
     );
   }
 
-  buildTable(List<Vendedor> vendedores) {
+  buildTable(List<Caixa> caixas) {
     return ListView(
       children: [
         PaginatedDataTable(
@@ -113,17 +103,14 @@ class _VendedorTableState extends State<VendedorTable>
           sortAscending: true,
           showFirstLastButtons: true,
           columns: [
-            DataColumn(label: Text("Cód.")),
-            DataColumn(label: Text("Foto")),
-            DataColumn(label: Text("Nome")),
-            DataColumn(label: Text("Telefone")),
-            DataColumn(label: Text("Email")),
+            DataColumn(label: Text("Código")),
+            DataColumn(label: Text("Descrição")),
+            DataColumn(label: Text("Caixa")),
+            DataColumn(label: Text("Caixa Status")),
+            DataColumn(label: Text("Visualizar")),
             DataColumn(label: Text("Editar")),
-            DataColumn(label: Text("Detalhes")),
-            DataColumn(label: Text("Pedidos")),
-            DataColumn(label: Text("Endereços")),
           ],
-          source: DataSource(vendedores, context),
+          source: DataSource(caixas, context),
         ),
       ],
     );
@@ -135,51 +122,32 @@ class _VendedorTableState extends State<VendedorTable>
 }
 
 class DataSource extends DataTableSource {
-  var vendedorController = GetIt.I.get<VendedorController>();
   BuildContext context;
-  List<Vendedor> vendedores;
+  List<Caixa> caixas;
   int selectedCount = 0;
 
-  DataSource(this.vendedores, this.context);
+  DataSource(this.caixas, this.context);
 
   @override
   DataRow getRow(int index) {
     assert(index >= 0);
-    if (index >= vendedores.length) return null;
-    Vendedor p = vendedores[index];
+    if (index >= caixas.length) return null;
+    Caixa p = caixas[index];
     return DataRow.byIndex(
       index: index,
       cells: [
         DataCell(Text("${p.id}")),
-        DataCell(CircleAvatar(
-          backgroundColor: Colors.grey[200],
-          radius: 20,
-        )),
-        DataCell(Text("${p.nome}")),
-        DataCell(Text("${p.telefone}")),
-        DataCell(Text("${p.usuario.email}")),
-        DataCell(IconButton(
-          icon: Icon(Icons.edit),
-          onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return VendedorCreatePage(
-                    vendedor: p,
-                  );
-                },
-              ),
-            );
-          },
-        )),
+        DataCell(Text("${p.descricao}")),
+        DataCell(Text("${p.referencia}")),
+        DataCell(Text("${p.caixaStatus}")),
         DataCell(IconButton(
           icon: Icon(Icons.search),
           onPressed: () {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (BuildContext context) {
-                  return VendedorCreatePage(
-                    vendedor: p,
+                  return CaixaCreatePage(
+                    caixa: p,
                   );
                 },
               ),
@@ -187,27 +155,13 @@ class DataSource extends DataTableSource {
           },
         )),
         DataCell(IconButton(
-          icon: Icon(Icons.shopping_basket_outlined),
+          icon: Icon(Icons.edit),
           onPressed: () {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (BuildContext context) {
-                  return VendedorCreatePage(
-                    vendedor: p,
-                  );
-                },
-              ),
-            );
-          },
-        )),
-        DataCell(IconButton(
-          icon: Icon(Icons.location_on_outlined),
-          onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return VendedorCreatePage(
-                    vendedor: p,
+                  return CaixaCreatePage(
+                    caixa: p,
                   );
                 },
               ),
@@ -219,7 +173,7 @@ class DataSource extends DataTableSource {
   }
 
   @override
-  int get rowCount => vendedores.length;
+  int get rowCount => caixas.length;
 
   @override
   bool get isRowCountApproximate => false;

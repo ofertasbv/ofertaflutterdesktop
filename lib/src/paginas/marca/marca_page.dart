@@ -4,7 +4,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:nosso/src/core/controller/marca_controller.dart';
 import 'package:nosso/src/paginas/marca/marca_create_page.dart';
-import 'package:nosso/src/paginas/marca/marca_list.dart';
 import 'package:nosso/src/paginas/marca/marca_table.dart';
 
 class MarcaPage extends StatelessWidget {
@@ -15,6 +14,7 @@ class MarcaPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
+        titleSpacing: 50,
         title: Text("Marcas"),
         actions: <Widget>[
           Observer(
@@ -36,7 +36,7 @@ class MarcaPage extends StatelessWidget {
               );
             },
           ),
-          SizedBox(width: 20),
+          SizedBox(width: 100),
         ],
       ),
       body: Container(

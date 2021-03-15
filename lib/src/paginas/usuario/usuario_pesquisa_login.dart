@@ -83,6 +83,7 @@ class _UsuarioPesquisaLoginState extends State<UsuarioPesquisaLogin>
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
+        elevation: 0,
         title: Text("Busca por login"),
       ),
       body: Observer(

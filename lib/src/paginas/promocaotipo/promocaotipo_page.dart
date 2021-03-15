@@ -29,8 +29,8 @@ class PromocaoTipoPage extends StatelessWidget {
                 );
               }
 
-              return Chip(
-                label: Text(
+              return CircleAvatar(
+                child: Text(
                   (promocaoTipoController.promocaoTipos.length ?? 0).toString(),
                 ),
               );

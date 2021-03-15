@@ -70,9 +70,7 @@ class _PedidoTableState extends State<PedidoTable> {
           columns: [
             DataColumn(label: Text("Código")),
             DataColumn(label: Text("Descrição.")),
-            DataColumn(label: Text("Valor")),
             DataColumn(label: Text("Total")),
-            DataColumn(label: Text("Desconto.")),
             DataColumn(label: Text("Cliente")),
             DataColumn(label: Text("Loja")),
             DataColumn(label: Text("Status")),
@@ -105,20 +103,12 @@ class DataSource extends DataTableSource {
         DataCell(Text("${p.id}")),
         DataCell(Text("${p.descricao}")),
         DataCell(Text(
-          "${p.valorInicial}",
-          style: TextStyle(color: Colors.red),
-        )),
-        DataCell(Text(
-          "${p.valorTotal}",
-          style: TextStyle(color: Colors.red),
-        )),
-        DataCell(Text(
           "${p.valorDesconto}",
           style: TextStyle(color: Colors.red),
         )),
         DataCell(Text("${p.cliente.nome}")),
         DataCell(Text("${p.loja.nome}")),
-        DataCell(Text("${p.statusPedido}")),
+        DataCell(Text("${p.statusPedido.toString()}")),
         DataCell(IconButton(
           icon: Icon(Icons.search),
           onPressed: () {

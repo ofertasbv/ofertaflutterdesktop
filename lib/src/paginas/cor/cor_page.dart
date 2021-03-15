@@ -4,7 +4,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:nosso/src/core/controller/cor_controller.dart';
 import 'package:nosso/src/paginas/cor/cor_create_page.dart';
-import 'package:nosso/src/paginas/cor/cor_list.dart';
+import 'package:nosso/src/paginas/cor/cor_table.dart';
 
 class CorPage extends StatelessWidget {
   var corController = GetIt.I.get<CorController>();
@@ -36,10 +36,13 @@ class CorPage extends StatelessWidget {
               );
             },
           ),
-          SizedBox(width: 20),
+          SizedBox(width: 100),
         ],
       ),
-      body: CorList(),
+      body: Container(
+        padding: EdgeInsets.only(left: 100, right: 100, top: 10),
+        child: CorTable(),
+      ),
       floatingActionButton: FloatingActionButton(
         elevation: 10,
         child: Icon(Icons.add),
