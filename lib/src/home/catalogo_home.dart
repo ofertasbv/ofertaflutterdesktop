@@ -24,8 +24,43 @@ class _CatalogoHomeState extends State<CatalogoHome> {
           padding: EdgeInsets.all(0),
           children: <Widget>[
             SizedBox(height: 5),
+
             Column(
               children: <Widget>[
+                Container(
+                  padding: EdgeInsets.all(10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        "Área de conhecimento",
+                        style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      GestureDetector(
+                        child: Text(
+                          "veja mais",
+                          style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (BuildContext context) {
+                                return PromocaoPage();
+                              },
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 10),
                 Container(
                   height: 250,
                   padding: EdgeInsets.all(0),

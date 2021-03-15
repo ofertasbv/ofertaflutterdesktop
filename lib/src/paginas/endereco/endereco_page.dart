@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -15,6 +14,7 @@ class EnderecoPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
+        titleSpacing: 50,
         title: Text("Endereços"),
         actions: <Widget>[
           Observer(
@@ -29,14 +29,27 @@ class EnderecoPage extends StatelessWidget {
                 );
               }
 
-              return Chip(
-                label: Text(
+              return CircleAvatar(
+                child: Text(
                   (enderecoController.enderecos.length ?? 0).toString(),
                 ),
               );
             },
           ),
-          SizedBox(width: 20),
+          SizedBox(width: 10),
+          CircleAvatar(
+            backgroundColor: Theme.of(context).accentColor.withOpacity(0.4),
+            foregroundColor: Colors.black,
+            child: IconButton(
+              icon: Icon(
+                Icons.refresh,
+              ),
+              onPressed: () {
+                enderecoController.getAll();
+              },
+            ),
+          ),
+          SizedBox(width: 100),
         ],
       ),
       body: EnderecoList(),

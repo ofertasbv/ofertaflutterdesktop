@@ -4,13 +4,13 @@ import 'package:google_fonts/google_fonts.dart';
 ThemeData getTheme(BuildContext context) {
   return ThemeData(
     brightness: Brightness.light,
-    primaryColor: Colors.grey[200],
+    primaryColor: Colors.grey[100],
     accentColor: Colors.purple,
     primarySwatch: Colors.deepOrange,
     textTheme: GoogleFonts.sourceSansProTextTheme().copyWith(
       headline6: TextStyle(
-        color: Colors.white,
-        fontWeight: FontWeight.bold,
+        color: Colors.purple,
+        fontWeight: FontWeight.w700,
         fontSize: 30,
       ),
       headline5: TextStyle(color: Colors.blueAccent),
@@ -23,11 +23,11 @@ ThemeData getTheme(BuildContext context) {
       elevation: 1,
       color: Colors.white,
       margin: EdgeInsets.all(0),
-      // shadowColor: Colors.white,
-      // shape: RoundedRectangleBorder(
-      //   borderRadius: new BorderRadius.circular(0),
-      //   side: BorderSide(color: Colors.white, width: 1),
-      // ),
+      shadowColor: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: new BorderRadius.circular(0),
+        side: BorderSide(color: Colors.white, width: 0),
+      ),
     ),
     buttonTheme: ButtonThemeData(
       splashColor: Colors.black,

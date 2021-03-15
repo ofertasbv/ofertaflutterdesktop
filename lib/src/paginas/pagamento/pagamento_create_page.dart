@@ -68,6 +68,7 @@ class _PagamentoCreatePageState extends State<PagamentoCreatePage>
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
+        titleSpacing: 50,
         title: Text("Pagamento cadastro"),
         actions: <Widget>[
           SizedBox(width: 20),
@@ -82,16 +83,19 @@ class _PagamentoCreatePageState extends State<PagamentoCreatePage>
           )
         ],
       ),
-      body: Observer(
-        builder: (context) {
-          if (pagamentoController.dioError == null) {
-            return buildListViewForm(context);
-          } else {
-            print("Erro: ${pagamentoController.mensagem}");
-            showToast("${pagamentoController.mensagem}");
-            return buildListViewForm(context);
-          }
-        },
+      body: Container(
+        padding: EdgeInsets.only(left: 100, right: 100, top: 10),
+        child: Observer(
+          builder: (context) {
+            if (pagamentoController.dioError == null) {
+              return buildListViewForm(context);
+            } else {
+              print("Erro: ${pagamentoController.mensagem}");
+              showToast("${pagamentoController.mensagem}");
+              return buildListViewForm(context);
+            }
+          },
+        ),
       ),
     );
   }
