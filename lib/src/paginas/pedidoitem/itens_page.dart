@@ -45,6 +45,7 @@ class _ItemPageState extends State<ItemPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         titleSpacing: 50,
         title: Text("Itens pedido"),
         actions: <Widget>[

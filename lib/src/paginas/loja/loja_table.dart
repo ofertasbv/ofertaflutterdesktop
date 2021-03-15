@@ -96,109 +96,132 @@ class _LojaTableState extends State<LojaTable>
 
           return RefreshIndicator(
             onRefresh: onRefresh,
-            child: builderTable(lojas),
+            child: buildTable(lojas),
           );
         },
       ),
     );
   }
 
-  builderTable(List<Loja> lojas) {
-    return DataTable(
-      sortAscending: true,
-      showCheckboxColumn: true,
-      showBottomBorder: true,
-      columnSpacing: 70,
-      columns: [
-        DataColumn(label: Text("Código")),
-        DataColumn(label: Text("Foto")),
-        DataColumn(label: Text("Nome")),
-        DataColumn(label: Text("Cnpj")),
-        DataColumn(label: Text("Editar")),
-        DataColumn(label: Text("Detalhes")),
-        DataColumn(label: Text("Produtos")),
-        DataColumn(label: Text("Promoções")),
+  buildTable(List<Loja> lojas) {
+    return ListView(
+      children: [
+        PaginatedDataTable(
+          rowsPerPage: 8,
+          showCheckboxColumn: true,
+          sortColumnIndex: 1,
+          sortAscending: true,
+          showFirstLastButtons: true,
+          columns: [
+            DataColumn(label: Text("Código")),
+            DataColumn(label: Text("Foto")),
+            DataColumn(label: Text("Nome")),
+            DataColumn(label: Text("Cnpj")),
+            DataColumn(label: Text("Editar")),
+            DataColumn(label: Text("Detalhes")),
+            DataColumn(label: Text("Produtos")),
+            DataColumn(label: Text("Promoções")),
+          ],
+          source: DataSource(lojas, context),
+        ),
       ],
-      rows: lojas
-          .map(
-            (p) => DataRow(
-              onSelectChanged: (i) {
-                setState(() {
-                  // selecionaItem(p);
-                });
-              },
-              cells: [
-                DataCell(Text("${p.id}")),
-                DataCell(CircleAvatar(
-                  backgroundColor: Colors.grey[200],
-                  radius: 20,
-                )),
-                DataCell(Text("${p.nome}")),
-                DataCell(Text(p.cnpj)),
-                DataCell(IconButton(
-                  icon: Icon(Icons.edit),
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (BuildContext context) {
-                          return LojaCreatePage(
-                            loja: p,
-                          );
-                        },
-                      ),
-                    );
-                  },
-                )),
-                DataCell(IconButton(
-                  icon: Icon(Icons.search),
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (BuildContext context) {
-                          return LojaCreatePage(
-                            loja: p,
-                          );
-                        },
-                      ),
-                    );
-                  },
-                )),
-                DataCell(IconButton(
-                  icon: Icon(Icons.list),
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (BuildContext context) {
-                          return LojaCreatePage(
-                            loja: p,
-                          );
-                        },
-                      ),
-                    );
-                  },
-                )),
-                DataCell(IconButton(
-                  icon: Icon(Icons.list),
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (BuildContext context) {
-                          return LojaCreatePage(
-                            loja: p,
-                          );
-                        },
-                      ),
-                    );
-                  },
-                )),
-              ],
-            ),
-          )
-          .toList(),
     );
   }
 
   @override
   // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
+}
+
+class DataSource extends DataTableSource {
+  var lojaController = GetIt.I.get<LojaController>();
+  BuildContext context;
+  List<Loja> lojas;
+  int selectedCount = 0;
+
+  DataSource(this.lojas, this.context);
+
+  @override
+  DataRow getRow(int index) {
+    assert(index >= 0);
+    if (index >= lojas.length) return null;
+    Loja p = lojas[index];
+    return DataRow.byIndex(
+      index: index,
+      cells: [
+        DataCell(Text("${p.id}")),
+        DataCell(CircleAvatar(
+          backgroundColor: Colors.grey[200],
+          radius: 20,
+        )),
+        DataCell(Text("${p.nome}")),
+        DataCell(Text(p.cnpj)),
+        DataCell(IconButton(
+          icon: Icon(Icons.edit),
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return LojaCreatePage(
+                    loja: p,
+                  );
+                },
+              ),
+            );
+          },
+        )),
+        DataCell(IconButton(
+          icon: Icon(Icons.search),
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return LojaCreatePage(
+                    loja: p,
+                  );
+                },
+              ),
+            );
+          },
+        )),
+        DataCell(IconButton(
+          icon: Icon(Icons.list),
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return LojaCreatePage(
+                    loja: p,
+                  );
+                },
+              ),
+            );
+          },
+        )),
+        DataCell(IconButton(
+          icon: Icon(Icons.list),
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return LojaCreatePage(
+                    loja: p,
+                  );
+                },
+              ),
+            );
+          },
+        )),
+      ],
+    );
+  }
+
+  @override
+  int get rowCount => lojas.length;
+
+  @override
+  bool get isRowCountApproximate => false;
+
+  @override
+  int get selectedRowCount => selectedCount;
 }

@@ -16,6 +16,7 @@ class CaixaControlePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         titleSpacing: 50,
+        elevation: 0,
         title: Text("Controle de caixa"),
         actions: <Widget>[
           SizedBox(width: 2),

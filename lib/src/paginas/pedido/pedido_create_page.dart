@@ -118,18 +118,23 @@ class _PedidoCreatePageState extends State<PedidoCreatePage>
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
+        elevation: 0,
+        titleSpacing: 50,
         title: Text("Pedido cadastros"),
       ),
-      body: Observer(
-        builder: (context) {
-          if (pedidoController.dioError == null) {
-            return buildListViewForm(context);
-          } else {
-            print("Erro: ${pedidoController.mensagem}");
-            showToast("${pedidoController.mensagem}");
-            return buildListViewForm(context);
-          }
-        },
+      body: Container(
+        padding: EdgeInsets.only(left: 100, right: 100, top: 10),
+        child: Observer(
+          builder: (context) {
+            if (pedidoController.dioError == null) {
+              return buildListViewForm(context);
+            } else {
+              print("Erro: ${pedidoController.mensagem}");
+              showToast("${pedidoController.mensagem}");
+              return buildListViewForm(context);
+            }
+          },
+        ),
       ),
     );
   }
@@ -164,10 +169,14 @@ class _PedidoCreatePageState extends State<PedidoCreatePage>
           ),
         ),
         SizedBox(height: 10),
-        StepMenuEtapa(
-          colorPedido: Colors.grey,
-          colorPagamento: Colors.orangeAccent,
-          colorConfirmacao: Colors.orangeAccent,
+        Container(
+          child: Center(
+            child: StepMenuEtapa(
+              colorPedido: Colors.grey,
+              colorPagamento: Colors.orangeAccent,
+              colorConfirmacao: Colors.orangeAccent,
+            ),
+          ),
         ),
         SizedBox(height: 0),
         Container(

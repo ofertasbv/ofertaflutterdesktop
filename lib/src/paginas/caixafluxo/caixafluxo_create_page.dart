@@ -115,6 +115,7 @@ class _CaixaFluxoCreatePageState extends State<CaixaFluxoCreatePage>
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
+        elevation: 0,
         title: Text("Caixa Fluxo cadastro"),
         actions: <Widget>[
           SizedBox(width: 20),

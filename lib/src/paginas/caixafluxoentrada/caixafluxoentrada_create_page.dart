@@ -76,6 +76,7 @@ class _CaixaFluxoEntradaCreatePageState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         title: Text("Caixa entrada cadastro"),
         actions: <Widget>[
           SizedBox(width: 20),

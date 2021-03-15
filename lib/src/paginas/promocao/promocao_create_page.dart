@@ -142,6 +142,7 @@ class _PromocaoCreatePageState extends State<PromocaoCreatePage>
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
+        elevation: 0,
         titleSpacing: 50,
         title: p.nome == null ? Text("Cadastro de promoção") : Text(p.nome),
       ),

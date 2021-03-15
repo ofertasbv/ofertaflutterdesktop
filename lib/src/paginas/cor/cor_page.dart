@@ -13,6 +13,8 @@ class CorPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
+        titleSpacing: 50,
         title: Text("Cores"),
         actions: <Widget>[
           Observer(

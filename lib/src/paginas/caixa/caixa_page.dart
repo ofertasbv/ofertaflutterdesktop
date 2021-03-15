@@ -14,6 +14,7 @@ class CaixaPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         titleSpacing: 50,
+        elevation: 0,
         title: Text("Caixas"),
         actions: <Widget>[
           Observer(

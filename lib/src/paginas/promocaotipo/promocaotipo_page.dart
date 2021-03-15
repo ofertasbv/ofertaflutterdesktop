@@ -13,6 +13,7 @@ class PromocaoTipoPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         titleSpacing: 50,
         title: Text("Tipos promoções"),
         actions: <Widget>[

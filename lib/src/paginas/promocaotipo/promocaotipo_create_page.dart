@@ -77,6 +77,7 @@ class _PromocaoTipoCreatePageState extends State<PromocaoTipoCreatePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         title: promocaoTipoController.promocaoTipo == null
             ? Text("Cadastro de tipo de promoção")
             : Text(promocaoTipo.descricao),

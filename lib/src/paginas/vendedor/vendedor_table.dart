@@ -96,113 +96,136 @@ class _VendedorTableState extends State<VendedorTable>
 
           return RefreshIndicator(
             onRefresh: onRefresh,
-            child: builderTable(vendedores),
+            child: buildTable(vendedores),
           );
         },
       ),
     );
   }
 
-  builderTable(List<Vendedor> vendedores) {
-    return DataTable(
-      sortAscending: true,
-      showCheckboxColumn: true,
-      showBottomBorder: true,
-      columnSpacing: 45,
-      columns: [
-        DataColumn(label: Text("Código")),
-        DataColumn(label: Text("Foto")),
-        DataColumn(label: Text("Nome")),
-        DataColumn(label: Text("Email")),
-        DataColumn(label: Text("Telefone")),
-        DataColumn(label: Text("Cpf")),
-        DataColumn(label: Text("Editar")),
-        DataColumn(label: Text("Detalhes")),
-        DataColumn(label: Text("Pedidos")),
-        DataColumn(label: Text("Endereços")),
+  buildTable(List<Vendedor> vendedores) {
+    return ListView(
+      children: [
+        PaginatedDataTable(
+          rowsPerPage: 8,
+          showCheckboxColumn: true,
+          sortColumnIndex: 1,
+          sortAscending: true,
+          showFirstLastButtons: true,
+          columns: [
+            DataColumn(label: Text("Código")),
+            DataColumn(label: Text("Foto")),
+            DataColumn(label: Text("Nome")),
+            DataColumn(label: Text("Email")),
+            DataColumn(label: Text("Telefone")),
+            DataColumn(label: Text("Cpf")),
+            DataColumn(label: Text("Editar")),
+            DataColumn(label: Text("Detalhes")),
+            DataColumn(label: Text("Pedidos")),
+            DataColumn(label: Text("Endereços")),
+          ],
+          source: DataSource(vendedores, context),
+        ),
       ],
-      rows: vendedores
-          .map(
-            (p) => DataRow(
-              onSelectChanged: (i) {
-                setState(() {
-                  // selecionaItem(p);
-                });
-              },
-              cells: [
-                DataCell(Text("${p.id}")),
-                DataCell(CircleAvatar(
-                  backgroundColor: Colors.grey[200],
-                  radius: 20,
-                )),
-                DataCell(Text("${p.nome}")),
-                DataCell(Text("${p.telefone}")),
-                DataCell(Text("${p.usuario.email}")),
-                DataCell(Text(p.cpf)),
-                DataCell(IconButton(
-                  icon: Icon(Icons.edit),
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (BuildContext context) {
-                          return VendedorCreatePage(
-                            vendedor: p,
-                          );
-                        },
-                      ),
-                    );
-                  },
-                )),
-                DataCell(IconButton(
-                  icon: Icon(Icons.search),
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (BuildContext context) {
-                          return VendedorCreatePage(
-                            vendedor: p,
-                          );
-                        },
-                      ),
-                    );
-                  },
-                )),
-                DataCell(IconButton(
-                  icon: Icon(Icons.shopping_basket_outlined),
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (BuildContext context) {
-                          return VendedorCreatePage(
-                            vendedor: p,
-                          );
-                        },
-                      ),
-                    );
-                  },
-                )),
-                DataCell(IconButton(
-                  icon: Icon(Icons.location_on_outlined),
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (BuildContext context) {
-                          return VendedorCreatePage(
-                            vendedor: p,
-                          );
-                        },
-                      ),
-                    );
-                  },
-                )),
-              ],
-            ),
-          )
-          .toList(),
     );
   }
 
   @override
   // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
+}
+
+class DataSource extends DataTableSource {
+  var vendedorController = GetIt.I.get<VendedorController>();
+  BuildContext context;
+  List<Vendedor> vendedores;
+  int selectedCount = 0;
+
+  DataSource(this.vendedores, this.context);
+
+  @override
+  DataRow getRow(int index) {
+    assert(index >= 0);
+    if (index >= vendedores.length) return null;
+    Vendedor p = vendedores[index];
+    return DataRow.byIndex(
+      index: index,
+      cells: [
+        DataCell(Text("${p.id}")),
+        DataCell(CircleAvatar(
+          backgroundColor: Colors.grey[200],
+          radius: 20,
+        )),
+        DataCell(Text("${p.nome}")),
+        DataCell(Text("${p.telefone}")),
+        DataCell(Text("${p.usuario.email}")),
+        DataCell(Text(p.cpf)),
+        DataCell(IconButton(
+          icon: Icon(Icons.edit),
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return VendedorCreatePage(
+                    vendedor: p,
+                  );
+                },
+              ),
+            );
+          },
+        )),
+        DataCell(IconButton(
+          icon: Icon(Icons.search),
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return VendedorCreatePage(
+                    vendedor: p,
+                  );
+                },
+              ),
+            );
+          },
+        )),
+        DataCell(IconButton(
+          icon: Icon(Icons.shopping_basket_outlined),
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return VendedorCreatePage(
+                    vendedor: p,
+                  );
+                },
+              ),
+            );
+          },
+        )),
+        DataCell(IconButton(
+          icon: Icon(Icons.location_on_outlined),
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return VendedorCreatePage(
+                    vendedor: p,
+                  );
+                },
+              ),
+            );
+          },
+        )),
+      ],
+    );
+  }
+
+  @override
+  int get rowCount => vendedores.length;
+
+  @override
+  bool get isRowCountApproximate => false;
+
+  @override
+  int get selectedRowCount => selectedCount;
 }

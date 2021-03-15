@@ -142,6 +142,7 @@ class _LojaCreatePageState extends State<LojaCreatePage> with ValidadorPessoa {
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
+        elevation: 0,
         titleSpacing: 50,
         title: p.nome == null ? Text("Cadastro de loja") : Text(p.nome),
       ),

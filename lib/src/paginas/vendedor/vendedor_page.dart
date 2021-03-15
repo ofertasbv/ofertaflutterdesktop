@@ -14,6 +14,7 @@ class VendedorPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         titleSpacing: 50,
+        elevation: 0,
         title: Text("Vendedores"),
         actions: <Widget>[
           Observer(

@@ -15,6 +15,7 @@ class PagamentoPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         titleSpacing: 50,
         title: Text("Pagamentos"),
         actions: <Widget>[

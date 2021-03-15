@@ -242,6 +242,7 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
+        elevation: 0,
         title: p.nome == null ? Text("Cadastro de produtos") : Text(p.nome),
       ),
       body: Container(

@@ -76,18 +76,23 @@ class _MarcaCreatePageState extends State<MarcaCreatePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
+        titleSpacing: 50,
         title: c.nome == null ? Text("Cadastro de marca") : Text(c.nome),
       ),
-      body: Observer(
-        builder: (context) {
-          if (marcaController.dioError == null) {
-            return buildListViewForm(context);
-          } else {
-            print("Erro: ${marcaController.mensagem}");
-            showToast("${marcaController.mensagem}");
-            return buildListViewForm(context);
-          }
-        },
+      body: Container(
+        padding: EdgeInsets.only(left: 100, right: 100, top: 10),
+        child: Observer(
+          builder: (context) {
+            if (marcaController.dioError == null) {
+              return buildListViewForm(context);
+            } else {
+              print("Erro: ${marcaController.mensagem}");
+              showToast("${marcaController.mensagem}");
+              return buildListViewForm(context);
+            }
+          },
+        ),
       ),
     );
   }

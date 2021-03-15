@@ -15,6 +15,7 @@ class CategoriaPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         titleSpacing: 50,
+        elevation: 0,
         title: Text("Categorias"),
         actions: <Widget>[
           Observer(

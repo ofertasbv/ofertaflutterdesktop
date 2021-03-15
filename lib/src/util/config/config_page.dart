@@ -29,7 +29,6 @@ import 'package:nosso/src/paginas/vendedor/vendedor_page.dart';
 import 'package:nosso/src/util/Examples/teste_mapa.dart';
 import 'package:nosso/src/util/barcodigo/leitor_codigo_barra.dart';
 import 'package:nosso/src/util/barcodigo/leitor_qr_code.dart';
-import 'package:nosso/src/util/componentes/radiolist.dart';
 
 class ConfigPage extends StatefulWidget {
   @override
@@ -47,27 +46,20 @@ class _ConfigPageState extends State<ConfigPage> {
         children: <Widget>[
           builderBodyBack(),
           Container(
-            padding: EdgeInsets.only(left: 100, right: 100),
+            padding: EdgeInsets.only(left: 0, right: 0),
             child: Column(
               children: [
                 Container(
-                  height: 70,
+                  height: 190,
                   width: double.infinity,
-                  color: Colors.grey[100],
-                  child: ListTile(
-                    leading: CircleAvatar(
-                      backgroundColor: Colors.indigo,
-                      radius: 20,
-                      backgroundImage: AssetImage(ConstantApi.urlLogo),
-                    ),
-                    title: Text("DASHBOARD - PAINEL DE CONTROLE"),
-                    subtitle: Text("Novo Repartimento - PÁ, 10-03-2021"),
-                  ),
+                  color: Colors.transparent,
+                  padding: EdgeInsets.only(left: 100, right: 100, top: 10),
+                  child: buildGridViewHeader(context),
                 ),
                 SizedBox(height: 10),
                 Expanded(
                   child: Container(
-                    padding: EdgeInsets.only(top: 20),
+                    padding: EdgeInsets.only(left: 100, right: 100),
                     color: Colors.grey[100],
                     child: buildGridViewConfig(context),
                   ),
@@ -86,7 +78,7 @@ class _ConfigPageState extends State<ConfigPage> {
         gradient: LinearGradient(
           colors: [
             Colors.grey[200].withOpacity(0.2),
-            Colors.grey[600].withOpacity(0.9)
+            Colors.grey[300].withOpacity(0.9)
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
@@ -95,14 +87,11 @@ class _ConfigPageState extends State<ConfigPage> {
     );
   }
 
-  buildGridViewConfig(BuildContext context) {
+  buildGridViewHeader(BuildContext context) {
     return GridView.count(
-      padding: EdgeInsets.only(top: 2),
-      // crossAxisSpacing: 1,
-      // mainAxisSpacing: 1,
+      padding: EdgeInsets.all(50),
       crossAxisCount: 4,
-
-      childAspectRatio: MediaQuery.of(context).size.aspectRatio * 2.1,
+      childAspectRatio: MediaQuery.of(context).size.aspectRatio * 2,
       scrollDirection: Axis.vertical,
       children: <Widget>[
         GestureDetector(
@@ -110,36 +99,31 @@ class _ConfigPageState extends State<ConfigPage> {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (BuildContext context) {
-                  return LeitorCodigoBarra();
+                  return PedidoPage();
                 },
               ),
             );
           },
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
+          child: Container(
+            width: 200,
+            child: ListTile(
+              leading: CircleAvatar(
+                radius: 30,
+                backgroundColor: Colors.grey,
+                child: Icon(
+                  Icons.account_circle_outlined,
+                  size: 30,
                 ),
-                child: CircleAvatar(
-                  backgroundColor:
-                      Theme.of(context).primaryColor.withOpacity(1),
-                  foregroundColor: Colors.grey[100],
-                  radius: 20,
-                  child: Icon(
-                    Icons.qr_code_outlined,
-                    size: 20,
-                  ),
-                ),
-                padding: EdgeInsets.all(10),
-                height: 50,
-                width: 100,
               ),
-              Text("Code bar", style: TextStyle(fontSize: 12)),
-            ],
+              title: Text(
+                "Fabio Resplandes",
+                style: TextStyle(
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              subtitle: Text("ofertasbv@gmail.com "),
+            ),
           ),
         ),
         GestureDetector(
@@ -147,32 +131,45 @@ class _ConfigPageState extends State<ConfigPage> {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (BuildContext context) {
-                  return LeitorQRCode();
+                  return HomePage();
                 },
               ),
             );
           },
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: CircleAvatar(
-                  backgroundColor: Colors.grey[500],
-                  foregroundColor: Colors.white,
-                  radius: 20,
-                  child: Icon(
-                    Icons.qr_code_scanner_outlined,
-                    size: 20,
-                  ),
-                ),
-                padding: EdgeInsets.all(10),
+          child: Container(
+            width: 200,
+            child: ListTile(
+              leading: Icon(
+                Icons.home,
+                size: 40,
+                color: Theme.of(context).accentColor,
               ),
-              Text("Qr code", style: TextStyle(fontSize: 12)),
-            ],
+              title: Text("Home page"),
+              subtitle: Text("Página inicial"),
+            ),
+          ),
+        ),
+        GestureDetector(
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return CaixaControlePage();
+                },
+              ),
+            );
+          },
+          child: Container(
+            width: 200,
+            child: ListTile(
+              leading: Icon(
+                Icons.account_box_outlined,
+                size: 40,
+                color: Theme.of(context).accentColor.withOpacity(1),
+              ),
+              title: Text("Controle de caixa"),
+              subtitle: Text("compra e vendas"),
+            ),
           ),
         ),
         GestureDetector(
@@ -187,27 +184,51 @@ class _ConfigPageState extends State<ConfigPage> {
               ),
             );
           },
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: CircleAvatar(
-                  backgroundColor: Colors.grey[500],
-                  foregroundColor: Colors.white,
-                  radius: 20,
-                  child: Icon(
-                    Icons.map_outlined,
-                    size: 20,
-                  ),
-                ),
-                padding: EdgeInsets.all(10),
+          child: Container(
+            width: 200,
+            child: ListTile(
+              leading: Icon(
+                Icons.location_on_outlined,
+                size: 40,
+                color: Theme.of(context).accentColor.withOpacity(1),
               ),
-              Text("Locais", style: TextStyle(fontSize: 12)),
-            ],
+              title: Text("Locais de comerciais"),
+              subtitle: Text("Locais de lojas"),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  buildGridViewConfig(BuildContext context) {
+    return GridView.count(
+      padding: EdgeInsets.all(50),
+      crossAxisCount: 4,
+      childAspectRatio: MediaQuery.of(context).size.aspectRatio * 2,
+      scrollDirection: Axis.vertical,
+      children: <Widget>[
+        GestureDetector(
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return LeitorCodigoBarra();
+                },
+              ),
+            );
+          },
+          child: Container(
+            width: 200,
+            child: ListTile(
+              leading: Icon(
+                Icons.qr_code_outlined,
+                size: 40,
+                color: Theme.of(context).accentColor.withOpacity(1),
+              ),
+              title: Text("Código de barra"),
+              subtitle: Text("Leitor de código de barra"),
+            ),
           ),
         ),
         GestureDetector(
@@ -215,35 +236,22 @@ class _ConfigPageState extends State<ConfigPage> {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (BuildContext context) {
-                  return HomePage();
+                  return LeitorQRCode();
                 },
               ),
             );
           },
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: CircleAvatar(
-                  backgroundColor:
-                      Theme.of(context).primaryColor.withOpacity(1),
-                  foregroundColor: Colors.grey[100],
-                  radius: 20,
-                  child: Icon(
-                    Icons.home_outlined,
-                    size: 20,
-                  ),
-                ),
-                padding: EdgeInsets.all(10),
+          child: Container(
+            width: 200,
+            child: ListTile(
+              leading: Icon(
+                Icons.qr_code_outlined,
+                size: 40,
+                color: Theme.of(context).accentColor.withOpacity(1),
               ),
-              Center(
-                child: Text("Home", style: TextStyle(fontSize: 12)),
-              ),
-            ],
+              title: Text("Qr coder"),
+              subtitle: Text("Leitor de qr coder"),
+            ),
           ),
         ),
         GestureDetector(
@@ -256,29 +264,17 @@ class _ConfigPageState extends State<ConfigPage> {
               ),
             );
           },
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: CircleAvatar(
-                  backgroundColor: Colors.grey[500],
-                  foregroundColor: Colors.white,
-                  radius: 20,
-                  child: Icon(
-                    Icons.shopping_basket_outlined,
-                    size: 20,
-                  ),
-                ),
-                padding: EdgeInsets.all(10),
+          child: Container(
+            width: 200,
+            child: ListTile(
+              leading: Icon(
+                Icons.shopping_basket_outlined,
+                size: 40,
+                color: Theme.of(context).accentColor.withOpacity(1),
               ),
-              Center(
-                child: Text("Produto", style: TextStyle(fontSize: 12)),
-              ),
-            ],
+              title: Text("Produtos"),
+              subtitle: Text("Lista de produtos"),
+            ),
           ),
         ),
         GestureDetector(
@@ -291,28 +287,17 @@ class _ConfigPageState extends State<ConfigPage> {
               ),
             );
           },
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: CircleAvatar(
-                  backgroundColor:
-                      Theme.of(context).primaryColor.withOpacity(1),
-                  foregroundColor: Colors.grey[100],
-                  radius: 20,
-                  child: Icon(
-                    Icons.list_alt_outlined,
-                    size: 20,
-                  ),
-                ),
-                padding: EdgeInsets.all(10),
+          child: Container(
+            width: 200,
+            child: ListTile(
+              leading: Icon(
+                Icons.list_alt_outlined,
+                size: 40,
+                color: Theme.of(context).accentColor.withOpacity(1),
               ),
-              Text("Categoria", style: TextStyle(fontSize: 12)),
-            ],
+              title: Text("Categoria"),
+              subtitle: Text("Lista de categorias"),
+            ),
           ),
         ),
         GestureDetector(
@@ -325,28 +310,17 @@ class _ConfigPageState extends State<ConfigPage> {
               ),
             );
           },
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: CircleAvatar(
-                  backgroundColor:
-                      Theme.of(context).primaryColor.withOpacity(1),
-                  foregroundColor: Colors.grey[100],
-                  radius: 20,
-                  child: Icon(
-                    Icons.list_alt_sharp,
-                    size: 20,
-                  ),
-                ),
-                padding: EdgeInsets.all(10),
+          child: Container(
+            width: 200,
+            child: ListTile(
+              leading: Icon(
+                Icons.list_alt_sharp,
+                size: 40,
+                color: Theme.of(context).accentColor.withOpacity(1),
               ),
-              Text("SubCategoria", style: TextStyle(fontSize: 12)),
-            ],
+              title: Text("SubCategorias"),
+              subtitle: Text("lista de subcategorias"),
+            ),
           ),
         ),
         GestureDetector(
@@ -359,27 +333,17 @@ class _ConfigPageState extends State<ConfigPage> {
               ),
             );
           },
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: CircleAvatar(
-                  backgroundColor: Colors.grey[500],
-                  foregroundColor: Colors.white,
-                  radius: 20,
-                  child: Icon(
-                    Icons.add_alert_outlined,
-                    size: 20,
-                  ),
-                ),
-                padding: EdgeInsets.all(10),
+          child: Container(
+            width: 200,
+            child: ListTile(
+              leading: Icon(
+                Icons.add_alert_outlined,
+                size: 40,
+                color: Theme.of(context).accentColor.withOpacity(1),
               ),
-              Text("Promoção", style: TextStyle(fontSize: 12)),
-            ],
+              title: Text("Promoções"),
+              subtitle: Text("lista de promoções"),
+            ),
           ),
         ),
         GestureDetector(
@@ -392,27 +356,17 @@ class _ConfigPageState extends State<ConfigPage> {
               ),
             );
           },
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: CircleAvatar(
-                  backgroundColor: Colors.grey[500],
-                  foregroundColor: Colors.white,
-                  radius: 20,
-                  child: Icon(
-                    Icons.add_alert_outlined,
-                    size: 20,
-                  ),
-                ),
-                padding: EdgeInsets.all(10),
+          child: Container(
+            width: 200,
+            child: ListTile(
+              leading: Icon(
+                Icons.add_alert_outlined,
+                size: 40,
+                color: Theme.of(context).accentColor.withOpacity(1),
               ),
-              Text("Promoção tipo", style: TextStyle(fontSize: 12)),
-            ],
+              title: Text("Promoção tipo"),
+              subtitle: Text("lista de tipos de promoções"),
+            ),
           ),
         ),
         GestureDetector(
@@ -425,27 +379,17 @@ class _ConfigPageState extends State<ConfigPage> {
               ),
             );
           },
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: CircleAvatar(
-                  backgroundColor: Colors.grey[500],
-                  foregroundColor: Colors.white,
-                  radius: 20,
-                  child: Icon(
-                    Icons.shopping_bag_outlined,
-                    size: 20,
-                  ),
-                ),
-                padding: EdgeInsets.all(10),
+          child: Container(
+            width: 200,
+            child: ListTile(
+              leading: Icon(
+                Icons.local_convenience_store_outlined,
+                size: 40,
+                color: Theme.of(context).accentColor.withOpacity(1),
               ),
-              Text("Loja", style: TextStyle(fontSize: 12)),
-            ],
+              title: Text("Lojas"),
+              subtitle: Text("lista de lojas"),
+            ),
           ),
         ),
         GestureDetector(
@@ -458,28 +402,17 @@ class _ConfigPageState extends State<ConfigPage> {
               ),
             );
           },
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: CircleAvatar(
-                  backgroundColor:
-                      Theme.of(context).primaryColor.withOpacity(1),
-                  foregroundColor: Colors.grey[100],
-                  radius: 20,
-                  child: Icon(
-                    Icons.people_alt_outlined,
-                    size: 20,
-                  ),
-                ),
-                padding: EdgeInsets.all(10),
+          child: Container(
+            width: 200,
+            child: ListTile(
+              leading: Icon(
+                Icons.person_add_alt,
+                size: 40,
+                color: Theme.of(context).accentColor.withOpacity(1),
               ),
-              Text("Cliente", style: TextStyle(fontSize: 12)),
-            ],
+              title: Text("Clientes"),
+              subtitle: Text("lista de clientes"),
+            ),
           ),
         ),
         GestureDetector(
@@ -492,28 +425,17 @@ class _ConfigPageState extends State<ConfigPage> {
               ),
             );
           },
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: CircleAvatar(
-                  backgroundColor:
-                      Theme.of(context).primaryColor.withOpacity(1),
-                  foregroundColor: Colors.grey[100],
-                  radius: 20,
-                  child: Icon(
-                    Icons.people_alt_outlined,
-                    size: 20,
-                  ),
-                ),
-                padding: EdgeInsets.all(10),
+          child: Container(
+            width: 200,
+            child: ListTile(
+              leading: Icon(
+                Icons.supervised_user_circle_outlined,
+                size: 40,
+                color: Theme.of(context).accentColor.withOpacity(1),
               ),
-              Text("Vendedor", style: TextStyle(fontSize: 12)),
-            ],
+              title: Text("Vendedores"),
+              subtitle: Text("lista de vendedores"),
+            ),
           ),
         ),
         GestureDetector(
@@ -526,28 +448,17 @@ class _ConfigPageState extends State<ConfigPage> {
               ),
             );
           },
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: CircleAvatar(
-                  backgroundColor:
-                      Theme.of(context).primaryColor.withOpacity(1),
-                  foregroundColor: Colors.grey[100],
-                  radius: 20,
-                  child: Icon(
-                    Icons.account_circle_outlined,
-                    size: 20,
-                  ),
-                ),
-                padding: EdgeInsets.all(10),
+          child: Container(
+            width: 200,
+            child: ListTile(
+              leading: Icon(
+                Icons.supervised_user_circle,
+                size: 40,
+                color: Theme.of(context).accentColor.withOpacity(1),
               ),
-              Text("Usuário", style: TextStyle(fontSize: 12)),
-            ],
+              title: Text("Usuários"),
+              subtitle: Text("lista de usuários"),
+            ),
           ),
         ),
         GestureDetector(
@@ -560,28 +471,17 @@ class _ConfigPageState extends State<ConfigPage> {
               ),
             );
           },
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: CircleAvatar(
-                  backgroundColor:
-                      Theme.of(context).primaryColor.withOpacity(1),
-                  foregroundColor: Colors.grey[100],
-                  radius: 20,
-                  child: Icon(
-                    Icons.account_tree_outlined,
-                    size: 20,
-                  ),
-                ),
-                padding: EdgeInsets.all(10),
+          child: Container(
+            width: 200,
+            child: ListTile(
+              leading: Icon(
+                Icons.vpn_key_outlined,
+                size: 40,
+                color: Theme.of(context).accentColor.withOpacity(1),
               ),
-              Text("Permissão", style: TextStyle(fontSize: 12)),
-            ],
+              title: Text("Permissões"),
+              subtitle: Text("lista de permissões"),
+            ),
           ),
         ),
         GestureDetector(
@@ -594,28 +494,17 @@ class _ConfigPageState extends State<ConfigPage> {
               ),
             );
           },
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: CircleAvatar(
-                  backgroundColor:
-                      Theme.of(context).primaryColor.withOpacity(1),
-                  foregroundColor: Colors.grey[100],
-                  radius: 20,
-                  child: Icon(
-                    Icons.photo_album_outlined,
-                    size: 20,
-                  ),
-                ),
-                padding: EdgeInsets.all(10),
+          child: Container(
+            width: 200,
+            child: ListTile(
+              leading: Icon(
+                Icons.filter,
+                size: 40,
+                color: Theme.of(context).accentColor.withOpacity(1),
               ),
-              Text("Arquivo", style: TextStyle(fontSize: 12)),
-            ],
+              title: Text("Arquivos"),
+              subtitle: Text("lista de arquivos"),
+            ),
           ),
         ),
         GestureDetector(
@@ -628,28 +517,17 @@ class _ConfigPageState extends State<ConfigPage> {
               ),
             );
           },
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: CircleAvatar(
-                  backgroundColor:
-                      Theme.of(context).primaryColor.withOpacity(1),
-                  foregroundColor: Colors.grey[100],
-                  radius: 20,
-                  child: Icon(
-                    Icons.shopping_bag_outlined,
-                    size: 20,
-                  ),
-                ),
-                padding: EdgeInsets.all(10),
+          child: Container(
+            width: 200,
+            child: ListTile(
+              leading: Icon(
+                Icons.list_alt_sharp,
+                size: 40,
+                color: Theme.of(context).accentColor.withOpacity(1),
               ),
-              Text("Marca", style: TextStyle(fontSize: 12)),
-            ],
+              title: Text("Marcas"),
+              subtitle: Text("lista de marcas"),
+            ),
           ),
         ),
         GestureDetector(
@@ -662,28 +540,17 @@ class _ConfigPageState extends State<ConfigPage> {
               ),
             );
           },
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: CircleAvatar(
-                  backgroundColor:
-                      Theme.of(context).primaryColor.withOpacity(1),
-                  foregroundColor: Colors.grey[100],
-                  radius: 20,
-                  child: Icon(
-                    Icons.shopping_basket_outlined,
-                    size: 20,
-                  ),
-                ),
-                padding: EdgeInsets.all(10),
+          child: Container(
+            width: 200,
+            child: ListTile(
+              leading: Icon(
+                Icons.shop_outlined,
+                size: 40,
+                color: Theme.of(context).accentColor.withOpacity(1),
               ),
-              Text("Items", style: TextStyle(fontSize: 12)),
-            ],
+              title: Text("Itens"),
+              subtitle: Text("lista de itens"),
+            ),
           ),
         ),
         GestureDetector(
@@ -696,27 +563,17 @@ class _ConfigPageState extends State<ConfigPage> {
               ),
             );
           },
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: CircleAvatar(
-                  backgroundColor: Colors.grey[500],
-                  foregroundColor: Colors.white,
-                  radius: 20,
-                  child: Icon(
-                    Icons.location_on_outlined,
-                    size: 20,
-                  ),
-                ),
-                padding: EdgeInsets.all(10),
+          child: Container(
+            width: 200,
+            child: ListTile(
+              leading: Icon(
+                Icons.location_on_outlined,
+                size: 40,
+                color: Theme.of(context).accentColor.withOpacity(1),
               ),
-              Text("Endereço", style: TextStyle(fontSize: 12)),
-            ],
+              title: Text("Endereços"),
+              subtitle: Text("lista de endereços"),
+            ),
           ),
         ),
         GestureDetector(
@@ -729,28 +586,17 @@ class _ConfigPageState extends State<ConfigPage> {
               ),
             );
           },
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: CircleAvatar(
-                  backgroundColor:
-                      Theme.of(context).primaryColor.withOpacity(1),
-                  foregroundColor: Colors.grey[100],
-                  radius: 20,
-                  child: Icon(
-                    Icons.color_lens_outlined,
-                    size: 20,
-                  ),
-                ),
-                padding: EdgeInsets.all(10),
+          child: Container(
+            width: 200,
+            child: ListTile(
+              leading: Icon(
+                Icons.color_lens_outlined,
+                size: 40,
+                color: Theme.of(context).accentColor.withOpacity(1),
               ),
-              Text("Cor", style: TextStyle(fontSize: 12)),
-            ],
+              title: Text("Cores"),
+              subtitle: Text("lista de cores"),
+            ),
           ),
         ),
         GestureDetector(
@@ -763,28 +609,17 @@ class _ConfigPageState extends State<ConfigPage> {
               ),
             );
           },
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: CircleAvatar(
-                  backgroundColor:
-                      Theme.of(context).primaryColor.withOpacity(1),
-                  foregroundColor: Colors.grey[100],
-                  radius: 20,
-                  child: Icon(
-                    Icons.format_size_outlined,
-                    size: 20,
-                  ),
-                ),
-                padding: EdgeInsets.all(10),
+          child: Container(
+            width: 200,
+            child: ListTile(
+              leading: Icon(
+                Icons.format_size,
+                size: 40,
+                color: Theme.of(context).accentColor.withOpacity(1),
               ),
-              Text("Tamanho", style: TextStyle(fontSize: 12)),
-            ],
+              title: Text("Tamanhos"),
+              subtitle: Text("lista de tamanhos"),
+            ),
           ),
         ),
         GestureDetector(
@@ -797,28 +632,17 @@ class _ConfigPageState extends State<ConfigPage> {
               ),
             );
           },
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: CircleAvatar(
-                  backgroundColor:
-                      Theme.of(context).primaryColor.withOpacity(1),
-                  foregroundColor: Colors.grey[100],
-                  radius: 20,
-                  child: Icon(
-                    Icons.shopping_cart_outlined,
-                    size: 20,
-                  ),
-                ),
-                padding: EdgeInsets.all(10),
+          child: Container(
+            width: 200,
+            child: ListTile(
+              leading: Icon(
+                Icons.shop_outlined,
+                size: 40,
+                color: Theme.of(context).accentColor.withOpacity(1),
               ),
-              Text("Pedido", style: TextStyle(fontSize: 12)),
-            ],
+              title: Text("Pedidos"),
+              subtitle: Text("lista de pedidos"),
+            ),
           ),
         ),
         GestureDetector(
@@ -831,28 +655,17 @@ class _ConfigPageState extends State<ConfigPage> {
               ),
             );
           },
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: CircleAvatar(
-                  backgroundColor:
-                      Theme.of(context).primaryColor.withOpacity(1),
-                  foregroundColor: Colors.grey[100],
-                  radius: 20,
-                  child: Icon(
-                    Icons.favorite_outline_outlined,
-                    size: 20,
-                  ),
-                ),
-                padding: EdgeInsets.all(10),
+          child: Container(
+            width: 200,
+            child: ListTile(
+              leading: Icon(
+                Icons.favorite_border_outlined,
+                size: 40,
+                color: Theme.of(context).accentColor.withOpacity(1),
               ),
-              Text("Favorito", style: TextStyle(fontSize: 12)),
-            ],
+              title: Text("Favoritos"),
+              subtitle: Text("lista de favoritos"),
+            ),
           ),
         ),
         GestureDetector(
@@ -865,28 +678,17 @@ class _ConfigPageState extends State<ConfigPage> {
               ),
             );
           },
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: CircleAvatar(
-                  backgroundColor:
-                      Theme.of(context).primaryColor.withOpacity(1),
-                  foregroundColor: Colors.grey[100],
-                  radius: 20,
-                  child: Icon(
-                    Icons.credit_card_outlined,
-                    size: 20,
-                  ),
-                ),
-                padding: EdgeInsets.all(10),
+          child: Container(
+            width: 200,
+            child: ListTile(
+              leading: Icon(
+                Icons.credit_card_outlined,
+                size: 40,
+                color: Theme.of(context).accentColor.withOpacity(1),
               ),
-              Text("Card Pay", style: TextStyle(fontSize: 12)),
-            ],
+              title: Text("Cartões"),
+              subtitle: Text("lista de cartões"),
+            ),
           ),
         ),
         GestureDetector(
@@ -899,62 +701,17 @@ class _ConfigPageState extends State<ConfigPage> {
               ),
             );
           },
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: CircleAvatar(
-                  backgroundColor:
-                      Theme.of(context).primaryColor.withOpacity(1),
-                  foregroundColor: Colors.grey[100],
-                  radius: 20,
-                  child: Icon(
-                    Icons.credit_card_outlined,
-                    size: 20,
-                  ),
-                ),
-                padding: EdgeInsets.all(10),
+          child: Container(
+            width: 200,
+            child: ListTile(
+              leading: Icon(
+                Icons.payment_outlined,
+                size: 40,
+                color: Theme.of(context).accentColor.withOpacity(1),
               ),
-              Text("Pagamento", style: TextStyle(fontSize: 12)),
-            ],
-          ),
-        ),
-        GestureDetector(
-          onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return CaixaControlePage();
-                },
-              ),
-            );
-          },
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: CircleAvatar(
-                  backgroundColor:
-                      Theme.of(context).primaryColor.withOpacity(1),
-                  foregroundColor: Colors.grey[100],
-                  radius: 20,
-                  child: Icon(
-                    Icons.credit_card_outlined,
-                    size: 20,
-                  ),
-                ),
-                padding: EdgeInsets.all(10),
-              ),
-              Text("Controle caixa", style: TextStyle(fontSize: 12)),
-            ],
+              title: Text("Pagamentos"),
+              subtitle: Text("lista de pagamentos"),
+            ),
           ),
         ),
         GestureDetector(
@@ -967,62 +724,17 @@ class _ConfigPageState extends State<ConfigPage> {
               ),
             );
           },
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: CircleAvatar(
-                  backgroundColor:
-                      Theme.of(context).primaryColor.withOpacity(1),
-                  foregroundColor: Colors.grey[100],
-                  radius: 20,
-                  child: Icon(
-                    Icons.credit_card_outlined,
-                    size: 20,
-                  ),
-                ),
-                padding: EdgeInsets.all(10),
+          child: Container(
+            width: 200,
+            child: ListTile(
+              leading: Icon(
+                Icons.account_box_sharp,
+                size: 40,
+                color: Theme.of(context).accentColor.withOpacity(1),
               ),
-              Text("Caixa fluxo", style: TextStyle(fontSize: 12)),
-            ],
-          ),
-        ),
-        GestureDetector(
-          onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return TesteRadioList();
-                },
-              ),
-            );
-          },
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: CircleAvatar(
-                  backgroundColor:
-                      Theme.of(context).primaryColor.withOpacity(1),
-                  foregroundColor: Colors.grey[100],
-                  radius: 20,
-                  child: Icon(
-                    Icons.credit_card_outlined,
-                    size: 20,
-                  ),
-                ),
-                padding: EdgeInsets.all(10),
-              ),
-              Text("RadioList", style: TextStyle(fontSize: 12)),
-            ],
+              title: Text("Fluxos"),
+              subtitle: Text("lista de fluxosde caixas"),
+            ),
           ),
         ),
       ],

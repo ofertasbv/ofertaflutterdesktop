@@ -76,6 +76,7 @@ class _CaixaFluxoSaidaCreatePageState extends State<CaixaFluxoSaidaCreatePage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         title: Text("Caixa saídas cadastro"),
         actions: <Widget>[
           SizedBox(width: 20),

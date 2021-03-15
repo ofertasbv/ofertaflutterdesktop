@@ -78,19 +78,24 @@ class _CorCreatePageState extends State<CorCreatePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        titleSpacing: 50,
+        elevation: 0,
         title:
             c.descricao == null ? Text("Cadastro de cor") : Text(c.descricao),
       ),
-      body: Observer(
-        builder: (context) {
-          if (corController.dioError == null) {
-            return buildListViewForm(context);
-          } else {
-            print("Erro: ${corController.mensagem}");
-            showToast("${corController.mensagem}");
-            return buildListViewForm(context);
-          }
-        },
+      body: Container(
+        padding: EdgeInsets.only(left: 100, right: 100, top: 10),
+        child: Observer(
+          builder: (context) {
+            if (corController.dioError == null) {
+              return buildListViewForm(context);
+            } else {
+              print("Erro: ${corController.mensagem}");
+              showToast("${corController.mensagem}");
+              return buildListViewForm(context);
+            }
+          },
+        ),
       ),
     );
   }

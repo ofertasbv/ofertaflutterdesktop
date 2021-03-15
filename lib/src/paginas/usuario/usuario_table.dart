@@ -4,39 +4,39 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
-import 'package:nosso/src/core/controller/cliente_controller.dart';
-import 'package:nosso/src/core/model/cliente.dart';
-import 'package:nosso/src/paginas/cliente/cliente_create_page.dart';
+import 'package:nosso/src/core/controller/usuario_controller.dart';
+import 'package:nosso/src/core/model/usuario.dart';
+import 'package:nosso/src/paginas/usuario/usuario_create_page.dart';
 import 'package:nosso/src/util/load/circular_progresso.dart';
 
-class ClienteTable extends StatefulWidget {
+class UsuarioTable extends StatefulWidget {
   @override
-  _ClienteTableState createState() => _ClienteTableState();
+  _UsuarioTableState createState() => _UsuarioTableState();
 }
 
-class _ClienteTableState extends State<ClienteTable>
-    with AutomaticKeepAliveClientMixin<ClienteTable> {
-  var clienteController = GetIt.I.get<ClienteController>();
+class _UsuarioTableState extends State<UsuarioTable>
+    with AutomaticKeepAliveClientMixin<UsuarioTable> {
+  var usuarioController = GetIt.I.get<UsuarioController>();
   var nomeController = TextEditingController();
 
   @override
   void initState() {
-    clienteController.getAll();
+    usuarioController.getAll();
     super.initState();
   }
 
   Future<void> onRefresh() {
-    return clienteController.getAll();
+    return usuarioController.getAll();
   }
 
   bool isLoading = true;
 
-  filterByNome(String nome) {
-    if (nome.trim().isEmpty) {
-      clienteController.getAll();
+  filterByNome(String email) {
+    if (email.trim().isEmpty) {
+      usuarioController.getAll();
     } else {
-      nome = nomeController.text;
-      clienteController.getAllByNome(nome);
+      email = nomeController.text;
+      usuarioController.getEmail(email);
     }
   }
 
@@ -85,25 +85,25 @@ class _ClienteTableState extends State<ClienteTable>
       padding: EdgeInsets.only(top: 0),
       child: Observer(
         builder: (context) {
-          List<Cliente> clientes = clienteController.clientes;
-          if (clienteController.error != null) {
+          List<Usuario> usuarios = usuarioController.usuarios;
+          if (usuarioController.error != null) {
             return Text("Não foi possível carregados dados");
           }
 
-          if (clientes == null) {
+          if (usuarios == null) {
             return CircularProgressor();
           }
 
           return RefreshIndicator(
             onRefresh: onRefresh,
-            child: buildTable(clientes),
+            child: buildTable(usuarios),
           );
         },
       ),
     );
   }
 
-  buildTable(List<Cliente> clientes) {
+  buildTable(List<Usuario> usuarios) {
     return ListView(
       children: [
         PaginatedDataTable(
@@ -114,17 +114,11 @@ class _ClienteTableState extends State<ClienteTable>
           showFirstLastButtons: true,
           columns: [
             DataColumn(label: Text("Código")),
-            DataColumn(label: Text("Foto")),
-            DataColumn(label: Text("Nome")),
             DataColumn(label: Text("Email")),
-            DataColumn(label: Text("Telefone")),
-            DataColumn(label: Text("Cpf")),
+            DataColumn(label: Text("Visualizar")),
             DataColumn(label: Text("Editar")),
-            DataColumn(label: Text("Detalhes")),
-            DataColumn(label: Text("Pedidos")),
-            DataColumn(label: Text("Endereços")),
           ],
-          source: DataSource(clientes, context),
+          source: DataSource(usuarios, context),
         ),
       ],
     );
@@ -136,52 +130,31 @@ class _ClienteTableState extends State<ClienteTable>
 }
 
 class DataSource extends DataTableSource {
-  var clienteController = GetIt.I.get<ClienteController>();
+  var usuarioController = GetIt.I.get<UsuarioController>();
   BuildContext context;
-  List<Cliente> clientes;
+  List<Usuario> usuarios;
   int selectedCount = 0;
 
-  DataSource(this.clientes, this.context);
+  DataSource(this.usuarios, this.context);
 
   @override
   DataRow getRow(int index) {
     assert(index >= 0);
-    if (index >= clientes.length) return null;
-    Cliente p = clientes[index];
+    if (index >= usuarios.length) return null;
+    Usuario p = usuarios[index];
     return DataRow.byIndex(
       index: index,
       cells: [
         DataCell(Text("${p.id}")),
-        DataCell(CircleAvatar(
-          backgroundColor: Colors.grey[200],
-          radius: 20,
-        )),
-        DataCell(Text("${p.nome}")),
-        DataCell(Text("${p.telefone}")),
-        DataCell(Text("${p.usuario.email}")),
-        DataCell(Text(p.cpf)),
-        DataCell(IconButton(
-          icon: Icon(Icons.edit),
-          onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return ClienteCreatePage(
-                    cliente: p,
-                  );
-                },
-              ),
-            );
-          },
-        )),
+        DataCell(Text("${p.email}")),
         DataCell(IconButton(
           icon: Icon(Icons.search),
           onPressed: () {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (BuildContext context) {
-                  return ClienteCreatePage(
-                    cliente: p,
+                  return UsuarioCreatePage(
+                    usuario: p,
                   );
                 },
               ),
@@ -189,27 +162,13 @@ class DataSource extends DataTableSource {
           },
         )),
         DataCell(IconButton(
-          icon: Icon(Icons.shopping_basket_outlined),
+          icon: Icon(Icons.edit),
           onPressed: () {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (BuildContext context) {
-                  return ClienteCreatePage(
-                    cliente: p,
-                  );
-                },
-              ),
-            );
-          },
-        )),
-        DataCell(IconButton(
-          icon: Icon(Icons.location_on_outlined),
-          onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return ClienteCreatePage(
-                    cliente: p,
+                  return UsuarioCreatePage(
+                    usuario: p,
                   );
                 },
               ),
@@ -221,7 +180,7 @@ class DataSource extends DataTableSource {
   }
 
   @override
-  int get rowCount => clientes.length;
+  int get rowCount => usuarios.length;
 
   @override
   bool get isRowCountApproximate => false;

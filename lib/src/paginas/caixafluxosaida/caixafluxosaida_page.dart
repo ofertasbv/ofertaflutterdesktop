@@ -16,6 +16,7 @@ class CaixaFluxoSaidaPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         title: Text("Caixa despesas"),
         actions: <Widget>[
           Observer(

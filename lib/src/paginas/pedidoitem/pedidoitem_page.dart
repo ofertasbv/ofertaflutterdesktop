@@ -15,6 +15,7 @@ class PedidoItemPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         titleSpacing: 50,
+        elevation: 0,
         title: Text("Itens pedido"),
         actions: <Widget>[
           Observer(

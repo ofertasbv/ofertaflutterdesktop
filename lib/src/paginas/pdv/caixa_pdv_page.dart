@@ -200,6 +200,7 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
     return Scaffold(
       key: GlobalScaffold.instance.scaffkey,
       appBar: AppBar(
+        elevation: 0,
         titleSpacing: 50,
         title: Text("PDV2020"),
         actions: <Widget>[

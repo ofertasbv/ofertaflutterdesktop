@@ -90,6 +90,7 @@ class _CaixaCreatePageState extends State<CaixaCreatePage>
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
+        elevation: 0,
         titleSpacing: 50,
         title: Text("Caixa cadastro"),
         actions: <Widget>[

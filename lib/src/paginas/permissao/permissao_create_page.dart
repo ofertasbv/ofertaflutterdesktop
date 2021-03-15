@@ -78,6 +78,7 @@ class _PermissaoCreatePageState extends State<PermissaoCreatePage> {
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
+        elevation: 0,
         title: p.descricao == null
             ? Text("Cadastro de permissão")
             : Text(p.descricao),

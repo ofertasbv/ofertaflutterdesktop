@@ -141,6 +141,7 @@ class _CategoriaCreatePageState extends State<CategoriaCreatePage> {
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
+        elevation: 0,
         titleSpacing: 50,
         title: c.nome == null ? Text("Cadastro de categoria") : Text(c.nome),
       ),

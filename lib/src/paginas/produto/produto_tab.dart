@@ -49,7 +49,7 @@ class _ProdutoTabState extends State<ProdutoTab> {
       child: Scaffold(
         appBar: AppBar(
           titleSpacing: 50,
-          elevation: 1,
+          elevation: 0,
           title: Text("Produtos"),
           actions: <Widget>[
             Observer(

@@ -79,6 +79,7 @@ class _ProdutoDetalhesTabState extends State<ProdutoDetalhesTab>
       child: Scaffold(
         key: GlobalScaffold.instance.scaffkey,
         appBar: AppBar(
+          elevation: 0,
           titleSpacing: 50,
           title: p.nome == null ? Text("Detalhes do produto") : Text(p.nome),
           actions: <Widget>[

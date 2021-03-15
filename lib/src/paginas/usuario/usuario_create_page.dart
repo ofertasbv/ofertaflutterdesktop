@@ -82,6 +82,7 @@ class _UsuarioCreatePageState extends State<UsuarioCreatePage>
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
+        elevation: 0,
         title: u.email == null ? Text("Cadastro de usuário") : Text(u.email),
       ),
       body: Observer(

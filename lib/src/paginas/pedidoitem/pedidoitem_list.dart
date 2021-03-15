@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:nosso/src/core/controller/pedidoItem_controller.dart';
+import 'package:nosso/src/core/controller/produto_controller.dart';
 import 'package:nosso/src/core/model/pedidoitem.dart';
 import 'package:nosso/src/paginas/pedidoitem/pedidoitem_create_page.dart';
 import 'package:nosso/src/util/load/circular_progresso.dart';
@@ -11,18 +12,17 @@ class PedidoItemList extends StatefulWidget {
   _PedidoItemListState createState() => _PedidoItemListState();
 }
 
-class _PedidoItemListState extends State<PedidoItemList>
-    with AutomaticKeepAliveClientMixin<PedidoItemList> {
+class _PedidoItemListState extends State<PedidoItemList> {
   var pedidoItemController = GetIt.I.get<PedidoItemController>();
 
   @override
   void initState() {
-    pedidoItemController.pedidosItens();
+    pedidoItemController.getAll();
     super.initState();
   }
 
   Future<void> onRefresh() {
-    pedidoItemController.pedidosItens();
+    pedidoItemController.getAll();
   }
 
   @override
@@ -42,55 +42,34 @@ class _PedidoItemListState extends State<PedidoItemList>
             );
           }
 
-          return RefreshIndicator(
-            onRefresh: onRefresh,
-            child: builderList(itens),
-          );
+          return buildTable(itens);
         },
       ),
     );
   }
 
-  ListView builderList(List<PedidoItem> itens) {
-    return ListView.builder(
-      itemCount: itens.length,
-      itemBuilder: (context, index) {
-        PedidoItem c = itens[index];
-
-        return Container(
-          color: Colors.grey[200],
-          child: ListTile(
-            isThreeLine: true,
-            leading: Container(
-              padding: EdgeInsets.all(1),
-              decoration: new BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Theme.of(context).primaryColor,
-                    Theme.of(context).primaryColor
-                  ],
-                ),
-                border: Border.all(
-                  color: Colors.black,
-                  width: 1,
-                ),
-                borderRadius: BorderRadius.circular(35),
-              ),
-              child: CircleAvatar(
-                backgroundColor: Colors.grey[100],
-                radius: 20,
-                child: Icon(Icons.shopping_basket_outlined),
-              ),
-            ),
-            title: Text(c.produto.nome),
-            subtitle: Text("R\$ ${c.valorTotal}"),
-            trailing: buildPopupMenuButton(context, c),
-            onLongPress: () {
-              showDialogAlert(context, c);
-            },
-          ),
-        );
-      },
+  buildTable(List<PedidoItem> itens) {
+    return ListView(
+      children: [
+        PaginatedDataTable(
+          rowsPerPage: 8,
+          showCheckboxColumn: true,
+          sortColumnIndex: 1,
+          sortAscending: true,
+          showFirstLastButtons: true,
+          columns: [
+            DataColumn(label: Text("Id")),
+            DataColumn(label: Text("Foto")),
+            DataColumn(label: Text("Produto")),
+            DataColumn(label: Text("Valor unit.")),
+            DataColumn(label: Text("Valor total")),
+            DataColumn(label: Text("Quantidade")),
+            DataColumn(label: Text("Visualizar")),
+            DataColumn(label: Text("Editar")),
+          ],
+          source: DataSource(itens, context),
+        ),
+      ],
     );
   }
 
@@ -127,60 +106,82 @@ class _PedidoItemListState extends State<PedidoItemList>
       },
     );
   }
+}
 
-  PopupMenuButton<String> buildPopupMenuButton(
-      BuildContext context, PedidoItem c) {
-    return PopupMenuButton<String>(
-      padding: EdgeInsets.zero,
-      icon: Icon(Icons.more_vert),
-      onSelected: (valor) {
-        if (valor == "novo") {
-          print("novo");
-        }
-        if (valor == "editar") {
-          print("editar");
-          Navigator.of(context).pop();
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (BuildContext context) {
-                return PedidoItemCreatePage(
-                  pedidoItem: c,
-                );
-              },
-            ),
-          );
-        }
-        if (valor == "delete") {
-          print("delete");
-        }
-      },
-      itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-        const PopupMenuItem<String>(
-          value: 'novo',
-          child: ListTile(
-            leading: Icon(Icons.add),
-            title: Text('novo'),
+
+class DataSource extends DataTableSource {
+  var pedidoItemController = GetIt.I.get<PedidoItemController>();
+  var produtoController = GetIt.I.get<ProdutoController>();
+  BuildContext context;
+  List<PedidoItem> pedidoItens;
+  int selectedCount = 0;
+
+  DataSource(this.pedidoItens, this.context);
+
+  @override
+  DataRow getRow(int index) {
+    assert(index >= 0);
+    if (index >= pedidoItens.length) return null;
+    PedidoItem p = pedidoItens[index];
+    return DataRow.byIndex(
+      index: index,
+      cells: [
+        DataCell(Text("${p.id}")),
+        DataCell(CircleAvatar(
+          backgroundColor: Colors.grey[100],
+          radius: 20,
+          backgroundImage: NetworkImage(
+            "${produtoController.arquivo + p.produto.foto}",
           ),
-        ),
-        const PopupMenuItem<String>(
-          value: 'editar',
-          child: ListTile(
-            leading: Icon(Icons.edit),
-            title: Text('editar'),
-          ),
-        ),
-        const PopupMenuItem<String>(
-          value: 'delete',
-          child: ListTile(
-            leading: Icon(Icons.delete),
-            title: Text('Delete'),
-          ),
-        )
+        )),
+        DataCell(Text("${p.produto.nome}")),
+        DataCell(Text(
+          "${p.valorUnitario}",
+          style: TextStyle(color: Colors.red),
+        )),
+        DataCell(Text(
+          "${p.valorTotal}",
+          style: TextStyle(color: Colors.red),
+        )),
+        DataCell(Text("${p.quantidade}")),
+        DataCell(IconButton(
+          icon: Icon(Icons.search),
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return PedidoItemCreatePage(
+                    pedidoItem: p,
+                  );
+                },
+              ),
+            );
+          },
+        )),
+        DataCell(IconButton(
+          icon: Icon(Icons.edit),
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return PedidoItemCreatePage(
+                    pedidoItem: p,
+                  );
+                },
+              ),
+            );
+          },
+        )),
       ],
     );
   }
 
   @override
-  // TODO: implement wantKeepAlive
-  bool get wantKeepAlive => true;
+  int get rowCount => pedidoItens.length;
+
+  @override
+  bool get isRowCountApproximate => false;
+
+  @override
+  int get selectedRowCount => selectedCount;
 }

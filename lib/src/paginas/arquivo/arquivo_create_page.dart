@@ -125,6 +125,7 @@ class _ArquivoCreatePageState extends State<ArquivoCreatePage> {
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
+        elevation: 0,
         title: Text("Arquivos cadastros"),
       ),
       body: Observer(

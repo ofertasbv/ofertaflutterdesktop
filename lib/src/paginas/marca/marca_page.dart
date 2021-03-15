@@ -14,6 +14,7 @@ class MarcaPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         title: Text("Marcas"),
         actions: <Widget>[
           Observer(

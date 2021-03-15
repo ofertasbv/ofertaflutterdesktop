@@ -13,6 +13,7 @@ class ArquivoPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         title: Text("Arquivos"),
         actions: <Widget>[
           Observer(

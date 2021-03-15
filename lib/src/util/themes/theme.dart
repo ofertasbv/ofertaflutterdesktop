@@ -4,21 +4,20 @@ import 'package:google_fonts/google_fonts.dart';
 ThemeData getTheme(BuildContext context) {
   return ThemeData(
     brightness: Brightness.light,
-    primaryColor: Colors.grey[300],
+    primaryColor: Colors.grey[200],
     accentColor: Colors.purple,
     primarySwatch: Colors.deepOrange,
     textTheme: GoogleFonts.sourceSansProTextTheme().copyWith(
-      headline1: TextStyle(
-        fontSize: 72.0,
-        fontWeight: FontWeight.bold,
-      ),
       headline6: TextStyle(
-        fontSize: 16,
-        color: Color(0xFF86848C),
+        color: Colors.white,
+        fontWeight: FontWeight.bold,
+        fontSize: 30,
       ),
-      bodyText2: TextStyle(
-        fontSize: 14,
-      ),
+      headline5: TextStyle(color: Colors.blueAccent),
+      headline4: TextStyle(color: Colors.yellow),
+      headline3: TextStyle(color: Colors.pink),
+      headline2: TextStyle(color: Colors.green),
+      headline1: TextStyle(color: Colors.cyan),
     ),
     cardTheme: CardTheme(
       elevation: 0,

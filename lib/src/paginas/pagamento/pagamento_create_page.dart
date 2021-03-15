@@ -67,6 +67,7 @@ class _PagamentoCreatePageState extends State<PagamentoCreatePage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         title: Text("Pagamento cadastro"),
         actions: <Widget>[
           SizedBox(width: 20),

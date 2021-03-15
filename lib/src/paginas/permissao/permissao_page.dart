@@ -13,6 +13,7 @@ class PermissaoPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         title: Text("Permissões"),
         actions: <Widget>[
           Observer(

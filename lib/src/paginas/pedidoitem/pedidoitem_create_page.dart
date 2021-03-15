@@ -77,6 +77,7 @@ class _PedidoItemCreatePageState extends State<PedidoItemCreatePage> {
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
+        elevation: 0,
         titleSpacing: 50,
         title: Text("Pedidos itens cadastros"),
       ),

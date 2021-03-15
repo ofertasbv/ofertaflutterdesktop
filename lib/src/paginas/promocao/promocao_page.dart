@@ -28,6 +28,7 @@ class _PromocaoPageState extends State<PromocaoPage> {
     return Scaffold(
       appBar: AppBar(
         titleSpacing: 50,
+        elevation: 0,
         title: Text("Ofertas"),
         actions: <Widget>[
           Observer(

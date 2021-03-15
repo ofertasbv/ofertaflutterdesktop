@@ -14,6 +14,7 @@ class ClientePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         titleSpacing: 50,
+        elevation: 0,
         title: Text("Clientes"),
         actions: <Widget>[
           Observer(

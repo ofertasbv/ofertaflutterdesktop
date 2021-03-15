@@ -5,6 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:nosso/src/core/controller/usuario_controller.dart';
 import 'package:nosso/src/paginas/usuario/usuario_create_page.dart';
 import 'package:nosso/src/paginas/usuario/usuario_list.dart';
+import 'package:nosso/src/paginas/usuario/usuario_table.dart';
 
 class UsuarioPage extends StatelessWidget {
   var usuarioController = GetIt.I.get<UsuarioController>();
@@ -14,6 +15,7 @@ class UsuarioPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         titleSpacing: 50,
+        elevation: 0,
         title: Text("Usuários"),
         actions: <Widget>[
           Observer(
@@ -38,7 +40,10 @@ class UsuarioPage extends StatelessWidget {
           SizedBox(width: 100),
         ],
       ),
-      body: UsuarioList(),
+      body: Container(
+        padding: EdgeInsets.only(left: 100, right: 100, top: 10),
+        child: UsuarioTable(),
+      ),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[

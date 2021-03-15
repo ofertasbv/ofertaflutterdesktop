@@ -104,6 +104,7 @@ class _VendedorCreatePageState extends State<VendedorCreatePage>
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
+        elevation: 0,
         titleSpacing: 50,
         title: p.nome == null ? Text("Cadastro de vendedor") : Text(p.nome),
       ),

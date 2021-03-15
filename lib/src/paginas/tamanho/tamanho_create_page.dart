@@ -78,20 +78,25 @@ class _TamanhoCreatePageState extends State<TamanhoCreatePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
+        titleSpacing: 50,
         title: c.descricao == null
             ? Text("Cadastro de tamanho")
             : Text(c.descricao),
       ),
-      body: Observer(
-        builder: (context) {
-          if (tamanhoController.dioError == null) {
-            return buildListViewForm(context);
-          } else {
-            print("Erro: ${tamanhoController.mensagem}");
-            showToast("${tamanhoController.mensagem}");
-            return buildListViewForm(context);
-          }
-        },
+      body: Container(
+        padding: EdgeInsets.only(left: 100, right: 100, top: 10),
+        child: Observer(
+          builder: (context) {
+            if (tamanhoController.dioError == null) {
+              return buildListViewForm(context);
+            } else {
+              print("Erro: ${tamanhoController.mensagem}");
+              showToast("${tamanhoController.mensagem}");
+              return buildListViewForm(context);
+            }
+          },
+        ),
       ),
     );
   }

@@ -227,9 +227,13 @@ class _PromocaoTableState extends State<PromocaoTable> {
             DataColumn(label: Text("Foto")),
             DataColumn(label: Text("Nome")),
             DataColumn(label: Text("Descrição")),
+            DataColumn(label: Text("Registro")),
+            DataColumn(label: Text("Início")),
+            DataColumn(label: Text("Encerramento")),
             DataColumn(label: Text("Loja")),
             DataColumn(label: Text("Visualizar")),
             DataColumn(label: Text("Editar")),
+            DataColumn(label: Text("Produtos")),
           ],
           source: DataSource(promocoes, context),
         ),
@@ -243,6 +247,7 @@ class DataSource extends DataTableSource {
   BuildContext context;
   List<Promocao> promocoes;
   int selectedCount = 0;
+  var dateFormat = DateFormat('dd/MM/yyyy');
 
   DataSource(this.promocoes, this.context);
 
@@ -263,6 +268,9 @@ class DataSource extends DataTableSource {
         )),
         DataCell(Text(p.nome)),
         DataCell(Text(p.descricao)),
+        DataCell(Text("${dateFormat.format(p.dataRegistro)}")),
+        DataCell(Text("${dateFormat.format(p.dataInicio)}")),
+        DataCell(Text("${dateFormat.format(p.dataFinal)}")),
         DataCell(Text(p.loja.nome)),
         DataCell(IconButton(
           icon: Icon(Icons.search),
@@ -280,6 +288,20 @@ class DataSource extends DataTableSource {
         )),
         DataCell(IconButton(
           icon: Icon(Icons.edit),
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return PromocaoCreatePage(
+                    promocao: p,
+                  );
+                },
+              ),
+            );
+          },
+        )),
+        DataCell(IconButton(
+          icon: Icon(Icons.shopping_basket_outlined),
           onPressed: () {
             Navigator.of(context).push(
               MaterialPageRoute(
