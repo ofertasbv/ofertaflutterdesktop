@@ -39,7 +39,7 @@ class PromocaoRepository {
         queryParameters: {
           "nomePromocao": filter.nomePromocao,
           "dataInicio": filter.dataInicio,
-          "dataEncerramento": filter.dataEncerramento,
+          "dataFinal": filter.dataFinal,
           "promocaoTipo": filter.promocaoTipo,
           "loja": filter.loja,
         },

@@ -41,7 +41,7 @@ class _PromocaoTableState extends State<PromocaoTable> {
 
   pesquisarFilter() {
     print("pesquisa data inicio: ${filter.dataInicio}");
-    print("pesquisa data encerramento: ${filter.dataEncerramento}");
+    print("pesquisa data encerramento: ${filter.dataFinal}");
     print("pesquisa nomePrmoção: ${filter.nomePromocao}");
     print("pesquisa promocaoTipo: ${filter.promocaoTipo}");
     print("pesquisa loja: ${filter.loja}");
@@ -94,9 +94,16 @@ class _PromocaoTableState extends State<PromocaoTable> {
                   color: Colors.grey[200],
                   child: DateTimeField(
                     format: dateFormat,
+                    onChanged: (DateTime dataInicio) {
+                      setState(() {
+                        String convertedDateInicio = "${dataInicio.day.toString().padLeft(2, '0')}/${dataInicio.month.toString().padLeft(2,'0')}/${dataInicio.year.toString()}";
+                        filter.dataInicio = convertedDateInicio;
+                        print("dataInicio: ${filter.dataFinal}");
+                      });
+                    },
                     decoration: InputDecoration(
-                      labelText: "data inicio",
-                      hintText: "99-09-9999",
+                      labelText: "Início da promoção",
+                      hintText: "99/09/9999",
                       prefixIcon: Icon(
                         Icons.calendar_today,
                         color: Colors.grey,
@@ -127,10 +134,17 @@ class _PromocaoTableState extends State<PromocaoTable> {
                   width: 500,
                   color: Colors.grey[200],
                   child: DateTimeField(
+                    onChanged: (DateTime dataFinal) {
+                      setState(() {
+                        String convertedDateFinal = "${dataFinal.day.toString().padLeft(2, '0')}/${dataFinal.month.toString().padLeft(2,'0')}/${dataFinal.year.toString()}";
+                        filter.dataFinal = convertedDateFinal;
+                        print("dataFinal: ${filter.dataFinal}");
+                      });
+                    },
                     format: dateFormat,
                     decoration: InputDecoration(
-                      labelText: "data inicio",
-                      hintText: "99-09-9999",
+                      labelText: "Encerramento da promoção",
+                      hintText: "99/09/9999",
                       prefixIcon: Icon(
                         Icons.calendar_today,
                         color: Colors.grey,
@@ -168,7 +182,7 @@ class _PromocaoTableState extends State<PromocaoTable> {
               children: [
                 RaisedButton.icon(
                   onPressed: () {
-                    promocaoController.getFilter(filter);
+                    pesquisarFilter();
                   },
                   icon: Icon(Icons.search),
                   label: Text("Realizar pesquisa"),
