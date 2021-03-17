@@ -7,6 +7,7 @@ import 'package:get_it/get_it.dart';
 import 'package:nosso/src/core/controller/loja_controller.dart';
 import 'package:nosso/src/core/model/loja.dart';
 import 'package:nosso/src/paginas/loja/loja_create_page.dart';
+import 'package:nosso/src/paginas/loja/loja_detalhes_tab.dart';
 import 'package:nosso/src/util/load/circular_progresso.dart';
 
 class LojaTable extends StatefulWidget {
@@ -176,9 +177,7 @@ class DataSource extends DataTableSource {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (BuildContext context) {
-                  return LojaCreatePage(
-                    loja: p,
-                  );
+                  return LojaDetalhesTab(p);
                 },
               ),
             );

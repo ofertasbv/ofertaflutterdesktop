@@ -55,6 +55,8 @@ class _PromocaoDetalhesTabState extends State<PromocaoDetalhesTab>
       length: 2,
       child: Scaffold(
         appBar: AppBar(
+          titleSpacing: 50,
+          elevation: 0,
           title: Text(promocao.nome),
           actions: <Widget>[
             CircleAvatar(
@@ -70,7 +72,7 @@ class _PromocaoDetalhesTabState extends State<PromocaoDetalhesTab>
                 },
               ),
             ),
-            SizedBox(width: 10),
+            SizedBox(width: 100),
           ],
           bottom: TabBar(
             indicatorPadding: EdgeInsets.only(right: 6, left: 6),
@@ -85,12 +87,15 @@ class _PromocaoDetalhesTabState extends State<PromocaoDetalhesTab>
             ],
           ),
         ),
-        body: TabBarView(
-          physics: NeverScrollableScrollPhysics(),
-          children: <Widget>[
-            PromocaoDetalhesView(promocao),
-            PromocaoDetalhesInfo(promocao)
-          ],
+        body: Container(
+          padding: EdgeInsets.only(left: 100, right: 100, top: 10),
+          child: TabBarView(
+            physics: NeverScrollableScrollPhysics(),
+            children: <Widget>[
+              PromocaoDetalhesView(promocao),
+              PromocaoDetalhesInfo(promocao)
+            ],
+          ),
         ),
         bottomNavigationBar: buildBottomNavigationBar(context),
       ),

@@ -16,6 +16,7 @@ import 'package:nosso/src/core/model/produto.dart';
 import 'package:nosso/src/core/model/promocao.dart';
 import 'package:nosso/src/core/model/subcategoria.dart';
 import 'package:nosso/src/paginas/produto/produto_create_page.dart';
+import 'package:nosso/src/paginas/produto/produto_detalhes_tab.dart';
 import 'package:nosso/src/util/filter/produto_filter.dart';
 import 'package:nosso/src/util/load/circular_progresso.dart';
 import 'package:dropdown_search/dropdown_search.dart';
@@ -232,6 +233,8 @@ class _ProdutoTableState extends State<ProdutoTable> {
             items: lojas,
             showSearchBox: true,
             itemAsString: (Loja s) => s.nome,
+            isFilteredOnline: true,
+            showClearButton: true,
             onChanged: (Loja l) {
               setState(() {
                 loja = l;
@@ -271,6 +274,8 @@ class _ProdutoTableState extends State<ProdutoTable> {
             items: promocoes,
             showSearchBox: true,
             itemAsString: (Promocao s) => s.nome,
+            isFilteredOnline: true,
+            showClearButton: true,
             onChanged: (Promocao s) {
               setState(() {
                 promocao = s;
@@ -310,6 +315,8 @@ class _ProdutoTableState extends State<ProdutoTable> {
             items: marcas,
             showSearchBox: true,
             itemAsString: (Marca s) => s.nome,
+            isFilteredOnline: true,
+            showClearButton: true,
             onChanged: (Marca m) {
               setState(() {
                 marca = m;
@@ -350,6 +357,8 @@ class _ProdutoTableState extends State<ProdutoTable> {
             items: subcategorias,
             showSearchBox: true,
             itemAsString: (SubCategoria s) => s.nome,
+            isFilteredOnline: true,
+            showClearButton: true,
             onChanged: (SubCategoria s) {
               setState(() {
                 subCategoria = s;
@@ -466,9 +475,7 @@ class DataSource extends DataTableSource {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (BuildContext context) {
-                  return ProdutoCreatePage(
-                    produto: p,
-                  );
+                  return ProdutoDetalhesTab(p);
                 },
               ),
             );

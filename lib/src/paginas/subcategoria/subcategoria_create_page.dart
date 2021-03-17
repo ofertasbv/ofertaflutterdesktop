@@ -59,7 +59,7 @@ class _SubCategoriaCreatePageState extends State<SubCategoriaCreatePage> {
     controller = Controller();
     super.didChangeDependencies();
   }
-  
+
   showSnackbar(BuildContext context, String content) {
     scaffoldKey.currentState.showSnackBar(
       SnackBar(
@@ -94,6 +94,9 @@ class _SubCategoriaCreatePageState extends State<SubCategoriaCreatePage> {
             itemAsString: (Categoria s) => s.nome,
             validator: (categoria) =>
             categoria == null ? "campo obrigatório" : null,
+            isFilteredOnline: true,
+            showClearButton: true,
+            selectedItem: categoriaSelecionada,
             onChanged: (Categoria categoria) {
               setState(() {
                 s.categoria = categoria;

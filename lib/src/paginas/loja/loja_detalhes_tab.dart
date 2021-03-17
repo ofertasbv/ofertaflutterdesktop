@@ -55,6 +55,8 @@ class _LojaDetalhesTabState extends State<LojaDetalhesTab>
       length: 2,
       child: Scaffold(
         appBar: AppBar(
+          titleSpacing: 50,
+          elevation: 0,
           title: Text(loja.nome),
           actions: <Widget>[
             CircleAvatar(
@@ -70,7 +72,7 @@ class _LojaDetalhesTabState extends State<LojaDetalhesTab>
                 },
               ),
             ),
-            SizedBox(width: 10),
+            SizedBox(width: 100),
           ],
           bottom: TabBar(
             indicatorPadding: EdgeInsets.only(right: 6, left: 6),
@@ -85,9 +87,15 @@ class _LojaDetalhesTabState extends State<LojaDetalhesTab>
             ],
           ),
         ),
-        body: TabBarView(
-          physics: NeverScrollableScrollPhysics(),
-          children: <Widget>[LojaDetalhesView(loja), LojaDetalhesInfo(loja)],
+        body: Container(
+          padding: EdgeInsets.only(left: 100, right: 100, top: 10),
+          child: TabBarView(
+            physics: NeverScrollableScrollPhysics(),
+            children: <Widget>[
+              LojaDetalhesView(loja),
+              LojaDetalhesInfo(loja),
+            ],
+          ),
         ),
         bottomNavigationBar: buildBottomNavigationBar(context),
       ),

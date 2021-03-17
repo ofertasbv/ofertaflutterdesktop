@@ -4,7 +4,6 @@ import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:nosso/src/core/controller/cliente_controller.dart';
@@ -46,8 +45,8 @@ class _PedidoCreatePageState extends State<PedidoCreatePage>
   Dialogs dialogs = Dialogs();
 
   Pedido p;
-  Cliente cliente;
-  Loja loja;
+  Cliente clienteSelecionado;
+  Loja lojaSelecionda;
   String statusPedido;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -62,11 +61,12 @@ class _PedidoCreatePageState extends State<PedidoCreatePage>
   void initState() {
     if (p == null) {
       p = Pedido();
-      loja = Loja();
-      cliente = Cliente();
       statusPedido = "CRIADO";
       buscarPessoaCliente(2);
       buscarPessoaLoja(1);
+    } else {
+      lojaSelecionda = p.loja;
+      clienteSelecionado = p.cliente;
     }
 
     lojaController.getAll();
@@ -83,15 +83,15 @@ class _PedidoCreatePageState extends State<PedidoCreatePage>
   }
 
   buscarPessoaCliente(int id) async {
-    cliente = await clienteController.getById(id);
-    print("Cliente: ${cliente.nome}");
-    return cliente;
+    clienteSelecionado = await clienteController.getById(id);
+    print("Cliente: ${clienteSelecionado.nome}");
+    return clienteSelecionado;
   }
 
   buscarPessoaLoja(int id) async {
-    loja = await lojaController.getById(id);
-    print("Loja: ${loja.nome}");
-    return loja;
+    lojaSelecionda = await lojaController.getById(id);
+    print("Loja: ${lojaSelecionda.nome}");
+    return lojaSelecionda;
   }
 
   showSnackbar(BuildContext context, String content) {
@@ -165,6 +165,9 @@ class _PedidoCreatePageState extends State<PedidoCreatePage>
             showSearchBox: true,
             itemAsString: (Loja s) => s.nome,
             validator: (value) => value == null ? "campo obrigatório" : null,
+            isFilteredOnline: true,
+            showClearButton: true,
+            selectedItem: lojaSelecionda,
             onChanged: (Loja l) {
               setState(() {
                 p.loja = l;
@@ -596,15 +599,12 @@ class _PedidoCreatePageState extends State<PedidoCreatePage>
                 if (p.id == null) {
                   dialogs.information(context, "prepando para o cadastro...");
                   Timer(Duration(seconds: 3), () {
-                    p.cliente = cliente;
-                    p.loja = loja;
-
                     p.valorTotal = (pedidoItemController.total -
                         ((pedidoItemController.total * p.valorDesconto) / 100) +
                         p.valorFrete);
 
-                    print("Cliente: ${cliente.nome}");
-                    print("Loja: ${loja.nome}");
+                    print("Cliente: ${clienteSelecionado.nome}");
+                    print("Loja: ${lojaSelecionda.nome}");
 
                     print("Descrição: ${p.descricao}");
                     print("Desconto: ${p.valorDesconto}");
@@ -621,11 +621,11 @@ class _PedidoCreatePageState extends State<PedidoCreatePage>
                       print("Produto: ${item.produto.nome}");
                     }
 
-                    pedidoController.create(p).then((value) {
-                      print("resultado : ${value}");
-                    });
-                    Navigator.of(context).pop();
-                    buildPush(context);
+                    // pedidoController.create(p).then((value) {
+                    //   print("resultado : ${value}");
+                    // });
+                    // Navigator.of(context).pop();
+                    // buildPush(context);
                   });
                 } else {
                   dialogs.information(
@@ -635,6 +635,8 @@ class _PedidoCreatePageState extends State<PedidoCreatePage>
                         ((pedidoItemController.total * p.valorDesconto) / 100) +
                         p.valorFrete);
 
+                    print("Cliente: ${clienteSelecionado.nome}");
+                    print("Loja: ${lojaSelecionda.nome}");
                     print("Descrição: ${p.descricao}");
                     print("Desconto: ${p.valorDesconto}");
                     print("Frete: ${p.valorFrete}");

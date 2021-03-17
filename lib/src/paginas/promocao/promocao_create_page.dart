@@ -66,6 +66,8 @@ class _PromocaoCreatePageState extends State<PromocaoCreatePage>
     if (p == null) {
       p = Promocao();
     } else {
+      lojaSelecionada = p.loja;
+      promocaoTipo = p.promocaoTipo;
       descontoController.text = p.desconto.toStringAsFixed(2);
     }
 
@@ -153,6 +155,9 @@ class _PromocaoCreatePageState extends State<PromocaoCreatePage>
             showSearchBox: true,
             itemAsString: (PromocaoTipo t) => t.descricao,
             validator: (value) => value == null ? "campo obrigatório" : null,
+            isFilteredOnline: true,
+            showClearButton: true,
+            selectedItem: promocaoTipo,
             onChanged: (PromocaoTipo t) {
               setState(() {
                 p.promocaoTipo = t;
@@ -185,12 +190,19 @@ class _PromocaoCreatePageState extends State<PromocaoCreatePage>
           }
 
           return DropdownSearch<Loja>(
+            mode: Mode.DIALOG,
             label: "Selecione lojas",
             popupTitle: Center(child: Text("Lojas")),
             items: lojas,
             showSearchBox: true,
             itemAsString: (Loja s) => s.nome,
             validator: (value) => value == null ? "campo obrigatório" : null,
+            isFilteredOnline: true,
+            showClearButton: true,
+            selectedItem: lojaSelecionada,
+            onSaved: (value) {
+              p.loja = value;
+            },
             onChanged: (Loja l) {
               setState(() {
                 p.loja = l;

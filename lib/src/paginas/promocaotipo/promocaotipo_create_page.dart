@@ -77,21 +77,25 @@ class _PromocaoTipoCreatePageState extends State<PromocaoTipoCreatePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        titleSpacing: 50,
         elevation: 0,
         title: promocaoTipoController.promocaoTipo == null
             ? Text("Cadastro de tipo de promoção")
             : Text(promocaoTipo.descricao),
       ),
-      body: Observer(
-        builder: (context) {
-          if (promocaoTipoController.dioError == null) {
-            return buildListViewForm(context);
-          } else {
-            print("Erro: ${promocaoTipoController.mensagem}");
-            showToast("${promocaoTipoController.mensagem}");
-            return buildListViewForm(context);
-          }
-        },
+      body: Container(
+        padding: EdgeInsets.only(left: 100, right: 100, top: 10),
+        child: Observer(
+          builder: (context) {
+            if (promocaoTipoController.dioError == null) {
+              return buildListViewForm(context);
+            } else {
+              print("Erro: ${promocaoTipoController.mensagem}");
+              showToast("${promocaoTipoController.mensagem}");
+              return buildListViewForm(context);
+            }
+          },
+        ),
       ),
     );
   }

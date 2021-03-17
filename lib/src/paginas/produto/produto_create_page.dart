@@ -129,6 +129,10 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
       destaque = p.destaque;
 
       e = p.estoque;
+      marcaSelecionada = p.marca;
+      subCategoriaSelecionada = p.subCategoria;
+      lojaSelecionada = p.loja;
+      promocaoSelecionada = p.promocao;
 
       controllerQuantidade.text = p.estoque.quantidade.toStringAsFixed(0);
       controllerValorUnitario.text = p.estoque.valorUnitario.toStringAsFixed(2);
@@ -248,6 +252,9 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
             showSearchBox: true,
             itemAsString: (Loja s) => s.nome,
             validator: (value) => value == null ? "campo obrigatório" : null,
+            isFilteredOnline: true,
+            showClearButton: true,
+            selectedItem: lojaSelecionada,
             onChanged: (Loja l) {
               setState(() {
                 p.loja = l;
@@ -286,6 +293,9 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
             showSearchBox: true,
             itemAsString: (Promocao s) => s.nome,
             validator: (value) => value == null ? "campo obrigatório" : null,
+            isFilteredOnline: true,
+            showClearButton: true,
+            selectedItem: promocaoSelecionada,
             onChanged: (Promocao s) {
               setState(() {
                 p.promocao = s;
@@ -324,6 +334,9 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
             showSearchBox: true,
             itemAsString: (Marca s) => s.nome,
             validator: (value) => value == null ? "campo obrigatório" : null,
+            isFilteredOnline: true,
+            showClearButton: true,
+            selectedItem: marcaSelecionada,
             onChanged: (Marca m) {
               setState(() {
                 p.marca = m;
@@ -363,6 +376,9 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
             showSearchBox: true,
             itemAsString: (SubCategoria s) => s.nome,
             validator: (value) => value == null ? "campo obrigatório" : null,
+            isFilteredOnline: true,
+            showClearButton: true,
+            selectedItem: subCategoriaSelecionada,
             onChanged: (SubCategoria s) {
               setState(() {
                 p.subCategoria = s;
