@@ -3,6 +3,7 @@ import 'dart:core';
 import 'dart:io';
 
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -24,6 +25,7 @@ import 'package:nosso/src/util/componentes/image_source_sheet.dart';
 import 'package:nosso/src/util/dialogs/dialogs.dart';
 import 'package:nosso/src/util/dropdown/dropdown_loja.dart';
 import 'package:nosso/src/util/dropdown/dropdown_promocaotipo.dart';
+import 'package:nosso/src/util/load/circular_progresso.dart';
 import 'package:nosso/src/util/load/circular_progresso_mini.dart';
 import 'package:nosso/src/util/upload/upload_response.dart';
 import 'package:nosso/src/util/validador/validador_promocao.dart';
@@ -65,10 +67,11 @@ class _PromocaoCreatePageState extends State<PromocaoCreatePage>
       p = Promocao();
     } else {
       descontoController.text = p.desconto.toStringAsFixed(2);
-      lojaController.lojaSelecionada = p.loja;
     }
 
     promocaoController.getAll();
+    promocaoTipoController.getAll();
+    lojaController.getAll();
     super.initState();
   }
 
@@ -116,15 +119,6 @@ class _PromocaoCreatePageState extends State<PromocaoCreatePage>
     }
   }
 
-  showToast(String cardTitle) {
-    Fluttertoast.showToast(
-      msg: "$cardTitle",
-      gravity: ToastGravity.CENTER,
-      timeInSecForIos: 10,
-      fontSize: 16.0,
-    );
-  }
-
   showSnackbar(BuildContext context, String content) {
     scaffoldKey.currentState.showSnackBar(
       SnackBar(
@@ -133,6 +127,83 @@ class _PromocaoCreatePageState extends State<PromocaoCreatePage>
           label: "OK",
           onPressed: () {},
         ),
+      ),
+    );
+  }
+
+  builderConteudoListTipoPromocoes() {
+    return Container(
+      padding: EdgeInsets.only(top: 0),
+      child: Observer(
+        builder: (context) {
+          List<PromocaoTipo> promocaoTipos =
+              promocaoTipoController.promocaoTipos;
+          if (promocaoTipoController.error != null) {
+            return Text("Não foi possível carregados dados");
+          }
+
+          if (promocaoTipos == null) {
+            return CircularProgressor();
+          }
+
+          return DropdownSearch<PromocaoTipo>(
+            label: "Selecione tipos",
+            popupTitle: Center(child: Text("Tipos")),
+            items: promocaoTipos,
+            showSearchBox: true,
+            itemAsString: (PromocaoTipo t) => t.descricao,
+            validator: (value) => value == null ? "campo obrigatório" : null,
+            onChanged: (PromocaoTipo t) {
+              setState(() {
+                p.promocaoTipo = t;
+                print("tipo: ${p.promocaoTipo.descricao}");
+              });
+            },
+            searchBoxDecoration: InputDecoration(
+              border: OutlineInputBorder(),
+              contentPadding: EdgeInsets.fromLTRB(20, 20, 20, 0),
+              labelText: "Pesquisar por loja",
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  builderConteudoListLojas() {
+    return Container(
+      padding: EdgeInsets.only(top: 0),
+      child: Observer(
+        builder: (context) {
+          List<Loja> lojas = lojaController.lojas;
+          if (lojaController.error != null) {
+            return Text("Não foi possível carregados dados");
+          }
+
+          if (lojas == null) {
+            return CircularProgressor();
+          }
+
+          return DropdownSearch<Loja>(
+            label: "Selecione lojas",
+            popupTitle: Center(child: Text("Lojas")),
+            items: lojas,
+            showSearchBox: true,
+            itemAsString: (Loja s) => s.nome,
+            validator: (value) => value == null ? "campo obrigatório" : null,
+            onChanged: (Loja l) {
+              setState(() {
+                p.loja = l;
+                print("loja: ${p.loja.nome}");
+              });
+            },
+            searchBoxDecoration: InputDecoration(
+              border: OutlineInputBorder(),
+              contentPadding: EdgeInsets.fromLTRB(20, 20, 20, 0),
+              labelText: "Pesquisar por loja",
+            ),
+          );
+        },
       ),
     );
   }
@@ -154,7 +225,6 @@ class _PromocaoCreatePageState extends State<PromocaoCreatePage>
               return buildListViewForm(context);
             } else {
               print("Erro: ${promocaoController.mensagem}");
-              showToast("${promocaoController.mensagem}");
               return buildListViewForm(context);
             }
           },
@@ -531,73 +601,14 @@ class _PromocaoCreatePageState extends State<PromocaoCreatePage>
                   ),
                 ),
                 SizedBox(height: 0),
-                DropDownPromocaoTipo(promocaoTipo),
-                Observer(
-                  builder: (context) {
-                    if (promocaoTipoController.promocaoTipoSelecionada ==
-                        null) {
-                      return Container(
-                        padding: EdgeInsets.only(left: 25),
-                        child: Container(
-                          child: promocaoTipoController.mensagem == null
-                              ? Text(
-                                  "campo obrigatório *",
-                                  style: TextStyle(
-                                    color: Colors.red,
-                                    fontSize: 12,
-                                  ),
-                                )
-                              : Text(
-                                  "${lojaController.mensagem}",
-                                  style: TextStyle(
-                                    color: Colors.red,
-                                    fontSize: 12,
-                                  ),
-                                ),
-                        ),
-                      );
-                    }
-                    return Container(
-                      padding: EdgeInsets.only(left: 25),
-                      child: Container(
-                        child: Icon(Icons.check_outlined, color: Colors.green),
-                      ),
-                    );
-                  },
+                Container(
+                  padding: EdgeInsets.all(15),
+                  child: builderConteudoListTipoPromocoes(),
                 ),
-                DropDownLoja(lojaSelecionada),
-                Observer(
-                  builder: (context) {
-                    if (lojaController.lojaSelecionada == null) {
-                      return Container(
-                        padding: EdgeInsets.only(left: 25),
-                        child: Container(
-                          child: lojaController.mensagem == null
-                              ? Text(
-                                  "campo obrigatório *",
-                                  style: TextStyle(
-                                    color: Colors.red,
-                                    fontSize: 12,
-                                  ),
-                                )
-                              : Text(
-                                  "${lojaController.mensagem}",
-                                  style: TextStyle(
-                                    color: Colors.red,
-                                    fontSize: 12,
-                                  ),
-                                ),
-                        ),
-                      );
-                    }
-                    return Container(
-                      padding: EdgeInsets.only(left: 25),
-                      child: Container(
-                        child: Icon(Icons.check_outlined, color: Colors.green),
-                      ),
-                    );
-                  },
-                ),
+                Container(
+                  padding: EdgeInsets.all(15),
+                  child: builderConteudoListLojas(),
+                )
               ],
             ),
           ),
@@ -629,10 +640,6 @@ class _PromocaoCreatePageState extends State<PromocaoCreatePage>
                   if (p.id == null) {
                     dialogs.information(context, "prepando para o cadastro...");
                     Timer(Duration(seconds: 3), () {
-                      p.loja = lojaController.lojaSelecionada;
-                      p.promocaoTipo =
-                          promocaoTipoController.promocaoTipoSelecionada;
-
                       print("Loja: ${p.loja.nome}");
                       print("Promoção tipo: ${p.promocaoTipo.descricao}");
                       print("Nome: ${p.nome}");
@@ -653,10 +660,6 @@ class _PromocaoCreatePageState extends State<PromocaoCreatePage>
                     dialogs.information(
                         context, "preparando para o alteração...");
                     Timer(Duration(seconds: 3), () {
-                      p.loja = lojaController.lojaSelecionada;
-                      p.promocaoTipo =
-                          promocaoTipoController.promocaoTipoSelecionada;
-
                       print("Loja: ${p.loja.nome}");
                       print("Promoção tipo: ${p.promocaoTipo.descricao}");
                       print("Nome: ${p.nome}");

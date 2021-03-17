@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -15,11 +16,10 @@ import 'package:nosso/src/core/model/cliente.dart';
 import 'package:nosso/src/core/model/loja.dart';
 import 'package:nosso/src/core/model/pedido.dart';
 import 'package:nosso/src/core/model/pedidoitem.dart';
-import 'package:nosso/src/core/model/usuario.dart';
 import 'package:nosso/src/paginas/pedido/pedido_page.dart';
 import 'package:nosso/src/paginas/pedidoitem/pedito_itens_page.dart';
-import 'package:nosso/src/paginas/permissao/permissao_page.dart';
 import 'package:nosso/src/util/dialogs/dialogs.dart';
+import 'package:nosso/src/util/load/circular_progresso.dart';
 import 'package:nosso/src/util/steps/step_menu_etapa.dart';
 import 'package:nosso/src/util/validador/validador_pedido.dart';
 
@@ -69,6 +69,8 @@ class _PedidoCreatePageState extends State<PedidoCreatePage>
       buscarPessoaLoja(1);
     }
 
+    lojaController.getAll();
+    clienteController.getAll();
     super.initState();
   }
 
@@ -92,15 +94,6 @@ class _PedidoCreatePageState extends State<PedidoCreatePage>
     return loja;
   }
 
-  showToast(String cardTitle) {
-    Fluttertoast.showToast(
-      msg: "$cardTitle",
-      gravity: ToastGravity.CENTER,
-      timeInSecForIos: 10,
-      fontSize: 16.0,
-    );
-  }
-
   showSnackbar(BuildContext context, String content) {
     scaffoldKey.currentState.showSnackBar(
       SnackBar(
@@ -109,6 +102,82 @@ class _PedidoCreatePageState extends State<PedidoCreatePage>
           label: "OK",
           onPressed: () {},
         ),
+      ),
+    );
+  }
+
+  builderConteudoListClientes() {
+    return Container(
+      padding: EdgeInsets.only(top: 0),
+      child: Observer(
+        builder: (context) {
+          List<Cliente> clientes = clienteController.clientes;
+          if (clienteController.error != null) {
+            return Text("Não foi possível carregados dados");
+          }
+
+          if (clientes == null) {
+            return CircularProgressor();
+          }
+
+          return DropdownSearch<Cliente>(
+            label: "Selecione clientes",
+            popupTitle: Center(child: Text("Clientes")),
+            items: clientes,
+            showSearchBox: true,
+            itemAsString: (Cliente c) => c.nome,
+            validator: (value) => value == null ? "campo obrigatório" : null,
+            onChanged: (Cliente c) {
+              setState(() {
+                p.cliente = c;
+                print("Cliente: ${p.cliente.nome}");
+              });
+            },
+            searchBoxDecoration: InputDecoration(
+              border: OutlineInputBorder(),
+              contentPadding: EdgeInsets.fromLTRB(20, 20, 20, 0),
+              labelText: "Pesquisar por cliente",
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  builderConteudoListLojas() {
+    return Container(
+      padding: EdgeInsets.only(top: 0),
+      child: Observer(
+        builder: (context) {
+          List<Loja> lojas = lojaController.lojas;
+          if (lojaController.error != null) {
+            return Text("Não foi possível carregados dados");
+          }
+
+          if (lojas == null) {
+            return CircularProgressor();
+          }
+
+          return DropdownSearch<Loja>(
+            label: "Selecione lojas",
+            popupTitle: Center(child: Text("Lojas")),
+            items: lojas,
+            showSearchBox: true,
+            itemAsString: (Loja s) => s.nome,
+            validator: (value) => value == null ? "campo obrigatório" : null,
+            onChanged: (Loja l) {
+              setState(() {
+                p.loja = l;
+                print("loja: ${p.loja.nome}");
+              });
+            },
+            searchBoxDecoration: InputDecoration(
+              border: OutlineInputBorder(),
+              contentPadding: EdgeInsets.fromLTRB(20, 20, 20, 0),
+              labelText: "Pesquisar por loja",
+            ),
+          );
+        },
       ),
     );
   }
@@ -130,7 +199,6 @@ class _PedidoCreatePageState extends State<PedidoCreatePage>
               return buildListViewForm(context);
             } else {
               print("Erro: ${pedidoController.mensagem}");
-              showToast("${pedidoController.mensagem}");
               return buildListViewForm(context);
             }
           },
@@ -428,6 +496,14 @@ class _PedidoCreatePageState extends State<PedidoCreatePage>
                       SizedBox(height: 10),
                     ],
                   ),
+                ),
+                Container(
+                  padding: EdgeInsets.all(10),
+                  child: builderConteudoListClientes(),
+                ),
+                Container(
+                  padding: EdgeInsets.all(10),
+                  child: builderConteudoListLojas(),
                 ),
                 Container(
                   padding: EdgeInsets.all(5),

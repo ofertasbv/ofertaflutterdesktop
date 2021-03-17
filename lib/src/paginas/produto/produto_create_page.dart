@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -36,6 +37,7 @@ import 'package:nosso/src/util/dropdown/dropdown_marca.dart';
 import 'package:nosso/src/util/dropdown/dropdown_promocao.dart';
 import 'package:nosso/src/util/dropdown/dropdown_subcategoria.dart';
 import 'package:nosso/src/util/dropdown/dropdown_tamanho.dart';
+import 'package:nosso/src/util/load/circular_progresso.dart';
 import 'package:nosso/src/util/upload/upload_response.dart';
 import 'package:nosso/src/util/validador/validador_produto.dart';
 
@@ -128,19 +130,16 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
 
       e = p.estoque;
 
-      lojaController.lojaSelecionada = p.loja;
-      subCategoriaController.subCategoriaSelecionada = p.subCategoria;
-      marcaController.marcaSelecionada = p.marca;
-      promocaoController.promocaoSelecionada = p.promocao;
-      // produtoController.corSelecionadas = p.cores;
-      // produtoController.tamanhoSelecionados = p.tamanhos;
-
       controllerQuantidade.text = p.estoque.quantidade.toStringAsFixed(0);
       controllerValorUnitario.text = p.estoque.valorUnitario.toStringAsFixed(2);
       controllerValorVenda.text = p.estoque.valorVenda.toStringAsFixed(2);
       controllerPecentual.text = p.estoque.percentual.toStringAsFixed(2);
     }
 
+    marcaController.getAll();
+    subCategoriaController.getAll();
+    lojaController.getAll();
+    promocaoController.getAll();
     produtoController.getAll();
 
     super.initState();
@@ -209,15 +208,6 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
     }
   }
 
-  showToast(String cardTitle) {
-    Fluttertoast.showToast(
-      msg: "$cardTitle",
-      gravity: ToastGravity.CENTER,
-      timeInSecForIos: 10,
-      fontSize: 16.0,
-    );
-  }
-
   showSnackbar(BuildContext context, String content) {
     scaffoldKey.currentState.showSnackBar(
       SnackBar(
@@ -237,6 +227,159 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
     controllerValorVenda.text = valor.toStringAsFixed(2);
   }
 
+  builderConteudoListLojas() {
+    return Container(
+      padding: EdgeInsets.only(top: 0),
+      child: Observer(
+        builder: (context) {
+          List<Loja> lojas = lojaController.lojas;
+          if (lojaController.error != null) {
+            return Text("Não foi possível carregados dados");
+          }
+
+          if (lojas == null) {
+            return CircularProgressor();
+          }
+
+          return DropdownSearch<Loja>(
+            label: "Selecione lojas",
+            popupTitle: Center(child: Text("Lojas")),
+            items: lojas,
+            showSearchBox: true,
+            itemAsString: (Loja s) => s.nome,
+            validator: (value) => value == null ? "campo obrigatório" : null,
+            onChanged: (Loja l) {
+              setState(() {
+                p.loja = l;
+                print("loja: ${p.loja.nome}");
+              });
+            },
+            searchBoxDecoration: InputDecoration(
+              border: OutlineInputBorder(),
+              contentPadding: EdgeInsets.fromLTRB(20, 20, 20, 0),
+              labelText: "Pesquisar por loja",
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  builderConteudoListPromocaoes() {
+    return Container(
+      padding: EdgeInsets.only(top: 0),
+      child: Observer(
+        builder: (context) {
+          List<Promocao> promocoes = promocaoController.promocoes;
+          if (promocaoController.error != null) {
+            return Text("Não foi possível carregados dados");
+          }
+
+          if (promocoes == null) {
+            return CircularProgressor();
+          }
+
+          return DropdownSearch<Promocao>(
+            label: "Selecione promocoes",
+            popupTitle: Center(child: Text("Promoções")),
+            items: promocoes,
+            showSearchBox: true,
+            itemAsString: (Promocao s) => s.nome,
+            validator: (value) => value == null ? "campo obrigatório" : null,
+            onChanged: (Promocao s) {
+              setState(() {
+                p.promocao = s;
+                print("promoção: ${p.promocao.nome}");
+              });
+            },
+            searchBoxDecoration: InputDecoration(
+              border: OutlineInputBorder(),
+              contentPadding: EdgeInsets.fromLTRB(20, 20, 20, 0),
+              labelText: "Pesquisar por promoção",
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  builderConteudoListMarcas() {
+    return Container(
+      padding: EdgeInsets.only(top: 0),
+      child: Observer(
+        builder: (context) {
+          List<Marca> marcas = marcaController.marcas;
+          if (marcaController.error != null) {
+            return Text("Não foi possível carregados dados");
+          }
+
+          if (marcas == null) {
+            return CircularProgressor();
+          }
+
+          return DropdownSearch<Marca>(
+            label: "Selecione marcas",
+            popupTitle: Center(child: Text("Marcas")),
+            items: marcas,
+            showSearchBox: true,
+            itemAsString: (Marca s) => s.nome,
+            validator: (value) => value == null ? "campo obrigatório" : null,
+            onChanged: (Marca m) {
+              setState(() {
+                p.marca = m;
+                print("marca: ${p.marca.nome}");
+              });
+            },
+            searchBoxDecoration: InputDecoration(
+              border: OutlineInputBorder(),
+              contentPadding: EdgeInsets.fromLTRB(20, 20, 20, 0),
+              labelText: "Pesquisar por marca",
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  builderConteudoListSubCategorias() {
+    return Container(
+      padding: EdgeInsets.only(top: 0),
+      child: Observer(
+        builder: (context) {
+          List<SubCategoria> subcategorias =
+              subCategoriaController.subCategorias;
+          if (subCategoriaController.error != null) {
+            return Text("Não foi possível carregados dados");
+          }
+
+          if (subcategorias == null) {
+            return CircularProgressor();
+          }
+
+          return DropdownSearch<SubCategoria>(
+            label: "Selecione categorias",
+            popupTitle: Center(child: Text("Categorias")),
+            items: subcategorias,
+            showSearchBox: true,
+            itemAsString: (SubCategoria s) => s.nome,
+            validator: (value) => value == null ? "campo obrigatório" : null,
+            onChanged: (SubCategoria s) {
+              setState(() {
+                p.subCategoria = s;
+                print("SubCategoria: ${p.subCategoria.nome}");
+              });
+            },
+            searchBoxDecoration: InputDecoration(
+              border: OutlineInputBorder(),
+              contentPadding: EdgeInsets.fromLTRB(20, 20, 20, 0),
+              labelText: "Pesquisar por categoria",
+            ),
+          );
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -253,7 +396,6 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
               return buildListViewForm(context);
             } else {
               print("Erro: ${produtoController.mensagem}");
-              showToast("${produtoController.mensagem}");
               return buildListViewForm(context);
             }
           },
@@ -795,158 +937,22 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
                   ),
                 ),
                 SizedBox(height: 0),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    DropDownMarca(),
-                    Observer(
-                      builder: (context) {
-                        if (marcaController.marcaSelecionada == null) {
-                          return Container(
-                            padding: EdgeInsets.only(left: 25),
-                            child: Container(
-                              child: marcaController.mensagem == null
-                                  ? Text(
-                                      "Campo obrigatório *",
-                                      style: TextStyle(
-                                        color: Colors.red,
-                                        fontSize: 12,
-                                      ),
-                                    )
-                                  : Text(
-                                      "${marcaController.mensagem}",
-                                      style: TextStyle(
-                                        color: Colors.red,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                            ),
-                          );
-                        }
-                        return Container(
-                          padding: EdgeInsets.only(left: 25),
-                          child: Container(
-                            child:
-                                Icon(Icons.check_outlined, color: Colors.green),
-                          ),
-                        );
-                      },
-                    ),
-                    SizedBox(height: 10),
-                    DropDownSubCategoria(subCategoriaSelecionada),
-                    Observer(
-                      builder: (context) {
-                        if (subCategoriaController.subCategoriaSelecionada ==
-                            null) {
-                          return Container(
-                            padding: EdgeInsets.only(left: 25),
-                            child: Container(
-                              child: subCategoriaController.mensagem == null
-                                  ? Text(
-                                      "campo obrigatório *",
-                                      style: TextStyle(
-                                        color: Colors.red,
-                                        fontSize: 12,
-                                      ),
-                                    )
-                                  : Text(
-                                      "${subCategoriaController.mensagem}",
-                                      style: TextStyle(
-                                        color: Colors.red,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                            ),
-                          );
-                        }
-                        return Container(
-                          padding: EdgeInsets.only(left: 25),
-                          child: Container(
-                            child:
-                                Icon(Icons.check_outlined, color: Colors.green),
-                          ),
-                        );
-                      },
-                    ),
-                    SizedBox(height: 10),
-                    DropDownLoja(lojaSelecionada),
-                    Observer(
-                      builder: (context) {
-                        if (lojaController.lojaSelecionada == null) {
-                          return Container(
-                            padding: EdgeInsets.only(left: 25),
-                            child: Container(
-                              child: lojaController.mensagem == null
-                                  ? Text(
-                                      "campo obrigatório *",
-                                      style: TextStyle(
-                                        color: Colors.red,
-                                        fontSize: 12,
-                                      ),
-                                    )
-                                  : Text(
-                                      "${lojaController.mensagem}",
-                                      style: TextStyle(
-                                        color: Colors.red,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                            ),
-                          );
-                        }
-                        return Container(
-                          padding: EdgeInsets.only(left: 25),
-                          child: Container(
-                            child:
-                                Icon(Icons.check_outlined, color: Colors.green),
-                          ),
-                        );
-                      },
-                    ),
-                    SizedBox(height: 10),
-                    DropDownPromocao(promocaoSelecionada),
-                    Observer(
-                      builder: (context) {
-                        if (promocaoController.promocaoSelecionada == null) {
-                          return Container(
-                            padding: EdgeInsets.only(left: 25),
-                            child: Container(
-                              child: promocaoController.mensagem == null
-                                  ? Text(
-                                      "campo obrigatório *",
-                                      style: TextStyle(
-                                        color: Colors.red,
-                                        fontSize: 12,
-                                      ),
-                                    )
-                                  : Text(
-                                      "${promocaoController.mensagem}",
-                                      style: TextStyle(
-                                        color: Colors.red,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                            ),
-                          );
-                        }
-                        return Container(
-                          padding: EdgeInsets.only(left: 25),
-                          child: Container(
-                            child:
-                                Icon(Icons.check_outlined, color: Colors.green),
-                          ),
-                        );
-                      },
-                    ),
-                    SizedBox(height: 10),
-                    DropDownCor(coreSelecionados),
-                    SizedBox(height: 10),
-                    DropDownTamanho(tamanhoSelecionados),
-                    SizedBox(height: 10),
-                  ],
+                Container(
+                  padding: EdgeInsets.all(15),
+                  child: builderConteudoListSubCategorias(),
                 ),
-                SizedBox(height: 0),
+                Container(
+                  padding: EdgeInsets.all(15),
+                  child: builderConteudoListMarcas(),
+                ),
+                Container(
+                  padding: EdgeInsets.all(15),
+                  child: builderConteudoListLojas(),
+                ),
+                Container(
+                  padding: EdgeInsets.all(15),
+                  child: builderConteudoListPromocaoes(),
+                ),
                 Container(
                   padding: EdgeInsets.all(15),
                   child: Container(
@@ -1162,11 +1168,6 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
                       DateTime agora = DateTime.now();
 
                       p.estoque.estoqueStatus = estoqueStatus;
-                      p.loja = lojaController.lojaSelecionada;
-                      p.subCategoria =
-                          subCategoriaController.subCategoriaSelecionada;
-                      p.marca = marcaController.marcaSelecionada;
-                      p.promocao = promocaoController.promocaoSelecionada;
 
                       //
                       // for (Cor c in corController.cores) {

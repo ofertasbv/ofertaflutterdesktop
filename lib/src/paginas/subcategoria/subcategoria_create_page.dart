@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:core';
 import 'dart:io';
 
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -13,7 +14,7 @@ import 'package:nosso/src/core/model/categoria.dart';
 import 'package:nosso/src/core/model/subcategoria.dart';
 import 'package:nosso/src/paginas/subcategoria/subcategoria_page.dart';
 import 'package:nosso/src/util/dialogs/dialogs.dart';
-import 'package:nosso/src/util/dropdown/dropdown_categoria.dart';
+import 'package:nosso/src/util/load/circular_progresso.dart';
 
 class SubCategoriaCreatePage extends StatefulWidget {
   SubCategoria subCategoria;
@@ -48,6 +49,7 @@ class _SubCategoriaCreatePageState extends State<SubCategoriaCreatePage> {
     } else {
       categoriaSelecionada = s.categoria;
     }
+    categoriaController.getAll();
     subCategoriaController.getAll();
     super.initState();
   }
@@ -57,16 +59,7 @@ class _SubCategoriaCreatePageState extends State<SubCategoriaCreatePage> {
     controller = Controller();
     super.didChangeDependencies();
   }
-
-  showToast(String cardTitle) {
-    Fluttertoast.showToast(
-      msg: "$cardTitle",
-      gravity: ToastGravity.CENTER,
-      timeInSecForIos: 10,
-      fontSize: 16.0,
-    );
-  }
-
+  
   showSnackbar(BuildContext context, String content) {
     scaffoldKey.currentState.showSnackBar(
       SnackBar(
@@ -75,6 +68,45 @@ class _SubCategoriaCreatePageState extends State<SubCategoriaCreatePage> {
           label: "OK",
           onPressed: () {},
         ),
+      ),
+    );
+  }
+
+  builderConteudoListCategorias() {
+    return Container(
+      padding: EdgeInsets.only(top: 0),
+      child: Observer(
+        builder: (context) {
+          List<Categoria> categorias = categoriaController.categorias;
+          if (categoriaController.error != null) {
+            return Text("Não foi possível carregados dados");
+          }
+
+          if (categoriaController == null) {
+            return CircularProgressor();
+          }
+
+          return DropdownSearch<Categoria>(
+            label: "Selecione categorias",
+            popupTitle: Center(child: Text("Categorias")),
+            items: categorias,
+            showSearchBox: true,
+            itemAsString: (Categoria s) => s.nome,
+            validator: (categoria) =>
+            categoria == null ? "campo obrigatório" : null,
+            onChanged: (Categoria categoria) {
+              setState(() {
+                s.categoria = categoria;
+                print("Categoria: ${s.categoria.nome}");
+              });
+            },
+            searchBoxDecoration: InputDecoration(
+              border: OutlineInputBorder(),
+              contentPadding: EdgeInsets.fromLTRB(20, 20, 20, 0),
+              labelText: "Pesquisar por categoria",
+            ),
+          );
+        },
       ),
     );
   }
@@ -96,7 +128,7 @@ class _SubCategoriaCreatePageState extends State<SubCategoriaCreatePage> {
               return buildListViewForm(context);
             } else {
               print("Erro: ${subCategoriaController.mensagem}");
-              showToast("${subCategoriaController.mensagem}");
+              // showToast("${subCategoriaController.mensagem}");
               return buildListViewForm(context);
             }
           },
@@ -107,8 +139,6 @@ class _SubCategoriaCreatePageState extends State<SubCategoriaCreatePage> {
 
   ListView buildListViewForm(BuildContext context) {
     var focus = FocusScope.of(context);
-    s.categoria = categoriaController.categoriaSelecionada;
-
     return ListView(
       children: <Widget>[
         Container(
@@ -163,46 +193,17 @@ class _SubCategoriaCreatePageState extends State<SubCategoriaCreatePage> {
                   ),
                 ),
                 SizedBox(height: 0),
-                DropDownCategoria(),
-                Observer(
-                  builder: (context) {
-                    if (categoriaController.categoriaSelecionada == null) {
-                      return Container(
-                        padding: EdgeInsets.only(left: 25),
-                        child: Container(
-                          child: categoriaController.mensagem == null
-                              ? Text(
-                                  "Campo obrigatório *",
-                                  style: TextStyle(
-                                    color: Colors.red,
-                                    fontSize: 12,
-                                  ),
-                                )
-                              : Text(
-                                  "${categoriaController.mensagem}",
-                                  style: TextStyle(
-                                    color: Colors.red,
-                                    fontSize: 12,
-                                  ),
-                                ),
-                        ),
-                      );
-                    }
-                    return Container(
-                      padding: EdgeInsets.only(left: 25),
-                      child: Container(
-                        child: Icon(Icons.check_outlined, color: Colors.green),
-                      ),
-                    );
-                  },
-                ),
+                Container(
+                  padding: EdgeInsets.all(15),
+                  child: builderConteudoListCategorias(),
+                )
               ],
             ),
           ),
         ),
         SizedBox(height: 0),
         Container(
-          padding: EdgeInsets.all(15),
+          padding: EdgeInsets.all(20),
           child: RaisedButton.icon(
             label: Text("Enviar formulário"),
             icon: Icon(Icons.check),
@@ -211,7 +212,6 @@ class _SubCategoriaCreatePageState extends State<SubCategoriaCreatePage> {
                 if (s.id == null) {
                   dialogs.information(context, "prepando para o cadastro...");
                   Timer(Duration(seconds: 3), () {
-                    s.categoria = categoriaController.categoriaSelecionada;
                     subCategoriaController.create(s).then((value) {
                       print("resultado : ${value}");
                     });
@@ -222,7 +222,6 @@ class _SubCategoriaCreatePageState extends State<SubCategoriaCreatePage> {
                   dialogs.information(
                       context, "preparando para o alteração...");
                   Timer(Duration(seconds: 3), () {
-                    s.categoria = categoriaController.categoriaSelecionada;
                     subCategoriaController.update(s.id, s);
 
                     Navigator.of(context).pop();
