@@ -272,13 +272,17 @@ class DataSource extends DataTableSource {
     return DataRow.byIndex(
       index: index,
       cells: [
-        DataCell(CircleAvatar(
-          backgroundColor: Colors.grey[100],
-          radius: 20,
-          backgroundImage: NetworkImage(
-            "${promocaoController.arquivo + p.foto}",
-          ),
-        )),
+        DataCell(
+          p.foto != null
+              ? CircleAvatar(
+            backgroundColor: Colors.grey[100],
+            radius: 20,
+            backgroundImage: NetworkImage(
+              "${promocaoController.arquivo + p.foto}",
+            ),
+          )
+              : CircleAvatar(),
+        ),
         DataCell(Text(p.nome)),
         DataCell(Text("${dateFormat.format(p.dataRegistro)}")),
         DataCell(Text("${dateFormat.format(p.dataInicio)}")),

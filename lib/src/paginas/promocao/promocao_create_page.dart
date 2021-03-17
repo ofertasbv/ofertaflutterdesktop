@@ -606,31 +606,32 @@ class _PromocaoCreatePageState extends State<PromocaoCreatePage>
         Container(
           padding: EdgeInsets.all(15),
           child: RaisedButton.icon(
-            label: Text("Enviar formulário"),
-            icon: Icon(Icons.check),
-            onPressed: () {
-              if (controller.validate()) {
-                if (p.foto == null) {
-                  showModalBottomSheet(
-                    context: context,
-                    builder: (context) => ImageSourceSheet(
-                      onImageSelected: (image) {
-                        setState(() {
-                          Navigator.of(context).pop();
-                          file = image;
-                          String arquivo = file.path.split('/').last;
-                          print("Image: ${arquivo}");
-                          enableButton();
-                        });
-                      },
-                    ),
-                  );
-                } else {
+              label: Text("Enviar formulário"),
+              icon: Icon(Icons.check),
+              onPressed: () {
+                if (controller.validate()) {
+                  // if (p.foto == null) {
+                  //   showModalBottomSheet(
+                  //     context: context,
+                  //     builder: (context) => ImageSourceSheet(
+                  //       onImageSelected: (image) {
+                  //         setState(() {
+                  //           Navigator.of(context).pop();
+                  //           file = image;
+                  //           String arquivo = file.path.split('/').last;
+                  //           print("Image: ${arquivo}");
+                  //           enableButton();
+                  //         });
+                  //       },
+                  //     ),
+                  //   );
+                  // } else {
                   if (p.id == null) {
                     dialogs.information(context, "prepando para o cadastro...");
                     Timer(Duration(seconds: 3), () {
                       p.loja = lojaController.lojaSelecionada;
-                      p.promocaoTipo = promocaoTipoController.promocaoTipoSelecionada;
+                      p.promocaoTipo =
+                          promocaoTipoController.promocaoTipoSelecionada;
 
                       print("Loja: ${p.loja.nome}");
                       print("Promoção tipo: ${p.promocaoTipo.descricao}");
@@ -673,8 +674,8 @@ class _PromocaoCreatePageState extends State<PromocaoCreatePage>
                   }
                 }
               }
-            },
-          ),
+              // },
+              ),
         ),
         SizedBox(height: 20),
       ],

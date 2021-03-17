@@ -1167,8 +1167,18 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
                           subCategoriaController.subCategoriaSelecionada;
                       p.marca = marcaController.marcaSelecionada;
                       p.promocao = promocaoController.promocaoSelecionada;
-                      // p.tamanhos = produtoController.tamanhoSelecionados;
-                      // p.cores = produtoController.corSelecionadas;
+
+                      //
+                      // for (Cor c in corController.cores) {
+                      //   print("Cores: ${c.descricao}");
+                      // }
+                      //
+                      // for (Tamanho c in tamanhoController.tamanhos) {
+                      //   print("Tamanhos: ${c.descricao}");
+                      // }
+                      //
+                      // p.cores.addAll(produtoController.corSelecionadas);
+                      // p.tamanhos.addAll(produtoController.tamanhoSelecionados);
 
                       print("Loja: ${p.loja.nome}");
                       print("SubCategoria: ${p.subCategoria.nome}");
@@ -1194,16 +1204,16 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
                       // print("Vencimento: ${p.estoque.dataVencimento}");
                       print("Agora: ${agora}");
 
-                      for (Cor c in corController.cores) {
-                        print("Cores: ${c.descricao}");
-                      }
-
-                      for (Tamanho c in tamanhoController.tamanhos) {
-                        print("Tamanhos: ${c.descricao}");
-                      }
-
-                      p.cores.addAll(produtoController.corSelecionadas);
-                      p.tamanhos.addAll(produtoController.tamanhoSelecionados);
+                      // for (Cor c in corController.cores) {
+                      //   print("Cores: ${c.descricao}");
+                      // }
+                      //
+                      // for (Tamanho c in tamanhoController.tamanhos) {
+                      //   print("Tamanhos: ${c.descricao}");
+                      // }
+                      //
+                      // p.cores.addAll(produtoController.corSelecionadas);
+                      // p.tamanhos.addAll(produtoController.tamanhoSelecionados);
 
                       p.estoque.quantidade =
                           int.tryParse(controllerQuantidade.text);

@@ -41,7 +41,8 @@ class _ProdutoTableState extends State<ProdutoTable> {
   Produto produto;
 
   var formatMoeda = new NumberFormat("#,##0.00", "pt_BR");
-  RangeValues ragerValores = const RangeValues(00, 100);
+  RangeValues values = RangeValues(0, 100);
+  RangeLabels labels = RangeLabels('0', '100');
 
   @override
   void initState() {
@@ -91,21 +92,21 @@ class _ProdutoTableState extends State<ProdutoTable> {
             child: Column(
               children: <Widget>[
                 RangeSlider(
-                  values: ragerValores,
+                  values: values,
                   min: 0,
                   max: 100,
-                  labels: RangeLabels(
-                    ragerValores.start.round().toString(),
-                    ragerValores.end.round().toString(),
-                  ),
-                  onChanged: (values) {
+                  labels: labels,
+                  divisions: 10,
+                  onChanged: (valor) {
                     setState(() {
-                      ragerValores = values;
-                      double valorMinimo = ragerValores.start;
-                      double valorMaximo = ragerValores.end;
+                      values = valor;
+                      double valorMinimo = valor.start;
+                      double valorMaximo = valor.end;
 
                       filter.valorMinimo = double.tryParse(valorMinimo.toStringAsFixed(0));
-                      filter.valorMaximo = double.tryParse(valorMaximo.toStringAsFixed(0));;
+                      filter.valorMaximo = double.tryParse(valorMaximo.toStringAsFixed(0));
+
+                      labels = RangeLabels(valor.start.toString(), valor.end.toString());
 
                       print("Valor mínimo: ${filter.valorMinimo}");
                       print("Valor máximo: ${filter.valorMaximo}");
@@ -398,6 +399,7 @@ class _ProdutoTableState extends State<ProdutoTable> {
           sortAscending: true,
           showFirstLastButtons: true,
           columns: [
+            DataColumn(label: Text("Cód.")),
             DataColumn(label: Text("Foto")),
             DataColumn(label: Text("Nome")),
             DataColumn(label: Text("Promoção")),
@@ -442,13 +444,18 @@ class DataSource extends DataTableSource {
         }
       },
       cells: [
-        DataCell(CircleAvatar(
-          backgroundColor: Colors.grey[100],
-          radius: 20,
-          backgroundImage: NetworkImage(
-            "${produtoController.arquivo + p.foto}",
-          ),
-        )),
+        DataCell(Text("${p.id}")),
+        DataCell(
+          p.foto != null
+              ? CircleAvatar(
+            backgroundColor: Colors.grey[100],
+            radius: 20,
+            backgroundImage: NetworkImage(
+              "${produtoController.arquivo + p.foto}",
+            ),
+          )
+              : CircleAvatar(),
+        ),
         DataCell(Text(p.nome)),
         DataCell(Text(p.promocao.nome)),
         DataCell(Text(p.subCategoria.nome)),
