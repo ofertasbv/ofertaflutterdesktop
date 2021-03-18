@@ -40,6 +40,7 @@ import 'package:nosso/src/util/dropdown/dropdown_tamanho.dart';
 import 'package:nosso/src/util/load/circular_progresso.dart';
 import 'package:nosso/src/util/upload/upload_response.dart';
 import 'package:nosso/src/util/validador/validador_produto.dart';
+import 'package:search_choices/search_choices.dart';
 
 class ProdutoCreatePage extends StatefulWidget {
   Produto produto;
@@ -82,6 +83,10 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
   Marca marcaSelecionada;
   List<Cor> coreSelecionados;
   List<Tamanho> tamanhoSelecionados;
+  List<int> coresSelecionadas = [];
+  List<int> tamanhosSelecionados = [];
+
+  String corSelecionda;
 
   Controller controller;
   var controllerCodigoBarra = TextEditingController();
@@ -140,6 +145,8 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
       controllerPecentual.text = p.estoque.percentual.toStringAsFixed(2);
     }
 
+    tamanhoController.getAll();
+    corController.getAll();
     marcaController.getAll();
     subCategoriaController.getAll();
     lojaController.getAll();
@@ -229,6 +236,96 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
             double.tryParse(controllerPecentual.text)) /
         100;
     controllerValorVenda.text = valor.toStringAsFixed(2);
+  }
+
+  builderConteudoListCores() {
+    return Container(
+      color: Colors.grey[200],
+      padding: EdgeInsets.only(top: 0),
+      child: Observer(
+        builder: (context) {
+          List<Cor> cores = corController.cores;
+          if (corController.error != null) {
+            return Text("Não foi possível carregados dados");
+          }
+
+          if (cores == null) {
+            return CircularProgressor();
+          }
+
+          return SearchChoices<Cor>.multiple(
+            items: cores.map((e) {
+              return DropdownMenuItem<Cor>(
+                child: Text(e.descricao),
+                value: e,
+              );
+            }).toList(),
+            selectedItems: coresSelecionadas,
+            hint: "Selecione uma cor",
+            searchHint: "Selecione uma cor",
+            validator: (value) => value == null ? "campo obrigatório" : null,
+            onChanged: (value) {
+              setState(() {
+                coresSelecionadas = value;
+              });
+            },
+            isExpanded: true,
+            padding: 20,
+            selectedAggregateWidgetFn: (List<Widget> list) {
+              return (Column(children: [
+                Text("${list.length} cores selecionadas"),
+                Wrap(children: list),
+              ]));
+            },
+          );
+        },
+      ),
+    );
+  }
+
+  builderConteudoLisTamanhos() {
+    return Container(
+      color: Colors.grey[200],
+      padding: EdgeInsets.only(top: 0),
+      child: Observer(
+        builder: (context) {
+          List<Tamanho> tamanhos = tamanhoController.tamanhos;
+          if (tamanhoController.error != null) {
+            return Text("Não foi possível carregados dados");
+          }
+
+          if (tamanhos == null) {
+            return CircularProgressor();
+          }
+
+          return SearchChoices<Tamanho>.multiple(
+            items: tamanhos.map((e) {
+              return DropdownMenuItem<Tamanho>(
+                child: Text(e.descricao),
+                value: e,
+              );
+            }).toList(),
+            selectedItems: tamanhosSelecionados,
+            hint: "Selecione um tamanho",
+            searchHint: "Selecione uma cor",
+            validator: (value) => value == null ? "campo obrigatório" : null,
+            onChanged: (value) {
+              setState(() {
+                tamanhosSelecionados = value;
+              });
+            },
+            isExpanded: true,
+            padding: 20,
+            selectedAggregateWidgetFn: (List<Widget> list) {
+              return (Column(children: [
+                Text("${list.length} tamanhos selecionados"),
+                Wrap(children: list),
+              ]));
+            },
+          );
+        },
+      ),
+    );
   }
 
   builderConteudoListLojas() {
@@ -739,145 +836,182 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
                         maxLines: 1,
                       ),
                       SizedBox(height: 10),
-                      TextFormField(
-                        controller: controllerQuantidade,
-                        onSaved: (value) {
-                          p.estoque.quantidade = int.tryParse(value);
-                        },
-                        validator: validateQuantidade,
-                        decoration: InputDecoration(
-                          labelText: "Quantidade de estoque",
-                          hintText: "Entre com a quantidade",
-                          prefixIcon: Icon(
-                            Icons.mode_edit,
-                            color: Colors.grey,
-                          ),
-                          suffixIcon: Icon(Icons.close),
-                          contentPadding:
-                              EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.purple[900]),
-                            gapPadding: 1,
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
+                      Container(
+                        padding: EdgeInsets.all(0),
+                        width: double.infinity,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              width: 500,
+                              child: TextFormField(
+                                controller: controllerQuantidade,
+                                onSaved: (value) {
+                                  p.estoque.quantidade = int.tryParse(value);
+                                },
+                                validator: validateQuantidade,
+                                decoration: InputDecoration(
+                                  labelText: "Quantidade de estoque",
+                                  hintText: "Entre com a quantidade",
+                                  prefixIcon: Icon(
+                                    Icons.mode_edit,
+                                    color: Colors.grey,
+                                  ),
+                                  suffixIcon: Icon(Icons.close),
+                                  contentPadding: EdgeInsets.fromLTRB(
+                                      20.0, 20.0, 20.0, 20.0),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(5.0)),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.purple[900]),
+                                    gapPadding: 1,
+                                    borderRadius: BorderRadius.circular(5.0),
+                                  ),
+                                ),
+                                onEditingComplete: () => focus.nextFocus(),
+                                keyboardType: TextInputType.numberWithOptions(
+                                    decimal: false),
+                                maxLength: 6,
+                              ),
+                            ),
+                            Container(
+                              width: 500,
+                              child: TextFormField(
+                                controller: controllerValorUnitario,
+                                onSaved: (value) {
+                                  p.estoque.valorUnitario =
+                                      double.tryParse(value);
+                                },
+                                validator: validateValorUnitario,
+                                decoration: InputDecoration(
+                                  labelText: "Valor unitário",
+                                  hintText: "Valor unitário",
+                                  prefixIcon: Icon(
+                                    Icons.monetization_on_outlined,
+                                    color: Colors.grey,
+                                  ),
+                                  suffixIcon: IconButton(
+                                    onPressed: () =>
+                                        controllerValorUnitario.clear(),
+                                    icon: Icon(Icons.clear),
+                                  ),
+                                  contentPadding: EdgeInsets.fromLTRB(
+                                      20.0, 20.0, 20.0, 20.0),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(5.0)),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.purple[900]),
+                                    gapPadding: 1,
+                                    borderRadius: BorderRadius.circular(5.0),
+                                  ),
+                                ),
+                                onEditingComplete: () => focus.nextFocus(),
+                                keyboardType: TextInputType.numberWithOptions(
+                                    decimal: true),
+                                maxLength: 10,
+                              ),
+                            )
+                          ],
                         ),
-                        onEditingComplete: () => focus.nextFocus(),
-                        keyboardType:
-                            TextInputType.numberWithOptions(decimal: false),
-                        maxLength: 6,
                       ),
                       SizedBox(height: 10),
-                      TextFormField(
-                        controller: controllerValorUnitario,
-                        onSaved: (value) {
-                          p.estoque.valorUnitario = double.tryParse(value);
-                        },
-                        validator: validateValorUnitario,
-                        decoration: InputDecoration(
-                          labelText: "Valor unitário",
-                          hintText: "Valor unitário",
-                          prefixIcon: Icon(
-                            Icons.monetization_on_outlined,
-                            color: Colors.grey,
-                          ),
-                          suffixIcon: IconButton(
-                            onPressed: () => controllerValorUnitario.clear(),
-                            icon: Icon(Icons.clear),
-                          ),
-                          contentPadding:
-                              EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.purple[900]),
-                            gapPadding: 1,
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
+                      Container(
+                        padding: EdgeInsets.all(0),
+                        width: double.infinity,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              width: 500,
+                              child: TextFormField(
+                                controller: controllerPecentual,
+                                onSaved: (value) {
+                                  p.estoque.percentual = double.tryParse(value);
+                                },
+                                validator: validatePercentual,
+                                onChanged: (percentual) {
+                                  valor = (double.tryParse(
+                                          controllerValorUnitario.text) +
+                                      (double.tryParse(controllerValorUnitario
+                                                  .text) *
+                                              double.tryParse(
+                                                  controllerPecentual.text)) /
+                                          100);
+                                  controllerValorVenda.text =
+                                      valor.toStringAsFixed(2);
+                                },
+                                decoration: InputDecoration(
+                                  labelText: "Percentual de ganho",
+                                  hintText: "Percentual de ganho",
+                                  prefixIcon: Icon(
+                                    Icons.monetization_on_outlined,
+                                    color: Colors.grey,
+                                  ),
+                                  suffixIcon: IconButton(
+                                    onPressed: () =>
+                                        controllerPecentual.clear(),
+                                    icon: Icon(Icons.clear),
+                                  ),
+                                  contentPadding: EdgeInsets.fromLTRB(
+                                      20.0, 20.0, 20.0, 20.0),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(5.0)),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.purple[900]),
+                                    gapPadding: 1,
+                                    borderRadius: BorderRadius.circular(5.0),
+                                  ),
+                                ),
+                                onEditingComplete: () => focus.nextFocus(),
+                                keyboardType: TextInputType.numberWithOptions(
+                                    decimal: true),
+                                maxLength: 10,
+                              ),
+                            ),
+                            Container(
+                              width: 500,
+                              child: TextFormField(
+                                controller: controllerValorVenda,
+                                onSaved: (value) {
+                                  p.estoque.valorVenda = double.tryParse(value);
+                                },
+                                validator: validateValorVenda,
+                                decoration: InputDecoration(
+                                  labelText: "Valor de venda",
+                                  hintText: "Valor de venda",
+                                  prefixIcon: Icon(
+                                    Icons.monetization_on_outlined,
+                                    color: Colors.grey,
+                                  ),
+                                  suffixIcon: IconButton(
+                                    onPressed: () =>
+                                        controllerValorVenda.clear(),
+                                    icon: Icon(Icons.clear),
+                                  ),
+                                  contentPadding: EdgeInsets.fromLTRB(
+                                      20.0, 20.0, 20.0, 20.0),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(5.0)),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.purple[900]),
+                                    gapPadding: 1,
+                                    borderRadius: BorderRadius.circular(5.0),
+                                  ),
+                                ),
+                                onEditingComplete: () => focus.nextFocus(),
+                                keyboardType: TextInputType.numberWithOptions(
+                                    decimal: true),
+                                maxLength: 10,
+                                enabled: false,
+                              ),
+                            )
+                          ],
                         ),
-                        onEditingComplete: () => focus.nextFocus(),
-                        keyboardType:
-                            TextInputType.numberWithOptions(decimal: true),
-                        maxLength: 10,
                       ),
-                      SizedBox(height: 10),
-                      TextFormField(
-                        controller: controllerPecentual,
-                        onSaved: (value) {
-                          p.estoque.percentual = double.tryParse(value);
-                        },
-                        validator: validatePercentual,
-                        onChanged: (percentual) {
-                          valor = (double.tryParse(
-                                  controllerValorUnitario.text) +
-                              (double.tryParse(controllerValorUnitario.text) *
-                                      double.tryParse(
-                                          controllerPecentual.text)) /
-                                  100);
-                          controllerValorVenda.text = valor.toStringAsFixed(2);
-                        },
-                        decoration: InputDecoration(
-                          labelText: "Percentual de ganho",
-                          hintText: "Percentual de ganho",
-                          prefixIcon: Icon(
-                            Icons.monetization_on_outlined,
-                            color: Colors.grey,
-                          ),
-                          suffixIcon: IconButton(
-                            onPressed: () => controllerPecentual.clear(),
-                            icon: Icon(Icons.clear),
-                          ),
-                          contentPadding:
-                              EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.purple[900]),
-                            gapPadding: 1,
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
-                        ),
-                        onEditingComplete: () => focus.nextFocus(),
-                        keyboardType:
-                            TextInputType.numberWithOptions(decimal: true),
-                        maxLength: 10,
-                      ),
-                      SizedBox(height: 10),
-                      TextFormField(
-                        controller: controllerValorVenda,
-                        onSaved: (value) {
-                          p.estoque.valorVenda = double.tryParse(value);
-                        },
-                        validator: validateValorVenda,
-                        decoration: InputDecoration(
-                          labelText: "Valor de venda",
-                          hintText: "Valor de venda",
-                          prefixIcon: Icon(
-                            Icons.monetization_on_outlined,
-                            color: Colors.grey,
-                          ),
-                          suffixIcon: IconButton(
-                            onPressed: () => controllerValorVenda.clear(),
-                            icon: Icon(Icons.clear),
-                          ),
-                          contentPadding:
-                              EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.purple[900]),
-                            gapPadding: 1,
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
-                        ),
-                        onEditingComplete: () => focus.nextFocus(),
-                        keyboardType:
-                            TextInputType.numberWithOptions(decimal: true),
-                        maxLength: 10,
-                        enabled: false,
-                      ),
-                      SizedBox(height: 10),
                       // DateTimeField(
                       //   initialValue: p.estoque.dataRegistro,
                       //   format: dateFormat,
@@ -913,7 +1047,6 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
                       //   },
                       //   maxLength: 10,
                       // ),
-                      SizedBox(height: 10),
                       // DateTimeField(
                       //   initialValue: p.estoque.dataVencimento,
                       //   format: dateFormat,
@@ -954,20 +1087,63 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
                 ),
                 SizedBox(height: 0),
                 Container(
+                  height: 100,
                   padding: EdgeInsets.all(15),
-                  child: builderConteudoListSubCategorias(),
+                  width: double.infinity,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        width: 500,
+                        color: Colors.grey[200],
+                        child: builderConteudoListLojas(),
+                      ),
+                      Container(
+                        width: 500,
+                        color: Colors.grey[200],
+                        child: builderConteudoListPromocaoes(),
+                      )
+                    ],
+                  ),
+                ),
+                Container(
+                  height: 100,
+                  padding: EdgeInsets.all(15),
+                  width: double.infinity,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        width: 500,
+                        color: Colors.grey[200],
+                        child: builderConteudoListMarcas(),
+                      ),
+                      Container(
+                        width: 500,
+                        color: Colors.grey[200],
+                        child: builderConteudoListSubCategorias(),
+                      )
+                    ],
+                  ),
                 ),
                 Container(
                   padding: EdgeInsets.all(15),
-                  child: builderConteudoListMarcas(),
-                ),
-                Container(
-                  padding: EdgeInsets.all(15),
-                  child: builderConteudoListLojas(),
-                ),
-                Container(
-                  padding: EdgeInsets.all(15),
-                  child: builderConteudoListPromocaoes(),
+                  width: double.infinity,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        width: 500,
+                        color: Colors.grey[200],
+                        child: builderConteudoListCores(),
+                      ),
+                      Container(
+                        width: 500,
+                        color: Colors.grey[200],
+                        child: builderConteudoLisTamanhos(),
+                      )
+                    ],
+                  ),
                 ),
                 Container(
                   padding: EdgeInsets.all(15),
@@ -1037,133 +1213,162 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.all(15),
-                  child: Container(
-                    padding: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    child: Column(
-                      children: <Widget>[
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Text("Unidade de medida"),
-                            RadioListTile(
-                              controlAffinity: ListTileControlAffinity.trailing,
-                              title: Text("UNIDADE"),
-                              value: "UNIDADE",
-                              groupValue: p.medida == null
-                                  ? p.medida = medida
-                                  : p.medida,
-                              secondary: const Icon(Icons.check_outlined),
-                              onChanged: (String valor) {
-                                setState(() {
-                                  p.medida = valor;
-                                  print("Medida: " + p.medida);
-                                });
-                              },
+                  padding: EdgeInsets.all(0),
+                  width: double.infinity,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        width: 500,
+                        height: 280,
+                        child: Container(
+                          padding: EdgeInsets.all(15),
+                          child: Container(
+                            padding: EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5),
                             ),
-                            RadioListTile(
-                              controlAffinity: ListTileControlAffinity.trailing,
-                              title: Text("PEÇA"),
-                              value: "PECA",
-                              groupValue: p.medida == null
-                                  ? p.medida = medida
-                                  : p.medida,
-                              secondary: const Icon(Icons.check_outlined),
-                              onChanged: (String valor) {
-                                setState(() {
-                                  p.medida = valor;
-                                  print("Medida: " + p.medida);
-                                });
-                              },
+                            child: Column(
+                              children: <Widget>[
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    Text("Unidade de medida"),
+                                    RadioListTile(
+                                      controlAffinity:
+                                          ListTileControlAffinity.trailing,
+                                      title: Text("UNIDADE"),
+                                      value: "UNIDADE",
+                                      groupValue: p.medida == null
+                                          ? p.medida = medida
+                                          : p.medida,
+                                      secondary:
+                                          const Icon(Icons.check_outlined),
+                                      onChanged: (String valor) {
+                                        setState(() {
+                                          p.medida = valor;
+                                          print("Medida: " + p.medida);
+                                        });
+                                      },
+                                    ),
+                                    RadioListTile(
+                                      controlAffinity:
+                                          ListTileControlAffinity.trailing,
+                                      title: Text("PEÇA"),
+                                      value: "PECA",
+                                      groupValue: p.medida == null
+                                          ? p.medida = medida
+                                          : p.medida,
+                                      secondary:
+                                          const Icon(Icons.check_outlined),
+                                      onChanged: (String valor) {
+                                        setState(() {
+                                          p.medida = valor;
+                                          print("Medida: " + p.medida);
+                                        });
+                                      },
+                                    ),
+                                    RadioListTile(
+                                      controlAffinity:
+                                          ListTileControlAffinity.trailing,
+                                      title: Text("QUILOGRAMA"),
+                                      value: "QUILOGRAMA",
+                                      groupValue: p.medida == null
+                                          ? p.medida = medida
+                                          : p.medida,
+                                      secondary:
+                                          const Icon(Icons.check_outlined),
+                                      onChanged: (String valor) {
+                                        setState(() {
+                                          p.medida = valor;
+                                          print("resultado: " + p.medida);
+                                        });
+                                      },
+                                    ),
+                                    RadioListTile(
+                                      controlAffinity:
+                                          ListTileControlAffinity.trailing,
+                                      title: Text("OUTRO"),
+                                      value: "OUTRO",
+                                      groupValue: p.medida == null
+                                          ? p.medida = medida
+                                          : p.medida,
+                                      secondary:
+                                          const Icon(Icons.check_outlined),
+                                      onChanged: (String valor) {
+                                        setState(() {
+                                          p.medida = valor;
+                                          print("resultado: " + p.medida);
+                                        });
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
-                            RadioListTile(
-                              controlAffinity: ListTileControlAffinity.trailing,
-                              title: Text("QUILOGRAMA"),
-                              value: "QUILOGRAMA",
-                              groupValue: p.medida == null
-                                  ? p.medida = medida
-                                  : p.medida,
-                              secondary: const Icon(Icons.check_outlined),
-                              onChanged: (String valor) {
-                                setState(() {
-                                  p.medida = valor;
-                                  print("resultado: " + p.medida);
-                                });
-                              },
-                            ),
-                            RadioListTile(
-                              controlAffinity: ListTileControlAffinity.trailing,
-                              title: Text("OUTRO"),
-                              value: "OUTRO",
-                              groupValue: p.medida == null
-                                  ? p.medida = medida
-                                  : p.medida,
-                              secondary: const Icon(Icons.check_outlined),
-                              onChanged: (String valor) {
-                                setState(() {
-                                  p.medida = valor;
-                                  print("resultado: " + p.medida);
-                                });
-                              },
-                            ),
-                          ],
+                          ),
                         ),
-                      ],
-                    ),
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.all(15),
-                  child: Container(
-                    padding: EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    child: Column(
-                      children: <Widget>[
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Text("Origem do produto"),
-                            RadioListTile(
-                              controlAffinity: ListTileControlAffinity.trailing,
-                              title: Text("NACIONAL"),
-                              value: "NACIONAL",
-                              groupValue: p.origem == null
-                                  ? p.origem = origem
-                                  : p.origem,
-                              secondary: const Icon(Icons.check_outlined),
-                              onChanged: (String valor) {
-                                setState(() {
-                                  p.origem = valor;
-                                  print("Origem: " + p.origem);
-                                });
-                              },
+                      ),
+                      Container(
+                        width: 500,
+                        height: 280,
+                        child: Container(
+                          padding: EdgeInsets.all(15),
+                          child: Container(
+                            padding: EdgeInsets.all(5),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5),
                             ),
-                            RadioListTile(
-                              controlAffinity: ListTileControlAffinity.trailing,
-                              title: Text("INTERNACIONAL"),
-                              value: "INTERNACIONAL",
-                              groupValue: p.origem == null
-                                  ? p.origem = origem
-                                  : p.origem,
-                              secondary: const Icon(Icons.check_outlined),
-                              onChanged: (String valor) {
-                                setState(() {
-                                  p.origem = valor;
-                                  print("Origem: " + p.origem);
-                                });
-                              },
+                            child: Column(
+                              children: <Widget>[
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    Text("Origem do produto"),
+                                    RadioListTile(
+                                      controlAffinity:
+                                          ListTileControlAffinity.trailing,
+                                      title: Text("NACIONAL"),
+                                      value: "NACIONAL",
+                                      groupValue: p.origem == null
+                                          ? p.origem = origem
+                                          : p.origem,
+                                      secondary:
+                                          const Icon(Icons.check_outlined),
+                                      onChanged: (String valor) {
+                                        setState(() {
+                                          p.origem = valor;
+                                          print("Origem: " + p.origem);
+                                        });
+                                      },
+                                    ),
+                                    RadioListTile(
+                                      controlAffinity:
+                                          ListTileControlAffinity.trailing,
+                                      title: Text("INTERNACIONAL"),
+                                      value: "INTERNACIONAL",
+                                      groupValue: p.origem == null
+                                          ? p.origem = origem
+                                          : p.origem,
+                                      secondary:
+                                          const Icon(Icons.check_outlined),
+                                      onChanged: (String valor) {
+                                        setState(() {
+                                          p.origem = valor;
+                                          print("Origem: " + p.origem);
+                                        });
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
-                          ],
+                          ),
                         ),
-                      ],
-                    ),
+                      )
+                    ],
                   ),
                 ),
               ],
