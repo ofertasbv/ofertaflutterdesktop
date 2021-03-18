@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:core';
 import 'dart:io';
 
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -146,6 +147,88 @@ class _EnderecoCreatePageState extends State<EnderecoCreatePage>
           target: LatLng(-4.253467, -49.944051),
           zoom: 16,
         ),
+      ),
+    );
+  }
+
+  builderConteudoListEstados() {
+    return Container(
+      padding: EdgeInsets.only(top: 0),
+      child: Observer(
+        builder: (context) {
+          List<Estado> estados = estadoController.estados;
+          if (cidadeController.error != null) {
+            return Text("Não foi possível carregados dados");
+          }
+
+          if (estados == null) {
+            return CircularProgressorMini();
+          }
+
+          return DropdownSearch<Estado>(
+            label: "Selecione estados",
+            popupTitle: Center(child: Text("Estados")),
+            items: estados,
+            showSearchBox: true,
+            itemAsString: (Estado s) => s.nome,
+            validator: (value) => value == null ? "campo obrigatório" : null,
+            isFilteredOnline: true,
+            showClearButton: true,
+            selectedItem: estadoSelecionado,
+            onChanged: (Estado e) {
+              estadoSelecionado = e;
+              setState(() {
+                cidadeController.getAllByEstadoId(estadoSelecionado.id);
+                print("estado: ${estadoSelecionado.nome}");
+              });
+            },
+            searchBoxDecoration: InputDecoration(
+              border: OutlineInputBorder(),
+              contentPadding: EdgeInsets.fromLTRB(20, 20, 20, 0),
+              labelText: "Pesquisar por estado",
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  builderConteudoListCiadades() {
+    return Container(
+      padding: EdgeInsets.only(top: 0),
+      child: Observer(
+        builder: (context) {
+          List<Cidade> cidades = cidadeController.cidades;
+          if (cidadeController.error != null) {
+            return Text("Não foi possível carregados dados");
+          }
+
+          if (cidades == null) {
+            return CircularProgressorMini();
+          }
+
+          return DropdownSearch<Cidade>(
+            label: "Selecione cidades",
+            popupTitle: Center(child: Text("Cidades")),
+            items: cidades,
+            showSearchBox: true,
+            itemAsString: (Cidade s) => s.nome,
+            validator: (value) => value == null ? "campo obrigatório" : null,
+            isFilteredOnline: true,
+            showClearButton: true,
+            selectedItem: cidadeSelecionada,
+            onChanged: (Cidade m) {
+              setState(() {
+                print("cidade: ${m.nome}");
+              });
+            },
+            searchBoxDecoration: InputDecoration(
+              border: OutlineInputBorder(),
+              contentPadding: EdgeInsets.fromLTRB(20, 20, 20, 0),
+              labelText: "Pesquisar por cidade",
+            ),
+          );
+        },
       ),
     );
   }
@@ -506,32 +589,12 @@ class _EnderecoCreatePageState extends State<EnderecoCreatePage>
               Container(
                 width: 500,
                 color: Colors.grey[200],
-                child: ListTile(
-                  title: Text("Estado *"),
-                  subtitle: estadoSelecionado == null
-                      ? Text("Selecione uma estado")
-                      : Text(estadoSelecionado.nome),
-                  leading: Icon(Icons.list_alt_outlined),
-                  trailing: Icon(Icons.arrow_drop_down_sharp),
-                  onTap: () {
-                    alertSelectEstados(context, estadoSelecionado);
-                  },
-                ),
+                child: builderConteudoListEstados(),
               ),
               Container(
                 width: 500,
                 color: Colors.grey[200],
-                child: ListTile(
-                  title: Text("Cidade *"),
-                  subtitle: cidadeSelecionada == null
-                      ? Text("Selecione uma cidade")
-                      : Text(cidadeSelecionada.nome),
-                  leading: Icon(Icons.list_alt_outlined),
-                  trailing: Icon(Icons.arrow_drop_down_sharp),
-                  onTap: () {
-                    alertSelectCidades(context, cidadeSelecionada);
-                  },
-                ),
+                child: builderConteudoListCiadades(),
               )
             ],
           ),
@@ -610,143 +673,6 @@ class _EnderecoCreatePageState extends State<EnderecoCreatePage>
               },
               child: Text("ok"),
             )
-          ],
-        );
-      },
-    );
-  }
-
-  builderConteudoListEstados() {
-    return Container(
-      padding: EdgeInsets.only(top: 0),
-      child: Observer(
-        builder: (context) {
-          List<Estado> estados = estadoController.estados;
-          if (cidadeController.error != null) {
-            return Text("Não foi possível carregados dados");
-          }
-
-          if (estados == null) {
-            return CircularProgressorMini();
-          }
-
-          return builderListEstados(estados);
-        },
-      ),
-    );
-  }
-
-  builderListEstados(List<Estado> estados) {
-    double containerWidth = 160;
-    double containerHeight = 20;
-
-    return ListView.builder(
-      itemCount: estados.length,
-      itemBuilder: (context, index) {
-        Estado c = estados[index];
-
-        return Column(
-          children: [
-            GestureDetector(
-              child: ListTile(
-                leading: CircleAvatar(
-                  radius: 20,
-                  child: Icon(Icons.location_on_outlined),
-                ),
-                title: Text(c.nome),
-              ),
-              onTap: () {
-                setState(() {
-                  estadoSelecionado = c;
-                  cidadeController.getAllByEstadoId(estadoSelecionado.id);
-                  print("${estadoSelecionado.nome}");
-                });
-                Navigator.of(context).pop();
-              },
-            ),
-            Divider()
-          ],
-        );
-      },
-    );
-  }
-
-  /* ============== CIDADE LISTA ============== */
-
-  alertSelectCidades(BuildContext context, Cidade c) {
-    return showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(32.0)),
-          ),
-          contentPadding: EdgeInsets.only(top: 10.0),
-          content: Container(
-            width: 300.0,
-            child: builderConteudoListCidades(),
-          ),
-          actions: [
-            FlatButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text("ok"),
-            )
-          ],
-        );
-      },
-    );
-  }
-
-  builderConteudoListCidades() {
-    return Container(
-      padding: EdgeInsets.only(top: 0),
-      child: Observer(
-        builder: (context) {
-          List<Cidade> cidades = cidadeController.cidades;
-          if (cidadeController.error != null) {
-            return Text("Não foi possível carregados dados");
-          }
-
-          if (cidades == null) {
-            return CircularProgressorMini();
-          }
-
-          return builderListCidades(cidades);
-        },
-      ),
-    );
-  }
-
-  builderListCidades(List<Cidade> cidades) {
-    double containerWidth = 160;
-    double containerHeight = 20;
-
-    return ListView.builder(
-      itemCount: cidades.length,
-      itemBuilder: (context, index) {
-        Cidade c = cidades[index];
-
-        return Column(
-          children: [
-            GestureDetector(
-              child: ListTile(
-                leading: CircleAvatar(
-                  radius: 20,
-                  child: Icon(Icons.location_on_outlined),
-                ),
-                title: Text(c.nome),
-              ),
-              onTap: () {
-                setState(() {
-                  cidadeSelecionada = c;
-                  print("${cidadeSelecionada.nome}");
-                });
-                Navigator.of(context).pop();
-              },
-            ),
-            Divider()
           ],
         );
       },
