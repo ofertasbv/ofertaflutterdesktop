@@ -155,21 +155,25 @@ class _EnderecoCreatePageState extends State<EnderecoCreatePage>
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
+        titleSpacing: 50,
         elevation: 0,
         title: endereco.logradouro == null
             ? Text("Cadastro de endereço")
             : Text(endereco.logradouro),
       ),
-      body: Observer(
-        builder: (context) {
-          if (enderecoController.dioError == null) {
-            return buildListViewForm(context);
-          } else {
-            print("Erro: ${enderecoController.mensagem}");
-            showToast("${enderecoController.mensagem}");
-            return buildListViewForm(context);
-          }
-        },
+      body: Container(
+        padding: EdgeInsets.only(left: 100, right: 100, top: 10),
+        child: Observer(
+          builder: (context) {
+            if (enderecoController.dioError == null) {
+              return buildListViewForm(context);
+            } else {
+              print("Erro: ${enderecoController.mensagem}");
+              showToast("${enderecoController.mensagem}");
+              return buildListViewForm(context);
+            }
+          },
+        ),
       ),
     );
   }
@@ -276,170 +280,6 @@ class _EnderecoCreatePageState extends State<EnderecoCreatePage>
                         keyboardType: TextInputType.text,
                         maxLength: 255,
                       ),
-                      SizedBox(height: 10),
-                      TextFormField(
-                        initialValue: endereco.complemento,
-                        onSaved: (value) => endereco.complemento = value,
-                        validator: validateComplemento,
-                        decoration: InputDecoration(
-                          labelText: "Complemento",
-                          hintText: "Complemento",
-                          prefixIcon: Icon(
-                            Icons.location_on,
-                            color: Colors.grey,
-                          ),
-                          contentPadding:
-                              EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                          labelStyle: TextStyle(color: Colors.black),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.purple[900]),
-                            gapPadding: 1,
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
-                        ),
-                        onEditingComplete: () => focus.nextFocus(),
-                        keyboardType: TextInputType.text,
-                        maxLength: 50,
-                      ),
-                      SizedBox(height: 10),
-                      TextFormField(
-                        controller: controllerNumero,
-                        onSaved: (value) => endereco.numero = value,
-                        validator: validateNumero,
-                        decoration: InputDecoration(
-                          labelText: "Número",
-                          hintText: "Número",
-                          prefixIcon: Icon(
-                            Icons.location_on,
-                            color: Colors.grey,
-                          ),
-                          contentPadding:
-                              EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                          labelStyle: TextStyle(color: Colors.black),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.purple[900]),
-                            gapPadding: 1,
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
-                        ),
-                        onEditingComplete: () => focus.nextFocus(),
-                        keyboardType: TextInputType.number,
-                        maxLength: 10,
-                      ),
-                      SizedBox(height: 10),
-                      TextFormField(
-                        controller: controllerCep,
-                        onSaved: (value) => endereco.cep = value,
-                        validator: validateCep,
-                        decoration: InputDecoration(
-                          labelText: "Cep",
-                          hintText: "Cep",
-                          prefixIcon: Icon(
-                            Icons.location_on,
-                            color: Colors.grey,
-                          ),
-                          labelStyle: TextStyle(color: Colors.black),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.purple[900]),
-                            gapPadding: 1,
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
-                        ),
-                        onEditingComplete: () => focus.nextFocus(),
-                        keyboardType: TextInputType.number,
-                        inputFormatters: [
-                          MaskedTextInputFormatter(
-                              mask: '99999-999', separator: '-')
-                        ],
-                        maxLength: 9,
-                      ),
-                      SizedBox(height: 10),
-                      TextFormField(
-                        controller: controllerBairro,
-                        onSaved: (value) => endereco.bairro = value,
-                        validator: validateBairro,
-                        decoration: InputDecoration(
-                          labelText: "Bairro",
-                          hintText: "Bairro",
-                          prefixIcon: Icon(
-                            Icons.location_on,
-                            color: Colors.grey,
-                          ),
-                          labelStyle: TextStyle(color: Colors.black),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.purple[900]),
-                            gapPadding: 1,
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
-                        ),
-                        onEditingComplete: () => focus.nextFocus(),
-                        keyboardType: TextInputType.text,
-                        maxLength: 50,
-                      ),
-                      SizedBox(height: 10),
-                      TextFormField(
-                        controller: controllerLatitude,
-                        onSaved: (value) =>
-                            endereco.latitude = double.tryParse(value),
-                        validator: validateLatitude,
-                        decoration: InputDecoration(
-                          labelText: "Latitude",
-                          hintText: "Latidute",
-                          prefixIcon: Icon(
-                            Icons.location_on,
-                            color: Colors.grey,
-                          ),
-                          labelStyle: TextStyle(color: Colors.black),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.purple[900]),
-                            gapPadding: 1,
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
-                        ),
-                        readOnly: true,
-                        onEditingComplete: () => focus.nextFocus(),
-                        keyboardType: TextInputType.numberWithOptions(),
-                        maxLength: 50,
-                      ),
-                      SizedBox(height: 10),
-                      TextFormField(
-                        controller: controllerLongitude,
-                        onSaved: (value) =>
-                            endereco.longitude = double.tryParse(value),
-                        validator: validateLongitude,
-                        decoration: InputDecoration(
-                          labelText: "Longitude",
-                          hintText: "Longitude",
-                          prefixIcon: Icon(
-                            Icons.location_on,
-                            color: Colors.grey,
-                          ),
-                          labelStyle: TextStyle(color: Colors.black),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.purple[900]),
-                            gapPadding: 1,
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
-                        ),
-                        readOnly: true,
-                        onEditingComplete: () => focus.nextFocus(),
-                        keyboardType: TextInputType.numberWithOptions(),
-                        maxLength: 50,
-                      ),
                     ],
                   ),
                 ),
@@ -448,43 +288,252 @@ class _EnderecoCreatePageState extends State<EnderecoCreatePage>
           ),
         ),
         Container(
+          height: 100,
           padding: EdgeInsets.all(15),
-          child: Container(
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey),
-              borderRadius: BorderRadius.circular(5),
-            ),
-            child: ListTile(
-              title: Text("Estado *"),
-              subtitle: estadoSelecionado == null
-                  ? Text("Selecione uma estado")
-                  : Text(estadoSelecionado.nome),
-              leading: Icon(Icons.list_alt_outlined),
-              trailing: Icon(Icons.arrow_drop_down_sharp),
-              onTap: () {
-                alertSelectEstados(context, estadoSelecionado);
-              },
-            ),
+          width: double.infinity,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                width: 500,
+                color: Colors.grey[200],
+                child: TextFormField(
+                  initialValue: endereco.complemento,
+                  onSaved: (value) => endereco.complemento = value,
+                  validator: validateComplemento,
+                  decoration: InputDecoration(
+                    labelText: "Complemento",
+                    hintText: "Complemento",
+                    prefixIcon: Icon(
+                      Icons.location_on,
+                      color: Colors.grey,
+                    ),
+                    contentPadding: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
+                    labelStyle: TextStyle(color: Colors.black),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5.0)),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.purple[900]),
+                      gapPadding: 1,
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                  ),
+                  onEditingComplete: () => focus.nextFocus(),
+                  keyboardType: TextInputType.text,
+                  maxLength: 50,
+                ),
+              ),
+              Container(
+                width: 500,
+                color: Colors.grey[200],
+                child: TextFormField(
+                  controller: controllerNumero,
+                  onSaved: (value) => endereco.numero = value,
+                  validator: validateNumero,
+                  decoration: InputDecoration(
+                    labelText: "Número",
+                    hintText: "Número",
+                    prefixIcon: Icon(
+                      Icons.location_on,
+                      color: Colors.grey,
+                    ),
+                    contentPadding: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
+                    labelStyle: TextStyle(color: Colors.black),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5.0)),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.purple[900]),
+                      gapPadding: 1,
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                  ),
+                  onEditingComplete: () => focus.nextFocus(),
+                  keyboardType: TextInputType.number,
+                  maxLength: 10,
+                ),
+              )
+            ],
           ),
         ),
         Container(
+          height: 100,
           padding: EdgeInsets.all(15),
-          child: Container(
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey),
-              borderRadius: BorderRadius.circular(5),
-            ),
-            child: ListTile(
-              title: Text("Cidade *"),
-              subtitle: cidadeSelecionada == null
-                  ? Text("Selecione uma cidade")
-                  : Text(cidadeSelecionada.nome),
-              leading: Icon(Icons.list_alt_outlined),
-              trailing: Icon(Icons.arrow_drop_down_sharp),
-              onTap: () {
-                alertSelectCidades(context, cidadeSelecionada);
-              },
-            ),
+          width: double.infinity,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                width: 500,
+                color: Colors.grey[200],
+                child: TextFormField(
+                  controller: controllerCep,
+                  onSaved: (value) => endereco.cep = value,
+                  validator: validateCep,
+                  decoration: InputDecoration(
+                    labelText: "Cep",
+                    hintText: "Cep",
+                    prefixIcon: Icon(
+                      Icons.location_on,
+                      color: Colors.grey,
+                    ),
+                    labelStyle: TextStyle(color: Colors.black),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5.0)),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.purple[900]),
+                      gapPadding: 1,
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                  ),
+                  onEditingComplete: () => focus.nextFocus(),
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [
+                    MaskedTextInputFormatter(mask: '99999-999', separator: '-')
+                  ],
+                  maxLength: 9,
+                ),
+              ),
+              Container(
+                width: 500,
+                color: Colors.grey[200],
+                child: TextFormField(
+                  controller: controllerBairro,
+                  onSaved: (value) => endereco.bairro = value,
+                  validator: validateBairro,
+                  decoration: InputDecoration(
+                    labelText: "Bairro",
+                    hintText: "Bairro",
+                    prefixIcon: Icon(
+                      Icons.location_on,
+                      color: Colors.grey,
+                    ),
+                    labelStyle: TextStyle(color: Colors.black),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5.0)),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.purple[900]),
+                      gapPadding: 1,
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                  ),
+                  onEditingComplete: () => focus.nextFocus(),
+                  keyboardType: TextInputType.text,
+                  maxLength: 50,
+                ),
+              )
+            ],
+          ),
+        ),
+        Container(
+          height: 100,
+          padding: EdgeInsets.all(15),
+          width: double.infinity,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                width: 500,
+                color: Colors.grey[200],
+                child: TextFormField(
+                  controller: controllerLatitude,
+                  onSaved: (value) =>
+                      endereco.latitude = double.tryParse(value),
+                  validator: validateLatitude,
+                  decoration: InputDecoration(
+                    labelText: "Latitude",
+                    hintText: "Latidute",
+                    prefixIcon: Icon(
+                      Icons.location_on,
+                      color: Colors.grey,
+                    ),
+                    labelStyle: TextStyle(color: Colors.black),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.purple[900]),
+                      gapPadding: 1,
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                  ),
+                  readOnly: true,
+                  onEditingComplete: () => focus.nextFocus(),
+                  keyboardType: TextInputType.numberWithOptions(),
+                  maxLength: 50,
+                ),
+              ),
+              Container(
+                width: 500,
+                color: Colors.grey[200],
+                child: TextFormField(
+                  controller: controllerLongitude,
+                  onSaved: (value) =>
+                      endereco.longitude = double.tryParse(value),
+                  validator: validateLongitude,
+                  decoration: InputDecoration(
+                    labelText: "Longitude",
+                    hintText: "Longitude",
+                    prefixIcon: Icon(
+                      Icons.location_on,
+                      color: Colors.grey,
+                    ),
+                    labelStyle: TextStyle(color: Colors.black),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.purple[900]),
+                      gapPadding: 1,
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                  ),
+                  readOnly: true,
+                  onEditingComplete: () => focus.nextFocus(),
+                  keyboardType: TextInputType.numberWithOptions(),
+                  maxLength: 50,
+                ),
+              )
+            ],
+          ),
+        ),
+        Container(
+          height: 100,
+          padding: EdgeInsets.all(15),
+          width: double.infinity,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                width: 500,
+                color: Colors.grey[200],
+                child: ListTile(
+                  title: Text("Estado *"),
+                  subtitle: estadoSelecionado == null
+                      ? Text("Selecione uma estado")
+                      : Text(estadoSelecionado.nome),
+                  leading: Icon(Icons.list_alt_outlined),
+                  trailing: Icon(Icons.arrow_drop_down_sharp),
+                  onTap: () {
+                    alertSelectEstados(context, estadoSelecionado);
+                  },
+                ),
+              ),
+              Container(
+                width: 500,
+                color: Colors.grey[200],
+                child: ListTile(
+                  title: Text("Cidade *"),
+                  subtitle: cidadeSelecionada == null
+                      ? Text("Selecione uma cidade")
+                      : Text(cidadeSelecionada.nome),
+                  leading: Icon(Icons.list_alt_outlined),
+                  trailing: Icon(Icons.arrow_drop_down_sharp),
+                  onTap: () {
+                    alertSelectCidades(context, cidadeSelecionada);
+                  },
+                ),
+              )
+            ],
           ),
         ),
         SizedBox(height: 0),

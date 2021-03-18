@@ -247,109 +247,155 @@ class _LojaCreatePageState extends State<LojaCreatePage> with ValidadorPessoa {
                   padding: EdgeInsets.all(5),
                   child: Column(
                     children: <Widget>[
-                      TextFormField(
-                        initialValue: p.nome,
-                        onSaved: (value) => p.nome = value,
-                        validator: (value) =>
-                            value.isEmpty ? "Preencha o nome fantazia" : null,
-                        decoration: InputDecoration(
-                          labelText: "Nome fantazia",
-                          hintText: "nome",
-                          prefixIcon: Icon(Icons.people, color: Colors.grey),
-                          suffixIcon: Icon(Icons.close),
-                          contentPadding:
-                              EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.lime[900]),
-                            gapPadding: 1,
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
+                      Container(
+                        height: 100,
+                        padding: EdgeInsets.all(0),
+                        width: double.infinity,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              width: 500,
+                              color: Colors.grey[200],
+                              child: TextFormField(
+                                initialValue: p.nome,
+                                onSaved: (value) => p.nome = value,
+                                validator: (value) => value.isEmpty
+                                    ? "Preencha o nome fantazia"
+                                    : null,
+                                decoration: InputDecoration(
+                                  labelText: "Nome fantazia",
+                                  hintText: "nome",
+                                  prefixIcon:
+                                      Icon(Icons.people, color: Colors.grey),
+                                  suffixIcon: Icon(Icons.close),
+                                  contentPadding: EdgeInsets.fromLTRB(
+                                      20.0, 20.0, 20.0, 20.0),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(5.0),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.lime[900]),
+                                    gapPadding: 1,
+                                    borderRadius: BorderRadius.circular(5.0),
+                                  ),
+                                ),
+                                onEditingComplete: () => focus.nextFocus(),
+                                keyboardType: TextInputType.text,
+                                maxLength: 50,
+                              ),
+                            ),
+                            Container(
+                              width: 500,
+                              color: Colors.grey[200],
+                              child: TextFormField(
+                                initialValue: p.razaoSocial,
+                                onSaved: (value) => p.razaoSocial = value,
+                                validator: (value) => value.isEmpty
+                                    ? "Preencha a razão social"
+                                    : null,
+                                decoration: InputDecoration(
+                                  labelText: "Razão social ",
+                                  hintText: "razão social",
+                                  prefixIcon:
+                                      Icon(Icons.people, color: Colors.grey),
+                                  suffixIcon: Icon(Icons.close),
+                                  contentPadding: EdgeInsets.fromLTRB(
+                                      20.0, 20.0, 20.0, 20.0),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(5.0)),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.lime[900]),
+                                    gapPadding: 1,
+                                    borderRadius: BorderRadius.circular(5.0),
+                                  ),
+                                ),
+                                onEditingComplete: () => focus.nextFocus(),
+                                keyboardType: TextInputType.text,
+                                maxLength: 50,
+                              ),
+                            )
+                          ],
                         ),
-                        onEditingComplete: () => focus.nextFocus(),
-                        keyboardType: TextInputType.text,
-                        maxLength: 50,
                       ),
                       SizedBox(height: 10),
-                      TextFormField(
-                        initialValue: p.razaoSocial,
-                        onSaved: (value) => p.razaoSocial = value,
-                        validator: (value) =>
-                            value.isEmpty ? "Preencha a razão social" : null,
-                        decoration: InputDecoration(
-                          labelText: "Razão social ",
-                          hintText: "razão social",
-                          prefixIcon: Icon(Icons.people, color: Colors.grey),
-                          suffixIcon: Icon(Icons.close),
-                          contentPadding:
-                              EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.lime[900]),
-                            gapPadding: 1,
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
+
+                      Container(
+                        height: 100,
+                        padding: EdgeInsets.all(0),
+                        width: double.infinity,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              width: 500,
+                              color: Colors.grey[200],
+                              child: TextFormField(
+                                initialValue: p.cnpj,
+                                onSaved: (value) => p.cnpj = value,
+                                validator: (value) =>
+                                    value.isEmpty ? "Preencha o cnpj" : null,
+                                decoration: InputDecoration(
+                                  labelText: "Cnpj",
+                                  hintText: "Cnpj",
+                                  prefixIcon: Icon(Icons.contact_mail,
+                                      color: Colors.grey),
+                                  suffixIcon: Icon(Icons.close),
+                                  contentPadding: EdgeInsets.fromLTRB(
+                                      20.0, 20.0, 20.0, 20.0),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(5.0)),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.lime[900]),
+                                    gapPadding: 1,
+                                    borderRadius: BorderRadius.circular(5.0),
+                                  ),
+                                ),
+                                onEditingComplete: () => focus.nextFocus(),
+                                keyboardType: TextInputType.number,
+                                inputFormatters: [maskFormatterCNPJ],
+                                maxLength: 17,
+                              ),
+                            ),
+                            Container(
+                              width: 500,
+                              color: Colors.grey[200],
+                              child: TextFormField(
+                                initialValue: p.telefone,
+                                onSaved: (value) => p.telefone = value,
+                                validator: (value) => value.isEmpty
+                                    ? "Preencha o telefone"
+                                    : null,
+                                decoration: InputDecoration(
+                                  labelText: "Telefone",
+                                  hintText: "Telefone celular",
+                                  prefixIcon:
+                                      Icon(Icons.phone, color: Colors.grey),
+                                  suffixIcon: Icon(Icons.close),
+                                  contentPadding: EdgeInsets.fromLTRB(
+                                      20.0, 20.0, 20.0, 20.0),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(5.0)),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.lime[900]),
+                                    gapPadding: 1,
+                                    borderRadius: BorderRadius.circular(5.0),
+                                  ),
+                                ),
+                                onEditingComplete: () => focus.nextFocus(),
+                                keyboardType: TextInputType.phone,
+                                inputFormatters: [maskFormatterCelular],
+                                maxLength: 50,
+                              ),
+                            )
+                          ],
                         ),
-                        onEditingComplete: () => focus.nextFocus(),
-                        keyboardType: TextInputType.text,
-                        maxLength: 50,
                       ),
-                      SizedBox(height: 10),
-                      TextFormField(
-                        initialValue: p.cnpj,
-                        onSaved: (value) => p.cnpj = value,
-                        validator: (value) =>
-                            value.isEmpty ? "Preencha o cnpj" : null,
-                        decoration: InputDecoration(
-                          labelText: "Cnpj",
-                          hintText: "Cnpj",
-                          prefixIcon:
-                              Icon(Icons.contact_mail, color: Colors.grey),
-                          suffixIcon: Icon(Icons.close),
-                          contentPadding:
-                              EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.lime[900]),
-                            gapPadding: 1,
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
-                        ),
-                        onEditingComplete: () => focus.nextFocus(),
-                        keyboardType: TextInputType.number,
-                        inputFormatters: [maskFormatterCNPJ],
-                        maxLength: 17,
-                      ),
-                      SizedBox(height: 10),
-                      TextFormField(
-                        initialValue: p.telefone,
-                        onSaved: (value) => p.telefone = value,
-                        validator: (value) =>
-                            value.isEmpty ? "Preencha o telefone" : null,
-                        decoration: InputDecoration(
-                          labelText: "Telefone",
-                          hintText: "Telefone celular",
-                          prefixIcon: Icon(Icons.phone, color: Colors.grey),
-                          suffixIcon: Icon(Icons.close),
-                          contentPadding:
-                              EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.lime[900]),
-                            gapPadding: 1,
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
-                        ),
-                        onEditingComplete: () => focus.nextFocus(),
-                        keyboardType: TextInputType.phone,
-                        inputFormatters: [maskFormatterCelular],
-                        maxLength: 50,
-                      ),
+
                       SizedBox(height: 10),
                       // DateTimeField(
                       //   initialValue: p.dataRegistro,
@@ -410,73 +456,92 @@ class _LojaCreatePageState extends State<LojaCreatePage> with ValidadorPessoa {
                         keyboardType: TextInputType.emailAddress,
                         maxLength: 50,
                       ),
-                      SizedBox(height: 10),
-                      TextFormField(
-                        controller: senhaController,
-                        onSaved: (value) => p.usuario.senha = value,
-                        validator: validateSenha,
-                        decoration: InputDecoration(
-                          labelText: "Senha",
-                          hintText: "Senha",
-                          prefixIcon: Icon(Icons.security, color: Colors.grey),
-                          suffixIcon: IconButton(
-                            icon: lojaController.senhaVisivel == true
-                                ? Icon(Icons.visibility_outlined,
-                                    color: Colors.grey)
-                                : Icon(Icons.visibility_off_outlined,
-                                    color: Colors.grey),
-                            onPressed: () {
-                              lojaController.visualizarSenha();
-                            },
+                    ],
+                  ),
+                ),
+
+                Container(
+                  height: 100,
+                  padding: EdgeInsets.all(5),
+                  width: double.infinity,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        width: 500,
+                        color: Colors.grey[200],
+                        child: TextFormField(
+                          controller: senhaController,
+                          onSaved: (value) => p.usuario.senha = value,
+                          validator: validateSenha,
+                          decoration: InputDecoration(
+                            labelText: "Senha",
+                            hintText: "Senha",
+                            prefixIcon:
+                                Icon(Icons.security, color: Colors.grey),
+                            suffixIcon: IconButton(
+                              icon: lojaController.senhaVisivel == true
+                                  ? Icon(Icons.visibility_outlined,
+                                      color: Colors.grey)
+                                  : Icon(Icons.visibility_off_outlined,
+                                      color: Colors.grey),
+                              onPressed: () {
+                                lojaController.visualizarSenha();
+                              },
+                            ),
+                            contentPadding:
+                                EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5.0)),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.lime[900]),
+                              gapPadding: 1,
+                              borderRadius: BorderRadius.circular(5.0),
+                            ),
                           ),
-                          contentPadding:
-                              EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.lime[900]),
-                            gapPadding: 1,
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
+                          onEditingComplete: () => focus.nextFocus(),
+                          keyboardType: TextInputType.text,
+                          obscureText: !lojaController.senhaVisivel,
+                          maxLength: 8,
                         ),
-                        onEditingComplete: () => focus.nextFocus(),
-                        keyboardType: TextInputType.text,
-                        obscureText: !lojaController.senhaVisivel,
-                        maxLength: 8,
                       ),
-                      SizedBox(height: 10),
-                      TextFormField(
-                        controller: confirmaSenhaController,
-                        validator: validateSenha,
-                        decoration: InputDecoration(
-                          labelText: "Confirma senha",
-                          hintText: "Confirma senha",
-                          prefixIcon: Icon(Icons.security, color: Colors.grey),
-                          suffixIcon: IconButton(
-                            icon: lojaController.senhaVisivel == true
-                                ? Icon(Icons.visibility_outlined,
-                                    color: Colors.grey)
-                                : Icon(Icons.visibility_off_outlined,
-                                    color: Colors.grey),
-                            onPressed: () {
-                              lojaController.visualizarSenha();
-                            },
+                      Container(
+                        width: 500,
+                        color: Colors.grey[200],
+                        child: TextFormField(
+                          controller: confirmaSenhaController,
+                          validator: validateSenha,
+                          decoration: InputDecoration(
+                            labelText: "Confirma senha",
+                            hintText: "Confirma senha",
+                            prefixIcon:
+                                Icon(Icons.security, color: Colors.grey),
+                            suffixIcon: IconButton(
+                              icon: lojaController.senhaVisivel == true
+                                  ? Icon(Icons.visibility_outlined,
+                                      color: Colors.grey)
+                                  : Icon(Icons.visibility_off_outlined,
+                                      color: Colors.grey),
+                              onPressed: () {
+                                lojaController.visualizarSenha();
+                              },
+                            ),
+                            contentPadding:
+                                EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5.0)),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.lime[900]),
+                              gapPadding: 1,
+                              borderRadius: BorderRadius.circular(5.0),
+                            ),
                           ),
-                          contentPadding:
-                              EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.lime[900]),
-                            gapPadding: 1,
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
+                          onEditingComplete: () => focus.nextFocus(),
+                          keyboardType: TextInputType.text,
+                          obscureText: !lojaController.senhaVisivel,
+                          maxLength: 8,
                         ),
-                        onEditingComplete: () => focus.nextFocus(),
-                        keyboardType: TextInputType.text,
-                        obscureText: !lojaController.senhaVisivel,
-                        maxLength: 8,
-                      ),
+                      )
                     ],
                   ),
                 ),

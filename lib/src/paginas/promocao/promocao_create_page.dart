@@ -473,154 +473,199 @@ class _PromocaoCreatePageState extends State<PromocaoCreatePage>
                         onEditingComplete: () => focus.nextFocus(),
                         keyboardType: TextInputType.text,
                       ),
-                      SizedBox(height: 10),
-                      TextFormField(
-                        controller: descontoController,
-                        onSaved: (value) => p.desconto = double.tryParse(value),
-                        validator: validateDesconto,
-                        decoration: InputDecoration(
-                          labelText: "Percentual de desconto",
-                          hintText: "deconto",
-                          prefixIcon: Icon(
-                            Icons.monetization_on,
-                            color: Colors.grey,
+                    ],
+                  ),
+                ),
+                Container(
+                  height: 100,
+                  padding: EdgeInsets.all(15),
+                  width: double.infinity,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        width: 500,
+                        color: Colors.grey[200],
+                        child: TextFormField(
+                          controller: descontoController,
+                          onSaved: (value) =>
+                              p.desconto = double.tryParse(value),
+                          validator: validateDesconto,
+                          decoration: InputDecoration(
+                            labelText: "Percentual de desconto",
+                            hintText: "deconto",
+                            prefixIcon: Icon(
+                              Icons.monetization_on,
+                              color: Colors.grey,
+                            ),
+                            suffixIcon: Icon(Icons.close),
+                            contentPadding:
+                                EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5.0)),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.purple[900]),
+                              gapPadding: 1,
+                              borderRadius: BorderRadius.circular(5.0),
+                            ),
                           ),
-                          suffixIcon: Icon(Icons.close),
-                          contentPadding:
-                              EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.purple[900]),
-                            gapPadding: 1,
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
+                          onEditingComplete: () => focus.nextFocus(),
+                          keyboardType:
+                              TextInputType.numberWithOptions(decimal: true),
+                          maxLength: 10,
                         ),
-                        onEditingComplete: () => focus.nextFocus(),
-                        keyboardType:
-                            TextInputType.numberWithOptions(decimal: true),
-                        maxLength: 10,
                       ),
-                      SizedBox(height: 10),
-                      DateTimeField(
-                        initialValue: p.dataRegistro,
-                        format: dateFormat,
-                        validator: validateDateRegsitro,
-                        onSaved: (value) => p.dataRegistro = value,
-                        decoration: InputDecoration(
-                          labelText: "data registro",
-                          hintText: "99-09-9999",
-                          prefixIcon: Icon(
-                            Icons.calendar_today,
-                            color: Colors.grey,
+                      Container(
+                        width: 500,
+                        color: Colors.grey[200],
+                        child: DateTimeField(
+                          initialValue: p.dataRegistro,
+                          format: dateFormat,
+                          validator: validateDateRegsitro,
+                          onSaved: (value) => p.dataRegistro = value,
+                          decoration: InputDecoration(
+                            labelText: "data registro",
+                            hintText: "99-09-9999",
+                            prefixIcon: Icon(
+                              Icons.calendar_today,
+                              color: Colors.grey,
+                            ),
+                            suffixIcon: Icon(Icons.close),
+                            contentPadding:
+                                EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5.0)),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.purple[900]),
+                              gapPadding: 1,
+                              borderRadius: BorderRadius.circular(5.0),
+                            ),
                           ),
-                          suffixIcon: Icon(Icons.close),
-                          contentPadding:
-                              EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.purple[900]),
-                            gapPadding: 1,
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
+                          onEditingComplete: () => focus.nextFocus(),
+                          onShowPicker: (context, currentValue) {
+                            return showDatePicker(
+                              context: context,
+                              firstDate: DateTime(2000),
+                              initialDate: currentValue ?? DateTime.now(),
+                              locale: Locale('pt', 'BR'),
+                              lastDate: DateTime(2030),
+                            );
+                          },
+                          maxLength: 10,
                         ),
-                        onEditingComplete: () => focus.nextFocus(),
-                        onShowPicker: (context, currentValue) {
-                          return showDatePicker(
-                            context: context,
-                            firstDate: DateTime(2000),
-                            initialDate: currentValue ?? DateTime.now(),
-                            locale: Locale('pt', 'BR'),
-                            lastDate: DateTime(2030),
-                          );
-                        },
-                        maxLength: 10,
-                      ),
-                      SizedBox(height: 10),
-                      DateTimeField(
-                        initialValue: p.dataInicio,
-                        format: dateFormat,
-                        validator: validateDateInicio,
-                        onSaved: (value) => p.dataInicio = value,
-                        decoration: InputDecoration(
-                          labelText: "data inicio",
-                          hintText: "99-09-9999",
-                          prefixIcon: Icon(
-                            Icons.calendar_today,
-                            color: Colors.grey,
-                          ),
-                          suffixIcon: Icon(Icons.close),
-                          contentPadding:
-                              EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.purple[900]),
-                            gapPadding: 1,
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
-                        ),
-                        onEditingComplete: () => focus.nextFocus(),
-                        onShowPicker: (context, currentValue) {
-                          return showDatePicker(
-                            context: context,
-                            firstDate: DateTime(2000),
-                            initialDate: currentValue ?? DateTime.now(),
-                            locale: Locale('pt', 'BR'),
-                            lastDate: DateTime(2030),
-                          );
-                        },
-                        maxLength: 10,
-                      ),
-                      SizedBox(height: 10),
-                      DateTimeField(
-                        initialValue: p.dataFinal,
-                        format: dateFormat,
-                        validator: validateDateFinal,
-                        onSaved: (value) => p.dataFinal = value,
-                        decoration: InputDecoration(
-                          labelText: "data encerramento",
-                          hintText: "99-09-9999",
-                          prefixIcon: Icon(
-                            Icons.calendar_today,
-                            color: Colors.grey,
-                          ),
-                          suffixIcon: Icon(Icons.close),
-                          contentPadding:
-                              EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.purple[900]),
-                            gapPadding: 1,
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
-                        ),
-                        onEditingComplete: () => focus.nextFocus(),
-                        onShowPicker: (context, currentValue) {
-                          return showDatePicker(
-                            context: context,
-                            firstDate: DateTime(2000),
-                            initialDate: currentValue ?? DateTime.now(),
-                            locale: Locale('pt', 'BR'),
-                            lastDate: DateTime(2030),
-                          );
-                        },
-                        maxLength: 10,
-                      ),
+                      )
                     ],
                   ),
                 ),
                 SizedBox(height: 0),
                 Container(
+                  height: 100,
                   padding: EdgeInsets.all(15),
-                  child: builderConteudoListTipoPromocoes(),
+                  width: double.infinity,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        width: 500,
+                        color: Colors.grey[200],
+                        child: DateTimeField(
+                          initialValue: p.dataInicio,
+                          format: dateFormat,
+                          validator: validateDateInicio,
+                          onSaved: (value) => p.dataInicio = value,
+                          decoration: InputDecoration(
+                            labelText: "data inicio",
+                            hintText: "99-09-9999",
+                            prefixIcon: Icon(
+                              Icons.calendar_today,
+                              color: Colors.grey,
+                            ),
+                            suffixIcon: Icon(Icons.close),
+                            contentPadding:
+                                EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5.0)),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.purple[900]),
+                              gapPadding: 1,
+                              borderRadius: BorderRadius.circular(5.0),
+                            ),
+                          ),
+                          onEditingComplete: () => focus.nextFocus(),
+                          onShowPicker: (context, currentValue) {
+                            return showDatePicker(
+                              context: context,
+                              firstDate: DateTime(2000),
+                              initialDate: currentValue ?? DateTime.now(),
+                              locale: Locale('pt', 'BR'),
+                              lastDate: DateTime(2030),
+                            );
+                          },
+                          maxLength: 10,
+                        ),
+                      ),
+                      Container(
+                        width: 500,
+                        color: Colors.grey[200],
+                        child: DateTimeField(
+                          initialValue: p.dataFinal,
+                          format: dateFormat,
+                          validator: validateDateFinal,
+                          onSaved: (value) => p.dataFinal = value,
+                          decoration: InputDecoration(
+                            labelText: "data encerramento",
+                            hintText: "99-09-9999",
+                            prefixIcon: Icon(
+                              Icons.calendar_today,
+                              color: Colors.grey,
+                            ),
+                            suffixIcon: Icon(Icons.close),
+                            contentPadding:
+                                EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5.0)),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.purple[900]),
+                              gapPadding: 1,
+                              borderRadius: BorderRadius.circular(5.0),
+                            ),
+                          ),
+                          onEditingComplete: () => focus.nextFocus(),
+                          onShowPicker: (context, currentValue) {
+                            return showDatePicker(
+                              context: context,
+                              firstDate: DateTime(2000),
+                              initialDate: currentValue ?? DateTime.now(),
+                              locale: Locale('pt', 'BR'),
+                              lastDate: DateTime(2030),
+                            );
+                          },
+                          maxLength: 10,
+                        ),
+                      )
+                    ],
+                  ),
                 ),
                 Container(
+                  height: 100,
                   padding: EdgeInsets.all(15),
-                  child: builderConteudoListLojas(),
-                )
+                  width: double.infinity,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        width: 500,
+                        color: Colors.grey[200],
+                        child: builderConteudoListTipoPromocoes(),
+                      ),
+                      Container(
+                        width: 500,
+                        color: Colors.grey[200],
+                        child: builderConteudoListLojas(),
+                      )
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
