@@ -42,17 +42,18 @@ abstract class CaixafluxoControllerBase with Store {
 
   @action
   Future<int> create(CaixaFluxo p) async {
-    try {
+    // try {
       caixaFluxo = await caixaFluxoRepository.create(p.toJson());
-      if (caixaFluxo == null) {
-        mensagem = "sem dados";
-      } else {
-        return caixaFluxo;
-      }
-    } on DioError catch (e) {
-      mensagem = e.message;
-      dioError = e;
-    }
+      return caixaFluxo;
+    //   if (caixaFluxo == null) {
+    //     mensagem = "sem dados";
+    //   } else {
+    //     return caixaFluxo;
+    //   }
+    // } on DioError catch (e) {
+    //   mensagem = e.message;
+    //   dioError = e;
+    // }
   }
 
   @action

@@ -32,7 +32,6 @@ class Vendedor extends Pessoa{
     nome = json['nome'];
     telefone = json['telefone'];
     tipoPessoa = json['tipoPessoa'];
-    dataRegistro = DateTime.tryParse(json['dataRegistro'].toString());
     foto = json['foto'];
     usuario =
         json['usuario'] != null ? new Usuario.fromJson(json['usuario']) : null;
@@ -54,7 +53,6 @@ class Vendedor extends Pessoa{
     data['nome'] = this.nome;
     data['telefone'] = this.telefone;
     data['tipoPessoa'] = this.tipoPessoa;
-    data['dataRegistro'] = this.dataRegistro.toIso8601String();
     data['foto'] = this.foto;
     if (this.usuario != null) {
       data['usuario'] = this.usuario.toJson();

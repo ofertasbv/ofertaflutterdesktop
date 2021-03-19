@@ -7,6 +7,7 @@ import 'package:get_it/get_it.dart';
 import 'package:nosso/src/core/controller/caixa_controller.dart';
 import 'package:nosso/src/core/model/caixa.dart';
 import 'package:nosso/src/paginas/caixa/caixa_create_page.dart';
+import 'package:nosso/src/paginas/caixafluxo/caixafluxo_create_page.dart';
 import 'package:nosso/src/util/load/circular_progresso.dart';
 
 class CaixaTable extends StatefulWidget {
@@ -103,12 +104,13 @@ class _CaixaTableState extends State<CaixaTable>
           sortAscending: true,
           showFirstLastButtons: true,
           columns: [
-            DataColumn(label: Text("Código")),
+            DataColumn(label: Text("Cód")),
             DataColumn(label: Text("Descrição")),
             DataColumn(label: Text("Caixa")),
-            DataColumn(label: Text("Caixa Status")),
-            DataColumn(label: Text("Visualizar")),
+            DataColumn(label: Text("Status")),
             DataColumn(label: Text("Editar")),
+            DataColumn(label: Text("Abrir")),
+            DataColumn(label: Text("Fechar")),
           ],
           source: DataSource(caixas, context),
         ),
@@ -139,20 +141,10 @@ class DataSource extends DataTableSource {
         DataCell(Text("${p.id}")),
         DataCell(Text("${p.descricao}")),
         DataCell(Text("${p.referencia}")),
-        DataCell(Text("${p.caixaStatus}")),
-        DataCell(IconButton(
-          icon: Icon(Icons.search),
-          onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return CaixaCreatePage(
-                    caixa: p,
-                  );
-                },
-              ),
-            );
-          },
+        DataCell(CircleAvatar(
+          backgroundColor:
+              p.caixaStatus == "ABERTO" ? Colors.green[600] : Colors.red[600],
+          child: Text("${p.caixaStatus.substring(0, 1)}"),
         )),
         DataCell(IconButton(
           icon: Icon(Icons.edit),
@@ -167,6 +159,42 @@ class DataSource extends DataTableSource {
               ),
             );
           },
+        )),
+        DataCell(RaisedButton.icon(
+          label: Text("Abrir caixa"),
+          color: p.caixaStatus == "FECHADO" ? Colors.green[600] : Colors.red[600],
+          icon: Icon(Icons.edit),
+          onPressed: p.caixaStatus == "FECHADO"
+              ? () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (BuildContext context) {
+                        return CaixaFluxoCreatePage(
+                          caixa: p,
+                        );
+                      },
+                    ),
+                  );
+                }
+              : null,
+        )),
+        DataCell(RaisedButton.icon(
+          label: Text("Fechar caixa"),
+          icon: Icon(Icons.edit),
+          color: p.caixaStatus == "ABERTO" ? Colors.red[600] : Colors.green[600],
+          onPressed: p.caixaStatus == "ABERTO"
+              ? () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return CaixaFluxoCreatePage(
+                    caixa: p,
+                  );
+                },
+              ),
+            );
+          }
+              : null,
         )),
       ],
     );

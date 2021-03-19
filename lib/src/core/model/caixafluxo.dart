@@ -53,6 +53,7 @@ class CaixaFluxo {
     data['saldoAnterior'] = this.saldoAnterior;
     data['valorEntrada'] = this.valorEntrada;
     data['valorSaida'] = this.valorSaida;
+    data['valorTotal'] = this.valorTotal;
     data['dataRegistro'] = this.dataRegistro.toIso8601String();
     data['caixaStatus'] = this.caixaStatus;
     data['status'] = this.status;

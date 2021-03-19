@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
+import 'package:intl/intl.dart';
 import 'package:nosso/src/core/controller/caixafluxo_controller.dart';
 import 'package:nosso/src/core/model/caixafluxo.dart';
 import 'package:nosso/src/paginas/caixafluxo/caixafluxo_create_page.dart';
@@ -103,10 +104,14 @@ class _CaixaFluxoTableState extends State<CaixaFluxoTable>
           sortAscending: true,
           showFirstLastButtons: true,
           columns: [
-            DataColumn(label: Text("Código")),
+            DataColumn(label: Text("Cód")),
             DataColumn(label: Text("Descrição")),
             DataColumn(label: Text("Caixa")),
             DataColumn(label: Text("Caixa Status")),
+            DataColumn(label: Text("Anterior")),
+            DataColumn(label: Text("Entrada")),
+            DataColumn(label: Text("Saída")),
+            DataColumn(label: Text("Total")),
             DataColumn(label: Text("Visualizar")),
             DataColumn(label: Text("Editar")),
           ],
@@ -125,6 +130,7 @@ class DataSource extends DataTableSource {
   BuildContext context;
   List<CaixaFluxo> caixaFluxos;
   int selectedCount = 0;
+  var formatMoeda = new NumberFormat("#,##0.00", "pt_BR");
 
   DataSource(this.caixaFluxos, this.context);
 
@@ -140,6 +146,10 @@ class DataSource extends DataTableSource {
         DataCell(Text("${p.descricao}")),
         DataCell(Text("${p.caixa.descricao}")),
         DataCell(Text("${p.caixa.caixaStatus}")),
+        DataCell(Text("${p.saldoAnterior}")),
+        DataCell(Text("${p.valorEntrada}")),
+        DataCell(Text("${p.valorSaida}")),
+        DataCell(Text("${p.valorTotal}")),
         DataCell(IconButton(
           icon: Icon(Icons.search),
           onPressed: () {

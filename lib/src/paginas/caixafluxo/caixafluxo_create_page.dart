@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -16,12 +17,11 @@ import 'package:nosso/src/core/controller/vendedor_controller.dart';
 import 'package:nosso/src/core/model/caixa.dart';
 import 'package:nosso/src/core/model/caixafluxo.dart';
 import 'package:nosso/src/core/model/vendedor.dart';
+import 'package:nosso/src/paginas/caixafluxo/caixafluxo_page.dart';
 import 'package:nosso/src/paginas/cartao/cartao_page.dart';
 import 'package:nosso/src/paginas/produto/produto_search.dart';
 import 'package:nosso/src/util/dialogs/dialogs.dart';
-import 'package:nosso/src/util/dropdown/dropdown_caixa.dart';
-import 'package:nosso/src/util/dropdown/dropdown_vendedor.dart';
-import 'package:nosso/src/util/format/currencyInputFormatter.dart';
+import 'package:nosso/src/util/load/circular_progresso.dart';
 import 'package:nosso/src/util/validador/validador_caixafluxo.dart';
 
 class CaixaFluxoCreatePage extends StatefulWidget {
@@ -67,11 +67,17 @@ class _CaixaFluxoCreatePageState extends State<CaixaFluxoCreatePage>
       status = false;
     } else {
       status = c.status;
+
+      caixaSelecionado = c.caixa;
+      vendedorSelecionado = c.vendedor;
+
       saldoAnteriorController.text = c.saldoAnterior.toStringAsFixed(2);
       valorEntradaController.text = c.valorEntrada.toStringAsFixed(2);
       valorSaidaController.text = c.valorSaida.toStringAsFixed(2);
       valorTotalController.text = c.valorTotal.toStringAsFixed(2);
     }
+    caixaController.getAll();
+    vendedorController.getAll();
     super.initState();
   }
 
@@ -79,15 +85,6 @@ class _CaixaFluxoCreatePageState extends State<CaixaFluxoCreatePage>
   didChangeDependencies() {
     controller = Controller();
     super.didChangeDependencies();
-  }
-
-  showToast(String cardTitle) {
-    Fluttertoast.showToast(
-      msg: "$cardTitle",
-      gravity: ToastGravity.CENTER,
-      timeInSecForIos: 10,
-      fontSize: 16.0,
-    );
   }
 
   showSnackbar(BuildContext context, String content) {
@@ -110,11 +107,95 @@ class _CaixaFluxoCreatePageState extends State<CaixaFluxoCreatePage>
     }
   }
 
+  builderConteudoListCaixas() {
+    return Container(
+      padding: EdgeInsets.only(top: 0),
+      child: Observer(
+        builder: (context) {
+          List<Caixa> caixas = caixaController.caixas;
+          if (caixaController.error != null) {
+            return Text("Não foi possível carregados dados");
+          }
+
+          if (caixas == null) {
+            return CircularProgressor();
+          }
+
+          return DropdownSearch<Caixa>(
+            label: "Selecione caixas",
+            popupTitle: Center(child: Text("Caixas")),
+            items: caixas,
+            showSearchBox: true,
+            itemAsString: (Caixa s) => s.descricao,
+            validator: (categoria) =>
+                categoria == null ? "campo obrigatório" : null,
+            isFilteredOnline: true,
+            showClearButton: true,
+            selectedItem: caixaSelecionado,
+            onChanged: (Caixa caixa) {
+              setState(() {
+                c.caixa = caixa;
+                print("Caixa: ${c.caixa.descricao}");
+              });
+            },
+            searchBoxDecoration: InputDecoration(
+              border: OutlineInputBorder(),
+              contentPadding: EdgeInsets.fromLTRB(20, 20, 20, 0),
+              labelText: "Pesquisar por caixa",
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  builderConteudoListVendedores() {
+    return Container(
+      padding: EdgeInsets.only(top: 0),
+      child: Observer(
+        builder: (context) {
+          List<Vendedor> vendedores = vendedorController.vendedores;
+          if (vendedorController.error != null) {
+            return Text("Não foi possível carregados dados");
+          }
+
+          if (vendedores == null) {
+            return CircularProgressor();
+          }
+
+          return DropdownSearch<Vendedor>(
+            label: "Selecione vendedores",
+            popupTitle: Center(child: Text("Vendedores")),
+            items: vendedores,
+            showSearchBox: true,
+            itemAsString: (Vendedor s) => s.nome,
+            validator: (value) => value == null ? "campo obrigatório" : null,
+            isFilteredOnline: true,
+            showClearButton: true,
+            selectedItem: vendedorSelecionado,
+            onChanged: (Vendedor vendedor) {
+              setState(() {
+                c.vendedor = vendedor;
+                print("Vendedor: ${c.vendedor.nome}");
+              });
+            },
+            searchBoxDecoration: InputDecoration(
+              border: OutlineInputBorder(),
+              contentPadding: EdgeInsets.fromLTRB(20, 20, 20, 0),
+              labelText: "Pesquisar por vendedor",
+            ),
+          );
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
+        titleSpacing: 50,
         elevation: 0,
         title: Text("Caixa Fluxo cadastro"),
         actions: <Widget>[
@@ -127,25 +208,28 @@ class _CaixaFluxoCreatePageState extends State<CaixaFluxoCreatePage>
             onPressed: () {
               showSearch(context: context, delegate: ProdutoSearchDelegate());
             },
-          )
+          ),
+          SizedBox(width: 100),
         ],
       ),
-      body: Observer(
-        builder: (context) {
-          if (caixafluxoController.dioError == null) {
-            return buildListViewForm(context);
-          } else {
-            print("Erro: ${caixafluxoController.mensagem}");
-            showToast("${caixafluxoController.mensagem}");
-            return buildListViewForm(context);
-          }
-        },
+      body: Container(
+        padding: EdgeInsets.only(left: 100, right: 100, top: 10),
+        child: Observer(
+          builder: (context) {
+            if (caixafluxoController.dioError == null) {
+              return buildListViewForm(context);
+            } else {
+              print("Erro: ${caixafluxoController.mensagem}");
+              return buildListViewForm(context);
+            }
+          },
+        ),
       ),
     );
   }
 
   buildListViewForm(BuildContext context) {
-    var dateFormat = DateFormat('dd/MM/yyyy HH:mm');
+    var dateFormat = DateFormat('dd/MM/yyyy');
     var maskFormatterNumero = new MaskTextInputFormatter(
         mask: '####-####-####-####', filter: {"#": RegExp(r'[0-9]')});
     var formatMoeda = new NumberFormat("#,##0.00", "pt_BR");
@@ -165,60 +249,6 @@ class _CaixaFluxoCreatePageState extends State<CaixaFluxoCreatePage>
             trailing: Text("${dateFormat.format(DateTime.now())}"),
           ),
         ),
-        SizedBox(height: 10),
-        Container(
-          padding: EdgeInsets.all(15),
-          child: Container(
-            height: 110,
-            decoration: new BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Theme.of(context).primaryColor,
-                  Theme.of(context).accentColor
-                ],
-              ),
-              border: Border.all(
-                color: Colors.transparent,
-                width: 1,
-              ),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Column(
-              children: [
-                Container(
-                  padding: EdgeInsets.all(15),
-                  child: Container(
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          child: SwitchListTile(
-                            autofocus: true,
-                            title: Text("Abertura de caixa? "),
-                            subtitle: Text("sim/não"),
-                            value: c.status = status,
-                            secondary: const Icon(Icons.check_outlined),
-                            onChanged: (bool valor) {
-                              setState(() {
-                                status = valor;
-                                verificaCaixaStatus(status);
-                                print("Status: " + c.status.toString());
-                              });
-                              showSnackbar(context, "CAIXA ${c.caixaStatus}");
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
         SizedBox(height: 0),
         Container(
           padding: EdgeInsets.all(5),
@@ -228,72 +258,192 @@ class _CaixaFluxoCreatePageState extends State<CaixaFluxoCreatePage>
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                DropDownCaixa(caixaSelecionado),
-                Observer(
-                  builder: (context) {
-                    if (caixaController.caixaSelecionado == null) {
-                      return Container(
-                        padding: EdgeInsets.only(left: 25),
-                        child: Container(
-                          child: caixaController.mensagem == null
-                              ? Text(
-                                  "campo obrigatório *",
-                                  style: TextStyle(
-                                    color: Colors.red,
-                                    fontSize: 12,
-                                  ),
-                                )
-                              : Text(
-                                  "${caixaController.mensagem}",
-                                  style: TextStyle(
-                                    color: Colors.red,
-                                    fontSize: 12,
-                                  ),
-                                ),
-                        ),
-                      );
-                    }
-                    return Container(
-                      padding: EdgeInsets.only(left: 25),
-                      child: Container(
-                        child: Icon(Icons.check_outlined, color: Colors.green),
+                Container(
+                  height: 100,
+                  padding: EdgeInsets.all(15),
+                  width: double.infinity,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        width: 500,
+                        color: Colors.grey[200],
+                        child: builderConteudoListCaixas(),
                       ),
-                    );
-                  },
+                      Container(
+                        width: 500,
+                        color: Colors.grey[200],
+                        child: builderConteudoListVendedores(),
+                      )
+                    ],
+                  ),
                 ),
-                DropDownVendedor(vendedorSelecionado),
-                Observer(
-                  builder: (context) {
-                    if (vendedorController.vendedoreSelecionado == null) {
-                      return Container(
-                        padding: EdgeInsets.only(left: 25),
-                        child: Container(
-                          child: vendedorController.mensagem == null
-                              ? Text(
-                                  "campo obrigatório *",
-                                  style: TextStyle(
-                                    color: Colors.red,
-                                    fontSize: 12,
-                                  ),
-                                )
-                              : Text(
-                                  "${vendedorController.mensagem}",
-                                  style: TextStyle(
-                                    color: Colors.red,
-                                    fontSize: 12,
-                                  ),
-                                ),
+
+                Container(
+                  height: 100,
+                  padding: EdgeInsets.all(15),
+                  width: double.infinity,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        width: 500,
+                        color: Colors.grey[200],
+                        child: TextFormField(
+                          controller: saldoAnteriorController,
+                          validator: validateSaldoAnterior,
+                          onSaved: (value) {
+                            c.saldoAnterior = double.tryParse(value);
+                          },
+                          decoration: InputDecoration(
+                            labelText: "Saldo anterior",
+                            hintText: "Saldo anterior",
+                            prefixIcon: Icon(
+                              Icons.monetization_on_outlined,
+                              color: Colors.grey,
+                            ),
+                            suffixIcon: IconButton(
+                              onPressed: () => saldoC.clear(),
+                              icon: Icon(Icons.clear),
+                            ),
+                            contentPadding:
+                            EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5.0)),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.purple[900]),
+                              gapPadding: 1,
+                              borderRadius: BorderRadius.circular(5.0),
+                            ),
+                          ),
+                          onEditingComplete: () => focus.nextFocus(),
+                          keyboardType: TextInputType.number,
+                          maxLength: 10,
                         ),
-                      );
-                    }
-                    return Container(
-                      padding: EdgeInsets.only(left: 25),
-                      child: Container(
-                        child: Icon(Icons.check_outlined, color: Colors.green),
                       ),
-                    );
-                  },
+                      Container(
+                        width: 500,
+                        color: Colors.grey[200],
+                        child: TextFormField(
+                          controller: valorEntradaController,
+                          validator: validateValorEntrada,
+                          onSaved: (value) {
+                            c.valorEntrada = double.tryParse(value);
+                          },
+                          decoration: InputDecoration(
+                            labelText: "Valor entrada",
+                            hintText: "Valor entrada",
+                            prefixIcon: Icon(
+                              Icons.monetization_on_outlined,
+                              color: Colors.grey,
+                            ),
+                            suffixIcon: IconButton(
+                              onPressed: () => valorEntradaController.clear(),
+                              icon: Icon(Icons.clear),
+                            ),
+                            contentPadding:
+                            EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5.0)),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.purple[900]),
+                              gapPadding: 1,
+                              borderRadius: BorderRadius.circular(5.0),
+                            ),
+                          ),
+                          onEditingComplete: () => focus.nextFocus(),
+                          keyboardType:
+                          TextInputType.numberWithOptions(decimal: false),
+                          maxLength: 6,
+                        ),
+                      )
+                    ],
+                  ),
                 ),
+
+                Container(
+                  height: 100,
+                  padding: EdgeInsets.all(15),
+                  width: double.infinity,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        width: 500,
+                        color: Colors.grey[200],
+                        child: TextFormField(
+                          controller: valorSaidaController,
+                          validator: validateValorSaida,
+                          onSaved: (value) {
+                            c.valorSaida = double.tryParse(value);
+                          },
+                          decoration: InputDecoration(
+                            labelText: "Valor saída",
+                            hintText: "Valor saída",
+                            prefixIcon: Icon(
+                              Icons.monetization_on_outlined,
+                              color: Colors.grey,
+                            ),
+                            suffixIcon: IconButton(
+                              onPressed: () => valorSaidaController.clear(),
+                              icon: Icon(Icons.clear),
+                            ),
+                            contentPadding:
+                            EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5.0)),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.purple[900]),
+                              gapPadding: 1,
+                              borderRadius: BorderRadius.circular(5.0),
+                            ),
+                          ),
+                          onEditingComplete: () => focus.nextFocus(),
+                          keyboardType:
+                          TextInputType.numberWithOptions(decimal: false),
+                          maxLength: 6,
+                        ),
+                      ),
+                      Container(
+                        width: 500,
+                        color: Colors.grey[200],
+                        child: TextFormField(
+                          controller: valorTotalController,
+                          validator: validateValorTotal,
+                          onSaved: (value) {
+                            c.valorTotal = double.tryParse(value);
+                          },
+                          decoration: InputDecoration(
+                            labelText: "Valor total",
+                            hintText: "Valor total",
+                            prefixIcon: Icon(
+                              Icons.monetization_on_outlined,
+                              color: Colors.grey,
+                            ),
+                            suffixIcon: IconButton(
+                              onPressed: () => valorTotalController.clear(),
+                              icon: Icon(Icons.clear),
+                            ),
+                            contentPadding:
+                            EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5.0)),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.purple[900]),
+                              gapPadding: 1,
+                              borderRadius: BorderRadius.circular(5.0),
+                            ),
+                          ),
+                          onEditingComplete: () => focus.nextFocus(),
+                          keyboardType:
+                          TextInputType.numberWithOptions(decimal: false),
+                          maxLength: 6,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+
                 SizedBox(height: 0),
                 Container(
                   padding: EdgeInsets.all(15),
@@ -318,137 +468,6 @@ class _CaixaFluxoCreatePageState extends State<CaixaFluxoCreatePage>
                         keyboardType: TextInputType.text,
                         maxLength: 255,
                         maxLines: null,
-                      ),
-                      SizedBox(height: 10),
-                      TextFormField(
-                        controller: saldoAnteriorController,
-                        validator: validateSaldoAnterior,
-                        onSaved: (value) {
-                          c.saldoAnterior = double.tryParse(value);
-                        },
-                        decoration: InputDecoration(
-                          labelText: "Saldo anterior",
-                          hintText: "Saldo anterior",
-                          prefixIcon: Icon(
-                            Icons.monetization_on_outlined,
-                            color: Colors.grey,
-                          ),
-                          suffixIcon: IconButton(
-                            onPressed: () => saldoC.clear(),
-                            icon: Icon(Icons.clear),
-                          ),
-                          contentPadding:
-                              EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.purple[900]),
-                            gapPadding: 1,
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
-                        ),
-                        onEditingComplete: () => focus.nextFocus(),
-                        keyboardType: TextInputType.number,
-                        maxLength: 10,
-                      ),
-                      SizedBox(height: 10),
-                      TextFormField(
-                        controller: valorEntradaController,
-                        validator: validateValorEntrada,
-                        onSaved: (value) {
-                          c.valorEntrada = double.tryParse(value);
-                        },
-                        decoration: InputDecoration(
-                          labelText: "Valor entrada",
-                          hintText: "Valor entrada",
-                          prefixIcon: Icon(
-                            Icons.monetization_on_outlined,
-                            color: Colors.grey,
-                          ),
-                          suffixIcon: IconButton(
-                            onPressed: () => valorEntradaController.clear(),
-                            icon: Icon(Icons.clear),
-                          ),
-                          contentPadding:
-                              EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.purple[900]),
-                            gapPadding: 1,
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
-                        ),
-                        onEditingComplete: () => focus.nextFocus(),
-                        keyboardType:
-                            TextInputType.numberWithOptions(decimal: false),
-                        maxLength: 6,
-                      ),
-                      SizedBox(height: 10),
-                      TextFormField(
-                        controller: valorSaidaController,
-                        validator: validateValorSaida,
-                        onSaved: (value) {
-                          c.valorSaida = double.tryParse(value);
-                        },
-                        decoration: InputDecoration(
-                          labelText: "Valor saída",
-                          hintText: "Valor saída",
-                          prefixIcon: Icon(
-                            Icons.monetization_on_outlined,
-                            color: Colors.grey,
-                          ),
-                          suffixIcon: IconButton(
-                            onPressed: () => valorSaidaController.clear(),
-                            icon: Icon(Icons.clear),
-                          ),
-                          contentPadding:
-                              EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.purple[900]),
-                            gapPadding: 1,
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
-                        ),
-                        onEditingComplete: () => focus.nextFocus(),
-                        keyboardType:
-                            TextInputType.numberWithOptions(decimal: false),
-                        maxLength: 6,
-                      ),
-                      SizedBox(height: 10),
-                      TextFormField(
-                        controller: valorTotalController,
-                        validator: validateValorTotal,
-                        onSaved: (value) {
-                          c.valorTotal = double.tryParse(value);
-                        },
-                        decoration: InputDecoration(
-                          labelText: "Valor total",
-                          hintText: "Valor total",
-                          prefixIcon: Icon(
-                            Icons.monetization_on_outlined,
-                            color: Colors.grey,
-                          ),
-                          suffixIcon: IconButton(
-                            onPressed: () => valorTotalController.clear(),
-                            icon: Icon(Icons.clear),
-                          ),
-                          contentPadding:
-                              EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.purple[900]),
-                            gapPadding: 1,
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
-                        ),
-                        onEditingComplete: () => focus.nextFocus(),
-                        keyboardType:
-                            TextInputType.numberWithOptions(decimal: false),
-                        maxLength: 6,
                       ),
                       SizedBox(height: 10),
                       DateTimeField(
@@ -503,8 +522,7 @@ class _CaixaFluxoCreatePageState extends State<CaixaFluxoCreatePage>
                 if (c.id == null) {
                   dialogs.information(context, "prepando para o cadastro...");
                   Timer(Duration(seconds: 3), () {
-                    c.caixa = caixa;
-                    c.vendedor = vendedorController.vendedoreSelecionado;
+
                     print("Descrição: ${c.descricao}");
                     print("Saldo anterior: ${c.saldoAnterior}");
                     print("Valor de entrada: ${c.valorEntrada}");
@@ -517,8 +535,12 @@ class _CaixaFluxoCreatePageState extends State<CaixaFluxoCreatePage>
                     print("Operador: ${c.vendedor.nome}");
 
                     caixafluxoController.create(c).then((value) {
-                      print("resultado : ${value}");
+                      print("cadastro : ${value}");
                     });
+
+                    verificaCaixaStatus(c.status);
+                    caixaController.update(caixa.id, caixa);
+
                     Navigator.of(context).pop();
                     buildPush(context);
                   });
@@ -526,7 +548,7 @@ class _CaixaFluxoCreatePageState extends State<CaixaFluxoCreatePage>
                   dialogs.information(
                       context, "preparando para o alteração...");
                   Timer(Duration(seconds: 3), () {
-                    c.vendedor = vendedorController.vendedoreSelecionado;
+                    verificaCaixaStatus(c.status);
                     print("Descrição: ${c.descricao}");
                     print("Saldo anterior: ${c.saldoAnterior}");
                     print("Valor de entrada: ${c.valorEntrada}");
@@ -538,9 +560,13 @@ class _CaixaFluxoCreatePageState extends State<CaixaFluxoCreatePage>
                     print("Caixa: ${c.caixa.descricao}");
                     print("Operador: ${c.vendedor.nome}");
 
-                    // caixafluxoController.update(c.id, c);
-                    // Navigator.of(context).pop();
-                    // buildPush(context);
+                    caixafluxoController.update(c.id, c);
+
+                    verificaCaixaStatus(c.status);
+                    caixaController.update(caixa.id, caixa);
+
+                    Navigator.of(context).pop();
+                    buildPush(context);
                   });
                 }
               }
@@ -555,7 +581,7 @@ class _CaixaFluxoCreatePageState extends State<CaixaFluxoCreatePage>
     return Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => CartaoPage(),
+        builder: (context) => CaixaFluxoPage(),
       ),
     );
   }
