@@ -82,19 +82,23 @@ class _UsuarioCreatePageState extends State<UsuarioCreatePage>
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
+        titleSpacing: 50,
         elevation: 0,
         title: u.email == null ? Text("Cadastro de usuário") : Text(u.email),
       ),
-      body: Observer(
-        builder: (context) {
-          if (usuarioController.dioError == null) {
-            return buildListViewForm(context);
-          } else {
-            print("Erro: ${usuarioController.mensagem}");
-            showToast("${usuarioController.mensagem}");
-            return buildListViewForm(context);
-          }
-        },
+      body: Container(
+        padding: EdgeInsets.only(left: 100, right: 100, top: 10),
+        child: Observer(
+          builder: (context) {
+            if (usuarioController.dioError == null) {
+              return buildListViewForm(context);
+            } else {
+              print("Erro: ${usuarioController.mensagem}");
+              showToast("${usuarioController.mensagem}");
+              return buildListViewForm(context);
+            }
+          },
+        ),
       ),
     );
   }

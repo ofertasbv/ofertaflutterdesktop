@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
+import 'package:nosso/src/api/constants/constant_api.dart';
 import 'package:nosso/src/core/controller/promocao_controller.dart';
 import 'package:nosso/src/core/model/loja.dart';
 import 'package:nosso/src/core/model/promocao.dart';
@@ -82,7 +83,7 @@ class _PromocaoListHomeState extends State<PromocaoListHome>
 
         return GestureDetector(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10),
+            padding: EdgeInsets.only(right: 10),
             child: Card(
               shape: RoundedRectangleBorder(
                 borderRadius: new BorderRadius.circular(0),
@@ -104,7 +105,7 @@ class _PromocaoListHomeState extends State<PromocaoListHome>
                         color: Colors.grey[200],
                         borderRadius: BorderRadius.circular(0),
                       ),
-                      child: ClipRRect(
+                      child: p.foto != null ? ClipRRect(
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(0),
                           topRight: Radius.circular(0),
@@ -115,7 +116,20 @@ class _PromocaoListHomeState extends State<PromocaoListHome>
                           promocaoController.arquivo + p.foto,
                           fit: BoxFit.cover,
                           width: containerWidth,
-                          height: 200,
+                          height: 240,
+                        ),
+                      ) : ClipRRect(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(0),
+                          topRight: Radius.circular(0),
+                          bottomRight: Radius.circular(0),
+                          bottomLeft: Radius.circular(0),
+                        ),
+                        child: Image.asset(
+                          ConstantApi.urlLogo,
+                          fit: BoxFit.cover,
+                          width: containerWidth,
+                          height: 240,
                         ),
                       ),
                     ),

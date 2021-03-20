@@ -53,15 +53,15 @@ class _ConfigPageState extends State<ConfigPage> {
                 Container(
                   height: 190,
                   width: double.infinity,
-                  color: Colors.transparent,
+                  color: Colors.indigo[900],
                   padding: EdgeInsets.only(left: 100, right: 100, top: 10),
                   child: buildGridViewHeader(context),
                 ),
                 SizedBox(height: 10),
                 Expanded(
                   child: Container(
+                    color: Colors.grey[200],
                     padding: EdgeInsets.only(left: 100, right: 100),
-                    color: Colors.grey[100],
                     child: buildGridViewConfig(context),
                   ),
                 )
@@ -78,8 +78,8 @@ class _ConfigPageState extends State<ConfigPage> {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            Colors.grey[200].withOpacity(0.2),
-            Colors.grey[300].withOpacity(0.9)
+            Colors.indigo[900],
+            Colors.indigo[900],
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
@@ -123,7 +123,12 @@ class _ConfigPageState extends State<ConfigPage> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              subtitle: Text("ofertasbv@gmail.com "),
+              subtitle: Text(
+                "ofertasbv@gmail.com",
+                style: TextStyle(
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
             ),
           ),
         ),
@@ -143,10 +148,15 @@ class _ConfigPageState extends State<ConfigPage> {
               leading: Icon(
                 Icons.home,
                 size: 40,
-                color: Theme.of(context).accentColor,
+                color: Theme.of(context).primaryColor,
               ),
               title: Text("Home page"),
-              subtitle: Text("Página inicial"),
+              subtitle: Text(
+                "Página inicial",
+                style: TextStyle(
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
             ),
           ),
         ),
@@ -166,10 +176,15 @@ class _ConfigPageState extends State<ConfigPage> {
               leading: Icon(
                 Icons.account_box_outlined,
                 size: 40,
-                color: Theme.of(context).accentColor.withOpacity(1),
+                color: Theme.of(context).primaryColor.withOpacity(1),
               ),
               title: Text("Controle de caixa"),
-              subtitle: Text("compra e vendas"),
+              subtitle: Text(
+                "compra e vendas",
+                style: TextStyle(
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
             ),
           ),
         ),
@@ -191,10 +206,15 @@ class _ConfigPageState extends State<ConfigPage> {
               leading: Icon(
                 Icons.location_on_outlined,
                 size: 40,
-                color: Theme.of(context).accentColor.withOpacity(1),
+                color: Theme.of(context).primaryColor,
               ),
               title: Text("Locais de comerciais"),
-              subtitle: Text("Locais de lojas"),
+              subtitle: Text(
+                "Locais de lojas",
+                style: TextStyle(
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
             ),
           ),
         ),
@@ -738,7 +758,6 @@ class _ConfigPageState extends State<ConfigPage> {
             ),
           ),
         ),
-
         GestureDetector(
           onTap: () {
             Navigator.of(context).push(

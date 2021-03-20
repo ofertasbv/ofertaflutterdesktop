@@ -6,8 +6,11 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:nosso/src/core/controller/caixafluxo_controller.dart';
+import 'package:nosso/src/core/model/caixaentrada.dart';
 import 'package:nosso/src/core/model/caixafluxo.dart';
 import 'package:nosso/src/paginas/caixafluxo/caixafluxo_create_page.dart';
+import 'package:nosso/src/paginas/caixafluxoentrada/caixafluxoentrada_create_page.dart';
+import 'package:nosso/src/paginas/caixafluxosaida/caixafluxosaida_create_page.dart';
 import 'package:nosso/src/util/load/circular_progresso.dart';
 
 class CaixaFluxoTable extends StatefulWidget {
@@ -107,13 +110,11 @@ class _CaixaFluxoTableState extends State<CaixaFluxoTable>
             DataColumn(label: Text("Cód")),
             DataColumn(label: Text("Descrição")),
             DataColumn(label: Text("Caixa")),
-            DataColumn(label: Text("Caixa Status")),
-            DataColumn(label: Text("Anterior")),
+            DataColumn(label: Text("Status")),
+            DataColumn(label: Text("Total")),
+            DataColumn(label: Text("Editar")),
             DataColumn(label: Text("Entrada")),
             DataColumn(label: Text("Saída")),
-            DataColumn(label: Text("Total")),
-            DataColumn(label: Text("Visualizar")),
-            DataColumn(label: Text("Editar")),
           ],
           source: DataSource(caixaFluxos, context),
         ),
@@ -145,13 +146,14 @@ class DataSource extends DataTableSource {
         DataCell(Text("${p.id}")),
         DataCell(Text("${p.descricao}")),
         DataCell(Text("${p.caixa.descricao}")),
-        DataCell(Text("${p.caixa.caixaStatus}")),
-        DataCell(Text("${p.saldoAnterior}")),
-        DataCell(Text("${p.valorEntrada}")),
-        DataCell(Text("${p.valorSaida}")),
+        DataCell(CircleAvatar(
+          backgroundColor:
+          p.caixa.caixaStatus == "ABERTO" ? Colors.green[600] : Colors.red[600],
+          child: Text("${p.caixa.caixaStatus.substring(0, 1)}"),
+        )),
         DataCell(Text("${p.valorTotal}")),
         DataCell(IconButton(
-          icon: Icon(Icons.search),
+          icon: Icon(Icons.edit),
           onPressed: () {
             Navigator.of(context).push(
               MaterialPageRoute(
@@ -164,15 +166,27 @@ class DataSource extends DataTableSource {
             );
           },
         )),
-        DataCell(IconButton(
-          icon: Icon(Icons.edit),
+        DataCell(RaisedButton(
+          color: Colors.green,
+          child: Text("Entrada"),
           onPressed: () {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (BuildContext context) {
-                  return CaixaFluxoCreatePage(
-                    caixaFluxo: p,
-                  );
+                  return CaixaFluxoEntradaCreatePage();
+                },
+              ),
+            );
+          },
+        )),
+        DataCell(RaisedButton(
+          color: Colors.red,
+          child: Text("Saída"),
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return CaixaFluxoSaidaCreatePage();
                 },
               ),
             );

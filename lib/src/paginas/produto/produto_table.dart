@@ -104,10 +104,13 @@ class _ProdutoTableState extends State<ProdutoTable> {
                       double valorMinimo = valor.start;
                       double valorMaximo = valor.end;
 
-                      filter.valorMinimo = double.tryParse(valorMinimo.toStringAsFixed(0));
-                      filter.valorMaximo = double.tryParse(valorMaximo.toStringAsFixed(0));
+                      filter.valorMinimo =
+                          double.tryParse(valorMinimo.toStringAsFixed(0));
+                      filter.valorMaximo =
+                          double.tryParse(valorMaximo.toStringAsFixed(0));
 
-                      labels = RangeLabels(valor.start.toString(), valor.end.toString());
+                      labels = RangeLabels(
+                          valor.start.toString(), valor.end.toString());
 
                       print("Valor mínimo: ${filter.valorMinimo}");
                       print("Valor máximo: ${filter.valorMaximo}");
@@ -411,6 +414,7 @@ class _ProdutoTableState extends State<ProdutoTable> {
             DataColumn(label: Text("Cód.")),
             DataColumn(label: Text("Foto")),
             DataColumn(label: Text("Nome")),
+            DataColumn(label: Text("Valor")),
             DataColumn(label: Text("Promoção")),
             DataColumn(label: Text("Categoria")),
             DataColumn(label: Text("Loja")),
@@ -433,6 +437,7 @@ class DataSource extends DataTableSource {
   BuildContext context;
   List<Produto> produtos;
   int selectedCount = 0;
+  var formatMoeda = new NumberFormat("#,##0.00", "pt_BR");
 
   DataSource(this.produtos, this.context);
 
@@ -457,15 +462,19 @@ class DataSource extends DataTableSource {
         DataCell(
           p.foto != null
               ? CircleAvatar(
-            backgroundColor: Colors.grey[100],
-            radius: 20,
-            backgroundImage: NetworkImage(
-              "${produtoController.arquivo + p.foto}",
-            ),
-          )
+                  backgroundColor: Colors.grey[100],
+                  radius: 20,
+                  backgroundImage: NetworkImage(
+                    "${produtoController.arquivo + p.foto}",
+                  ),
+                )
               : CircleAvatar(),
         ),
         DataCell(Text(p.nome)),
+        DataCell(Text(
+          "R\$ ${formatMoeda.format(p.estoque.valorVenda)}",
+          style: TextStyle(color: Colors.red),
+        )),
         DataCell(Text(p.promocao.nome)),
         DataCell(Text(p.subCategoria.nome)),
         DataCell(Text(p.loja.nome)),

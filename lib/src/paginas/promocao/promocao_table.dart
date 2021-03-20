@@ -8,6 +8,8 @@ import 'package:nosso/src/core/controller/promocao_controller.dart';
 import 'package:nosso/src/core/model/loja.dart';
 import 'package:nosso/src/core/model/promocao.dart';
 import 'package:nosso/src/core/model/promocaotipo.dart';
+import 'package:nosso/src/paginas/produto/produto_tab.dart';
+import 'package:nosso/src/paginas/produto/produto_table.dart';
 import 'package:nosso/src/paginas/promocao/promocao_create_page.dart';
 import 'package:nosso/src/paginas/promocao/promocao_detalhes_tab.dart';
 import 'package:nosso/src/util/filter/promocao_filter.dart';
@@ -97,7 +99,8 @@ class _PromocaoTableState extends State<PromocaoTable> {
                     format: dateFormat,
                     onChanged: (DateTime dataInicio) {
                       setState(() {
-                        String convertedDateInicio = "${dataInicio.day.toString().padLeft(2, '0')}/${dataInicio.month.toString().padLeft(2,'0')}/${dataInicio.year.toString()}";
+                        String convertedDateInicio =
+                            "${dataInicio.day.toString().padLeft(2, '0')}/${dataInicio.month.toString().padLeft(2, '0')}/${dataInicio.year.toString()}";
                         filter.dataInicio = convertedDateInicio;
                         print("dataInicio: ${filter.dataFinal}");
                       });
@@ -137,7 +140,8 @@ class _PromocaoTableState extends State<PromocaoTable> {
                   child: DateTimeField(
                     onChanged: (DateTime dataFinal) {
                       setState(() {
-                        String convertedDateFinal = "${dataFinal.day.toString().padLeft(2, '0')}/${dataFinal.month.toString().padLeft(2,'0')}/${dataFinal.year.toString()}";
+                        String convertedDateFinal =
+                            "${dataFinal.day.toString().padLeft(2, '0')}/${dataFinal.month.toString().padLeft(2, '0')}/${dataFinal.year.toString()}";
                         filter.dataFinal = convertedDateFinal;
                         print("dataFinal: ${filter.dataFinal}");
                       });
@@ -239,12 +243,12 @@ class _PromocaoTableState extends State<PromocaoTable> {
           sortAscending: true,
           showFirstLastButtons: true,
           columns: [
+            DataColumn(label: Text("Cód")),
             DataColumn(label: Text("Foto")),
             DataColumn(label: Text("Nome")),
-            DataColumn(label: Text("Registro")),
+            DataColumn(label: Text("Status")),
             DataColumn(label: Text("Início")),
             DataColumn(label: Text("Encerramento")),
-            DataColumn(label: Text("Loja")),
             DataColumn(label: Text("Visualizar")),
             DataColumn(label: Text("Editar")),
             DataColumn(label: Text("Produtos")),
@@ -273,22 +277,26 @@ class DataSource extends DataTableSource {
     return DataRow.byIndex(
       index: index,
       cells: [
+        DataCell(Text("${p.id}")),
         DataCell(
           p.foto != null
               ? CircleAvatar(
-            backgroundColor: Colors.grey[100],
-            radius: 20,
-            backgroundImage: NetworkImage(
-              "${promocaoController.arquivo + p.foto}",
-            ),
-          )
+                  backgroundColor: Colors.grey[100],
+                  radius: 20,
+                  backgroundImage: NetworkImage(
+                    "${promocaoController.arquivo + p.foto}",
+                  ),
+                )
               : CircleAvatar(),
         ),
         DataCell(Text(p.nome)),
-        DataCell(Text("${dateFormat.format(p.dataRegistro)}")),
+        DataCell(CircleAvatar(
+          backgroundColor:
+              p.status == true ? Colors.green[600] : Colors.red[600],
+          child: Text("${p.status.toString().substring(0, 1).toUpperCase()}"),
+        )),
         DataCell(Text("${dateFormat.format(p.dataInicio)}")),
         DataCell(Text("${dateFormat.format(p.dataFinal)}")),
-        DataCell(Text(p.loja.nome)),
         DataCell(IconButton(
           icon: Icon(Icons.search),
           onPressed: () {
@@ -321,9 +329,7 @@ class DataSource extends DataTableSource {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (BuildContext context) {
-                  return PromocaoCreatePage(
-                    promocao: p,
-                  );
+                  return ProdutoTab();
                 },
               ),
             );

@@ -52,15 +52,6 @@ class _PermissaoCreatePageState extends State<PermissaoCreatePage> {
     super.didChangeDependencies();
   }
 
-  showToast(String cardTitle) {
-    Fluttertoast.showToast(
-      msg: "$cardTitle",
-      gravity: ToastGravity.CENTER,
-      timeInSecForIos: 10,
-      fontSize: 16.0,
-    );
-  }
-
   showSnackbar(BuildContext context, String content) {
     scaffoldKey.currentState.showSnackBar(
       SnackBar(
@@ -83,16 +74,18 @@ class _PermissaoCreatePageState extends State<PermissaoCreatePage> {
             ? Text("Cadastro de permissão")
             : Text(p.descricao),
       ),
-      body: Observer(
-        builder: (context) {
-          if (permissaoController.dioError == null) {
-            return buildListViewForm(context);
-          } else {
-            print("Erro: ${permissaoController.mensagem}");
-            showToast("${permissaoController.mensagem}");
-            return buildListViewForm(context);
-          }
-        },
+      body: Container(
+        padding: EdgeInsets.only(left: 100, right: 100, top: 10),
+        child: Observer(
+          builder: (context) {
+            if (permissaoController.dioError == null) {
+              return buildListViewForm(context);
+            } else {
+              print("Erro: ${permissaoController.mensagem}");
+              return buildListViewForm(context);
+            }
+          },
+        ),
       ),
     );
   }

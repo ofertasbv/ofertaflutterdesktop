@@ -1,4 +1,3 @@
-import 'package:nosso/src/core/enum/pedido_status.dart';
 import 'package:nosso/src/core/model/cliente.dart';
 import 'package:nosso/src/core/model/loja.dart';
 import 'package:nosso/src/core/model/pedidoitem.dart';
@@ -15,7 +14,6 @@ class Pedido {
   Cliente cliente;
   Loja loja;
   String statusPedido;
-  String formaPagamento;
   DateTime dataHoraEntrega;
   DateTime dataRegistro;
 
@@ -30,7 +28,6 @@ class Pedido {
       this.cliente,
       this.loja,
       this.statusPedido,
-      this.formaPagamento,
       this.dataHoraEntrega,
       this.dataRegistro});
 
@@ -40,7 +37,7 @@ class Pedido {
 
     valorFrete = json['valorFrete'];
     valorDesconto = json['valorDesconto'];
-    valorTotal = json['valorInicial'];
+    valorInicial = json['valorInicial'];
     valorTotal = json['valorTotal'];
 
     if (json['pedidoItems'] != null) {
@@ -55,7 +52,6 @@ class Pedido {
     loja = json['loja'] != null ? new Loja.fromJson(json['loja']) : null;
 
     statusPedido = json['statusPedido'];
-    formaPagamento = json['formaPagamento'];
 
     dataHoraEntrega = DateTime.tryParse(json['dataHoraEntrega'].toString());
     dataRegistro = DateTime.tryParse(json['dataRegistro'].toString());
@@ -82,7 +78,6 @@ class Pedido {
     }
 
     data['statusPedido'] = this.statusPedido;
-    data['formaPagamento'] = this.formaPagamento;
 
     data['dataHoraEntrega'] = this.dataHoraEntrega.toIso8601String();
     data['dataRegistro'] = this.dataRegistro.toIso8601String();

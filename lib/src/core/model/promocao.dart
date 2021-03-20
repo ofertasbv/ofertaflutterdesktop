@@ -12,6 +12,7 @@ class Promocao {
   DateTime dataFinal;
   Loja loja;
   PromocaoTipo promocaoTipo;
+  bool status;
 
   Promocao({
     this.id,
@@ -24,6 +25,7 @@ class Promocao {
     this.dataFinal,
     this.loja,
     this.promocaoTipo,
+    this.status,
   });
 
   Promocao.fromJson(Map<String, dynamic> json) {
@@ -32,6 +34,7 @@ class Promocao {
     descricao = json['descricao'];
     foto = json['foto'];
     desconto = json['desconto'];
+    status = json['status'];
 
     dataRegistro = DateTime.tryParse(json['dataRegistro'].toString());
     dataInicio = DateTime.tryParse(json['dataInicio'].toString());
@@ -50,6 +53,7 @@ class Promocao {
     data['descricao'] = this.descricao;
     data['foto'] = this.foto;
     data['desconto'] = this.desconto;
+    data['status'] = this.status;
 
     data['dataRegistro'] = this.dataRegistro.toIso8601String();
     data['dataInicio'] = this.dataInicio.toIso8601String();

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:nosso/src/api/constants/constant_api.dart';
 import 'package:nosso/src/core/controller/produto_controller.dart';
 import 'package:nosso/src/core/model/content.dart';
 import 'package:nosso/src/core/model/produto.dart';
@@ -41,15 +42,25 @@ class ContainerProduto extends StatelessWidget {
               child: Stack(
                 alignment: Alignment.bottomRight,
                 children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(0),
-                    child: Image.network(
-                      produtoController.arquivo + p.foto,
-                      fit: BoxFit.cover,
-                      width: 100,
-                      height: 150,
-                    ),
-                  ),
+                  p.foto != null
+                      ? ClipRRect(
+                          borderRadius: BorderRadius.circular(0),
+                          child: Image.network(
+                            produtoController.arquivo + p.foto,
+                            fit: BoxFit.cover,
+                            width: 100,
+                            height: 150,
+                          ),
+                        )
+                      : ClipRRect(
+                          borderRadius: BorderRadius.circular(0),
+                          child: Image.asset(
+                            ConstantApi.urlLogo,
+                            fit: BoxFit.cover,
+                            width: 100,
+                            height: 150,
+                          ),
+                        ),
                   Padding(
                     padding: EdgeInsets.zero,
                     child: Align(

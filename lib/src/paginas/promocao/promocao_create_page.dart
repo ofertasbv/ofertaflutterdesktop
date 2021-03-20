@@ -56,6 +56,7 @@ class _PromocaoCreatePageState extends State<PromocaoCreatePage>
   PromocaoTipo promocaoTipo;
   Loja lojaSelecionada;
   File file;
+  bool status;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -65,7 +66,9 @@ class _PromocaoCreatePageState extends State<PromocaoCreatePage>
   void initState() {
     if (p == null) {
       p = Promocao();
+      status = false;
     } else {
+      status = p.status;
       lojaSelecionada = p.loja;
       promocaoTipo = p.promocaoTipo;
       descontoController.text = p.desconto.toStringAsFixed(2);
@@ -412,6 +415,36 @@ class _PromocaoCreatePageState extends State<PromocaoCreatePage>
                             alignment: Alignment.bottomLeft,
                           ),
                   ],
+                ),
+                Container(
+                  padding: EdgeInsets.all(10),
+                  child: Container(
+                    child: Column(
+                      children: <Widget>[
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey),
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: SwitchListTile(
+                            autofocus: true,
+                            title: Text("Promoção ativa? "),
+                            subtitle: Text("sim/não"),
+                            value: p.status = status,
+                            secondary: const Icon(Icons.check_outlined),
+                            onChanged: (bool valor) {
+                              setState(() {
+                                status = valor;
+                                print("Status: " + p.status.toString());
+                              });
+                              showSnackbar(context, "Status ${p.status}");
+                            },
+                          ),
+                        ),
+                        SizedBox(height: 30),
+                      ],
+                    ),
+                  ),
                 ),
                 SizedBox(height: 20),
                 Container(

@@ -19,16 +19,19 @@ class _CatalogoHomeState extends State<CatalogoHome> {
     return Container(
       padding: EdgeInsets.only(left: 100, right: 100, top: 1),
       child: Container(
-        color: Colors.transparent,
+        decoration: BoxDecoration(
+          color: Colors.grey[100].withOpacity(1),
+          border: Border.all(color: Colors.grey[200]),
+          borderRadius: BorderRadius.circular(0),
+        ),
         child: ListView(
           padding: EdgeInsets.all(0),
           children: <Widget>[
             SizedBox(height: 5),
-
             Column(
               children: <Widget>[
                 Container(
-                  padding: EdgeInsets.all(10),
+                  padding: EdgeInsets.all(0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
@@ -37,6 +40,7 @@ class _CatalogoHomeState extends State<CatalogoHome> {
                         style: TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.bold,
+                          color: Theme.of(context).accentColor,
                         ),
                       ),
                       GestureDetector(
@@ -45,6 +49,7 @@ class _CatalogoHomeState extends State<CatalogoHome> {
                           style: TextStyle(
                             fontSize: 22,
                             fontWeight: FontWeight.bold,
+                            color: Theme.of(context).accentColor,
                           ),
                         ),
                         onTap: () {
@@ -72,7 +77,7 @@ class _CatalogoHomeState extends State<CatalogoHome> {
             Column(
               children: <Widget>[
                 Container(
-                  padding: EdgeInsets.all(10),
+                  padding: EdgeInsets.all(0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
@@ -81,6 +86,7 @@ class _CatalogoHomeState extends State<CatalogoHome> {
                         style: TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.bold,
+                          color: Theme.of(context).accentColor,
                         ),
                       ),
                       GestureDetector(
@@ -89,6 +95,7 @@ class _CatalogoHomeState extends State<CatalogoHome> {
                           style: TextStyle(
                             fontSize: 22,
                             fontWeight: FontWeight.bold,
+                            color: Theme.of(context).accentColor,
                           ),
                         ),
                         onTap: () {
@@ -106,8 +113,8 @@ class _CatalogoHomeState extends State<CatalogoHome> {
                 ),
                 SizedBox(height: 10),
                 Container(
-                  height: 300,
-                  padding: EdgeInsets.all(2),
+                  height: 350,
+                  padding: EdgeInsets.all(0),
                   child: PromocaoListHome(),
                 ),
               ],
@@ -116,7 +123,7 @@ class _CatalogoHomeState extends State<CatalogoHome> {
             Column(
               children: <Widget>[
                 Container(
-                  padding: EdgeInsets.all(10),
+                  padding: EdgeInsets.all(0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
@@ -125,6 +132,7 @@ class _CatalogoHomeState extends State<CatalogoHome> {
                         style: TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.bold,
+                          color: Theme.of(context).accentColor,
                         ),
                       ),
                       GestureDetector(
@@ -133,6 +141,7 @@ class _CatalogoHomeState extends State<CatalogoHome> {
                           style: TextStyle(
                             fontSize: 22,
                             fontWeight: FontWeight.bold,
+                            color: Theme.of(context).accentColor,
                           ),
                         ),
                         onTap: () {
@@ -151,7 +160,7 @@ class _CatalogoHomeState extends State<CatalogoHome> {
                 SizedBox(height: 10),
                 Container(
                   height: 156,
-                  padding: EdgeInsets.all(0),
+                  padding: EdgeInsets.zero,
                   child: ProdutoListHome(),
                 ),
               ],

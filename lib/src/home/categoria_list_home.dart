@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
+import 'package:nosso/src/api/constants/constant_api.dart';
 import 'package:nosso/src/core/controller/categoria_controller.dart';
 import 'package:nosso/src/core/model/categoria.dart';
 import 'package:nosso/src/paginas/subcategoria/subcategoria_produto.dart';
@@ -96,7 +97,7 @@ class _CategoriaListHomeState extends State<CategoriaListHome>
 
         return GestureDetector(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10),
+            padding: EdgeInsets.only(right: 10),
             child: Card(
               child: AnimatedContainer(
                 width: 200,
@@ -114,23 +115,30 @@ class _CategoriaListHomeState extends State<CategoriaListHome>
                   children: <Widget>[
                     Container(
                       padding: EdgeInsets.all(1),
-                      child: CircleAvatar(
-                        backgroundColor: Colors.grey[100],
-                        radius: 50,
-                        backgroundImage: NetworkImage(
-                          "${categoriaController.arquivo + c.foto}",
-                        ),
-                      ),
+                      child: c.foto != null
+                          ? CircleAvatar(
+                              backgroundColor: Colors.grey[100],
+                              radius: 50,
+                              backgroundImage: NetworkImage(
+                                "${categoriaController.arquivo + c.foto}",
+                              ),
+                            )
+                          : CircleAvatar(
+                              backgroundColor: Colors.grey[100],
+                              radius: 50,
+                            ),
                     ),
                     SizedBox(height: 0),
                     Container(
                       alignment: Alignment.center,
-                      padding: EdgeInsets.all(5),
-                      height: 40,
+                      padding: EdgeInsets.all(0),
+                      height: 80,
                       width: containerWidth,
                       child: Text(
                         c.nome.toLowerCase(),
-                        style: TextStyle(color: Colors.grey[900]),
+                        style: TextStyle(
+                          color: Theme.of(context).accentColor,
+                        ),
                       ),
                     )
                   ],

@@ -77,6 +77,7 @@ class _CaixaFluxoSaidaCreatePageState extends State<CaixaFluxoSaidaCreatePage>
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
+        titleSpacing: 50,
         title: Text("Caixa saídas cadastro"),
         actions: <Widget>[
           SizedBox(width: 20),
@@ -91,16 +92,19 @@ class _CaixaFluxoSaidaCreatePageState extends State<CaixaFluxoSaidaCreatePage>
           )
         ],
       ),
-      body: Observer(
-        builder: (context) {
-          if (caixafluxoController.dioError == null) {
-            return buildListViewForm(context);
-          } else {
-            print("Erro: ${caixafluxoController.mensagem}");
-            showToast("${caixafluxoController.mensagem}");
-            return buildListViewForm(context);
-          }
-        },
+      body: Container(
+        padding: EdgeInsets.only(left: 100, right: 100, top: 10),
+        child: Observer(
+          builder: (context) {
+            if (caixafluxoController.dioError == null) {
+              return buildListViewForm(context);
+            } else {
+              print("Erro: ${caixafluxoController.mensagem}");
+              showToast("${caixafluxoController.mensagem}");
+              return buildListViewForm(context);
+            }
+          },
+        ),
       ),
     );
   }

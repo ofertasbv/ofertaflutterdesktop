@@ -4,13 +4,33 @@ import 'package:google_fonts/google_fonts.dart';
 ThemeData getTheme(BuildContext context) {
   return ThemeData(
     brightness: Brightness.light,
-    primaryColor: Colors.grey[100],
-    accentColor: Colors.purple,
-    primarySwatch: Colors.deepOrange,
+    primaryColor: Colors.white,
+    accentColor: Colors.indigo[900],
+    primarySwatch: Colors.green,
     textTheme: GoogleFonts.sourceSansProTextTheme().copyWith(
+      subtitle2: TextStyle(
+        color: Colors.green,
+        fontWeight: FontWeight.w400,
+        fontSize: 16,
+      ),
+      subtitle1: TextStyle(
+        color: Colors.green[400],
+        fontWeight: FontWeight.w400,
+        fontSize: 16,
+      ),
+      bodyText2: TextStyle(
+        color: Colors.black,
+        fontWeight: FontWeight.w400,
+        fontSize: 16,
+      ),
+      bodyText1: TextStyle(
+        color: Colors.green[400],
+        fontWeight: FontWeight.w400,
+        fontSize: 16,
+      ),
       headline6: TextStyle(
-        color: Colors.purple,
-        fontWeight: FontWeight.w700,
+        color: Colors.green,
+        fontWeight: FontWeight.w400,
         fontSize: 30,
       ),
       headline5: TextStyle(color: Colors.blueAccent),
@@ -19,31 +39,30 @@ ThemeData getTheme(BuildContext context) {
       headline2: TextStyle(color: Colors.green),
       headline1: TextStyle(color: Colors.cyan),
     ),
+    scaffoldBackgroundColor: Colors.grey[100],
     cardTheme: CardTheme(
       elevation: 1,
       color: Colors.white,
       margin: EdgeInsets.all(0),
-      shadowColor: Colors.white,
       shape: RoundedRectangleBorder(
         borderRadius: new BorderRadius.circular(0),
         side: BorderSide(color: Colors.white, width: 0),
       ),
     ),
     buttonTheme: ButtonThemeData(
-      splashColor: Colors.black,
+      splashColor: Colors.green,
       textTheme: ButtonTextTheme.primary,
       height: 50,
       padding: EdgeInsets.all(10),
       alignedDropdown: true,
-      buttonColor: Colors.purple[700],
       shape: RoundedRectangleBorder(
         borderRadius: new BorderRadius.circular(0),
         side: BorderSide(color: Colors.transparent),
       ),
     ),
     inputDecorationTheme: InputDecorationTheme(
-      labelStyle: TextStyle(color: Colors.purple),
-      prefixStyle: TextStyle(color: Colors.purple),
+      labelStyle: TextStyle(color: Colors.indigo[900]),
+      prefixStyle: TextStyle(color: Colors.indigo[900]),
       hintStyle: TextStyle(color: Colors.deepOrange),
       fillColor: Colors.grey[200],
       alignLabelWithHint: true,
@@ -54,9 +73,9 @@ ThemeData getTheme(BuildContext context) {
       isDense: true,
       filled: true,
     ),
-    hintColor: Colors.purple[500],
+    hintColor: Colors.indigo[900],
     iconTheme: IconThemeData(
-      color: Colors.purple[800],
+      color: Colors.indigo[900],
     ),
     snackBarTheme: SnackBarThemeData(
       actionTextColor: Colors.black,
@@ -69,9 +88,9 @@ ThemeData getTheme(BuildContext context) {
     ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       elevation: 0,
-      selectedItemColor: Colors.purple[900],
+      selectedItemColor: Colors.indigo[900],
       unselectedItemColor: Colors.black,
-      unselectedLabelStyle: TextStyle(color: Colors.purple[900]),
+      unselectedLabelStyle: TextStyle(color: Colors.indigo[900]),
       backgroundColor: Colors.grey[100],
     ),
   );

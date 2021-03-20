@@ -29,8 +29,11 @@ class Dialogs {
                   Navigator.pop(context);
                 },
                 child: Text(
-                  "cancelar",
-                  style: TextStyle(color: Colors.red),
+                  "CANCELAR",
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             )

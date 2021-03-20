@@ -76,6 +76,7 @@ class _PedidoTableState extends State<PedidoTable> {
             DataColumn(label: Text("Status")),
             DataColumn(label: Text("Visualizar")),
             DataColumn(label: Text("Editar")),
+            DataColumn(label: Text("Itens")),
           ],
           source: DataSource(pedidos, context),
         ),
@@ -125,6 +126,20 @@ class DataSource extends DataTableSource {
         )),
         DataCell(IconButton(
           icon: Icon(Icons.edit),
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return PedidoCreatePage(
+                    pedido: p,
+                  );
+                },
+              ),
+            );
+          },
+        )),
+        DataCell(IconButton(
+          icon: Icon(Icons.shopping_basket_outlined),
           onPressed: () {
             Navigator.of(context).push(
               MaterialPageRoute(
