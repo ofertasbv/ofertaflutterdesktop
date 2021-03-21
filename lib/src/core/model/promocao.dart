@@ -1,4 +1,5 @@
 import 'package:nosso/src/core/model/loja.dart';
+import 'package:nosso/src/core/model/produto.dart';
 import 'package:nosso/src/core/model/promocaotipo.dart';
 
 class Promocao {
@@ -13,6 +14,7 @@ class Promocao {
   Loja loja;
   PromocaoTipo promocaoTipo;
   bool status;
+  List<Produto> produtos = new List<Produto>();
 
   Promocao({
     this.id,
@@ -26,6 +28,7 @@ class Promocao {
     this.loja,
     this.promocaoTipo,
     this.status,
+    this.produtos,
   });
 
   Promocao.fromJson(Map<String, dynamic> json) {
@@ -44,6 +47,13 @@ class Promocao {
     promocaoTipo = json['promocaoTipo'] != null
         ? new PromocaoTipo.fromJson(json['promocaoTipo'])
         : null;
+
+    if (json['produtos'] != null) {
+      produtos = new List<Produto>();
+      json['produtos'].forEach((v) {
+        produtos.add(new Produto.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -65,6 +75,10 @@ class Promocao {
 
     if (this.promocaoTipo != null) {
       data['promocaoTipo'] = this.promocaoTipo.toJson();
+    }
+
+    if (this.produtos != null) {
+      data['produtos'] = this.produtos.map((v) => v.toJson()).toList();
     }
     return data;
   }

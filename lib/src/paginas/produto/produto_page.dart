@@ -8,6 +8,7 @@ import 'package:nosso/src/core/model/categoria.dart';
 import 'package:nosso/src/core/model/produto.dart';
 import 'package:nosso/src/core/model/subcategoria.dart';
 import 'package:nosso/src/paginas/produto/produto_grid.dart';
+import 'package:nosso/src/paginas/produto/produto_list.dart';
 import 'package:nosso/src/paginas/subcategoria/subcategoria_create_page.dart';
 import 'package:nosso/src/paginas/subcategoria/subcategoria_list.dart';
 import 'package:nosso/src/paginas/subcategoria/subcategoria_table.dart';
@@ -27,6 +28,7 @@ class _ProdutoPageState extends State<ProdutoPage> {
   var produtoController = GetIt.I.get<ProdutoController>();
 
   ProdutoFilter filter;
+  String pagina = "";
 
   _ProdutoPageState({this.filter});
 
@@ -62,6 +64,36 @@ class _ProdutoPageState extends State<ProdutoPage> {
             foregroundColor: Colors.black,
             child: IconButton(
               icon: Icon(
+                Icons.dashboard,
+              ),
+              onPressed: () {
+                setState(() {
+                  pagina = "grid";
+                });
+              },
+            ),
+          ),
+          SizedBox(width: 10),
+          CircleAvatar(
+            backgroundColor: Theme.of(context).accentColor.withOpacity(0.4),
+            foregroundColor: Colors.black,
+            child: IconButton(
+              icon: Icon(
+                Icons.table_rows,
+              ),
+              onPressed: () {
+                setState(() {
+                  pagina = "list";
+                });
+              },
+            ),
+          ),
+          SizedBox(width: 10),
+          CircleAvatar(
+            backgroundColor: Theme.of(context).accentColor.withOpacity(0.4),
+            foregroundColor: Colors.black,
+            child: IconButton(
+              icon: Icon(
                 Icons.refresh,
               ),
               onPressed: () {
@@ -74,7 +106,9 @@ class _ProdutoPageState extends State<ProdutoPage> {
       ),
       body: Container(
         padding: EdgeInsets.only(left: 100, right: 100, top: 10),
-        child: ProdutoGrid(filter: filter),
+        child: pagina == "grid"
+            ? ProdutoGrid(filter: filter)
+            : ProdutoList(filter: filter),
       ),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,

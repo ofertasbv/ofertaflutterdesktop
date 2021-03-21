@@ -85,7 +85,7 @@ class _CategoriaListHomeState extends State<CategoriaListHome>
   }
 
   ListView builderList(List<Categoria> categorias) {
-    double containerWidth = 100;
+    double containerWidth = 200;
     double containerHeight = 15;
 
     return ListView.builder(
@@ -97,51 +97,53 @@ class _CategoriaListHomeState extends State<CategoriaListHome>
         return GestureDetector(
           child: Padding(
             padding: EdgeInsets.only(right: 10),
-            child: Card(
-              child: AnimatedContainer(
-                width: 200,
-                height: 300,
-                alignment: Alignment.center,
-                duration: Duration(seconds: 1),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border.all(color: Colors.transparent),
-                  borderRadius: BorderRadius.circular(0),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Container(
-                      padding: EdgeInsets.all(1),
-                      child: c.foto != null
-                          ? CircleAvatar(
-                              backgroundColor: Colors.grey[100],
-                              radius: 50,
-                              backgroundImage: NetworkImage(
-                                "${categoriaController.arquivo + c.foto}",
-                              ),
-                            )
-                          : CircleAvatar(
-                              backgroundColor: Colors.grey[100],
-                              radius: 50,
+            child: AnimatedContainer(
+              width: 200,
+              height: 250,
+              alignment: Alignment.center,
+              duration: Duration(seconds: 1),
+              decoration: BoxDecoration(
+                color: Colors.transparent,
+                border: Border.all(color: Colors.transparent),
+                borderRadius: BorderRadius.circular(0),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.all(1),
+                    color: Colors.green[100],
+                    width: double.infinity,
+                    height: 165,
+                    child: c.foto != null
+                        ? CircleAvatar(
+                            backgroundColor: Colors.grey[100],
+                            radius: 50,
+                            backgroundImage: NetworkImage(
+                              "${categoriaController.arquivo + c.foto}",
                             ),
-                    ),
-                    SizedBox(height: 0),
-                    Container(
-                      alignment: Alignment.center,
-                      padding: EdgeInsets.all(0),
-                      height: 80,
-                      width: containerWidth,
-                      child: Text(
-                        c.nome.toLowerCase(),
-                        style: TextStyle(
-                          color: Theme.of(context).accentColor,
-                        ),
+                          )
+                        : CircleAvatar(
+                            backgroundColor: Colors.grey[100],
+                            radius: 50,
+                          ),
+                  ),
+                  SizedBox(height: 0),
+                  Container(
+                    padding: EdgeInsets.all(0),
+                    height: 80,
+                    width: containerWidth,
+                    color: Colors.white,
+                    alignment: Alignment.center,
+                    child: Text(
+                      c.nome.toLowerCase(),
+                      style: TextStyle(
+                        color: Theme.of(context).accentColor,
                       ),
-                    )
-                  ],
-                ),
+                    ),
+                  )
+                ],
               ),
             ),
           ),

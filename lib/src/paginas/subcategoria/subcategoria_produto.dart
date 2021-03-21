@@ -43,7 +43,6 @@ class _SubCategoriaProdutoState extends State<SubCategoriaProduto>
     } else {
       subCategoriaController.getAllByCategoriaById(categoria.id);
     }
-
     super.initState();
   }
 
@@ -110,7 +109,7 @@ class _SubCategoriaProdutoState extends State<SubCategoriaProduto>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            SizedBox(height: 0),
+            SizedBox(height: 10),
             Container(
               height: 80,
               width: double.infinity,
@@ -135,6 +134,7 @@ class _SubCategoriaProdutoState extends State<SubCategoriaProduto>
             Expanded(
               child: Container(
                 color: Colors.grey[200],
+                padding: EdgeInsets.only(bottom: 10),
                 child: builderConteutoListSubCategoria(),
               ),
             ),
@@ -190,38 +190,41 @@ class _SubCategoriaProdutoState extends State<SubCategoriaProduto>
     double containerWidth = 160;
     double containerHeight = 20;
 
-    return ListView.builder(
+    return ListView.separated(
       scrollDirection: Axis.vertical,
       itemCount: categorias.length,
+      separatorBuilder: (context, index) {
+        return Divider();
+      },
       itemBuilder: (context, index) {
         SubCategoria c = categorias[index];
 
         return GestureDetector(
           child: Container(
+            color: Colors.white,
             child: ListTile(
-              isThreeLine: false,
-              leading: Container(
-                padding: EdgeInsets.all(1),
-                child: CircleAvatar(
-                  backgroundColor: Theme.of(context).accentColor,
-                  foregroundColor: Theme.of(context).primaryColor,
-                  radius: 20,
-                  child: Text(
-                    c.nome.substring(0, 1).toUpperCase(),
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+                isThreeLine: false,
+                leading: Container(
+                  padding: EdgeInsets.all(1),
+                  child: CircleAvatar(
+                    backgroundColor: Theme.of(context).accentColor,
+                    foregroundColor: Theme.of(context).primaryColor,
+                    radius: 20,
+                    child: Text(
+                      c.nome.substring(0, 1).toUpperCase(),
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              title: Text(c.nome),
-              subtitle: Text("${c.categoria.nome}"),
-              trailing: Container(
-                height: 80,
-                width: 50,
-              ),
-            ),
+                title: Text(c.nome),
+                subtitle: Text("${c.categoria.nome}"),
+                trailing: Chip(
+                  label: Text("${c.produtos.length}"),
+                  backgroundColor: Theme.of(context).accentColor,
+                )),
           ),
           onTap: () {
             filter.subCategoria = c.id;

@@ -6,16 +6,16 @@ ThemeData getTheme(BuildContext context) {
     tabBarTheme: TabBarTheme(),
     brightness: Brightness.light,
     primaryColor: Colors.white,
-    accentColor: Colors.black,
-    primarySwatch: Colors.green,
+    accentColor: Colors.green,
+    primarySwatch: Colors.pink,
     textTheme: GoogleFonts.sourceSansProTextTheme().copyWith(
       subtitle2: TextStyle(
-        color: Colors.green,
+        color: Colors.black,
         fontWeight: FontWeight.w400,
         fontSize: 16,
       ),
       subtitle1: TextStyle(
-        color: Colors.green[400],
+        color: Colors.green[600],
         fontWeight: FontWeight.w400,
         fontSize: 16,
       ),
@@ -57,7 +57,7 @@ ThemeData getTheme(BuildContext context) {
       padding: EdgeInsets.all(10),
       alignedDropdown: true,
       shape: RoundedRectangleBorder(
-        borderRadius: new BorderRadius.circular(0),
+        borderRadius: new BorderRadius.circular(10),
         side: BorderSide(color: Colors.transparent),
       ),
     ),

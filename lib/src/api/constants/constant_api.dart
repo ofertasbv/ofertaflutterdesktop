@@ -1,5 +1,5 @@
 class ConstantApi {
-  static String urlList = "http://10.0.0.103:8081";
+  static String urlList = "http://192.168.42.22:8081";
 
   static String urlArquivoProduto = urlList + "/produtos/download/";
   static String urlArquivoSubCategoria = urlList + "/subcategorias/download/";

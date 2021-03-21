@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:nosso/src/core/controller/produto_controller.dart';
 import 'package:nosso/src/core/controller/promocao_controller.dart';
-import 'package:nosso/src/core/model/produto.dart';
 import 'package:nosso/src/core/model/promocao.dart';
-import 'package:nosso/src/paginas/produto/produto_tab.dart';
+import 'package:nosso/src/paginas/produto/produto_page.dart';
 import 'package:nosso/src/paginas/promocao/promocao_create_page.dart';
+import 'package:nosso/src/util/filter/produto_filter.dart';
 
 class ContainerPromocao extends StatelessWidget {
   PromoCaoController promoCaoController;
@@ -13,43 +12,86 @@ class ContainerPromocao extends StatelessWidget {
 
   ContainerPromocao(this.promoCaoController, this.p);
 
+  ProdutoFilter filter = ProdutoFilter();
+
   @override
   Widget build(BuildContext context) {
     var formatMoeda = new NumberFormat("#,##0.00", "pt_BR");
+    var dateFormat = DateFormat('dd/MM/yyyy');
 
-    return ListTile(
-      isThreeLine: false,
-      leading: Container(
-        padding: EdgeInsets.all(1),
-        decoration: new BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Theme.of(context).primaryColor,
-              Theme.of(context).primaryColor
-            ],
-          ),
-          border: Border.all(
-            color: Colors.black,
-            width: 1,
-          ),
-          borderRadius: BorderRadius.circular(35),
-        ),
-        child: p.foto != null
-            ? CircleAvatar(
-                backgroundColor: Colors.grey[100],
-                radius: 20,
-                backgroundImage: NetworkImage(
-                  "${promoCaoController.arquivo + p.foto}",
+    return Container(
+      color: Colors.white,
+      height: 150,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          Container(
+            width: 600,
+            height: 150,
+            color: Colors.white,
+            padding: EdgeInsets.all(20),
+            child: ListTile(
+              isThreeLine: true,
+              leading: p.foto != null
+                  ? CircleAvatar(
+                      backgroundColor: Colors.grey[100],
+                      foregroundColor: Colors.green,
+                      radius: 50,
+                      backgroundImage: NetworkImage(
+                        "${promoCaoController.arquivo + p.foto}",
+                      ),
+                    )
+                  : CircleAvatar(
+                      backgroundColor: Colors.grey[100],
+                      radius: 50,
+                    ),
+              title: Text(
+                p.nome,
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
                 ),
-              )
-            : CircleAvatar(),
-      ),
-      title: Text(p.nome),
-      subtitle: Text("R\$ ${formatMoeda.format(p.desconto)} OFF"),
-      trailing: Container(
-        height: 80,
-        width: 50,
-        child: buildPopupMenuButton(context, p),
+              ),
+              subtitle: Text(
+                  "${dateFormat.format(p.dataInicio)} á ${dateFormat.format(p.dataFinal)}"),
+            ),
+          ),
+          Container(
+            width: 500,
+            height: 150,
+            color: Colors.white,
+            padding: EdgeInsets.all(20),
+            child: ListTile(
+              isThreeLine: false,
+              leading: Text(
+                "% ${formatMoeda.format(p.desconto)} DE DESCOSTO",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              title: Text(
+                p.descricao,
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              subtitle: Text(
+                "${p.loja.nome}",
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              trailing: Chip(
+                backgroundColor: Theme.of(context).accentColor,
+                label: Text("${p.produtos.length}"),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -80,11 +122,11 @@ class ContainerPromocao extends StatelessWidget {
           print("delete");
         }
         if (valor == "produtos") {
-          print("produtos");
+          filter.subCategoria = p.id;
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (BuildContext context) {
-                return ProdutoTab();
+                return ProdutoPage(filter: filter);
               },
             ),
           );

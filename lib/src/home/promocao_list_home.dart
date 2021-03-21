@@ -84,69 +84,65 @@ class _PromocaoListHomeState extends State<PromocaoListHome>
         return GestureDetector(
           child: Padding(
             padding: EdgeInsets.only(right: 10),
-            child: Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: new BorderRadius.circular(0),
-                side: BorderSide(color: Colors.grey[100], width: 1),
+            child: AnimatedContainer(
+              width: containerWidth,
+              duration: Duration(seconds: 1),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(color: Colors.transparent),
+                borderRadius: BorderRadius.circular(0),
               ),
-              child: AnimatedContainer(
-                width: containerWidth,
-                duration: Duration(seconds: 1),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border.all(color: Colors.transparent),
-                  borderRadius: BorderRadius.circular(0),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.grey[200],
-                        borderRadius: BorderRadius.circular(0),
-                      ),
-                      child: p.foto != null ? ClipRRect(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(0),
-                          topRight: Radius.circular(0),
-                          bottomRight: Radius.circular(0),
-                          bottomLeft: Radius.circular(0),
-                        ),
-                        child: Image.network(
-                          promocaoController.arquivo + p.foto,
-                          fit: BoxFit.cover,
-                          width: containerWidth,
-                          height: 240,
-                        ),
-                      ) : ClipRRect(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(0),
-                          topRight: Radius.circular(0),
-                          bottomRight: Radius.circular(0),
-                          bottomLeft: Radius.circular(0),
-                        ),
-                        child: Image.asset(
-                          ConstantApi.urlLogo,
-                          fit: BoxFit.cover,
-                          width: containerWidth,
-                          height: 240,
-                        ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey[200],
+                      borderRadius: BorderRadius.circular(0),
+                    ),
+                    child: p.foto != null
+                        ? ClipRRect(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(0),
+                              topRight: Radius.circular(0),
+                              bottomRight: Radius.circular(0),
+                              bottomLeft: Radius.circular(0),
+                            ),
+                            child: Image.network(
+                              promocaoController.arquivo + p.foto,
+                              fit: BoxFit.cover,
+                              width: containerWidth,
+                              height: 240,
+                            ),
+                          )
+                        : ClipRRect(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(0),
+                              topRight: Radius.circular(0),
+                              bottomRight: Radius.circular(0),
+                              bottomLeft: Radius.circular(0),
+                            ),
+                            child: Image.asset(
+                              ConstantApi.urlLogo,
+                              fit: BoxFit.cover,
+                              width: containerWidth,
+                              height: 240,
+                            ),
+                          ),
+                  ),
+                  SizedBox(height: 0),
+                  Container(
+                    width: containerWidth,
+                    color: Colors.transparent,
+                    child: ListTile(
+                      title: Text(p.nome),
+                      subtitle: Text(p.descricao),
+                      trailing: Chip(
+                        label: Text("OFF ${formatMoeda.format(p.desconto)}"),
                       ),
                     ),
-                    SizedBox(height: 0),
-                    Container(
-                      width: containerWidth,
-                      color: Colors.transparent,
-                      child: ListTile(
-                        title: Text(p.nome),
-                        subtitle: Text(p.descricao),
-                        trailing: Chip(
-                          label: Text("OFF ${formatMoeda.format(p.desconto)}"),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),

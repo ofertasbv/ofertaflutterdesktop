@@ -16,140 +16,71 @@ class ContainerProduto extends StatelessWidget {
   Widget build(BuildContext context) {
     var formatMoeda = new NumberFormat("#,##0.00", "pt_BR");
 
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: new BorderRadius.circular(0),
-        side: BorderSide(color: Colors.grey[200], width: 1),
-      ),
-      child: AnimatedContainer(
-        width: 350,
-        height: 150,
-        duration: Duration(seconds: 1),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border.all(color: Colors.transparent),
-          borderRadius: BorderRadius.circular(0),
-        ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(0),
-              ),
-              child: Stack(
-                alignment: Alignment.bottomRight,
-                children: [
-                  p.foto != null
-                      ? ClipRRect(
-                          borderRadius: BorderRadius.circular(0),
-                          child: Image.network(
-                            produtoController.arquivo + p.foto,
-                            fit: BoxFit.cover,
-                            width: 100,
-                            height: 150,
-                          ),
-                        )
-                      : ClipRRect(
-                          borderRadius: BorderRadius.circular(0),
-                          child: Image.asset(
-                            ConstantApi.urlLogo,
-                            fit: BoxFit.cover,
-                            width: 100,
-                            height: 150,
-                          ),
-                        ),
-                  Padding(
-                    padding: EdgeInsets.zero,
-                    child: Align(
-                      alignment: Alignment.bottomRight,
-                      child: p.novo == true
-                          ? Chip(
-                              label: Text(
-                                "novo",
-                                style: TextStyle(
-                                  fontSize: 10,
-                                  color: Colors.redAccent,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            )
-                          : Chip(
-                              label: Text(
-                                "atual",
-                                style: TextStyle(
-                                  fontSize: 10,
-                                  color: Colors.redAccent,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              child: Container(
-                width: double.infinity,
-                color: Colors.transparent,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Container(
-                      child: ListTile(
-                        title: Text(
-                          "${p.nome}",
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        subtitle: Text("Código. ${p.id}"),
-                        trailing: CircleAvatar(
-                          backgroundColor: Colors.grey[300],
-                          foregroundColor: Colors.redAccent,
-                          child: IconButton(
-                            splashColor: Colors.black,
-                            icon: Icon(
-                              Icons.favorite_border,
-                              color: Colors.redAccent,
-                              size: 15,
-                            ),
-                            onPressed: () {},
-                          ),
-                        ),
+    return Container(
+      color: Colors.white,
+      height: 150,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          Container(
+            width: 600,
+            height: 150,
+            color: Colors.white,
+            padding: EdgeInsets.all(20),
+            child: ListTile(
+              isThreeLine: true,
+              leading: p.foto != null
+                  ? CircleAvatar(
+                      backgroundColor: Colors.grey[100],
+                      foregroundColor: Colors.green,
+                      radius: 50,
+                      backgroundImage: NetworkImage(
+                        "${produtoController.arquivo + p.foto}",
                       ),
+                    )
+                  : CircleAvatar(
+                      backgroundColor: Colors.grey[100],
+                      radius: 50,
                     ),
-                    Container(
-                      child: ListTile(
-                        title: Text(
-                          "R\$ ${formatMoeda.format(p.estoque.valorUnitario)}",
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.grey,
-                            fontWeight: FontWeight.w500,
-                            decoration: TextDecoration.lineThrough,
-                            decorationStyle: TextDecorationStyle.dashed,
-                          ),
-                        ),
-                        subtitle: Text(
-                          "R\$ ${formatMoeda.format(p.estoque.valorUnitario - ((p.estoque.valorUnitario * p.promocao.desconto) / 100))} a vista",
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.green,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        trailing: buildPopupMenuButton(context, p),
-                      ),
-                    ),
-                  ],
+              title: Text(
+                p.nome,
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
+              subtitle: Text("${p.descricao}"),
             ),
-          ],
-        ),
+          ),
+          Container(
+            width: 500,
+            height: 150,
+            color: Colors.white,
+            padding: EdgeInsets.all(20),
+            child: ListTile(
+              isThreeLine: false,
+              title: Text(
+                p.descricao,
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              subtitle: Text(
+                "${p.loja.nome}",
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              trailing: Chip(
+                backgroundColor: Theme.of(context).accentColor,
+                label: Text("${p.id}"),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
