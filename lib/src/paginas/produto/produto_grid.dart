@@ -2,9 +2,11 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
+import 'package:nosso/src/api/constants/constant_api.dart';
 import 'package:nosso/src/core/controller/favorito_controller.dart';
 import 'package:nosso/src/core/controller/produto_controller.dart';
 import 'package:nosso/src/core/model/favorito.dart';
@@ -44,11 +46,17 @@ class _ProdutoGridState extends State<ProdutoGrid>
 
   @override
   void initState() {
+    if (filter == null) {
+      produtoController.getAll();
+    } else {
+      produtoController.getFilter(filter);
+    }
+
     if (favorito == null) {
       favorito = Favorito();
       produto = Produto();
     }
-    produtoController.getAll();
+
     super.initState();
   }
 
@@ -146,11 +154,11 @@ class _ProdutoGridState extends State<ProdutoGrid>
 
   builderGrid(List<Produto> produtos) {
     return Container(
-      padding: EdgeInsets.only(left: 100, right: 100, top: 1),
+      padding: EdgeInsets.only(top: 0, bottom: 0),
       child: Container(
         color: Colors.transparent,
         child: GridView.builder(
-          padding: EdgeInsets.only(top: 5),
+          padding: EdgeInsets.only(top: 10, bottom: 10),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 4,
             crossAxisSpacing: 10,
@@ -161,124 +169,135 @@ class _ProdutoGridState extends State<ProdutoGrid>
           itemBuilder: (context, index) {
             Produto p = produtos[index];
             return GestureDetector(
-              child: AnimatedContainer(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      Colors.grey[200].withOpacity(0.1),
-                      Colors.grey[400].withOpacity(0.3),
-                    ],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  border: Border.all(color: Colors.transparent),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                duration: Duration(seconds: 2),
-                curve: Curves.bounceIn,
-                child: Column(
-                  children: <Widget>[
-                    Stack(
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Image.network(
-                            produtoController.arquivo + p.foto,
-                            fit: BoxFit.cover,
-                            width: double.infinity,
-                            height: 300,
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(top: 10, right: 10),
-                          child: Align(
-                            alignment: Alignment.centerRight,
-                            child: CircleAvatar(
-                              backgroundColor: Colors.grey[300],
-                              foregroundColor: Colors.redAccent,
-                              radius: 15,
-                              child: IconButton(
-                                splashColor: Colors.black,
-                                icon: (this.favorito.status == false
-                                    ? Icon(
-                                        Icons.favorite_border,
-                                        color: Colors.redAccent,
-                                        size: 15,
-                                      )
-                                    : Icon(
-                                        Icons.favorite_outlined,
-                                        color: Colors.redAccent,
-                                        size: 15,
-                                      )),
-                                onPressed: () {
-                                  setState(() {
-                                    print("Favoritar: ${p.nome}");
-                                    // favoritar();
-                                  });
-
-                                  // if (favorito.id == null) {
-                                  //   favorito.produto = p;
-                                  //   favorito.status = isFavorito;
-                                  //   favoritoController.create(favorito);
-                                  //   print("Adicionar: ${p.nome}");
-                                  // } else {
-                                  //   favorito.produto = p;
-                                  //   favorito.status = isFavorito;
-                                  //   favoritoController.update(
-                                  //       favorito.id, favorito);
-                                  //   print("Alterar: ${p.nome}");
-                                  //   showSnackbar(context, "favorito");
-                                  // }
-                                },
-                              ),
-                            ),
-                          ),
-                        ),
+              child: Card(
+                child: AnimatedContainer(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        Colors.grey[100].withOpacity(0.1),
+                        Colors.grey[100].withOpacity(0.3),
                       ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Container(
-                          height: 30,
-                          padding: EdgeInsets.all(6),
-                          child: Text("${p.nome}", overflow: TextOverflow.ellipsis),
-                        ),
-                        Container(
-                          height: 60,
-                          child: ListTile(
-                            title: Text(
-                              "${formatMoeda.format(p.estoque.valorUnitario)}",
-                              style: TextStyle(
-                                fontSize: 12,
-                                decoration: TextDecoration.lineThrough,
-                                decorationStyle: TextDecorationStyle.dashed,
-                              ),
-                            ),
-                            subtitle: Text(
-                              "R\$ ${formatMoeda.format(p.estoque.valorUnitario - ((p.estoque.valorUnitario * p.promocao.desconto) / 100))}",
-                              style: TextStyle(
-                                color: Colors.green,
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            trailing: Chip(
-                              label: Text(
-                                "${formatMoeda.format(p.promocao.desconto)} OFF",
-                                style: TextStyle(
-                                  fontSize: 10,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
+                    border: Border.all(color: Colors.transparent),
+                    borderRadius: BorderRadius.circular(0),
+                  ),
+                  duration: Duration(seconds: 2),
+                  curve: Curves.bounceIn,
+                  child: Column(
+                    children: <Widget>[
+                      Stack(
+                        children: [
+                          p.foto != null
+                              ? ClipRRect(
+                                  borderRadius: BorderRadius.circular(0),
+                                  child: Image.network(
+                                    produtoController.arquivo + p.foto,
+                                    fit: BoxFit.cover,
+                                    width: double.infinity,
+                                    height: 300,
+                                  ),
+                                )
+                              : ClipRRect(
+                                  borderRadius: BorderRadius.circular(0),
+                                  child: Image.asset(
+                                    ConstantApi.urlLogo,
+                                    fit: BoxFit.cover,
+                                    width: double.infinity,
+                                    height: 300,
+                                  ),
+                                ),
+                          Padding(
+                            padding: EdgeInsets.only(top: 10, right: 10),
+                            child: Align(
+                              alignment: Alignment.centerRight,
+                              child: CircleAvatar(
+                                backgroundColor: Colors.grey[300],
+                                foregroundColor: Colors.redAccent,
+                                radius: 15,
+                                child: IconButton(
+                                  splashColor: Colors.black,
+                                  icon: (this.favorito.status == false
+                                      ? Icon(
+                                          Icons.favorite_border,
+                                          color: Colors.redAccent,
+                                          size: 15,
+                                        )
+                                      : Icon(
+                                          Icons.favorite_outlined,
+                                          color: Colors.redAccent,
+                                          size: 15,
+                                        )),
+                                  onPressed: () {
+                                    setState(() {
+                                      print("Favoritar: ${p.nome}");
+                                      // favoritar();
+                                    });
+
+                                    // if (favorito.id == null) {
+                                    //   favorito.produto = p;
+                                    //   favorito.status = isFavorito;
+                                    //   favoritoController.create(favorito);
+                                    //   print("Adicionar: ${p.nome}");
+                                    // } else {
+                                    //   favorito.produto = p;
+                                    //   favorito.status = isFavorito;
+                                    //   favoritoController.update(
+                                    //       favorito.id, favorito);
+                                    //   print("Alterar: ${p.nome}");
+                                    //   showSnackbar(context, "favorito");
+                                    // }
+                                  },
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Container(
+                            height: 30,
+                            child: ListTile(
+                              title: Text("${p.nome}",
+                                  overflow: TextOverflow.ellipsis),
+                            ),
+                          ),
+                          Container(
+                            height: 60,
+                            child: ListTile(
+                              title: Text(
+                                "${formatMoeda.format(p.estoque.valorUnitario)}",
+                                style: TextStyle(
+                                  decoration: TextDecoration.lineThrough,
+                                  decorationStyle: TextDecorationStyle.dashed,
+                                ),
+                              ),
+                              subtitle: Text(
+                                "R\$ ${formatMoeda.format(p.estoque.valorUnitario - ((p.estoque.valorUnitario * p.promocao.desconto) / 100))}",
+                                style: TextStyle(
+                                  color: Colors.green,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              trailing: Chip(
+                                label: Text(
+                                  "${formatMoeda.format(p.promocao.desconto)} OFF",
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
               onTap: () {

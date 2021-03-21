@@ -71,13 +71,13 @@ void main() async {
     SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
       // cor da barra superior
-      statusBarIconBrightness: Brightness.dark,
+      statusBarIconBrightness: Brightness.light,
       // ícones da barra superior
       systemNavigationBarColor: Colors.orangeAccent,
       // cor da barra inferior
       systemNavigationBarIconBrightness: Brightness.dark,
       //
-      systemNavigationBarDividerColor: Colors.black,
+      systemNavigationBarDividerColor: Colors.transparent,
       // ícones da barra inferior
       statusBarBrightness: Brightness.dark,
     ),

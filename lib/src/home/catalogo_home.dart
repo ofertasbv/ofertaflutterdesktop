@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
@@ -5,8 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:nosso/src/home/categoria_list_home.dart';
 import 'package:nosso/src/home/produto_list_home.dart';
 import 'package:nosso/src/home/promocao_list_home.dart';
+import 'package:nosso/src/paginas/produto/produto_page.dart';
 import 'package:nosso/src/paginas/produto/produto_tab.dart';
 import 'package:nosso/src/paginas/promocao/promocao_page.dart';
+import 'package:nosso/src/paginas/subcategoria/subcategoria_produto.dart';
+import 'package:nosso/src/util/load/shimmerListCategoriaHome.dart';
+import 'package:nosso/src/util/load/shimmerListProdutoHome.dart';
+import 'package:nosso/src/util/load/shimmerListPromocaoHome.dart';
 
 class CatalogoHome extends StatefulWidget {
   @override
@@ -14,6 +20,19 @@ class CatalogoHome extends StatefulWidget {
 }
 
 class _CatalogoHomeState extends State<CatalogoHome> {
+  var isDataFetched = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    Timer timer = Timer(Duration(seconds: 3), () {
+      setState(() {
+        isDataFetched = true;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -38,8 +57,8 @@ class _CatalogoHomeState extends State<CatalogoHome> {
                       Text(
                         "Área de conhecimento",
                         style: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w400,
                           color: Theme.of(context).accentColor,
                         ),
                       ),
@@ -47,8 +66,8 @@ class _CatalogoHomeState extends State<CatalogoHome> {
                         child: Text(
                           "veja mais",
                           style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w400,
                             color: Theme.of(context).accentColor,
                           ),
                         ),
@@ -56,7 +75,7 @@ class _CatalogoHomeState extends State<CatalogoHome> {
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (BuildContext context) {
-                                return PromocaoPage();
+                                return SubCategoriaProduto();
                               },
                             ),
                           );
@@ -69,7 +88,9 @@ class _CatalogoHomeState extends State<CatalogoHome> {
                 Container(
                   height: 250,
                   padding: EdgeInsets.all(0),
-                  child: CategoriaListHome(),
+                  child: isDataFetched == false
+                      ? ShimmerListCategoriaHome()
+                      : CategoriaListHome(),
                 ),
               ],
             ),
@@ -84,8 +105,8 @@ class _CatalogoHomeState extends State<CatalogoHome> {
                       Text(
                         "Ofertas em destaque",
                         style: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w400,
                           color: Theme.of(context).accentColor,
                         ),
                       ),
@@ -93,8 +114,8 @@ class _CatalogoHomeState extends State<CatalogoHome> {
                         child: Text(
                           "veja mais",
                           style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w400,
                             color: Theme.of(context).accentColor,
                           ),
                         ),
@@ -115,7 +136,9 @@ class _CatalogoHomeState extends State<CatalogoHome> {
                 Container(
                   height: 350,
                   padding: EdgeInsets.all(0),
-                  child: PromocaoListHome(),
+                  child: isDataFetched == false
+                      ? ShimmerListPromocaoHome()
+                      : PromocaoListHome(),
                 ),
               ],
             ),
@@ -130,8 +153,8 @@ class _CatalogoHomeState extends State<CatalogoHome> {
                       Text(
                         "Prouduto em destaque",
                         style: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w400,
                           color: Theme.of(context).accentColor,
                         ),
                       ),
@@ -139,8 +162,8 @@ class _CatalogoHomeState extends State<CatalogoHome> {
                         child: Text(
                           "veja mais",
                           style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w400,
                             color: Theme.of(context).accentColor,
                           ),
                         ),
@@ -148,7 +171,7 @@ class _CatalogoHomeState extends State<CatalogoHome> {
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (BuildContext context) {
-                                return ProdutoTab();
+                                return ProdutoPage();
                               },
                             ),
                           );
@@ -161,8 +184,11 @@ class _CatalogoHomeState extends State<CatalogoHome> {
                 Container(
                   height: 156,
                   padding: EdgeInsets.zero,
-                  child: ProdutoListHome(),
+                  child: isDataFetched == false
+                      ? ShimmerListProdutoHome()
+                      : ProdutoListHome(),
                 ),
+                SizedBox(height: 20),
               ],
             ),
           ],

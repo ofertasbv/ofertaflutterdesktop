@@ -5,11 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
-import 'package:nosso/src/api/constants/constant_api.dart';
 import 'package:nosso/src/core/controller/categoria_controller.dart';
 import 'package:nosso/src/core/model/categoria.dart';
 import 'package:nosso/src/paginas/subcategoria/subcategoria_produto.dart';
-import 'package:nosso/src/util/load/circular_progresso_mini.dart';
+import 'package:nosso/src/util/load/shimmerListCategoriaHome.dart';
 
 class CategoriaListHome extends StatefulWidget {
   @override
@@ -73,7 +72,7 @@ class _CategoriaListHomeState extends State<CategoriaListHome>
           }
 
           if (categorias == null) {
-            return CircularProgressorMini();
+            return ShimmerListCategoriaHome();
           }
 
           return RefreshIndicator(

@@ -10,7 +10,6 @@ import 'package:nosso/src/core/controller/subcategoria_controller.dart';
 import 'package:nosso/src/core/model/categoria.dart';
 import 'package:nosso/src/paginas/subcategoria/subcategoria_produto.dart';
 import 'package:nosso/src/util/load/circular_progresso.dart';
-import 'package:nosso/src/util/load/circular_progresso_mini.dart';
 
 class CategoriaSubCategoria extends StatefulWidget {
   CategoriaSubCategoria();

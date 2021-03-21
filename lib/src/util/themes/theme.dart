@@ -3,9 +3,10 @@ import 'package:google_fonts/google_fonts.dart';
 
 ThemeData getTheme(BuildContext context) {
   return ThemeData(
+    tabBarTheme: TabBarTheme(),
     brightness: Brightness.light,
     primaryColor: Colors.white,
-    accentColor: Colors.indigo[900],
+    accentColor: Colors.black,
     primarySwatch: Colors.green,
     textTheme: GoogleFonts.sourceSansProTextTheme().copyWith(
       subtitle2: TextStyle(
@@ -31,7 +32,7 @@ ThemeData getTheme(BuildContext context) {
       headline6: TextStyle(
         color: Colors.green,
         fontWeight: FontWeight.w400,
-        fontSize: 30,
+        fontSize: 16,
       ),
       headline5: TextStyle(color: Colors.blueAccent),
       headline4: TextStyle(color: Colors.yellow),
@@ -39,7 +40,7 @@ ThemeData getTheme(BuildContext context) {
       headline2: TextStyle(color: Colors.green),
       headline1: TextStyle(color: Colors.cyan),
     ),
-    scaffoldBackgroundColor: Colors.grey[100],
+    scaffoldBackgroundColor: Colors.grey[100].withOpacity(1),
     cardTheme: CardTheme(
       elevation: 1,
       color: Colors.white,

@@ -6,7 +6,7 @@ import 'package:nosso/src/core/controller/subcategoria_controller.dart';
 import 'package:nosso/src/core/model/categoria.dart';
 import 'package:nosso/src/core/model/favorito.dart';
 import 'package:nosso/src/core/model/subcategoria.dart';
-import 'package:nosso/src/paginas/produto/produto_tab.dart';
+import 'package:nosso/src/paginas/produto/produto_page.dart';
 import 'package:nosso/src/util/filter/produto_filter.dart';
 import 'package:nosso/src/util/load/circular_progresso_mini.dart';
 
@@ -31,13 +31,19 @@ class _SubCategoriaProdutoState extends State<SubCategoriaProduto>
   Categoria categoria;
   Favorito favorito;
 
-  ProdutoFilter filter;
+  ProdutoFilter filter = ProdutoFilter();
   int size = 0;
   int page = 0;
 
   @override
   void initState() {
-    subCategoriaController.getAllByCategoriaById(categoria.id);
+    if (categoria == null) {
+      categoria = Categoria();
+      subCategoriaController.getAll();
+    } else {
+      subCategoriaController.getAllByCategoriaById(categoria.id);
+    }
+
     super.initState();
   }
 
@@ -56,7 +62,11 @@ class _SubCategoriaProdutoState extends State<SubCategoriaProduto>
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(categoria.nome),
+        titleSpacing: 50,
+        elevation: 0,
+        title: categoria.nome == null
+            ? Text("Departamentos")
+            : Text(categoria.nome),
         actions: <Widget>[
           Observer(
             builder: (context) {
@@ -70,22 +80,31 @@ class _SubCategoriaProdutoState extends State<SubCategoriaProduto>
                 );
               }
 
-              return Chip(
-                label: Text(
+              return CircleAvatar(
+                child: Text(
                   (subCategoriaController.subCategorias.length ?? 0).toString(),
                 ),
               );
             },
           ),
-          IconButton(
-            icon: Icon(Icons.refresh_outlined),
-            onPressed: () {
-              subCategoriaController.getAll();
-            },
+          SizedBox(width: 10),
+          CircleAvatar(
+            backgroundColor: Theme.of(context).accentColor.withOpacity(0.4),
+            foregroundColor: Colors.black,
+            child: IconButton(
+              icon: Icon(
+                Icons.refresh,
+              ),
+              onPressed: () {
+                subCategoriaController.getAll();
+              },
+            ),
           ),
+          SizedBox(width: 100),
         ],
       ),
       body: Container(
+        padding: EdgeInsets.only(left: 100, right: 100, top: 10),
         height: MediaQuery.of(context).size.height,
         color: Colors.transparent,
         child: Column(
@@ -95,8 +114,8 @@ class _SubCategoriaProdutoState extends State<SubCategoriaProduto>
             Container(
               height: 80,
               width: double.infinity,
-              color: Colors.grey[100],
-              padding: EdgeInsets.all(5),
+              color: Colors.grey[200],
+              padding: EdgeInsets.all(0),
               child: ListTile(
                 subtitle: TextFormField(
                   controller: nomeController,
@@ -112,8 +131,12 @@ class _SubCategoriaProdutoState extends State<SubCategoriaProduto>
                 ),
               ),
             ),
+            SizedBox(height: 10),
             Expanded(
-              child: builderConteutoListSubCategoria(),
+              child: Container(
+                color: Colors.grey[200],
+                child: builderConteutoListSubCategoria(),
+              ),
             ),
           ],
         ),
@@ -180,7 +203,7 @@ class _SubCategoriaProdutoState extends State<SubCategoriaProduto>
               leading: Container(
                 padding: EdgeInsets.all(1),
                 child: CircleAvatar(
-                  backgroundColor: Colors.grey[500].withOpacity(0.2),
+                  backgroundColor: Theme.of(context).accentColor,
                   foregroundColor: Theme.of(context).primaryColor,
                   radius: 20,
                   child: Text(
@@ -201,10 +224,11 @@ class _SubCategoriaProdutoState extends State<SubCategoriaProduto>
             ),
           ),
           onTap: () {
+            filter.subCategoria = c.id;
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (BuildContext context) {
-                  return ProdutoTab(s: c);
+                  return ProdutoPage(filter: filter);
                 },
               ),
             );

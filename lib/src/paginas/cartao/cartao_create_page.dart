@@ -62,6 +62,8 @@ class _CartaoCreatePageState extends State<CartaoCreatePage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        titleSpacing: 50,
+        elevation: 0,
         title: Text("Cartão cadastro"),
         actions: <Widget>[
           SizedBox(width: 20),
@@ -76,16 +78,19 @@ class _CartaoCreatePageState extends State<CartaoCreatePage>
           )
         ],
       ),
-      body: Observer(
-        builder: (context) {
-          if (cartaoController.dioError == null) {
-            return buildListViewForm(context);
-          } else {
-            print("Erro: ${cartaoController.mensagem}");
-            showToast("${cartaoController.mensagem}");
-            return buildListViewForm(context);
-          }
-        },
+      body: Container(
+        padding: EdgeInsets.only(left: 100, right: 100, top: 10),
+        child: Observer(
+          builder: (context) {
+            if (cartaoController.dioError == null) {
+              return buildListViewForm(context);
+            } else {
+              print("Erro: ${cartaoController.mensagem}");
+              showToast("${cartaoController.mensagem}");
+              return buildListViewForm(context);
+            }
+          },
+        ),
       ),
     );
   }
