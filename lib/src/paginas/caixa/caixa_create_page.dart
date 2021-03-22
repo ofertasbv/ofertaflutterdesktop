@@ -52,16 +52,7 @@ class _CaixaCreatePageState extends State<CaixaCreatePage>
     controller = Controller();
     super.didChangeDependencies();
   }
-
-  showToast(String cardTitle) {
-    Fluttertoast.showToast(
-      msg: "$cardTitle",
-      gravity: ToastGravity.CENTER,
-      timeInSecForIos: 10,
-      fontSize: 16.0,
-    );
-  }
-
+  
   showSnackbar(BuildContext context, String content) {
     scaffoldKey.currentState.showSnackBar(
       SnackBar(
@@ -106,16 +97,17 @@ class _CaixaCreatePageState extends State<CaixaCreatePage>
       ),
       body: Container(
         padding: EdgeInsets.only(left: 100, right: 100, top: 10),
-        child: Observer(
-          builder: (context) {
-            if (caixaController.dioError == null) {
-              return buildListViewForm(context);
-            } else {
-              print("Erro: ${caixaController.mensagem}");
-              showToast("${caixaController.mensagem}");
-              return buildListViewForm(context);
-            }
-          },
+        child: Card(
+          child: Observer(
+            builder: (context) {
+              if (caixaController.dioError == null) {
+                return buildListViewForm(context);
+              } else {
+                print("Erro: ${caixaController.mensagem}");
+                return buildListViewForm(context);
+              }
+            },
+          ),
         ),
       ),
     );

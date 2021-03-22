@@ -16,6 +16,7 @@ class CaixaFluxoEntradaPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
+        titleSpacing: 50,
         title: Text("Caixa receitas"),
         actions: <Widget>[
           Observer(
@@ -38,7 +39,7 @@ class CaixaFluxoEntradaPage extends StatelessWidget {
               );
             },
           ),
-          SizedBox(width: 20),
+          SizedBox(width: 100),
         ],
       ),
       body: Container(

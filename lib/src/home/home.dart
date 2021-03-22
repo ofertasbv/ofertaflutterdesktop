@@ -124,7 +124,7 @@ class _HomePageState extends State<HomePage>
               SizedBox(width: 100),
             ],
           ),
-          body: Center(child: lista[elementIndex]),
+          body: Scrollbar(child: Center(child: lista[elementIndex])),
           // bottomNavigationBar: buildBottomNavigationBar(),
 
 /* ======================= Menu lateral ======================= */

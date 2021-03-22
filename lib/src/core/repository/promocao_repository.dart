@@ -38,6 +38,7 @@ class PromocaoRepository {
         "/promocoes/filter",
         queryParameters: {
           "nomePromocao": filter.nomePromocao,
+          "status": filter.status,
           "dataInicio": filter.dataInicio,
           "dataFinal": filter.dataFinal,
           "promocaoTipo": filter.promocaoTipo,
@@ -55,6 +56,17 @@ class PromocaoRepository {
     try {
       print("carregando promoções by nome");
       var response = await dio.client.get("/promocoes/nome/${nome}");
+      return (response.data as List).map((c) => Promocao.fromJson(c)).toList();
+    } on DioError catch (e) {
+      print(e.message);
+    }
+    return null;
+  }
+
+  Future<List<Promocao>> getAllByStatus(bool status) async {
+    try {
+      print("carregando promoções by status");
+      var response = await dio.client.get("/promocoes/status/${status}");
       return (response.data as List).map((c) => Promocao.fromJson(c)).toList();
     } on DioError catch (e) {
       print(e.message);

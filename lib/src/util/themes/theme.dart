@@ -5,9 +5,9 @@ ThemeData getTheme(BuildContext context) {
   return ThemeData(
     tabBarTheme: TabBarTheme(),
     brightness: Brightness.light,
-    primaryColor: Colors.redAccent,
-    accentColor: Colors.black,
-    primarySwatch: Colors.purple,
+    primaryColor: Colors.amber,
+    accentColor: Colors.purple,
+    primarySwatch: Colors.deepPurple,
     textTheme: GoogleFonts.sourceSansProTextTheme().copyWith(
       subtitle2: TextStyle(
         color: Colors.black,
@@ -15,7 +15,7 @@ ThemeData getTheme(BuildContext context) {
         fontSize: 16,
       ),
       subtitle1: TextStyle(
-        color: Colors.purple,
+        color: Colors.black,
         fontWeight: FontWeight.w400,
         fontSize: 16,
       ),

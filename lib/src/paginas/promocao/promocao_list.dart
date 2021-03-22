@@ -8,7 +8,6 @@ import 'package:nosso/src/core/controller/promocao_controller.dart';
 import 'package:nosso/src/core/model/loja.dart';
 import 'package:nosso/src/core/model/promocao.dart';
 import 'package:nosso/src/paginas/produto/produto_page.dart';
-import 'package:nosso/src/paginas/promocao/promocao_detalhes_tab.dart';
 import 'package:nosso/src/util/container/container_promocao.dart';
 import 'package:nosso/src/util/filter/produto_filter.dart';
 import 'package:nosso/src/util/load/circular_progresso.dart';
@@ -34,19 +33,19 @@ class _PromocaoListState extends State<PromocaoList>
 
   @override
   void initState() {
-    promocaoController.getAll();
+    promocaoController.getAllByStatus(true);
     super.initState();
   }
 
   Future<void> onRefresh() {
-    return promocaoController.getAll();
+    return promocaoController.getAllByStatus(true);
   }
 
   bool isLoading = true;
 
   filterByNome(String nome) {
     if (nome.trim().isEmpty) {
-      promocaoController.getAll();
+      promocaoController.getAllByStatus(true);
     } else {
       nome = nomeController.text;
       promocaoController.getAllByNome(nome);

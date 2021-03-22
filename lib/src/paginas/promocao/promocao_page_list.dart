@@ -5,23 +5,24 @@ import 'package:get_it/get_it.dart';
 import 'package:nosso/src/core/controller/promocao_controller.dart';
 import 'package:nosso/src/core/model/loja.dart';
 import 'package:nosso/src/paginas/promocao/promocao_create_page.dart';
+import 'package:nosso/src/paginas/promocao/promocao_list.dart';
 import 'package:nosso/src/paginas/promocao/promocao_table.dart';
 
-class PromocaoPage extends StatefulWidget {
+class PromocaoPageList extends StatefulWidget {
   Loja p;
 
-  PromocaoPage({Key key, this.p}) : super(key: key);
+  PromocaoPageList({Key key, this.p}) : super(key: key);
 
   @override
-  _PromocaoPageState createState() => _PromocaoPageState(p: this.p);
+  _PromocaoPageListState createState() => _PromocaoPageListState(p: this.p);
 }
 
-class _PromocaoPageState extends State<PromocaoPage> {
+class _PromocaoPageListState extends State<PromocaoPageList> {
   var promocaoController = GetIt.I.get<PromoCaoController>();
 
   Loja p;
 
-  _PromocaoPageState({this.p});
+  _PromocaoPageListState({this.p});
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +60,7 @@ class _PromocaoPageState extends State<PromocaoPage> {
                 Icons.refresh,
               ),
               onPressed: () {
-                promocaoController.getAll();
+                promocaoController.getAllByStatus(true);
               },
             ),
           ),
@@ -68,7 +69,7 @@ class _PromocaoPageState extends State<PromocaoPage> {
       ),
       body: Container(
         padding: EdgeInsets.only(left: 100, right: 100, top: 10),
-        child: Card(child: PromocaoTable()),
+        child: Card(child: PromocaoList()),
       ),
       floatingActionButton: FloatingActionButton(
         elevation: 10,

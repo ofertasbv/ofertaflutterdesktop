@@ -135,18 +135,20 @@ class _CategoriaCreatePageState extends State<CategoriaCreatePage> {
         titleSpacing: 50,
         title: c.nome == null ? Text("Cadastro de categoria") : Text(c.nome),
       ),
-      body: Container(
-        padding: EdgeInsets.only(left: 100, right: 100, top: 10),
-        child: Card(
-          child: Observer(
-            builder: (context) {
-              if (categoriaController.dioError == null) {
-                return buildListViewForm(context);
-              } else {
-                print("Erro: ${categoriaController.mensagem}");
-                return buildListViewForm(context);
-              }
-            },
+      body: Scrollbar(
+        child: Container(
+          padding: EdgeInsets.only(left: 100, right: 100, top: 10),
+          child: Card(
+            child: Observer(
+              builder: (context) {
+                if (categoriaController.dioError == null) {
+                  return buildListViewForm(context);
+                } else {
+                  print("Erro: ${categoriaController.mensagem}");
+                  return buildListViewForm(context);
+                }
+              },
+            ),
           ),
         ),
       ),

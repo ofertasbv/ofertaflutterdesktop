@@ -171,6 +171,7 @@ class _SubCategoriaProdutoState extends State<SubCategoriaProduto>
                     child: Icon(
                       Icons.mood_outlined,
                       size: 100,
+                      color: Theme.of(context).accentColor,
                     ),
                   ),
                   Text(

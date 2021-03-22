@@ -149,6 +149,7 @@ class _ProdutoGridState extends State<ProdutoGrid>
                     child: Icon(
                       Icons.mood_outlined,
                       size: 100,
+                      color: Theme.of(context).accentColor,
                     ),
                   ),
                   Text(

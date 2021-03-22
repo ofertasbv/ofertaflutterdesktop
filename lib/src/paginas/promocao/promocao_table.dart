@@ -28,6 +28,7 @@ class _PromocaoTableState extends State<PromocaoTable> {
   Promocao promocao;
   PromocaoTipo promocaoTipo;
   Loja loja;
+  bool status;
 
   @override
   void initState() {
@@ -36,6 +37,10 @@ class _PromocaoTableState extends State<PromocaoTable> {
       promocao = Promocao();
       promocaoTipo = PromocaoTipo();
       loja = Loja();
+      status = true;
+    } else {
+      filter.status = false;
+      status = filter.status;
     }
 
     promocaoController.getAll();
@@ -81,6 +86,26 @@ class _PromocaoTableState extends State<PromocaoTable> {
                 filter.nomePromocao = nomeController.text;
                 print("promoção nome: ${nome}");
                 print("promoção filter: ${filter.nomePromocao}");
+              },
+            ),
+          ),
+          SizedBox(height: 10),
+          Container(
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.grey),
+              borderRadius: BorderRadius.circular(5),
+            ),
+            child: SwitchListTile(
+              autofocus: true,
+              title: Text("Promoção ativa? "),
+              subtitle: Text("NÃO/SIM"),
+              secondary: const Icon(Icons.check_outlined),
+              value: status = filter.status,
+              onChanged: (bool valor) {
+                setState(() {
+                  filter.status = valor;
+                  print("Status: " + filter.status.toString());
+                });
               },
             ),
           ),

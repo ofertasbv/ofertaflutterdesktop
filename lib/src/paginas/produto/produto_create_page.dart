@@ -2,13 +2,11 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:barcode_scan/barcode_scan.dart';
-import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:nosso/src/core/controller/cor_controller.dart';
@@ -31,13 +29,8 @@ import 'package:nosso/src/core/model/uploadFileResponse.dart';
 import 'package:nosso/src/paginas/produto/produto_tab.dart';
 import 'package:nosso/src/util/componentes/image_source_sheet.dart';
 import 'package:nosso/src/util/dialogs/dialogs.dart';
-import 'package:nosso/src/util/dropdown/dropdown_cor.dart';
-import 'package:nosso/src/util/dropdown/dropdown_loja.dart';
-import 'package:nosso/src/util/dropdown/dropdown_marca.dart';
-import 'package:nosso/src/util/dropdown/dropdown_promocao.dart';
-import 'package:nosso/src/util/dropdown/dropdown_subcategoria.dart';
-import 'package:nosso/src/util/dropdown/dropdown_tamanho.dart';
 import 'package:nosso/src/util/load/circular_progresso.dart';
+import 'package:nosso/src/util/load/circular_progresso_mini.dart';
 import 'package:nosso/src/util/upload/upload_response.dart';
 import 'package:nosso/src/util/validador/validador_produto.dart';
 import 'package:search_choices/search_choices.dart';
@@ -250,7 +243,7 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
           }
 
           if (cores == null) {
-            return CircularProgressor();
+            return CircularProgressorMini();
           }
 
           return SearchChoices<Cor>.multiple(
@@ -295,7 +288,7 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
           }
 
           if (tamanhos == null) {
-            return CircularProgressor();
+            return CircularProgressorMini();
           }
 
           return SearchChoices<Tamanho>.multiple(
@@ -339,7 +332,7 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
           }
 
           if (lojas == null) {
-            return CircularProgressor();
+            return CircularProgressorMini();
           }
 
           return DropdownSearch<Loja>(
@@ -380,7 +373,7 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
           }
 
           if (promocoes == null) {
-            return CircularProgressor();
+            return CircularProgressorMini();
           }
 
           return DropdownSearch<Promocao>(
@@ -421,7 +414,7 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
           }
 
           if (marcas == null) {
-            return CircularProgressor();
+            return CircularProgressorMini();
           }
 
           return DropdownSearch<Marca>(
@@ -463,7 +456,7 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
           }
 
           if (subcategorias == null) {
-            return CircularProgressor();
+            return CircularProgressorMini();
           }
 
           return DropdownSearch<SubCategoria>(
@@ -1448,11 +1441,11 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
                       p.estoque.percentual =
                           double.tryParse(controllerPecentual.text);
 
-                      produtoController.create(p).then((value) {
-                        print("resultado : ${value}");
-                      });
-                      Navigator.of(context).pop();
-                      buildPush(context);
+                      // produtoController.create(p).then((value) {
+                      //   print("resultado : ${value}");
+                      // });
+                      // Navigator.of(context).pop();
+                      // buildPush(context);
                     });
                   } else {
                     dialogs.information(
@@ -1503,9 +1496,9 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
                       p.estoque.percentual =
                           double.tryParse(controllerPecentual.text);
 
-                      produtoController.update(p.id, p);
-                      Navigator.of(context).pop();
-                      buildPush(context);
+                      // produtoController.update(p.id, p);
+                      // Navigator.of(context).pop();
+                      // buildPush(context);
                     });
                   }
                 }

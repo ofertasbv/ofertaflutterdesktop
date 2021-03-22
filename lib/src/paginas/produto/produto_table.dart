@@ -20,6 +20,7 @@ import 'package:nosso/src/paginas/produto/produto_detalhes_tab.dart';
 import 'package:nosso/src/util/filter/produto_filter.dart';
 import 'package:nosso/src/util/load/circular_progresso.dart';
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:nosso/src/util/load/circular_progresso_mini.dart';
 
 class ProdutoTable extends StatefulWidget {
   @override
@@ -227,7 +228,7 @@ class _ProdutoTableState extends State<ProdutoTable> {
           }
 
           if (lojas == null) {
-            return CircularProgressor();
+            return CircularProgressorMini();
           }
 
           return DropdownSearch<Loja>(
@@ -268,7 +269,7 @@ class _ProdutoTableState extends State<ProdutoTable> {
           }
 
           if (promocoes == null) {
-            return CircularProgressor();
+            return CircularProgressorMini();
           }
 
           return DropdownSearch<Promocao>(
@@ -309,7 +310,7 @@ class _ProdutoTableState extends State<ProdutoTable> {
           }
 
           if (marcas == null) {
-            return CircularProgressor();
+            return CircularProgressorMini();
           }
 
           return DropdownSearch<Marca>(
@@ -351,7 +352,7 @@ class _ProdutoTableState extends State<ProdutoTable> {
           }
 
           if (subcategorias == null) {
-            return CircularProgressor();
+            return CircularProgressorMini();
           }
 
           return DropdownSearch<SubCategoria>(
@@ -392,7 +393,7 @@ class _ProdutoTableState extends State<ProdutoTable> {
           }
 
           if (produtos == null) {
-            return CircularProgressor();
+            return CircularProgressorMini();
           }
 
           return buildTable(produtos);

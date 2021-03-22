@@ -43,6 +43,7 @@ abstract class PromocaoTipoControllerBase with Store {
     }
   }
 
+
   @action
   Future<int> create(PromocaoTipo p) async {
     try {

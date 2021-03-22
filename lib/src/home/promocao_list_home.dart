@@ -9,7 +9,9 @@ import 'package:nosso/src/api/constants/constant_api.dart';
 import 'package:nosso/src/core/controller/promocao_controller.dart';
 import 'package:nosso/src/core/model/loja.dart';
 import 'package:nosso/src/core/model/promocao.dart';
+import 'package:nosso/src/paginas/produto/produto_page.dart';
 import 'package:nosso/src/paginas/promocao/promocao_detalhes_tab.dart';
+import 'package:nosso/src/util/filter/produto_filter.dart';
 import 'package:nosso/src/util/load/circular_progresso_mini.dart';
 
 class PromocaoListHome extends StatefulWidget {
@@ -27,18 +29,18 @@ class _PromocaoListHomeState extends State<PromocaoListHome>
   var formatMoeda = new NumberFormat("#,##0.00", "pt_BR");
 
   Loja p;
+  ProdutoFilter filter = ProdutoFilter();
 
   _PromocaoListHomeState({this.p});
 
   @override
   void initState() {
-    promocaoController.getAll();
-
+    promocaoController.getAllByStatus(true);
     super.initState();
   }
 
   Future<void> onRefresh() {
-    return promocaoController.getAll();
+    return promocaoController.getAllByStatus(true);
   }
 
   bool isLoading = true;
@@ -147,10 +149,11 @@ class _PromocaoListHomeState extends State<PromocaoListHome>
             ),
           ),
           onTap: () {
+            filter.promocao = p.id;
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (BuildContext context) {
-                  return PromocaoDetalhesTab(p);
+                  return ProdutoPage(filter: filter);
                 },
               ),
             );
