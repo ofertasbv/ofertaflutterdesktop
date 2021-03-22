@@ -54,7 +54,7 @@ class CorPage extends StatelessWidget {
       ),
       body: Container(
         padding: EdgeInsets.only(left: 100, right: 100, top: 10),
-        child: CorTable(),
+        child: Card(child: CorTable()),
       ),
       floatingActionButton: FloatingActionButton(
         elevation: 10,

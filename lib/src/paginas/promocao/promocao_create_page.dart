@@ -231,15 +231,17 @@ class _PromocaoCreatePageState extends State<PromocaoCreatePage>
       ),
       body: Container(
         padding: EdgeInsets.only(left: 100, right: 100, top: 10),
-        child: Observer(
-          builder: (context) {
-            if (promocaoController.dioError == null) {
-              return buildListViewForm(context);
-            } else {
-              print("Erro: ${promocaoController.mensagem}");
-              return buildListViewForm(context);
-            }
-          },
+        child: Card(
+          child: Observer(
+            builder: (context) {
+              if (promocaoController.dioError == null) {
+                return buildListViewForm(context);
+              } else {
+                print("Erro: ${promocaoController.mensagem}");
+                return buildListViewForm(context);
+              }
+            },
+          ),
         ),
       ),
     );

@@ -76,15 +76,17 @@ class _PermissaoCreatePageState extends State<PermissaoCreatePage> {
       ),
       body: Container(
         padding: EdgeInsets.only(left: 100, right: 100, top: 10),
-        child: Observer(
-          builder: (context) {
-            if (permissaoController.dioError == null) {
-              return buildListViewForm(context);
-            } else {
-              print("Erro: ${permissaoController.mensagem}");
-              return buildListViewForm(context);
-            }
-          },
+        child: Card(
+          child: Observer(
+            builder: (context) {
+              if (permissaoController.dioError == null) {
+                return buildListViewForm(context);
+              } else {
+                print("Erro: ${permissaoController.mensagem}");
+                return buildListViewForm(context);
+              }
+            },
+          ),
         ),
       ),
     );

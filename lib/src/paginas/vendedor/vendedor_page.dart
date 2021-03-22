@@ -54,7 +54,7 @@ class VendedorPage extends StatelessWidget {
       ),
       body: Container(
         padding: EdgeInsets.only(left: 100, right: 100, top: 10),
-        child: VendedorTable(),
+        child: Card(child: VendedorTable()),
       ),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,

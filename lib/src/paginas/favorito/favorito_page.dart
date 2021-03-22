@@ -55,7 +55,7 @@ class FavoritoPage extends StatelessWidget {
       ),
       body: Container(
         padding: EdgeInsets.only(left: 100, right: 100, top: 10),
-        child: FavoritoTable(),
+        child: Card(child: FavoritoTable()),
       ),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,

@@ -42,7 +42,10 @@ class CaixaFluxoSaidaPage extends StatelessWidget {
           SizedBox(width: 20),
         ],
       ),
-      body: CaixaFluxoSaidaList(),
+      body: Container(
+        padding: EdgeInsets.only(left: 100, right: 100, top: 10),
+        child: Card(child: CaixaFluxoSaidaList()),
+      ),
       floatingActionButton: FloatingActionButton(
         elevation: 10,
         child: Icon(Icons.add),

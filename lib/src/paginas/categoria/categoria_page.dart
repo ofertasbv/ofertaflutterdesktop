@@ -54,7 +54,7 @@ class CategoriaPage extends StatelessWidget {
       ),
       body: Container(
         padding: EdgeInsets.only(left: 100, right: 100, top: 10),
-        child: CategoriaTable(),
+        child: Card(child: CategoriaTable()),
       ),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,

@@ -113,7 +113,7 @@ class _CategoriaListHomeState extends State<CategoriaListHome>
                 children: <Widget>[
                   Container(
                     padding: EdgeInsets.all(1),
-                    color: Colors.green[100],
+                    color: Colors.grey[300],
                     width: double.infinity,
                     height: 165,
                     child: c.foto != null

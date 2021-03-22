@@ -52,7 +52,10 @@ class EnderecoPage extends StatelessWidget {
           SizedBox(width: 100),
         ],
       ),
-      body: EnderecoList(),
+      body: Container(
+        padding: EdgeInsets.only(left: 100, right: 100, top: 10),
+        child: Card(child: EnderecoList()),
+      ),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[

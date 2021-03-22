@@ -69,7 +69,7 @@ class _SubcategoriaPageState extends State<SubcategoriaPage> {
       ),
       body: Container(
         padding: EdgeInsets.only(left: 100, right: 100, top: 10),
-        child: SubCategoriaTable(),
+        child: Card(child: SubCategoriaTable()),
       ),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,

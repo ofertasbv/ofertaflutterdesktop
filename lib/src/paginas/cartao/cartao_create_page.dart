@@ -48,16 +48,7 @@ class _CartaoCreatePageState extends State<CartaoCreatePage>
     controller = Controller();
     super.didChangeDependencies();
   }
-
-  showToast(String cardTitle) {
-    Fluttertoast.showToast(
-      msg: "$cardTitle",
-      gravity: ToastGravity.CENTER,
-      timeInSecForIos: 10,
-      fontSize: 16.0,
-    );
-  }
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,16 +71,17 @@ class _CartaoCreatePageState extends State<CartaoCreatePage>
       ),
       body: Container(
         padding: EdgeInsets.only(left: 100, right: 100, top: 10),
-        child: Observer(
-          builder: (context) {
-            if (cartaoController.dioError == null) {
-              return buildListViewForm(context);
-            } else {
-              print("Erro: ${cartaoController.mensagem}");
-              showToast("${cartaoController.mensagem}");
-              return buildListViewForm(context);
-            }
-          },
+        child: Card(
+          child: Observer(
+            builder: (context) {
+              if (cartaoController.dioError == null) {
+                return buildListViewForm(context);
+              } else {
+                print("Erro: ${cartaoController.mensagem}");
+                return buildListViewForm(context);
+              }
+            },
+          ),
         ),
       ),
     );

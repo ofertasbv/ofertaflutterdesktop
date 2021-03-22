@@ -54,7 +54,7 @@ class ClientePage extends StatelessWidget {
       ),
       body: Container(
         padding: EdgeInsets.only(left: 100, right: 100, top: 10),
-        child: ClienteTable(),
+        child: Card(child: ClienteTable()),
       ),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,

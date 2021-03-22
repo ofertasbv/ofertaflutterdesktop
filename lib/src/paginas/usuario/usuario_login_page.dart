@@ -17,7 +17,7 @@ class _UsuarioLoginPageState extends State<UsuarioLoginPage> {
       ),
       body: Container(
         padding: EdgeInsets.only(left: 550, right: 550, top: 100),
-        child: UsuarioLogin(),
+        child: Card(child: UsuarioLogin()),
       ),
     );
   }

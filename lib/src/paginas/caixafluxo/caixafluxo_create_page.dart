@@ -214,15 +214,17 @@ class _CaixaFluxoCreatePageState extends State<CaixaFluxoCreatePage>
       ),
       body: Container(
         padding: EdgeInsets.only(left: 100, right: 100, top: 10),
-        child: Observer(
-          builder: (context) {
-            if (caixafluxoController.dioError == null) {
-              return buildListViewForm(context);
-            } else {
-              print("Erro: ${caixafluxoController.mensagem}");
-              return buildListViewForm(context);
-            }
-          },
+        child: Card(
+          child: Observer(
+            builder: (context) {
+              if (caixafluxoController.dioError == null) {
+                return buildListViewForm(context);
+              } else {
+                print("Erro: ${caixafluxoController.mensagem}");
+                return buildListViewForm(context);
+              }
+            },
+          ),
         ),
       ),
     );

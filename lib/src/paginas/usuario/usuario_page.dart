@@ -42,7 +42,7 @@ class UsuarioPage extends StatelessWidget {
       ),
       body: Container(
         padding: EdgeInsets.only(left: 100, right: 100, top: 10),
-        child: UsuarioTable(),
+        child: Card(child: UsuarioTable()),
       ),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,

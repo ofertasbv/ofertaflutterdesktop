@@ -54,7 +54,7 @@ class PagamentoPage extends StatelessWidget {
       ),
       body: Container(
         padding: EdgeInsets.only(left: 100, right: 100, top: 10),
-        child: PagamentoTable(),
+        child: Card(child: PagamentoTable()),
       ),
       floatingActionButton: FloatingActionButton(
         elevation: 10,

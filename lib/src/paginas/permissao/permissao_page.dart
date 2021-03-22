@@ -55,7 +55,7 @@ class PermissaoPage extends StatelessWidget {
       ),
       body: Container(
         padding: EdgeInsets.only(left: 100, right: 100, top: 10),
-        child: PermissaoTable(),
+        child: Card(child: PermissaoTable()),
       ),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,

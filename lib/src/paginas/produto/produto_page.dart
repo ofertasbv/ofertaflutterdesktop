@@ -106,9 +106,9 @@ class _ProdutoPageState extends State<ProdutoPage> {
       ),
       body: Container(
         padding: EdgeInsets.only(left: 100, right: 100, top: 10),
-        child: pagina == "grid"
-            ? ProdutoGrid(filter: filter)
-            : ProdutoList(filter: filter),
+        child: pagina == "list"
+            ? ProdutoList(filter: filter)
+            : ProdutoGrid(filter: filter),
       ),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,

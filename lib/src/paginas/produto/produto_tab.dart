@@ -119,7 +119,7 @@ class _ProdutoTabState extends State<ProdutoTab> {
               Expanded(
                 child: Container(
                   padding: EdgeInsets.only(left: 100, right: 100, top: 20),
-                  child: Center(child: lista[elementIndex]),
+                  child: Card(child: Center(child: lista[elementIndex])),
                 ),
               ),
             ],

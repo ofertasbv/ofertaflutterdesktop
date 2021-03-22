@@ -62,16 +62,7 @@ class _CaixaFluxoSaidaCreatePageState extends State<CaixaFluxoSaidaCreatePage>
     controller = Controller();
     super.didChangeDependencies();
   }
-
-  showToast(String cardTitle) {
-    Fluttertoast.showToast(
-      msg: "$cardTitle",
-      gravity: ToastGravity.CENTER,
-      timeInSecForIos: 10,
-      fontSize: 16.0,
-    );
-  }
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -94,16 +85,17 @@ class _CaixaFluxoSaidaCreatePageState extends State<CaixaFluxoSaidaCreatePage>
       ),
       body: Container(
         padding: EdgeInsets.only(left: 100, right: 100, top: 10),
-        child: Observer(
-          builder: (context) {
-            if (caixafluxoController.dioError == null) {
-              return buildListViewForm(context);
-            } else {
-              print("Erro: ${caixafluxoController.mensagem}");
-              showToast("${caixafluxoController.mensagem}");
-              return buildListViewForm(context);
-            }
-          },
+        child: Card(
+          child: Observer(
+            builder: (context) {
+              if (caixafluxoController.dioError == null) {
+                return buildListViewForm(context);
+              } else {
+                print("Erro: ${caixafluxoController.mensagem}");
+                return buildListViewForm(context);
+              }
+            },
+          ),
         ),
       ),
     );

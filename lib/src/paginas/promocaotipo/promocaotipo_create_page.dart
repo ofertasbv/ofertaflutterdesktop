@@ -52,15 +52,6 @@ class _PromocaoTipoCreatePageState extends State<PromocaoTipoCreatePage> {
     super.didChangeDependencies();
   }
 
-  showToast(String cardTitle) {
-    Fluttertoast.showToast(
-      msg: "$cardTitle",
-      gravity: ToastGravity.CENTER,
-      timeInSecForIos: 10,
-      fontSize: 16.0,
-    );
-  }
-
   showSnackbar(BuildContext context, String content) {
     scaffoldKey.currentState.showSnackBar(
       SnackBar(
@@ -85,16 +76,17 @@ class _PromocaoTipoCreatePageState extends State<PromocaoTipoCreatePage> {
       ),
       body: Container(
         padding: EdgeInsets.only(left: 100, right: 100, top: 10),
-        child: Observer(
-          builder: (context) {
-            if (promocaoTipoController.dioError == null) {
-              return buildListViewForm(context);
-            } else {
-              print("Erro: ${promocaoTipoController.mensagem}");
-              showToast("${promocaoTipoController.mensagem}");
-              return buildListViewForm(context);
-            }
-          },
+        child: Card(
+          child: Observer(
+            builder: (context) {
+              if (promocaoTipoController.dioError == null) {
+                return buildListViewForm(context);
+              } else {
+                print("Erro: ${promocaoTipoController.mensagem}");
+                return buildListViewForm(context);
+              }
+            },
+          ),
         ),
       ),
     );

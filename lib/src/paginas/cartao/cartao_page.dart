@@ -39,7 +39,10 @@ class CartaoPage extends StatelessWidget {
           SizedBox(width: 100),
         ],
       ),
-      body: CartaoList(),
+      body: Container(
+        padding: EdgeInsets.only(left: 100, right: 100, top: 10),
+        child: Card(child: CartaoList()),
+      ),
       floatingActionButton: FloatingActionButton(
         elevation: 10,
         child: Icon(Icons.add),

@@ -503,15 +503,17 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
       ),
       body: Container(
         padding: EdgeInsets.only(left: 100, right: 100, top: 10),
-        child: Observer(
-          builder: (context) {
-            if (produtoController.dioError == null) {
-              return buildListViewForm(context);
-            } else {
-              print("Erro: ${produtoController.mensagem}");
-              return buildListViewForm(context);
-            }
-          },
+        child: Card(
+          child: Observer(
+            builder: (context) {
+              if (produtoController.dioError == null) {
+                return buildListViewForm(context);
+              } else {
+                print("Erro: ${produtoController.mensagem}");
+                return buildListViewForm(context);
+              }
+            },
+          ),
         ),
       ),
     );

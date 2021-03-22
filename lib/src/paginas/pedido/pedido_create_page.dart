@@ -202,15 +202,17 @@ class _PedidoCreatePageState extends State<PedidoCreatePage>
       ),
       body: Container(
         padding: EdgeInsets.only(left: 100, right: 100, top: 10),
-        child: Observer(
-          builder: (context) {
-            if (pedidoController.dioError == null) {
-              return buildListViewForm(context);
-            } else {
-              print("Erro: ${pedidoController.mensagem}");
-              return buildListViewForm(context);
-            }
-          },
+        child: Card(
+          child: Observer(
+            builder: (context) {
+              if (pedidoController.dioError == null) {
+                return buildListViewForm(context);
+              } else {
+                print("Erro: ${pedidoController.mensagem}");
+                return buildListViewForm(context);
+              }
+            },
+          ),
         ),
       ),
     );

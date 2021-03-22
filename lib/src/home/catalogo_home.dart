@@ -36,10 +36,20 @@ class _CatalogoHomeState extends State<CatalogoHome> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            Colors.grey[100].withOpacity(1),
+            Colors.grey[100],
+          ],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        ),
+      ),
       padding: EdgeInsets.only(left: 100, right: 100, top: 1),
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.grey[100].withOpacity(1),
+          color: Colors.transparent,
           border: Border.all(color: Colors.grey[200]),
           borderRadius: BorderRadius.circular(0),
         ),

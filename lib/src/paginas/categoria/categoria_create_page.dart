@@ -113,16 +113,7 @@ class _CategoriaCreatePageState extends State<CategoriaCreatePage> {
       showSnackbar(context, "Arquivo anexada com sucesso!");
     }
   }
-
-  showToast(String descricao) {
-    Fluttertoast.showToast(
-      msg: descricao,
-      gravity: ToastGravity.CENTER,
-      timeInSecForIos: 10,
-      fontSize: 16.0,
-    );
-  }
-
+  
   showSnackbar(BuildContext context, String content) {
     scaffoldKey.currentState.showSnackBar(
       SnackBar(
@@ -146,16 +137,17 @@ class _CategoriaCreatePageState extends State<CategoriaCreatePage> {
       ),
       body: Container(
         padding: EdgeInsets.only(left: 100, right: 100, top: 10),
-        child: Observer(
-          builder: (context) {
-            if (categoriaController.dioError == null) {
-              return buildListViewForm(context);
-            } else {
-              print("Erro: ${categoriaController.mensagem}");
-              showToast("${categoriaController.mensagem}");
-              return buildListViewForm(context);
-            }
-          },
+        child: Card(
+          child: Observer(
+            builder: (context) {
+              if (categoriaController.dioError == null) {
+                return buildListViewForm(context);
+              } else {
+                print("Erro: ${categoriaController.mensagem}");
+                return buildListViewForm(context);
+              }
+            },
+          ),
         ),
       ),
     );

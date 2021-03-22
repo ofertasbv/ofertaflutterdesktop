@@ -6,6 +6,7 @@ import 'package:nosso/src/core/controller/promocao_controller.dart';
 import 'package:nosso/src/core/model/loja.dart';
 import 'package:nosso/src/paginas/promocao/promocao_create_page.dart';
 import 'package:nosso/src/paginas/promocao/promocao_list.dart';
+import 'package:nosso/src/paginas/promocao/promocao_table.dart';
 
 class PromocaoPage extends StatefulWidget {
   Loja p;
@@ -68,7 +69,7 @@ class _PromocaoPageState extends State<PromocaoPage> {
       ),
       body: Container(
         padding: EdgeInsets.only(left: 100, right: 100, top: 10),
-        child: PromocaoList(),
+        child: Card(child: PromocaoTable()),
       ),
       floatingActionButton: FloatingActionButton(
         elevation: 10,

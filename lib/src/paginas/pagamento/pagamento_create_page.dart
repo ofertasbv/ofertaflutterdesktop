@@ -85,16 +85,18 @@ class _PagamentoCreatePageState extends State<PagamentoCreatePage>
       ),
       body: Container(
         padding: EdgeInsets.only(left: 100, right: 100, top: 10),
-        child: Observer(
-          builder: (context) {
-            if (pagamentoController.dioError == null) {
-              return buildListViewForm(context);
-            } else {
-              print("Erro: ${pagamentoController.mensagem}");
-              showToast("${pagamentoController.mensagem}");
-              return buildListViewForm(context);
-            }
-          },
+        child: Card(
+          child: Observer(
+            builder: (context) {
+              if (pagamentoController.dioError == null) {
+                return buildListViewForm(context);
+              } else {
+                print("Erro: ${pagamentoController.mensagem}");
+                showToast("${pagamentoController.mensagem}");
+                return buildListViewForm(context);
+              }
+            },
+          ),
         ),
       ),
     );

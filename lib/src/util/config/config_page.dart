@@ -53,7 +53,7 @@ class _ConfigPageState extends State<ConfigPage> {
                 Container(
                   height: 190,
                   width: double.infinity,
-                  color: Colors.indigo[900],
+                  color: Theme.of(context).primaryColor,
                   padding: EdgeInsets.only(left: 100, right: 100, top: 10),
                   child: buildGridViewHeader(context),
                 ),
@@ -126,7 +126,7 @@ class _ConfigPageState extends State<ConfigPage> {
               subtitle: Text(
                 "ofertasbv@gmail.com",
                 style: TextStyle(
-                  color: Theme.of(context).primaryColor,
+                  color: Theme.of(context).accentColor,
                 ),
               ),
             ),
@@ -148,13 +148,13 @@ class _ConfigPageState extends State<ConfigPage> {
               leading: Icon(
                 Icons.home,
                 size: 40,
-                color: Theme.of(context).primaryColor,
+                color: Theme.of(context).accentColor,
               ),
               title: Text("Home page"),
               subtitle: Text(
                 "Página inicial",
                 style: TextStyle(
-                  color: Theme.of(context).primaryColor,
+                  color: Theme.of(context).accentColor,
                 ),
               ),
             ),
@@ -176,13 +176,13 @@ class _ConfigPageState extends State<ConfigPage> {
               leading: Icon(
                 Icons.account_box_outlined,
                 size: 40,
-                color: Theme.of(context).primaryColor.withOpacity(1),
+                color: Theme.of(context).accentColor.withOpacity(1),
               ),
               title: Text("Controle de caixa"),
               subtitle: Text(
                 "compra e vendas",
                 style: TextStyle(
-                  color: Theme.of(context).primaryColor,
+                  color: Theme.of(context).accentColor,
                 ),
               ),
             ),
@@ -206,13 +206,13 @@ class _ConfigPageState extends State<ConfigPage> {
               leading: Icon(
                 Icons.location_on_outlined,
                 size: 40,
-                color: Theme.of(context).primaryColor,
+                color: Theme.of(context).accentColor,
               ),
               title: Text("Locais de comerciais"),
               subtitle: Text(
                 "Locais de lojas",
                 style: TextStyle(
-                  color: Theme.of(context).primaryColor,
+                  color: Theme.of(context).accentColor,
                 ),
               ),
             ),
