@@ -47,7 +47,7 @@ class _CatalogoHomeState extends State<CatalogoHome> {
           end: Alignment.bottomCenter,
         ),
       ),
-      padding: EdgeInsets.only(left: 100, right: 100, top: 1),
+      padding: EdgeInsets.only(left: 50, right: 50, top: 1),
       child: Container(
         decoration: BoxDecoration(
           color: Colors.transparent,

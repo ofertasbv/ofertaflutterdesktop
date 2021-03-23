@@ -27,7 +27,7 @@ class _PromocaoPageState extends State<PromocaoPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        titleSpacing: 50,
+        titleSpacing: 0,
         elevation: 0,
         title: Text("Ofertas"),
         actions: <Widget>[
@@ -63,11 +63,11 @@ class _PromocaoPageState extends State<PromocaoPage> {
               },
             ),
           ),
-          SizedBox(width: 100),
+          SizedBox(width: 50),
         ],
       ),
       body: Container(
-        padding: EdgeInsets.only(left: 100, right: 100, top: 10),
+        padding: EdgeInsets.only(left: 50, right: 50, top: 10),
         child: Card(child: PromocaoTable()),
       ),
       floatingActionButton: FloatingActionButton(

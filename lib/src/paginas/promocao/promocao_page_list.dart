@@ -27,49 +27,51 @@ class _PromocaoPageListState extends State<PromocaoPageList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        titleSpacing: 50,
-        elevation: 0,
-        title: Text("Ofertas"),
-        actions: <Widget>[
-          Observer(
-            builder: (context) {
-              if (promocaoController.error != null) {
-                return Text("Não foi possível carregar");
-              }
-
-              if (promocaoController.promocoes == null) {
-                return Center(
-                  child: Icon(Icons.warning_amber_outlined),
-                );
-              }
-
-              return CircleAvatar(
-                child: Text(
-                  (promocaoController.promocoes.length ?? 0).toString(),
-                ),
-              );
-            },
-          ),
-          SizedBox(width: 10),
-          CircleAvatar(
-            backgroundColor: Theme.of(context).accentColor.withOpacity(0.4),
-            foregroundColor: Colors.black,
-            child: IconButton(
-              icon: Icon(
-                Icons.refresh,
-              ),
-              onPressed: () {
-                promocaoController.getAllByStatus(true);
-              },
-            ),
-          ),
-          SizedBox(width: 100),
-        ],
-      ),
-      body: Container(
-        padding: EdgeInsets.only(left: 100, right: 100, top: 10),
-        child: Card(child: PromocaoList()),
+      // appBar: AppBar(
+      //   titleSpacing: 50,
+      //   elevation: 0,
+      //   title: Text("Ofertas"),
+      //   actions: <Widget>[
+      //     Observer(
+      //       builder: (context) {
+      //         if (promocaoController.error != null) {
+      //           return Text("Não foi possível carregar");
+      //         }
+      //
+      //         if (promocaoController.promocoes == null) {
+      //           return Center(
+      //             child: Icon(Icons.warning_amber_outlined),
+      //           );
+      //         }
+      //
+      //         return CircleAvatar(
+      //           child: Text(
+      //             (promocaoController.promocoes.length ?? 0).toString(),
+      //           ),
+      //         );
+      //       },
+      //     ),
+      //     SizedBox(width: 10),
+      //     CircleAvatar(
+      //       backgroundColor: Theme.of(context).accentColor.withOpacity(0.4),
+      //       foregroundColor: Colors.black,
+      //       child: IconButton(
+      //         icon: Icon(
+      //           Icons.refresh,
+      //         ),
+      //         onPressed: () {
+      //           promocaoController.getAllByStatus(true);
+      //         },
+      //       ),
+      //     ),
+      //     SizedBox(width: 100),
+      //   ],
+      // ),
+      body: Scrollbar(
+        child: Container(
+          padding: EdgeInsets.only(left: 50, right: 50, top: 0),
+          child: PromocaoList(),
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         elevation: 10,

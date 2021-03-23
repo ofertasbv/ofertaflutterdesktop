@@ -43,7 +43,7 @@ class _HomePageState extends State<HomePage>
           appBar: AppBar(
             elevation: 0,
             bottomOpacity: 0,
-            titleSpacing: 50,
+            titleSpacing: 0,
             title: Text("U-NOSSO"),
             actions: <Widget>[
               CircleAvatar(
@@ -121,7 +121,7 @@ class _HomePageState extends State<HomePage>
                   );
                 },
               ),
-              SizedBox(width: 100),
+              SizedBox(width: 50),
             ],
           ),
           body: Scrollbar(child: Center(child: lista[elementIndex])),

@@ -61,7 +61,7 @@ class _SubCategoriaProdutoState extends State<SubCategoriaProduto>
 
     return Scaffold(
       appBar: AppBar(
-        titleSpacing: 50,
+        titleSpacing: 0,
         elevation: 0,
         title: categoria.nome == null
             ? Text("Departamentos")
@@ -99,11 +99,11 @@ class _SubCategoriaProdutoState extends State<SubCategoriaProduto>
               },
             ),
           ),
-          SizedBox(width: 100),
+          SizedBox(width: 50),
         ],
       ),
       body: Container(
-        padding: EdgeInsets.only(left: 100, right: 100, top: 10),
+        padding: EdgeInsets.only(left: 50, right: 50, top: 10),
         height: MediaQuery.of(context).size.height,
         color: Colors.transparent,
         child: Column(
@@ -202,7 +202,7 @@ class _SubCategoriaProdutoState extends State<SubCategoriaProduto>
 
         return GestureDetector(
           child: Container(
-            color: Colors.white,
+            color: Colors.grey[200],
             child: ListTile(
                 isThreeLine: false,
                 leading: Container(

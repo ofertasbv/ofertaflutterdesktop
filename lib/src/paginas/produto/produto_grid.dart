@@ -139,27 +139,6 @@ class _ProdutoGridState extends State<ProdutoGrid>
             return Text("Não foi possível buscar produtos");
           }
 
-          if (produtos.length == 0) {
-            return Center(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Center(
-                    child: Icon(
-                      Icons.mood_outlined,
-                      size: 100,
-                      color: Theme.of(context).accentColor,
-                    ),
-                  ),
-                  Text(
-                    "Ops! sem produtos",
-                  ),
-                ],
-              ),
-            );
-          }
-
           if (produtos == null) {
             return CircularProgressor();
           }
@@ -184,7 +163,7 @@ class _ProdutoGridState extends State<ProdutoGrid>
             crossAxisCount: 4,
             crossAxisSpacing: 10,
             mainAxisSpacing: 10,
-            childAspectRatio: MediaQuery.of(context).size.aspectRatio * 0.4,
+            childAspectRatio: MediaQuery.of(context).size.aspectRatio * 0.35,
           ),
           itemCount: produtos.length,
           itemBuilder: (context, index) {
@@ -192,7 +171,7 @@ class _ProdutoGridState extends State<ProdutoGrid>
             return GestureDetector(
               child: AnimatedContainer(
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Colors.grey[200],
                   border: Border.all(color: Colors.transparent),
                   borderRadius: BorderRadius.circular(0),
                 ),
@@ -273,9 +252,13 @@ class _ProdutoGridState extends State<ProdutoGrid>
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Container(
-                          height: 30,
+                          height: 50,
                           child: ListTile(
                             title: Text("${p.nome}",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
                                 overflow: TextOverflow.ellipsis),
                           ),
                         ),
@@ -283,7 +266,7 @@ class _ProdutoGridState extends State<ProdutoGrid>
                           height: 60,
                           child: ListTile(
                             title: Text(
-                              "${formatMoeda.format(p.estoque.valorUnitario)}",
+                              "R\$ ${formatMoeda.format(p.estoque.valorUnitario)}",
                               style: TextStyle(
                                 decoration: TextDecoration.lineThrough,
                                 decorationStyle: TextDecorationStyle.dashed,
@@ -294,13 +277,15 @@ class _ProdutoGridState extends State<ProdutoGrid>
                               style: TextStyle(
                                 color: Colors.green,
                                 fontWeight: FontWeight.bold,
+                                fontSize: 20,
                               ),
                             ),
                             trailing: Chip(
+                              backgroundColor: Theme.of(context).accentColor,
                               label: Text(
                                 "${formatMoeda.format(p.promocao.desconto)} OFF",
                                 style: TextStyle(
-                                  color: Colors.black,
+                                  color: Colors.grey[100],
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),

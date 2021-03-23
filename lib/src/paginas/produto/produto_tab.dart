@@ -48,7 +48,7 @@ class _ProdutoTabState extends State<ProdutoTab> {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          titleSpacing: 50,
+          titleSpacing: 0,
           elevation: 0,
           title: Text("Produtos"),
           actions: <Widget>[
@@ -107,22 +107,24 @@ class _ProdutoTabState extends State<ProdutoTab> {
                 },
               ),
             ),
-            SizedBox(width: 100),
+            SizedBox(width: 50),
           ],
         ),
-        body: Container(
-          height: MediaQuery.of(context).size.height,
-          color: Colors.grey[300],
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Expanded(
-                child: Container(
-                  padding: EdgeInsets.only(left: 100, right: 100, top: 20),
-                  child: Card(child: Center(child: lista[elementIndex])),
+        body: Scrollbar(
+          child: Container(
+            height: MediaQuery.of(context).size.height,
+            color: Colors.grey[300],
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Expanded(
+                  child: Container(
+                    padding: EdgeInsets.only(left: 50, right: 50, top: 10),
+                    child: Card(child: Center(child: lista[elementIndex])),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
         floatingActionButton: FloatingActionButton(

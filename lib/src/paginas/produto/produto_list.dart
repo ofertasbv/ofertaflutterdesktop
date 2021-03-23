@@ -4,6 +4,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:mobx/src/api/observable_collections.dart';
+import 'package:nosso/src/api/constants/constant_api.dart';
 import 'package:nosso/src/core/controller/produto_controller.dart';
 import 'package:nosso/src/core/model/content.dart';
 import 'package:nosso/src/core/model/produto.dart';
@@ -93,49 +94,48 @@ class _ProdutoListState extends State<ProdutoList>
           child: Padding(
             padding: EdgeInsets.symmetric(vertical: 0),
             child: Container(
-              color: Colors.white,
+              color: Colors.grey[200],
               height: 150,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    width: 600,
+                    width: 200,
                     height: 150,
-                    color: Colors.white,
-                    padding: EdgeInsets.all(20),
-                    child: ListTile(
-                      leading: p.foto != null
-                          ? CircleAvatar(
-                              backgroundColor: Colors.grey[100],
-                              foregroundColor: Colors.green,
-                              radius: 50,
-                              backgroundImage: NetworkImage(
-                                "${produtoController.arquivo + p.foto}",
-                              ),
-                            )
-                          : CircleAvatar(
-                              backgroundColor: Colors.grey[100],
-                              radius: 50,
+                    color: Colors.grey,
+                    padding: EdgeInsets.all(0),
+                    child: p.foto != null
+                        ? Container(
+                            width: 200,
+                            height: 150,
+                            color: Colors.grey[400],
+                            child: Image.network(
+                              "${produtoController.arquivo + p.foto}",
+                              width: 200,
+                              height: 150,
+                              fit: BoxFit.cover,
                             ),
-                      title: Text(
-                        p.nome,
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      subtitle: Text("${p.descricao}"),
-                    ),
+                          )
+                        : Container(
+                            width: 200,
+                            height: 150,
+                            color: Colors.grey[600],
+                            child: Image.asset(
+                              ConstantApi.urlLogo,
+                              width: 200,
+                              height: 150,
+                            ),
+                          ),
                   ),
                   Container(
                     width: 500,
                     height: 150,
-                    color: Colors.white,
+                    color: Colors.grey[200],
                     padding: EdgeInsets.all(20),
                     child: ListTile(
                       title: Text(
-                        p.descricao,
+                        p.nome,
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -151,6 +151,61 @@ class _ProdutoListState extends State<ProdutoList>
                       trailing: Chip(
                         backgroundColor: Theme.of(context).accentColor,
                         label: Text("${p.id}"),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: 300,
+                    height: 150,
+                    color: Colors.grey[300],
+                    padding: EdgeInsets.all(20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Chip(
+                          backgroundColor: Theme.of(context).accentColor,
+                          label: Text(
+                            "R\$ ${formatMoeda.format(p.estoque.valorUnitario)}",
+                            style: TextStyle(
+                              color: Colors.grey[100],
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              decoration: TextDecoration.lineThrough,
+                              decorationStyle: TextDecorationStyle.dashed,
+                            ),
+                          ),
+                        ),
+                        Text(
+                          "R\$ ${formatMoeda.format(p.estoque.valorVenda)}",
+                          style: TextStyle(
+                            color: Theme.of(context).primaryColor,
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          "Valor a vista ou no boleto",
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    color: Colors.grey[300],
+                    width: 300,
+                    child: Container(
+                      width: 300,
+                      height: 50,
+                      padding: EdgeInsets.all(50),
+                      child: RaisedButton.icon(
+                        onPressed: () {},
+                        icon: Icon(Icons.add),
+                        label: Text("LISTA DE DESEJO"),
                       ),
                     ),
                   ),

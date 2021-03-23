@@ -37,7 +37,7 @@ class _ProdutoPageState extends State<ProdutoPage> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        titleSpacing: 50,
+        titleSpacing: 0,
         title: Text("Produtos em destaque"),
         actions: <Widget>[
           Observer(
@@ -101,12 +101,12 @@ class _ProdutoPageState extends State<ProdutoPage> {
               },
             ),
           ),
-          SizedBox(width: 100),
+          SizedBox(width: 50),
         ],
       ),
       body: Scrollbar(
         child: Container(
-          padding: EdgeInsets.only(left: 100, right: 100, top: 10),
+          padding: EdgeInsets.only(left: 50, right: 50, top: 10),
           child: pagina == "list"
               ? ProdutoList(filter: filter)
               : ProdutoGrid(filter: filter),

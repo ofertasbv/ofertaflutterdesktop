@@ -60,25 +60,48 @@ class _PromocaoListState extends State<PromocaoList>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          SizedBox(height: 0),
           Container(
             height: 80,
             width: double.infinity,
-            color: Colors.grey[200],
-            padding: EdgeInsets.all(0),
-            child: ListTile(
-              subtitle: TextFormField(
-                controller: nomeController,
-                decoration: InputDecoration(
-                  labelText: "busca por promoções",
-                  prefixIcon: Icon(Icons.search_outlined),
-                  suffixIcon: IconButton(
-                    onPressed: () => nomeController.clear(),
-                    icon: Icon(Icons.clear),
+            color: Colors.grey[300],
+            padding: EdgeInsets.all(10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: Icon(Icons.arrow_back),
+                ),
+                Container(
+                  height: 80,
+                  width: 800,
+                  color: Colors.grey[300],
+                  padding: EdgeInsets.all(0),
+                  child: ListTile(
+                    subtitle: TextFormField(
+                      controller: nomeController,
+                      decoration: InputDecoration(
+                        labelText: "busca por promoções",
+                        prefixIcon: Icon(Icons.search_outlined),
+                        suffixIcon: IconButton(
+                          onPressed: () => nomeController.clear(),
+                          icon: Icon(Icons.clear),
+                        ),
+                      ),
+                      onChanged: filterByNome,
+                    ),
                   ),
                 ),
-                onChanged: filterByNome,
-              ),
+                IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: Icon(Icons.arrow_forward),
+                )
+              ],
             ),
           ),
           SizedBox(height: 0),
@@ -128,25 +151,7 @@ class _PromocaoListState extends State<PromocaoList>
       itemBuilder: (context, index) {
         Promocao p = promocoes[index];
 
-        return Container(
-          padding: EdgeInsets.only(bottom: 10),
-          child: GestureDetector(
-            child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 0),
-              child: ContainerPromocao(promocaoController, p),
-            ),
-            onTap: () {
-              filter.promocao = p.id;
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (BuildContext context) {
-                    return ProdutoPage(filter: filter);
-                  },
-                ),
-              );
-            },
-          ),
-        );
+        return ContainerPromocao(promocaoController, p);
       },
     );
   }

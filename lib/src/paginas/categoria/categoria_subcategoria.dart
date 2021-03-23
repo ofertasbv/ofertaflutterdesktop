@@ -140,36 +140,40 @@ class _CategoriaSubCategoriaState extends State<CategoriaSubCategoria> {
         Categoria p = categorias[index];
 
         return GestureDetector(
-          child: ListTile(
-            isThreeLine: false,
-            leading: Container(
-              padding: EdgeInsets.all(1),
-              decoration: new BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Theme.of(context).primaryColor,
-                    Theme.of(context).primaryColor
-                  ],
+          child: Container(
+            color: Colors.grey,
+            child: ListTile(
+              isThreeLine: false,
+              leading: Container(
+                color: Colors.grey,
+                padding: EdgeInsets.all(1),
+                decoration: new BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Theme.of(context).primaryColor,
+                      Theme.of(context).primaryColor
+                    ],
+                  ),
+                  border: Border.all(
+                    color: Colors.black,
+                    width: 1,
+                  ),
+                  borderRadius: BorderRadius.circular(35),
                 ),
-                border: Border.all(
-                  color: Colors.black,
-                  width: 1,
+                child: CircleAvatar(
+                  backgroundColor: Colors.grey[100],
+                  radius: 20,
+                  backgroundImage: NetworkImage(
+                    "${categoriaController.arquivo + p.foto}",
+                  ),
                 ),
-                borderRadius: BorderRadius.circular(35),
               ),
-              child: CircleAvatar(
-                backgroundColor: Colors.grey[100],
-                radius: 20,
-                backgroundImage: NetworkImage(
-                  "${categoriaController.arquivo + p.foto}",
-                ),
+              title: Text(p.nome),
+              subtitle: Text("código ${p.id}"),
+              trailing: Container(
+                height: 80,
+                width: 50,
               ),
-            ),
-            title: Text(p.nome),
-            subtitle: Text("código ${p.id}"),
-            trailing: Container(
-              height: 80,
-              width: 50,
             ),
           ),
           // onTap: () {
