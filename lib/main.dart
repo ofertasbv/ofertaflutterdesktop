@@ -98,10 +98,159 @@ class MyApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate
       ],
       supportedLocales: [const Locale('pt', 'BR')],
-      home: ConfigPage(),
+      home: WidgetTree(),
     );
   }
 }
 
+class WidgetTree extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    Size _size = MediaQuery.of(context).size;
+    return Scaffold(
+      body: ResponsiveLayout(
+          iphone: Container(
+            width: double.infinity,
+            height: double.infinity,
+            color: Colors.pink,
+          ),
+          ipad: Row(
+            children: [
+              Expanded(
+                flex: 9,
+                child: Container(
+                  width: 500,
+                  height: double.infinity,
+                  color: Colors.green,
+                ),
+              ),
+              Expanded(
+                flex: 9,
+                child: Container(
+                  width: 500,
+                  height: double.infinity,
+                  color: Colors.blue,
+                ),
+              ),
+            ],
+          ),
+          macbook: ListView(
+            children: [
+              Container(
+                height: 80,
+                color: Colors.grey[600],
+              ),
+              Container(
+                height: 50,
+                color: Colors.deepOrange[400],
+              ),
+              Container(
+                height: 1500,
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: _size.width > 1340 ? 1 : 2,
+                      child: Container(
+                        height: double.infinity,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    Expanded(
+                      flex: _size.width > 1340 ? 8 : 10,
+                      child: Container(
+                        height: double.infinity,
+                        color: Colors.blue,
+                        child: Column(
+                          children: [
+                            Container(
+                              height: 200,
+                              color: Colors.grey[400],
+                            ),
+                            SizedBox(height: 10),
+                            Container(
+                              height: 100,
+                              color: Colors.red[400],
+                            ),
+                            SizedBox(height: 10),
+                            Container(
+                              height: 300,
+                              color: Colors.grey[600],
+                            ),
+                            SizedBox(height: 10),
+                            Container(
+                              height: 100,
+                              color: Colors.red[400],
+                            ),
+                            SizedBox(height: 10),
+                            Container(
+                              height: 300,
+                              color: Colors.grey[600],
+                            ),
+                            SizedBox(height: 10),
+                            Container(
+                              height: 100,
+                              color: Colors.red[400],
+                            ),
+                            SizedBox(height: 10),
+                            Expanded(
+                              child: Container(
+                                color: Colors.grey[400],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: _size.width > 1340 ? 1 : 2,
+                      child: Container(
+                        height: double.infinity,
+                        color: Colors.green,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          )),
+    );
+  }
+}
 
+class ResponsiveLayout extends StatelessWidget {
+  final Widget iphone;
+  final Widget ipad;
+  final Widget macbook;
 
+  const ResponsiveLayout({Key key, this.ipad, this.iphone, this.macbook})
+      : super(key: key);
+
+  static int iphoneLimit = 600;
+  static int ipadLimit = 1200;
+
+  static bool isIphone(BuildContext context) =>
+      MediaQuery.of(context).size.width < iphoneLimit;
+
+  static bool isIpad(BuildContext context) =>
+      MediaQuery.of(context).size.width < ipadLimit &&
+      MediaQuery.of(context).size.width >= iphoneLimit;
+
+  static bool isMacbook(BuildContext context) =>
+      MediaQuery.of(context).size.width >= ipadLimit;
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        if (constraints.maxWidth < iphoneLimit) {
+          return iphone;
+        }
+        if (constraints.maxWidth < ipadLimit) {
+          return ipad;
+        } else {
+          return macbook;
+        }
+      },
+    );
+  }
+}
