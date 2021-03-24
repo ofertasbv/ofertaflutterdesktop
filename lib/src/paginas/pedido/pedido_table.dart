@@ -109,7 +109,7 @@ class DataSource extends DataTableSource {
         )),
         DataCell(Text("${p.cliente.nome}")),
         DataCell(Text("${p.loja.nome}")),
-        DataCell(Text("${p.statusPedido.toString()}")),
+        DataCell(Text("${p.pedidoStatus}")),
         DataCell(IconButton(
           icon: Icon(Icons.search),
           onPressed: () {

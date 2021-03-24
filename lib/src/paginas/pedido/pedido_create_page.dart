@@ -19,6 +19,7 @@ import 'package:nosso/src/paginas/pedido/pedido_page.dart';
 import 'package:nosso/src/paginas/pedidoitem/pedito_itens_page.dart';
 import 'package:nosso/src/util/dialogs/dialogs.dart';
 import 'package:nosso/src/util/load/circular_progresso.dart';
+import 'package:nosso/src/util/load/circular_progresso_mini.dart';
 import 'package:nosso/src/util/steps/step_menu_etapa.dart';
 import 'package:nosso/src/util/validador/validador_pedido.dart';
 
@@ -47,7 +48,7 @@ class _PedidoCreatePageState extends State<PedidoCreatePage>
   Pedido p;
   Cliente clienteSelecionado;
   Loja lojaSelecionda;
-  String statusPedido;
+  String pedidoStatus;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -61,7 +62,7 @@ class _PedidoCreatePageState extends State<PedidoCreatePage>
   void initState() {
     if (p == null) {
       p = Pedido();
-      statusPedido = "CRIADO";
+      pedidoStatus = "CRIADO";
     } else {
       lojaSelecionda = p.loja;
       clienteSelecionado = p.cliente;
@@ -83,18 +84,6 @@ class _PedidoCreatePageState extends State<PedidoCreatePage>
   void didChangeDependencies() {
     controller = Controller();
     super.didChangeDependencies();
-  }
-
-  buscarPessoaCliente(int id) async {
-    clienteSelecionado = await clienteController.getById(id);
-    print("Cliente: ${clienteSelecionado.nome}");
-    return clienteSelecionado;
-  }
-
-  buscarPessoaLoja(int id) async {
-    lojaSelecionda = await lojaController.getById(id);
-    print("Loja: ${lojaSelecionda.nome}");
-    return lojaSelecionda;
   }
 
   showSnackbar(BuildContext context, String content) {
@@ -120,7 +109,7 @@ class _PedidoCreatePageState extends State<PedidoCreatePage>
           }
 
           if (clientes == null) {
-            return CircularProgressor();
+            return CircularProgressorMini();
           }
 
           return DropdownSearch<Cliente>(
@@ -161,7 +150,7 @@ class _PedidoCreatePageState extends State<PedidoCreatePage>
           }
 
           if (lojas == null) {
-            return CircularProgressor();
+            return CircularProgressorMini();
           }
 
           return DropdownSearch<Loja>(
@@ -593,14 +582,14 @@ class _PedidoCreatePageState extends State<PedidoCreatePage>
                           controlAffinity: ListTileControlAffinity.trailing,
                           title: Text("CRIADO"),
                           value: "CRIADO",
-                          groupValue: p.statusPedido == null
-                              ? p.statusPedido = statusPedido
-                              : p.statusPedido,
+                          groupValue: p.pedidoStatus == null
+                              ? p.pedidoStatus = pedidoStatus
+                              : p.pedidoStatus,
                           secondary: const Icon(Icons.check_outlined),
                           onChanged: (String valor) {
                             setState(() {
-                              p.statusPedido = valor;
-                              print("StatusPedido: " + p.statusPedido);
+                              p.pedidoStatus = valor;
+                              print("StatusPedido: " + p.pedidoStatus);
                             });
                           },
                         ),
@@ -608,14 +597,14 @@ class _PedidoCreatePageState extends State<PedidoCreatePage>
                           controlAffinity: ListTileControlAffinity.trailing,
                           title: Text("ENVIADO"),
                           value: "ENVIADO",
-                          groupValue: p.statusPedido == null
-                              ? p.statusPedido = statusPedido
-                              : p.statusPedido,
+                          groupValue: p.pedidoStatus == null
+                              ? p.pedidoStatus = pedidoStatus
+                              : p.pedidoStatus,
                           secondary: const Icon(Icons.check_outlined),
                           onChanged: (String valor) {
                             setState(() {
-                              p.statusPedido = valor;
-                              print("StatusPedido: " + p.statusPedido);
+                              p.pedidoStatus = valor;
+                              print("StatusPedido: " + p.pedidoStatus);
                             });
                           },
                         ),
@@ -623,14 +612,14 @@ class _PedidoCreatePageState extends State<PedidoCreatePage>
                           controlAffinity: ListTileControlAffinity.trailing,
                           title: Text("CANCELADO"),
                           value: "CANCELADO",
-                          groupValue: p.statusPedido == null
-                              ? p.statusPedido = statusPedido
-                              : p.statusPedido,
+                          groupValue: p.pedidoStatus == null
+                              ? p.pedidoStatus = pedidoStatus
+                              : p.pedidoStatus,
                           secondary: const Icon(Icons.check_outlined),
                           onChanged: (String valor) {
                             setState(() {
-                              p.statusPedido = valor;
-                              print("StatusPedido: " + p.statusPedido);
+                              p.pedidoStatus = valor;
+                              print("StatusPedido: " + p.pedidoStatus);
                             });
                           },
                         ),
@@ -638,14 +627,14 @@ class _PedidoCreatePageState extends State<PedidoCreatePage>
                           controlAffinity: ListTileControlAffinity.trailing,
                           title: Text("ENTREGUE"),
                           value: "ENTREGUE",
-                          groupValue: p.statusPedido == null
-                              ? p.statusPedido = statusPedido
-                              : p.statusPedido,
+                          groupValue: p.pedidoStatus == null
+                              ? p.pedidoStatus = pedidoStatus
+                              : p.pedidoStatus,
                           secondary: const Icon(Icons.check_outlined),
                           onChanged: (String valor) {
                             setState(() {
-                              p.statusPedido = valor;
-                              print("StatusPedido: " + p.statusPedido);
+                              p.pedidoStatus = valor;
+                              print("StatusPedido: " + p.pedidoStatus);
                             });
                           },
                         ),
@@ -680,7 +669,7 @@ class _PedidoCreatePageState extends State<PedidoCreatePage>
                     print("Frete: ${p.valorFrete}");
                     print("Valor total: ${p.valorTotal}");
 
-                    print("Status: ${p.statusPedido}");
+                    print("Status: ${p.pedidoStatus}");
 
                     print("Data de regsitro: ${p.dataRegistro}");
                     print("Data e hora da entrega: ${p.dataHoraEntrega}");
@@ -689,7 +678,7 @@ class _PedidoCreatePageState extends State<PedidoCreatePage>
                       print("Produto: ${item.produto.nome}");
                     }
 
-                    p.pedidoItems.addAll(pedidoItemController.itens);
+                    p.pedidoItems = pedidoItemController.itens;
 
                     pedidoController.create(p).then((value) {
                       print("resultado : ${value}");
@@ -712,7 +701,7 @@ class _PedidoCreatePageState extends State<PedidoCreatePage>
                     print("Frete: ${p.valorFrete}");
                     print("Valor total: ${p.valorTotal}");
 
-                    print("Status: ${p.statusPedido}");
+                    print("Status: ${p.pedidoStatus}");
 
                     print("Data de resgistro: ${p.dataRegistro}");
                     print("Data e hora da entrega: ${p.dataHoraEntrega}");

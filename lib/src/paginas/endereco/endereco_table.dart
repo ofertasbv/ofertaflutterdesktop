@@ -4,32 +4,44 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
-import 'package:intl/intl.dart';
-import 'package:nosso/src/core/controller/pagamento_controller.dart';
-import 'package:nosso/src/core/model/pagamento.dart';
+import 'package:nosso/src/core/controller/categoria_controller.dart';
+import 'package:nosso/src/core/controller/endereco_controller.dart';
+import 'package:nosso/src/core/model/categoria.dart';
+import 'package:nosso/src/core/model/endereco.dart';
+import 'package:nosso/src/paginas/categoria/categoria_create_page.dart';
+import 'package:nosso/src/paginas/endereco/endereco_create_page.dart';
 import 'package:nosso/src/util/load/circular_progresso.dart';
 
-class PagamentoTable extends StatefulWidget {
+class EnderecoTable extends StatefulWidget {
   @override
-  _PagamentoTableState createState() => _PagamentoTableState();
+  _EnderecoTableState createState() => _EnderecoTableState();
 }
 
-class _PagamentoTableState extends State<PagamentoTable>
-    with AutomaticKeepAliveClientMixin<PagamentoTable> {
-  var pagamentoController = GetIt.I.get<PagamentoController>();
+class _EnderecoTableState extends State<EnderecoTable>
+    with AutomaticKeepAliveClientMixin<EnderecoTable> {
+  var enderecoController = GetIt.I.get<EnderecoController>();
   var nomeController = TextEditingController();
 
   @override
   void initState() {
-    pagamentoController.getAll();
+    enderecoController.getAll();
     super.initState();
   }
 
   Future<void> onRefresh() {
-    return pagamentoController.getAll();
+    return enderecoController.getAll();
   }
 
   bool isLoading = true;
+
+  filterByNome(String nome) {
+    if (nome.trim().isEmpty) {
+      // categoriaController.getAll();
+    } else {
+      nome = nomeController.text;
+      // categoriaController.getAllByNome(nome);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +68,7 @@ class _PagamentoTableState extends State<PagamentoTable>
                     icon: Icon(Icons.clear),
                   ),
                 ),
+                onChanged: filterByNome,
               ),
             ),
           ),
@@ -75,25 +88,25 @@ class _PagamentoTableState extends State<PagamentoTable>
       padding: EdgeInsets.only(top: 0),
       child: Observer(
         builder: (context) {
-          List<Pagamento> pagamentos = pagamentoController.pagamentos;
-          if (pagamentoController.error != null) {
+          List<Endereco> enderecos = enderecoController.enderecos;
+          if (enderecoController.error != null) {
             return Text("Não foi possível carregados dados");
           }
 
-          if (pagamentos == null) {
+          if (enderecos == null) {
             return CircularProgressor();
           }
 
           return RefreshIndicator(
             onRefresh: onRefresh,
-            child: buildTable(pagamentos),
+            child: buildTable(enderecos),
           );
         },
       ),
     );
   }
 
-  buildTable(List<Pagamento> pagamentos) {
+  buildTable(List<Endereco> enderecos) {
     return ListView(
       children: [
         PaginatedDataTable(
@@ -104,17 +117,15 @@ class _PagamentoTableState extends State<PagamentoTable>
           showFirstLastButtons: true,
           columns: [
             DataColumn(label: Text("Código")),
-            DataColumn(label: Text("Quantidade")),
-            DataColumn(label: Text("Forma")),
-            DataColumn(label: Text("Tipo")),
-            DataColumn(label: Text("Valor")),
-            DataColumn(label: Text("Registro")),
-            DataColumn(label: Text("Pedido")),
-            DataColumn(label: Text("Visualizar")),
+            DataColumn(label: Text("Logradouro")),
+            DataColumn(label: Text("Complemnto")),
+            DataColumn(label: Text("Bairro")),
+            DataColumn(label: Text("Cep")),
+            DataColumn(label: Text("Cidade")),
+            DataColumn(label: Text("Visualisar")),
             DataColumn(label: Text("Editar")),
-            DataColumn(label: Text("Faturas")),
           ],
-          source: DataSource(pagamentos, context),
+          source: DataSource(enderecos, context),
         ),
       ],
     );
@@ -127,45 +138,59 @@ class _PagamentoTableState extends State<PagamentoTable>
 
 class DataSource extends DataTableSource {
   BuildContext context;
-  List<Pagamento> pagamentos;
+  List<Endereco> enderecos;
   int selectedCount = 0;
-  var dateFormat = DateFormat('dd/MM/yyyy');
 
-  DataSource(this.pagamentos, this.context);
+  DataSource(this.enderecos, this.context);
 
   @override
   DataRow getRow(int index) {
     assert(index >= 0);
-    if (index >= pagamentos.length) return null;
-    Pagamento p = pagamentos[index];
+    if (index >= enderecos.length) return null;
+    Endereco p = enderecos[index];
     return DataRow.byIndex(
       index: index,
       cells: [
         DataCell(Text("${p.id}")),
-        DataCell(Text("${p.quantidade}")),
-        DataCell(Text(p.pagamentoForma)),
-        DataCell(Text("${p.pagamentoTipo}")),
-        DataCell(Text("${p.valor}")),
-        DataCell(Text("${dateFormat.format(p.dataPagamento)}")),
-        DataCell(Text("${p.pedido.descricao}")),
+        DataCell(Text("${p.logradouro}")),
+        DataCell(Text(p.complemento)),
+        DataCell(Text(p.bairro)),
+        DataCell(Text(p.cep)),
+        DataCell(Text(p.cidade.nome)),
         DataCell(IconButton(
           icon: Icon(Icons.search),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return EnderecoCreatePage(
+                    endereco: p,
+                  );
+                },
+              ),
+            );
+          },
         )),
         DataCell(IconButton(
           icon: Icon(Icons.edit),
-          onPressed: () {},
-        )),
-        DataCell(IconButton(
-          icon: Icon(Icons.monetization_on_outlined),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return EnderecoCreatePage(
+                    endereco: p,
+                  );
+                },
+              ),
+            );
+          },
         )),
       ],
     );
   }
 
   @override
-  int get rowCount => pagamentos.length;
+  int get rowCount => enderecos.length;
 
   @override
   bool get isRowCountApproximate => false;

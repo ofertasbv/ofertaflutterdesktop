@@ -5,6 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:nosso/src/core/controller/endereco_controller.dart';
 import 'package:nosso/src/paginas/endereco/endereco_create_page.dart';
 import 'package:nosso/src/paginas/endereco/endereco_list.dart';
+import 'package:nosso/src/paginas/endereco/endereco_table.dart';
 
 class EnderecoPage extends StatelessWidget {
   var enderecoController = GetIt.I.get<EnderecoController>();
@@ -54,7 +55,7 @@ class EnderecoPage extends StatelessWidget {
       ),
       body: Container(
         padding: EdgeInsets.only(left: 100, right: 100, top: 10),
-        child: Card(child: EnderecoList()),
+        child: Card(child: EnderecoTable()),
       ),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,

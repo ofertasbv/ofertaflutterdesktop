@@ -1,5 +1,6 @@
 import 'package:nosso/src/core/model/pedido.dart';
 import 'package:nosso/src/core/model/produto.dart';
+import 'package:nosso/src/core/model/tamanho.dart';
 
 class PedidoItem {
   int id;
@@ -8,6 +9,7 @@ class PedidoItem {
   Produto produto;
   double valorTotal;
   Pedido pedido;
+  Tamanho tamanho;
 
   PedidoItem({
     this.id,
@@ -16,6 +18,7 @@ class PedidoItem {
     this.produto,
     this.valorTotal,
     this.pedido,
+    this.tamanho,
   });
 
   PedidoItem.fromJson(Map<String, dynamic> json) {
@@ -28,6 +31,9 @@ class PedidoItem {
 
     pedido =
         json['pedido'] != null ? new Pedido.fromJson(json['pedido']) : null;
+
+    tamanho =
+        json['tamanho'] != null ? new Tamanho.fromJson(json['tamanho']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -42,6 +48,10 @@ class PedidoItem {
 
     if (this.pedido != null) {
       data['pedido'] = this.pedido.toJson();
+    }
+
+    if (this.tamanho != null) {
+      data['tamanho'] = this.tamanho.toJson();
     }
 
     return data;

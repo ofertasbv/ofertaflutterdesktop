@@ -1,6 +1,5 @@
-import 'package:nosso/src/core/enum/pagamento_forma.dart';
-import 'package:nosso/src/core/enum/pagamento_tipo.dart';
 import 'package:nosso/src/core/model/fatura.dart';
+import 'package:nosso/src/core/model/pedido.dart';
 
 class Pagamento {
   int id;
@@ -10,6 +9,7 @@ class Pagamento {
   String pagamentoForma;
   String pagamentoTipo;
   List<Fatura> faturas;
+  Pedido pedido;
 
   Pagamento({
     this.id,
@@ -19,6 +19,7 @@ class Pagamento {
     this.pagamentoForma,
     this.pagamentoTipo,
     this.faturas,
+    this.pedido,
   });
 
   Pagamento.fromJson(Map<String, dynamic> json) {
@@ -35,6 +36,9 @@ class Pagamento {
         faturas.add(new Fatura.fromJson(v));
       });
     }
+
+    pedido =
+        json['pedido'] != null ? new Pedido.fromJson(json['pedido']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -45,9 +49,15 @@ class Pagamento {
     data['dataPagamento'] = this.dataPagamento.toIso8601String();
     data['pagamentoForma'] = this.pagamentoForma;
     data['pagamentoTipo'] = this.pagamentoTipo;
+
     if (this.faturas != null) {
       data['faturas'] = this.faturas.map((v) => v.toJson()).toList();
     }
+
+    if (this.pedido != null) {
+      data['pedido'] = this.pedido.toJson();
+    }
+
     return data;
   }
 }

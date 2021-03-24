@@ -55,7 +55,7 @@ class PedidoItemPage extends StatelessWidget {
       ),
       body: Container(
         padding: EdgeInsets.only(left: 100, right: 100, top: 10),
-        child: Card(child: PedidoItemList()),
+        child: Card(child: PedidoItemTable()),
       ),
       floatingActionButton: FloatingActionButton(
         elevation: 10,

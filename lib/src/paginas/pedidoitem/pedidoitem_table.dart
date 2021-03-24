@@ -55,95 +55,116 @@ class _PedidoItemTableState extends State<PedidoItemTable>
 
           return RefreshIndicator(
             onRefresh: onRefresh,
-            child: builderTable(itens),
+            child: buildTable(itens),
           );
         },
       ),
     );
   }
 
-  builderTable(List<PedidoItem> itens) {
-    return DataTable(
-      sortAscending: true,
-      showCheckboxColumn: true,
-      showBottomBorder: true,
-      columnSpacing: 100,
-      columns: [
-        DataColumn(label: Text("Código")),
-        DataColumn(label: Text("Foto")),
-        DataColumn(label: Text("Produto")),
-        DataColumn(label: Text("Quant.")),
-        DataColumn(label: Text("Valor unit.")),
-        DataColumn(label: Text("Valor total.")),
-        DataColumn(label: Text("Visualizar")),
-        DataColumn(label: Text("Editar")),
+  buildTable(List<PedidoItem> itens) {
+    return ListView(
+      children: [
+        PaginatedDataTable(
+          rowsPerPage: 8,
+          showCheckboxColumn: true,
+          sortColumnIndex: 1,
+          sortAscending: true,
+          showFirstLastButtons: true,
+          columns: [
+            DataColumn(label: Text("Código")),
+            DataColumn(label: Text("Foto")),
+            DataColumn(label: Text("Produto")),
+            DataColumn(label: Text("Quant.")),
+            DataColumn(label: Text("Valor unit.")),
+            DataColumn(label: Text("Valor total.")),
+            DataColumn(label: Text("Visualizar")),
+            DataColumn(label: Text("Editar")),
+          ],
+          source: DataSource(itens, context),
+        ),
       ],
-      rows: itens
-          .map(
-            (p) => DataRow(
-              onSelectChanged: (i) {
-                setState(() {
-                  // selecionaItem(p);
-                });
-              },
-              cells: [
-                DataCell(Text("${p.id}")),
-                DataCell(CircleAvatar(
-                  backgroundColor: Colors.grey[100],
-                  radius: 20,
-                  backgroundImage: NetworkImage(
-                    "${produtoController.arquivo + p.produto.foto}",
-                  ),
-                )),
-                DataCell(Text("${p.produto.nome}")),
-                DataCell(Text(
-                  "${p.quantidade}",
-                  style: TextStyle(color: Colors.black),
-                )),
-                DataCell(Text(
-                  "${p.valorTotal}",
-                  style: TextStyle(color: Colors.red),
-                )),
-                DataCell(Text(
-                  "${p.valorUnitario}",
-                  style: TextStyle(color: Colors.red),
-                )),
-                DataCell(IconButton(
-                  icon: Icon(Icons.search),
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (BuildContext context) {
-                          return PedidoItemCreatePage(
-                            pedidoItem: p,
-                          );
-                        },
-                      ),
-                    );
-                  },
-                )),
-                DataCell(IconButton(
-                  icon: Icon(Icons.edit),
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (BuildContext context) {
-                          return PedidoItemCreatePage(
-                            pedidoItem: p,
-                          );
-                        },
-                      ),
-                    );
-                  },
-                )),
-              ],
-            ),
-          )
-          .toList(),
     );
   }
 
   @override
   // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
+}
+
+class DataSource extends DataTableSource {
+  var produtoController = GetIt.I.get<ProdutoController>();
+  BuildContext context;
+  List<PedidoItem> pedidos;
+  int selectedCount = 0;
+
+  DataSource(this.pedidos, this.context);
+
+  @override
+  DataRow getRow(int index) {
+    assert(index >= 0);
+    if (index >= pedidos.length) return null;
+    PedidoItem p = pedidos[index];
+    return DataRow.byIndex(
+      index: index,
+      cells: [
+        DataCell(Text("${p.id}")),
+        DataCell(p.produto.foto != null ? CircleAvatar(
+          backgroundColor: Colors.grey[100],
+          radius: 20,
+          backgroundImage: NetworkImage("${produtoController.arquivo + p.produto.foto}"),
+        ) : CircleAvatar(radius: 20,)),
+        DataCell(Text("${p.produto.nome}")),
+        DataCell(Text(
+          "${p.quantidade}",
+          style: TextStyle(color: Colors.black),
+        )),
+        DataCell(Text(
+          "${p.valorTotal}",
+          style: TextStyle(color: Colors.red),
+        )),
+        DataCell(Text(
+          "${p.valorUnitario}",
+          style: TextStyle(color: Colors.red),
+        )),
+        DataCell(IconButton(
+          icon: Icon(Icons.search),
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return PedidoItemCreatePage(
+                    pedidoItem: p,
+                  );
+                },
+              ),
+            );
+          },
+        )),
+        DataCell(IconButton(
+          icon: Icon(Icons.edit),
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return PedidoItemCreatePage(
+                    pedidoItem: p,
+                  );
+                },
+              ),
+            );
+          },
+        )),
+      ],
+    );
+  }
+
+  @override
+  int get rowCount => pedidos.length;
+
+  @override
+  bool get isRowCountApproximate => false;
+
+  @override
+  int get selectedRowCount => selectedCount;
 }

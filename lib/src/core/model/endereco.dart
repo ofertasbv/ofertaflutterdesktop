@@ -1,4 +1,3 @@
-import 'package:nosso/src/core/enum/tipo_endereco.dart';
 import 'package:nosso/src/core/model/cidade.dart';
 
 class Endereco {

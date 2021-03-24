@@ -10,10 +10,10 @@ class Pedido {
   double valorDesconto;
   double valorInicial;
   double valorTotal;
-  List<PedidoItem> pedidoItems = new List();
+  List<PedidoItem> pedidoItems = List<PedidoItem>();
   Cliente cliente;
   Loja loja;
-  String statusPedido;
+  String pedidoStatus;
   DateTime dataHoraEntrega;
   DateTime dataRegistro;
 
@@ -27,7 +27,7 @@ class Pedido {
     this.pedidoItems,
     this.cliente,
     this.loja,
-    this.statusPedido,
+    this.pedidoStatus,
     this.dataHoraEntrega,
     this.dataRegistro,
   });
@@ -59,7 +59,7 @@ class Pedido {
 
     loja = json['loja'] != null ? new Loja.fromJson(json['loja']) : null;
 
-    statusPedido = json['statusPedido'];
+    pedidoStatus = json['pedidoStatus'];
 
     dataHoraEntrega = DateTime.tryParse(json['dataHoraEntrega'].toString());
     dataRegistro = DateTime.tryParse(json['dataRegistro'].toString());
@@ -85,7 +85,7 @@ class Pedido {
       data['loja'] = this.loja.toJson();
     }
 
-    data['statusPedido'] = this.statusPedido;
+    data['pedidoStatus'] = this.pedidoStatus;
 
     data['dataHoraEntrega'] = this.dataHoraEntrega.toIso8601String();
     data['dataRegistro'] = this.dataRegistro.toIso8601String();

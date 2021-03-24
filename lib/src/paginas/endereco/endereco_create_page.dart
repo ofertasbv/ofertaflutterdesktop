@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:core';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
@@ -69,22 +70,17 @@ class _EnderecoCreatePageState extends State<EnderecoCreatePage>
 
   @override
   void initState() {
-    enderecoController.getAll();
+    cidadeController.getAll();
     estados = estadoController.getAll();
 
     if (endereco == null) {
       endereco = Endereco();
     } else {
-      controllerDestino.text = endereco.logradouro;
-      controllerNumero.text = endereco.numero;
-      controllerCep.text = endereco.cep;
-      controllerBairro.text = endereco.bairro;
-      controllerLatitude.text = endereco.latitude.toString();
-      controllerLongitude.text = endereco.longitude.toString();
+      cidadeSelecionada = endereco.cidade;
+      estadoSelecionado = cidadeSelecionada.estado;
     }
 
     tipoEndereco = "COMERCIAL";
-    cidadeSelecionada = endereco.cidade;
     super.initState();
   }
 
@@ -95,7 +91,7 @@ class _EnderecoCreatePageState extends State<EnderecoCreatePage>
     controller = Controller();
     super.didChangeDependencies();
   }
-  
+
   showSnackbar(BuildContext context, String content) {
     scaffoldKey.currentState.showSnackBar(
       SnackBar(
@@ -103,40 +99,6 @@ class _EnderecoCreatePageState extends State<EnderecoCreatePage>
         action: SnackBarAction(
           label: "OK",
           onPressed: () {},
-        ),
-      ),
-    );
-  }
-
-  criaMapa() {
-    return Container(
-      height: 600,
-      child: GoogleMap(
-        onTap: (valor) {
-          print("Lat: ${valor.latitude}, Long: ${valor.longitude}");
-          setState(() {
-            valor != null
-                ? latitudeController.text = valor.latitude.toString()
-                : latitudeController.text = endereco.latitude.toString();
-            valor != null
-                ? longitudeController.text = valor.longitude.toString()
-                : longitudeController.text = endereco.longitude.toString();
-          });
-        },
-        indoorViewEnabled: true,
-        mapToolbarEnabled: true,
-        buildingsEnabled: true,
-        tiltGesturesEnabled: true,
-        zoomControlsEnabled: false,
-        zoomGesturesEnabled: true,
-        myLocationEnabled: true,
-        myLocationButtonEnabled: true,
-        rotateGesturesEnabled: true,
-        trafficEnabled: false,
-        mapType: MapType.satellite,
-        initialCameraPosition: CameraPosition(
-          target: LatLng(-4.253467, -49.944051),
-          zoom: 16,
         ),
       ),
     );
@@ -402,7 +364,7 @@ class _EnderecoCreatePageState extends State<EnderecoCreatePage>
                 width: 500,
                 color: Colors.grey[200],
                 child: TextFormField(
-                  controller: controllerNumero,
+                  initialValue: endereco.numero,
                   onSaved: (value) => endereco.numero = value,
                   validator: validateNumero,
                   decoration: InputDecoration(
@@ -441,7 +403,7 @@ class _EnderecoCreatePageState extends State<EnderecoCreatePage>
                 width: 500,
                 color: Colors.grey[200],
                 child: TextFormField(
-                  controller: controllerCep,
+                  initialValue: endereco.cep,
                   onSaved: (value) => endereco.cep = value,
                   validator: validateCep,
                   decoration: InputDecoration(
@@ -472,7 +434,7 @@ class _EnderecoCreatePageState extends State<EnderecoCreatePage>
                 width: 500,
                 color: Colors.grey[200],
                 child: TextFormField(
-                  controller: controllerBairro,
+                  initialValue: endereco.bairro,
                   onSaved: (value) => endereco.bairro = value,
                   validator: validateBairro,
                   decoration: InputDecoration(
@@ -510,7 +472,7 @@ class _EnderecoCreatePageState extends State<EnderecoCreatePage>
                 width: 500,
                 color: Colors.grey[200],
                 child: TextFormField(
-                  controller: controllerLatitude,
+                  initialValue: endereco.latitude.toString(),
                   onSaved: (value) =>
                       endereco.latitude = double.tryParse(value),
                   validator: validateLatitude,
@@ -531,7 +493,6 @@ class _EnderecoCreatePageState extends State<EnderecoCreatePage>
                       borderRadius: BorderRadius.circular(5.0),
                     ),
                   ),
-                  readOnly: true,
                   onEditingComplete: () => focus.nextFocus(),
                   keyboardType: TextInputType.numberWithOptions(),
                   maxLength: 50,
@@ -541,7 +502,7 @@ class _EnderecoCreatePageState extends State<EnderecoCreatePage>
                 width: 500,
                 color: Colors.grey[200],
                 child: TextFormField(
-                  controller: controllerLongitude,
+                  initialValue: endereco.longitude.toString(),
                   onSaved: (value) =>
                       endereco.longitude = double.tryParse(value),
                   validator: validateLongitude,
@@ -562,7 +523,6 @@ class _EnderecoCreatePageState extends State<EnderecoCreatePage>
                       borderRadius: BorderRadius.circular(5.0),
                     ),
                   ),
-                  readOnly: true,
                   onEditingComplete: () => focus.nextFocus(),
                   keyboardType: TextInputType.numberWithOptions(),
                   maxLength: 50,
@@ -602,10 +562,16 @@ class _EnderecoCreatePageState extends State<EnderecoCreatePage>
                 if (endereco.id == null) {
                   dialogs.information(context, "prepando para o cadastro...");
                   Timer(Duration(seconds: 3), () {
+                    print("Logradouro: ${endereco.logradouro}");
+                    print("Complemento: ${endereco.complemento}");
+                    print("Bairro: ${endereco.bairro}");
+                    print("Numero: ${endereco.numero}");
+                    print("Cep: ${endereco.cep}");
+                    print("Cidade: ${endereco.cidade}");
+
                     print("Latitude: ${endereco.latitude}");
                     print("Longitude: ${endereco.longitude}");
 
-                    endereco.cidade = cidadeSelecionada;
                     enderecoController.create(endereco).then((value) {
                       print("resultado : ${value}");
                     });
@@ -615,12 +581,21 @@ class _EnderecoCreatePageState extends State<EnderecoCreatePage>
                   dialogs.information(
                       context, "preparando para o alteração...");
                   Timer(Duration(seconds: 3), () {
+                    print("Logradouro: ${endereco.logradouro}");
+                    print("Complemento: ${endereco.complemento}");
+                    print("Bairro: ${endereco.bairro}");
+                    print("Numero: ${endereco.numero}");
+                    print("Cep: ${endereco.cep}");
+                    print("Cidade: ${endereco.cidade}");
+
                     print("Latitude: ${endereco.latitude}");
                     print("Longitude: ${endereco.longitude}");
 
-                    endereco.cidade = cidadeSelecionada;
-                    enderecoController.update(endereco.id, endereco);
-
+                    enderecoController
+                        .update(endereco.id, endereco)
+                        .then((value) {
+                      print("resultado : ${value}");
+                    });
                     buildPush(context);
                   });
                 }
