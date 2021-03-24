@@ -15,6 +15,7 @@ import 'package:nosso/src/core/controller/produto_controller.dart';
 import 'package:nosso/src/core/model/caixa.dart';
 import 'package:nosso/src/core/model/pedidoitem.dart';
 import 'package:nosso/src/core/model/produto.dart';
+import 'package:nosso/src/paginas/pedido/pedido_create_page.dart';
 import 'package:nosso/src/paginas/pedidoitem/itens_page.dart';
 import 'package:nosso/src/util/load/circular_progresso.dart';
 import 'package:nosso/src/util/snackbar/snackbar_global.dart';
@@ -120,6 +121,7 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
   }
 
   buscarByCodigoDeBarra(String codigoBarra) async {
+    pedidoItem = PedidoItem();
     p = await produtoController.getCodigoBarra(codigoBarra);
 
     if (p != null) {
@@ -257,19 +259,48 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
         ],
       ),
       body: Container(
-        padding: EdgeInsets.only(left: 100, right: 100, top: 10),
-        child: Container(
-          color: Colors.grey[300],
-          child: Observer(
-            builder: (context) {
-              if (pedidoItemController.dioError == null) {
-                return buildForm(dateFormat, context);
-              } else {
-                print("Erro: ${pedidoItemController.mensagem}");
-                return buildForm(dateFormat, context);
-              }
-            },
-          ),
+        color: Colors.grey[200],
+        padding: EdgeInsets.only(left: 100, right: 100, top: 0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              color: Theme.of(context).primaryColor.withOpacity(0.1),
+              padding: EdgeInsets.all(0),
+              child: ListTile(
+                title: caixa == null
+                    ? Text("CAIXA SEM STATUS")
+                    : Text("CAIXA ESTÁ ${caixa.caixaStatus}"),
+                subtitle: caixa == null
+                    ? Text("CAIXA SEM REFERENCIA")
+                    : Text("${caixa.descricao} - ${caixa.referencia}"),
+                trailing: Text("${dateFormat.format(DateTime.now())}"),
+              ),
+            ),
+            Container(
+              height: 600,
+              color: Colors.red[400],
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    width: 450,
+                    height: 600,
+                    color: Colors.grey[400],
+                    child: buildForm(dateFormat, context),
+                  ),
+                  Expanded(
+                    child: Container(
+                      height: 600,
+                      color: Colors.grey[300],
+                      child: builderConteudoList(),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -281,20 +312,7 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
       child: ListView(
         children: [
           Container(
-            color: Theme.of(context).primaryColor.withOpacity(0.1),
-            padding: EdgeInsets.all(0),
-            child: ListTile(
-              title: caixa == null
-                  ? Text("CAIXA SEM STATUS")
-                  : Text("CAIXA ESTÁ ${caixa.caixaStatus}"),
-              subtitle: caixa == null
-                  ? Text("CAIXA SEM REFERENCIA")
-                  : Text("${caixa.descricao} - ${caixa.referencia}"),
-              trailing: Text("${dateFormat.format(DateTime.now())}"),
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.all(15),
+            padding: EdgeInsets.all(10),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -334,21 +352,21 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
                   keyboardType: TextInputType.number,
                   maxLength: 20,
                 ),
-                SizedBox(height: 5),
                 RaisedButton.icon(
                   elevation: 0.0,
                   icon: Icon(Icons.photo_camera_outlined),
                   shape: RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(30),
+                    borderRadius: new BorderRadius.circular(10),
                     side: BorderSide(color: Colors.transparent),
                   ),
-                  label: Text("Scanner"),
+                  label: Text("pesquisar"),
                   onPressed: () {
                     setState(() {
                       buscarByCodigoDeBarra(codigoBarraController.text);
                     });
                   },
                 ),
+                SizedBox(height: 10),
                 Text(
                   "QUANTIDADE",
                   style: TextStyle(
@@ -493,18 +511,28 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
               ],
             ),
           ),
-          builderConteudoList(),
           Container(
-            padding: EdgeInsets.all(15),
+            padding: EdgeInsets.all(10),
             child: RaisedButton.icon(
               label: Text("Enviar formulário"),
               icon: Icon(Icons.check),
               onPressed: () {
-                if (controller.validate()) {}
+                if (controller.validate()) {
+                  buildPush(context);
+                }
               },
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  buildPush(BuildContext context) {
+    return Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => PedidoCreatePage(),
       ),
     );
   }
@@ -549,15 +577,12 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
 
   builderTable(List<PedidoItem> itens) {
     return DataTable(
-      sortAscending: true,
-      showCheckboxColumn: true,
-      showBottomBorder: true,
       columns: [
-        DataColumn(label: Text("Código")),
-        DataColumn(label: Text("Quantidade")),
-        DataColumn(label: Text("Valor Unit.")),
+        DataColumn(label: Text("Cód")),
+        DataColumn(label: Text("Quant.")),
+        DataColumn(label: Text("Unit.")),
         DataColumn(label: Text("Descrição")),
-        DataColumn(label: Text("Valor Total")),
+        DataColumn(label: Text("Total")),
         DataColumn(label: Text("Excluir"))
       ],
       rows: itens

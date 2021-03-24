@@ -672,8 +672,8 @@ class _PedidoCreatePageState extends State<PedidoCreatePage>
                         ((pedidoItemController.total * p.valorDesconto) / 100) +
                         p.valorFrete);
 
-                    print("Cliente: ${clienteSelecionado.nome}");
-                    print("Loja: ${lojaSelecionda.nome}");
+                    print("Cliente: ${p.cliente.nome}");
+                    print("Loja: ${p.loja.nome}");
 
                     print("Descrição: ${p.descricao}");
                     print("Desconto: ${p.valorDesconto}");
@@ -689,11 +689,13 @@ class _PedidoCreatePageState extends State<PedidoCreatePage>
                       print("Produto: ${item.produto.nome}");
                     }
 
-                    // pedidoController.create(p).then((value) {
-                    //   print("resultado : ${value}");
-                    // });
-                    // Navigator.of(context).pop();
-                    // buildPush(context);
+                    p.pedidoItems.addAll(pedidoItemController.itens);
+
+                    pedidoController.create(p).then((value) {
+                      print("resultado : ${value}");
+                    });
+                    Navigator.of(context).pop();
+                    buildPush(context);
                   });
                 } else {
                   dialogs.information(
@@ -703,8 +705,8 @@ class _PedidoCreatePageState extends State<PedidoCreatePage>
                         ((pedidoItemController.total * p.valorDesconto) / 100) +
                         p.valorFrete);
 
-                    print("Cliente: ${clienteSelecionado.nome}");
-                    print("Loja: ${lojaSelecionda.nome}");
+                    print("Cliente: ${p.cliente.nome}");
+                    print("Loja: ${p.loja.nome}");
                     print("Descrição: ${p.descricao}");
                     print("Desconto: ${p.valorDesconto}");
                     print("Frete: ${p.valorFrete}");
@@ -715,9 +717,9 @@ class _PedidoCreatePageState extends State<PedidoCreatePage>
                     print("Data de resgistro: ${p.dataRegistro}");
                     print("Data e hora da entrega: ${p.dataHoraEntrega}");
 
-                    // pedidoController.update(p.id, p);
-                    // Navigator.of(context).pop();
-                    // buildPush(context);
+                    pedidoController.update(p.id, p);
+                    Navigator.of(context).pop();
+                    buildPush(context);
                   });
                 }
               }

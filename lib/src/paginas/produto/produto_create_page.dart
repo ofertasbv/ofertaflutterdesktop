@@ -29,11 +29,12 @@ import 'package:nosso/src/core/model/uploadFileResponse.dart';
 import 'package:nosso/src/paginas/produto/produto_tab.dart';
 import 'package:nosso/src/util/componentes/image_source_sheet.dart';
 import 'package:nosso/src/util/dialogs/dialogs.dart';
-import 'package:nosso/src/util/load/circular_progresso.dart';
 import 'package:nosso/src/util/load/circular_progresso_mini.dart';
 import 'package:nosso/src/util/upload/upload_response.dart';
 import 'package:nosso/src/util/validador/validador_produto.dart';
 import 'package:search_choices/search_choices.dart';
+import 'package:multiselect_dropdown/multiple_dropdown.dart';
+import 'package:multiselect_dropdown/multiple_select.dart';
 
 class ProdutoCreatePage extends StatefulWidget {
   Produto produto;
@@ -247,10 +248,14 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
           }
 
           return SearchChoices<Cor>.multiple(
-            items: cores.map((e) {
+            items: cores.map((c) {
               return DropdownMenuItem<Cor>(
-                child: Text(e.descricao),
-                value: e,
+                child: Text(c.descricao),
+                value: c,
+                onTap: () {
+                  coreSelecionados.add(c);
+                  print("Cores selecionadas onTap: ${coreSelecionados}");
+                },
               );
             }).toList(),
             selectedItems: coresSelecionadas,
@@ -260,6 +265,11 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
             onChanged: (value) {
               setState(() {
                 coresSelecionadas = value;
+                // coreSelecionados.insertAll(value, coresSelecionadas);
+                // p.cores.addAll(Iterable<Cor>.generate(coreSelecionados.length).toList());
+                // coreSelecionados.addAll(Iterable<Cor>.generate(coreSelecionados.length).toList());
+                print("Cores selecionadas index: ${coresSelecionadas}");
+                print("Cores selecionadas objeto: ${cores[0].toString()}");
               });
             },
             isExpanded: true,
@@ -1421,16 +1431,16 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
                       // print("Vencimento: ${p.estoque.dataVencimento}");
                       print("Agora: ${agora}");
 
-                      // for (Cor c in corController.cores) {
-                      //   print("Cores: ${c.descricao}");
-                      // }
-                      //
-                      // for (Tamanho c in tamanhoController.tamanhos) {
-                      //   print("Tamanhos: ${c.descricao}");
-                      // }
-                      //
-                      // p.cores.addAll(produtoController.corSelecionadas);
-                      // p.tamanhos.addAll(produtoController.tamanhoSelecionados);
+                      for (Cor c in coreSelecionados) {
+                        print("Cores: ${c.descricao}");
+                      }
+
+                      for (Tamanho c in tamanhoSelecionados) {
+                        print("Tamanhos: ${c.descricao}");
+                      }
+
+                      p.cores.addAll(coreSelecionados);
+                      p.tamanhos.addAll(tamanhoSelecionados);
 
                       p.estoque.quantidade =
                           int.tryParse(controllerQuantidade.text);
@@ -1441,11 +1451,11 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
                       p.estoque.percentual =
                           double.tryParse(controllerPecentual.text);
 
-                      // produtoController.create(p).then((value) {
-                      //   print("resultado : ${value}");
-                      // });
-                      // Navigator.of(context).pop();
-                      // buildPush(context);
+                      produtoController.create(p).then((value) {
+                        print("resultado : ${value}");
+                      });
+                      Navigator.of(context).pop();
+                      buildPush(context);
                     });
                   } else {
                     dialogs.information(
@@ -1476,16 +1486,16 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
                       // print("Vencimento: ${p.estoque.dataVencimento}");
                       print("Agora: ${agora}");
 
-                      // for (Cor c in produtoController.corSelecionadas) {
-                      //   print("Cores: ${c.descricao}");
-                      // }
-                      //
-                      // for (Tamanho c in produtoController.tamanhoSelecionados) {
-                      //   print("Tamanhos: ${c.descricao}");
-                      // }
-                      //
-                      // p.cores.addAll(produtoController.corSelecionadas);
-                      // p.tamanhos.addAll(produtoController.tamanhoSelecionados);
+                      for (Cor c in coreSelecionados) {
+                        print("Cores: ${c.descricao}");
+                      }
+
+                      for (Tamanho c in tamanhoSelecionados) {
+                        print("Tamanhos: ${c.descricao}");
+                      }
+
+                      p.cores.addAll(coreSelecionados);
+                      p.tamanhos.addAll(tamanhoSelecionados);
 
                       p.estoque.quantidade =
                           int.tryParse(controllerQuantidade.text);
@@ -1496,8 +1506,10 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
                       p.estoque.percentual =
                           double.tryParse(controllerPecentual.text);
 
-                      // produtoController.update(p.id, p);
-                      // Navigator.of(context).pop();
+                      produtoController.update(p.id, p).then((value) {
+                        print("resultado : ${value}");
+                      });
+                      Navigator.of(context).pop();
                       // buildPush(context);
                     });
                   }

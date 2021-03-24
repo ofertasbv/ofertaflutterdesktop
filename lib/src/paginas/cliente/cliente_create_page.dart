@@ -339,42 +339,6 @@ class _ClienteCreatePageState extends State<ClienteCreatePage>
                         maxLength: 50,
                       ),
                       SizedBox(height: 10),
-                      DateTimeField(
-                        initialValue: p.dataRegistro,
-                        format: dateFormat,
-                        validator: validateDateRegsitro,
-                        onSaved: (value) => p.dataRegistro = value,
-                        decoration: InputDecoration(
-                          labelText: "data registro",
-                          hintText: "99-09-9999",
-                          prefixIcon: Icon(
-                            Icons.calendar_today,
-                            color: Colors.grey,
-                          ),
-                          suffixIcon: Icon(Icons.close),
-                          contentPadding:
-                              EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.purple[900]),
-                            gapPadding: 1,
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
-                        ),
-                        onEditingComplete: () => focus.nextFocus(),
-                        onShowPicker: (context, currentValue) {
-                          return showDatePicker(
-                            context: context,
-                            firstDate: DateTime(2000),
-                            initialDate: currentValue ?? DateTime.now(),
-                            locale: Locale('pt', 'BR'),
-                            lastDate: DateTime(2030),
-                          );
-                        },
-                        maxLength: 10,
-                      ),
-                      SizedBox(height: 10),
                       TextFormField(
                         initialValue: p.usuario.email,
                         onSaved: (value) => p.usuario.email = value,
@@ -493,7 +457,6 @@ class _ClienteCreatePageState extends State<ClienteCreatePage>
                       print("Nome: ${p.nome}");
                       print("CPF: ${p.cpf}");
                       print("Telefone: ${p.telefone}");
-                      print("DataRegistro: ${p.dataRegistro}");
                       print("Email: ${p.usuario.email}");
                       print("Senha: ${p.usuario.senha}");
 
@@ -515,7 +478,6 @@ class _ClienteCreatePageState extends State<ClienteCreatePage>
                       print("Nome: ${p.nome}");
                       print("CPF: ${p.cpf}");
                       print("Telefone: ${p.telefone}");
-                      print("DataRegistro: ${p.dataRegistro}");
                       print("Email: ${p.usuario.email}");
                       print("Senha: ${p.usuario.senha}");
 

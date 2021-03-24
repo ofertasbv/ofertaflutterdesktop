@@ -1,30 +1,33 @@
+import 'package:nosso/src/core/model/pedido.dart';
 import 'package:nosso/src/core/model/produto.dart';
 
 class PedidoItem {
   int id;
   double valorUnitario;
   int quantidade;
-  DateTime dataRegistro;
   Produto produto;
   double valorTotal;
+  Pedido pedido;
 
   PedidoItem({
     this.id,
     this.valorUnitario,
     this.quantidade,
-    this.dataRegistro,
     this.produto,
     this.valorTotal,
+    this.pedido,
   });
 
   PedidoItem.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     valorUnitario = json['valorUnitario'];
     quantidade = json['quantidade'];
-    dataRegistro = DateTime.tryParse(json['dataRegistro'].toString());
     produto =
         json['produto'] != null ? new Produto.fromJson(json['produto']) : null;
     valorTotal = json['valorTotal'];
+
+    pedido =
+        json['pedido'] != null ? new Pedido.fromJson(json['pedido']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -32,11 +35,15 @@ class PedidoItem {
     data['id'] = this.id;
     data['valorUnitario'] = this.valorUnitario;
     data['quantidade'] = this.quantidade;
-    data['dataRegistro'] = this.dataRegistro.toIso8601String();
     if (this.produto != null) {
       data['produto'] = this.produto.toJson();
     }
     data['valorTotal'] = this.valorTotal;
+
+    if (this.pedido != null) {
+      data['pedido'] = this.pedido.toJson();
+    }
+
     return data;
   }
 }

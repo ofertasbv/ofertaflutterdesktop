@@ -10,26 +10,34 @@ class Pedido {
   double valorDesconto;
   double valorInicial;
   double valorTotal;
-  List<PedidoItem> pedidoItems;
+  List<PedidoItem> pedidoItems = new List();
   Cliente cliente;
   Loja loja;
   String statusPedido;
   DateTime dataHoraEntrega;
   DateTime dataRegistro;
 
-  Pedido(
-      {this.id,
-      this.descricao,
-      this.valorFrete,
-      this.valorDesconto,
-      this.valorInicial,
-      this.valorTotal,
-      this.pedidoItems,
-      this.cliente,
-      this.loja,
-      this.statusPedido,
-      this.dataHoraEntrega,
-      this.dataRegistro});
+  Pedido({
+    this.id,
+    this.descricao,
+    this.valorFrete,
+    this.valorDesconto,
+    this.valorInicial,
+    this.valorTotal,
+    this.pedidoItems,
+    this.cliente,
+    this.loja,
+    this.statusPedido,
+    this.dataHoraEntrega,
+    this.dataRegistro,
+  });
+
+  adicinarItem(List<PedidoItem> itens) {
+    pedidoItems = itens;
+    pedidoItems.forEach((p) {
+      p.pedido;
+    });
+  }
 
   Pedido.fromJson(Map<String, dynamic> json) {
     id = json['id'];

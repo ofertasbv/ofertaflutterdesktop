@@ -44,7 +44,6 @@ class CaixaFluxoEntrada {
     if (this.pedido != null) {
       data['pedido'] = this.pedido.toJson();
     }
-
     return data;
   }
 }
