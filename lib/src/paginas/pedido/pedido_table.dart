@@ -68,9 +68,9 @@ class _PedidoTableState extends State<PedidoTable> {
           sortAscending: true,
           showFirstLastButtons: true,
           columns: [
-            DataColumn(label: Text("Código")),
+            DataColumn(label: Text("Cód")),
             DataColumn(label: Text("Descrição.")),
-            DataColumn(label: Text("Total")),
+            DataColumn(label: Text("Valor")),
             DataColumn(label: Text("Cliente")),
             DataColumn(label: Text("Loja")),
             DataColumn(label: Text("Status")),

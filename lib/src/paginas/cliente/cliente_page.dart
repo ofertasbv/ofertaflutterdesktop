@@ -13,7 +13,7 @@ class ClientePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        titleSpacing: 50,
+        titleSpacing: 0,
         elevation: 0,
         title: Text("Clientes"),
         actions: <Widget>[
@@ -53,7 +53,7 @@ class ClientePage extends StatelessWidget {
         ],
       ),
       body: Container(
-        padding: EdgeInsets.only(left: 100, right: 100, top: 10),
+        padding: EdgeInsets.only(left: 50, right: 50, top: 10),
         child: Card(child: ClienteTable()),
       ),
       floatingActionButton: Column(

@@ -118,6 +118,7 @@ class _EnderecoTableState extends State<EnderecoTable>
           columns: [
             DataColumn(label: Text("Código")),
             DataColumn(label: Text("Logradouro")),
+            DataColumn(label: Text("Número")),
             DataColumn(label: Text("Complemnto")),
             DataColumn(label: Text("Bairro")),
             DataColumn(label: Text("Cep")),
@@ -153,6 +154,7 @@ class DataSource extends DataTableSource {
       cells: [
         DataCell(Text("${p.id}")),
         DataCell(Text("${p.logradouro}")),
+        DataCell(Text("${p.numero}")),
         DataCell(Text(p.complemento)),
         DataCell(Text(p.bairro)),
         DataCell(Text(p.cep)),
