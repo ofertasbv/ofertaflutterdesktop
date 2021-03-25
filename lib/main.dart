@@ -109,36 +109,98 @@ class WidgetTree extends StatelessWidget {
     Size _size = MediaQuery.of(context).size;
     return Scaffold(
       body: ResponsiveLayout(
-          iphone: Container(
-            width: double.infinity,
-            height: double.infinity,
-            color: Colors.pink,
-          ),
-          ipad: Row(
-            children: [
-              Expanded(
-                flex: 9,
-                child: Container(
-                  width: 500,
-                  height: double.infinity,
-                  color: Colors.green,
-                ),
+        iphone: Container(
+          width: double.infinity,
+          height: double.infinity,
+          color: Colors.pink,
+        ),
+        ipad: Row(
+          children: [
+            Expanded(
+              flex: 9,
+              child: Container(
+                width: 500,
+                height: double.infinity,
+                color: Colors.green,
               ),
-              Expanded(
-                flex: 9,
-                child: Container(
-                  width: 500,
-                  height: double.infinity,
-                  color: Colors.blue,
-                ),
+            ),
+            Expanded(
+              flex: 9,
+              child: Container(
+                width: 500,
+                height: double.infinity,
+                color: Colors.blue,
               ),
-            ],
-          ),
-          macbook: ListView(
+            ),
+          ],
+        ),
+        macbook: Scrollbar(
+          child: ListView(
             children: [
               Container(
                 height: 80,
-                color: Colors.grey[600],
+                color: Colors.grey[800],
+                child: Container(
+                  color: Colors.transparent,
+                  width: 800,
+                  padding: EdgeInsets.only(top: 0, left: 110, right: 110),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        height: 70,
+                        width: 200,
+                        color: Colors.transparent,
+                        child: Text(
+                          "BOOK-OFERTAS",
+                          style: TextStyle(
+                            color: Colors.deepOrange[400],
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        alignment: Alignment.centerLeft,
+                      ),
+                      Container(
+                        height: 70,
+                        width: 700,
+                        color: Colors.transparent,
+                        child: Text(
+                          "CATALOGO DE OFERTAS DE TODOS OS DIAS",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 25,
+                          ),
+                        ),
+                        alignment: Alignment.centerLeft,
+                      ),
+                      Container(
+                        height: 70,
+                        width: 200,
+                        color: Colors.transparent,
+                        child: FlatButton.icon(
+                          onPressed: () {},
+                          icon: Icon(
+                            Icons.edit,
+                            color: Colors.white,
+                          ),
+                          label: Text(
+                            "Cadastre-se",
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(35),
+                            side: BorderSide(color: Colors.deepOrange[400]),
+                          ),
+                        ),
+                        alignment: Alignment.centerRight,
+                      ),
+                    ],
+                  ),
+                ),
               ),
               Container(
                 height: 50,
@@ -152,24 +214,32 @@ class WidgetTree extends StatelessWidget {
                       flex: _size.width > 1340 ? 1 : 2,
                       child: Container(
                         height: double.infinity,
-                        color: Colors.grey,
+                        color: Colors.grey[100],
                       ),
                     ),
                     Expanded(
-                      flex: _size.width > 1340 ? 8 : 10,
+                      flex: _size.width > 1340 ? 12 : 14,
                       child: Container(
                         height: double.infinity,
-                        color: Colors.blue,
+                        color: Colors.grey[100],
                         child: Column(
                           children: [
                             Container(
-                              height: 200,
+                              height: 250,
                               color: Colors.grey[400],
                             ),
                             SizedBox(height: 10),
                             Container(
                               height: 100,
-                              color: Colors.red[400],
+                              color: Colors.grey[100],
+                              child: Text(
+                                "DESTAQUES DA SEMANA",
+                                style: TextStyle(
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              alignment: Alignment.center,
                             ),
                             SizedBox(height: 10),
                             Container(
@@ -179,7 +249,15 @@ class WidgetTree extends StatelessWidget {
                             SizedBox(height: 10),
                             Container(
                               height: 100,
-                              color: Colors.red[400],
+                              color: Colors.grey[100],
+                              child: Text(
+                                "CATEGORIAS EM DESTAQUE",
+                                style: TextStyle(
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              alignment: Alignment.center,
                             ),
                             SizedBox(height: 10),
                             Container(
@@ -189,7 +267,15 @@ class WidgetTree extends StatelessWidget {
                             SizedBox(height: 10),
                             Container(
                               height: 100,
-                              color: Colors.red[400],
+                              color: Colors.grey[100],
+                              child: Text(
+                                "PRODUTOS EM DESTAQUE",
+                                style: TextStyle(
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              alignment: Alignment.center,
                             ),
                             SizedBox(height: 10),
                             Expanded(
@@ -205,14 +291,17 @@ class WidgetTree extends StatelessWidget {
                       flex: _size.width > 1340 ? 1 : 2,
                       child: Container(
                         height: double.infinity,
-                        color: Colors.green,
+                        color: Colors.grey[100],
                       ),
                     ),
                   ],
                 ),
               ),
+              SizedBox(height: 20)
             ],
-          )),
+          ),
+        ),
+      ),
     );
   }
 }
