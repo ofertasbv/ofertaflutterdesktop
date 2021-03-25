@@ -31,6 +31,10 @@ import 'package:flutter/services.dart';
 import 'package:nosso/src/core/controller/tamanho_controller.dart';
 import 'package:nosso/src/core/controller/usuario_controller.dart';
 import 'package:nosso/src/core/controller/vendedor_controller.dart';
+import 'package:nosso/src/home/categoria_list_home.dart';
+import 'package:nosso/src/home/categoria_list_menu.dart';
+import 'package:nosso/src/home/promocao_list_home.dart';
+import 'package:nosso/src/paginas/promocao/promocao_page_list.dart';
 import 'package:nosso/src/util/config/config_page.dart';
 import 'package:nosso/src/util/themes/theme.dart';
 
@@ -143,7 +147,7 @@ class WidgetTree extends StatelessWidget {
                 child: Container(
                   color: Colors.transparent,
                   width: 800,
-                  padding: EdgeInsets.only(top: 0, left: 110, right: 110),
+                  padding: EdgeInsets.only(top: 0, left: 50, right: 50),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -152,25 +156,32 @@ class WidgetTree extends StatelessWidget {
                         height: 70,
                         width: 200,
                         color: Colors.transparent,
-                        child: Text(
-                          "BOOK-OFERTAS",
-                          style: TextStyle(
-                            color: Colors.deepOrange[400],
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold,
+                        child: ListTile(
+                          leading: Icon(
+                            Icons.shopping_basket,
+                            size: 55,
+                            color: Colors.grey[200],
+                          ),
+                          title: Text(
+                            "BOOK OFERTAS",
+                            style: TextStyle(
+                              color: Colors.deepOrange[300],
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                         alignment: Alignment.centerLeft,
                       ),
                       Container(
                         height: 70,
-                        width: 700,
+                        width: 500,
                         color: Colors.transparent,
                         child: Text(
                           "CATALOGO DE OFERTAS DE TODOS OS DIAS",
                           style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 25,
+                            color: Colors.grey[200],
+                            fontSize: 24,
                           ),
                         ),
                         alignment: Alignment.centerLeft,
@@ -179,21 +190,21 @@ class WidgetTree extends StatelessWidget {
                         height: 70,
                         width: 200,
                         color: Colors.transparent,
-                        child: FlatButton.icon(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.edit,
-                            color: Colors.white,
-                          ),
-                          label: Text(
-                            "Cadastre-se",
-                            style: TextStyle(
-                              color: Colors.white,
+                        child: CircleAvatar(
+                          child: IconButton(
+                            onPressed: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (BuildContext context) {
+                                    return ConfigPage();
+                                  },
+                                ),
+                              );
+                            },
+                            icon: Icon(
+                              Icons.dashboard,
+                              color: Colors.grey[200],
                             ),
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(35),
-                            side: BorderSide(color: Colors.deepOrange[400]),
                           ),
                         ),
                         alignment: Alignment.centerRight,
@@ -205,6 +216,10 @@ class WidgetTree extends StatelessWidget {
               Container(
                 height: 50,
                 color: Colors.deepOrange[400],
+                padding: EdgeInsets.only(top: 0, left: 60, right: 50),
+                child: Container(
+                  child: CategoriaListMenu(),
+                ),
               ),
               Container(
                 height: 1500,
@@ -218,7 +233,7 @@ class WidgetTree extends StatelessWidget {
                       ),
                     ),
                     Expanded(
-                      flex: _size.width > 1340 ? 12 : 14,
+                      flex: _size.width > 1340 ? 22 : 24,
                       child: Container(
                         height: double.infinity,
                         color: Colors.grey[100],
@@ -232,19 +247,44 @@ class WidgetTree extends StatelessWidget {
                             Container(
                               height: 100,
                               color: Colors.grey[100],
-                              child: Text(
-                                "DESTAQUES DA SEMANA",
-                                style: TextStyle(
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "DESTAQUES DA SEMANA",
+                                    style: TextStyle(
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  GestureDetector(
+                                    child: Text(
+                                      "VER MAIS",
+                                      style: TextStyle(
+                                        fontSize: 30,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    onTap: () {
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (BuildContext context) {
+                                            return PromocaoPageList();
+                                          },
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ],
                               ),
                               alignment: Alignment.center,
                             ),
                             SizedBox(height: 10),
                             Container(
-                              height: 300,
-                              color: Colors.grey[600],
+                              height: 400,
+                              color: Colors.transparent,
+                              child: PromocaoListHome(),
                             ),
                             SizedBox(height: 10),
                             Container(
@@ -262,7 +302,8 @@ class WidgetTree extends StatelessWidget {
                             SizedBox(height: 10),
                             Container(
                               height: 300,
-                              color: Colors.grey[600],
+                              color: Colors.transparent,
+                              child: CategoriaListHome(),
                             ),
                             SizedBox(height: 10),
                             Container(

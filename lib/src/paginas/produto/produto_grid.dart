@@ -40,7 +40,7 @@ class _ProdutoGridState extends State<ProdutoGrid>
   Produto produto;
   bool isFavorito = false;
 
-  ProdutoFilter filter;
+  ProdutoFilter filter = ProdutoFilter();
   int size = 0;
   int page = 0;
 
@@ -51,17 +51,11 @@ class _ProdutoGridState extends State<ProdutoGrid>
     } else {
       produtoController.getFilter(filter);
     }
-
-    if (favorito == null) {
-      favorito = Favorito();
-      produto = Produto();
-    }
-
     super.initState();
   }
 
   Future<void> onRefresh() {
-    return produtoController.getAll();
+    return produtoController.getFilter(filter);
   }
 
   favoritar() {
@@ -81,55 +75,28 @@ class _ProdutoGridState extends State<ProdutoGrid>
     );
   }
 
-  showDialogAlert(BuildContext context, Produto p) async {
-    return showDialog(
-      context: context,
-      barrierDismissible: false, // user must tap button for close dialog!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('INFORMAÇÃOES'),
-          content: Text(p.nome),
-          actions: <Widget>[
-            FlatButton(
-              child: const Text('CANCELAR'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      height: double.infinity,
+      padding: EdgeInsets.only(bottom: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          SizedBox(height: 0),
+          Expanded(
+            child: Container(
+              color: Colors.transparent,
+              child: builderConteudoList(),
             ),
-            FlatButton(
-              child: const Text('EDITAR'),
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (BuildContext context) {
-                      return ProdutoCreatePage(
-                        produto: p,
-                      );
-                    },
-                  ),
-                );
-              },
-            ),
-            FlatButton(
-              child: const Text('VER DETALHES'),
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (BuildContext context) {
-                      return ProdutoDetalhesTab(p);
-                    },
-                  ),
-                );
-              },
-            ),
-          ],
-        );
-      },
+          ),
+        ],
+      ),
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
+  builderConteudoList() {
     return Container(
       padding: EdgeInsets.only(top: 0),
       child: Observer(
@@ -156,14 +123,13 @@ class _ProdutoGridState extends State<ProdutoGrid>
     return Container(
       padding: EdgeInsets.only(top: 0, bottom: 0),
       child: Container(
-        color: Colors.transparent,
         child: GridView.builder(
           padding: EdgeInsets.only(top: 10, bottom: 10),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 4,
             crossAxisSpacing: 10,
             mainAxisSpacing: 10,
-            childAspectRatio: MediaQuery.of(context).size.aspectRatio * 0.35,
+            childAspectRatio: MediaQuery.of(context).size.aspectRatio * 0.38,
           ),
           itemCount: produtos.length,
           itemBuilder: (context, index) {
@@ -171,7 +137,7 @@ class _ProdutoGridState extends State<ProdutoGrid>
             return GestureDetector(
               child: AnimatedContainer(
                 decoration: BoxDecoration(
-                  color: Colors.grey[200],
+                  color: Colors.white,
                   border: Border.all(color: Colors.transparent),
                   borderRadius: BorderRadius.circular(0),
                 ),
@@ -210,7 +176,7 @@ class _ProdutoGridState extends State<ProdutoGrid>
                               radius: 15,
                               child: IconButton(
                                 splashColor: Colors.black,
-                                icon: (this.favorito.status == false
+                                icon: (this.isFavorito == false
                                     ? Icon(
                                         Icons.favorite_border,
                                         color: Colors.redAccent,

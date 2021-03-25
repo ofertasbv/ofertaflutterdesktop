@@ -30,7 +30,7 @@ class _ProdutoListState extends State<ProdutoList>
   var produtoController = GetIt.I.get<ProdutoController>();
   SubCategoria s;
 
-  ProdutoFilter filter;
+  ProdutoFilter filter = ProdutoFilter();
   int size = 0;
   int page = 0;
 
@@ -45,12 +45,28 @@ class _ProdutoListState extends State<ProdutoList>
   }
 
   Future<void> onRefresh() {
-    return produtoController.getAll();
+    return produtoController.getFilter(filter);
   }
 
   @override
   Widget build(BuildContext context) {
-    return builderConteudoList();
+    return Container(
+      width: double.infinity,
+      height: double.infinity,
+      padding: EdgeInsets.only(bottom: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          SizedBox(height: 0),
+          Expanded(
+            child: Container(
+              color: Colors.transparent,
+              child: builderConteudoList(),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   builderConteudoList() {
@@ -203,7 +219,15 @@ class _ProdutoListState extends State<ProdutoList>
                       height: 50,
                       padding: EdgeInsets.all(50),
                       child: RaisedButton.icon(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (BuildContext context) {
+                                return ProdutoDetalhesTab(p);
+                              },
+                            ),
+                          );
+                        },
                         icon: Icon(Icons.add),
                         label: Text("LISTA DE DESEJO"),
                       ),
@@ -213,15 +237,6 @@ class _ProdutoListState extends State<ProdutoList>
               ),
             ),
           ),
-          onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return ProdutoDetalhesTab(p);
-                },
-              ),
-            );
-          },
         );
       },
     );

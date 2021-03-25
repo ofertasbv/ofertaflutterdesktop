@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:nosso/main.dart';
 import 'package:nosso/src/api/constants/constant_api.dart';
 import 'package:nosso/src/home/home.dart';
 import 'package:nosso/src/paginas/arquivo/arquivo_page.dart';
@@ -54,14 +55,14 @@ class _ConfigPageState extends State<ConfigPage> {
                   height: 190,
                   width: double.infinity,
                   color: Theme.of(context).primaryColor,
-                  padding: EdgeInsets.only(left: 100, right: 100, top: 10),
+                  padding: EdgeInsets.only(left: 50, right: 50, top: 10),
                   child: buildGridViewHeader(context),
                 ),
                 SizedBox(height: 10),
                 Expanded(
                   child: Container(
                     color: Colors.grey[200],
-                    padding: EdgeInsets.only(left: 100, right: 100),
+                    padding: EdgeInsets.only(left: 50, right: 50),
                     child: buildGridViewConfig(context),
                   ),
                 )
@@ -78,8 +79,8 @@ class _ConfigPageState extends State<ConfigPage> {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            Colors.indigo[900],
-            Colors.indigo[900],
+            Colors.grey[900],
+            Colors.grey[900],
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
@@ -100,7 +101,7 @@ class _ConfigPageState extends State<ConfigPage> {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (BuildContext context) {
-                  return PedidoPage();
+                  return WidgetTree();
                 },
               ),
             );
@@ -121,6 +122,7 @@ class _ConfigPageState extends State<ConfigPage> {
                 style: TextStyle(
                   fontSize: 25,
                   fontWeight: FontWeight.bold,
+                  color: Colors.grey[200],
                 ),
               ),
               subtitle: Text(
@@ -137,7 +139,7 @@ class _ConfigPageState extends State<ConfigPage> {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (BuildContext context) {
-                  return HomePage();
+                  return WidgetTree();
                 },
               ),
             );
@@ -150,7 +152,13 @@ class _ConfigPageState extends State<ConfigPage> {
                 size: 40,
                 color: Theme.of(context).accentColor,
               ),
-              title: Text("Home page"),
+              title: Text(
+                "Home page",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey[200],
+                ),
+              ),
               subtitle: Text(
                 "Página inicial",
                 style: TextStyle(
@@ -178,7 +186,13 @@ class _ConfigPageState extends State<ConfigPage> {
                 size: 40,
                 color: Theme.of(context).accentColor.withOpacity(1),
               ),
-              title: Text("Controle de caixa"),
+              title: Text(
+                "Controle de caixa",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey[200],
+                ),
+              ),
               subtitle: Text(
                 "compra e vendas",
                 style: TextStyle(
@@ -208,7 +222,13 @@ class _ConfigPageState extends State<ConfigPage> {
                 size: 40,
                 color: Theme.of(context).accentColor,
               ),
-              title: Text("Locais de comerciais"),
+              title: Text(
+                "Locais de comerciais",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey[200],
+                ),
+              ),
               subtitle: Text(
                 "Locais de lojas",
                 style: TextStyle(

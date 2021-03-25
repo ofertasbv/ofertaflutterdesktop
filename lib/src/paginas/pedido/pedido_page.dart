@@ -15,7 +15,7 @@ class PedidoPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        titleSpacing: 50,
+        titleSpacing: 0,
         title: Text("Pedidos"),
         actions: <Widget>[
           Observer(
@@ -50,11 +50,11 @@ class PedidoPage extends StatelessWidget {
               },
             ),
           ),
-          SizedBox(width: 100),
+          SizedBox(width: 50),
         ],
       ),
       body: Container(
-        padding: EdgeInsets.only(left: 100, right: 100, top: 10),
+        padding: EdgeInsets.only(left: 50, right: 50, top: 10),
         child: Card(child: PedidoTable()),
       ),
       floatingActionButton: Column(

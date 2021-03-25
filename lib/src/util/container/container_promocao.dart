@@ -38,26 +38,26 @@ class ContainerPromocao extends StatelessWidget {
                 padding: EdgeInsets.all(0),
                 child: p.foto != null
                     ? Container(
-                  width: 200,
-                  height: 150,
-                  color: Colors.grey[400],
-                  child: Image.network(
-                    "${promoCaoController.arquivo + p.foto}",
-                    width: 200,
-                    height: 150,
-                    fit: BoxFit.cover,
-                  ),
-                )
+                        width: 200,
+                        height: 150,
+                        color: Colors.grey[400],
+                        child: Image.network(
+                          "${promoCaoController.arquivo + p.foto}",
+                          width: 200,
+                          height: 150,
+                          fit: BoxFit.cover,
+                        ),
+                      )
                     : Container(
-                  width: 200,
-                  height: 150,
-                  color: Colors.grey[600],
-                  child: Image.asset(
-                    ConstantApi.urlLogo,
-                    width: 200,
-                    height: 150,
-                  ),
-                ),
+                        width: 200,
+                        height: 150,
+                        color: Colors.grey[600],
+                        child: Image.asset(
+                          ConstantApi.urlLogo,
+                          width: 200,
+                          height: 150,
+                        ),
+                      ),
               ),
               Container(
                 width: 500,
@@ -134,7 +134,16 @@ class ContainerPromocao extends StatelessWidget {
                   height: 50,
                   padding: EdgeInsets.all(50),
                   child: RaisedButton.icon(
-                    onPressed: () {},
+                    onPressed: () {
+                      filter.promocao = p.id;
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (BuildContext context) {
+                            return ProdutoPage(filter: filter);
+                          },
+                        ),
+                      );
+                    },
                     icon: Icon(Icons.shopping_basket_outlined),
                     label: Text("ESCOLHER PRODUTOS"),
                   ),
@@ -144,16 +153,6 @@ class ContainerPromocao extends StatelessWidget {
           ),
         ),
       ),
-      onTap: () {
-        filter.promocao = p.id;
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (BuildContext context) {
-              return ProdutoPage(filter: filter);
-            },
-          ),
-        );
-      },
     );
   }
 

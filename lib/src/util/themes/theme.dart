@@ -5,23 +5,23 @@ ThemeData getTheme(BuildContext context) {
   return ThemeData(
     tabBarTheme: TabBarTheme(),
     brightness: Brightness.light,
-    primaryColor: Colors.amber,
-    accentColor: Colors.purple,
-    primarySwatch: Colors.deepPurple,
+    primaryColor: Colors.grey[800],
+    accentColor: Colors.deepOrange[400],
+    primarySwatch: Colors.deepOrange,
     textTheme: GoogleFonts.sourceSansProTextTheme().copyWith(
       subtitle2: TextStyle(
         color: Colors.black,
-        fontWeight: FontWeight.w400,
+        fontWeight: FontWeight.w600,
         fontSize: 16,
       ),
       subtitle1: TextStyle(
         color: Colors.black,
-        fontWeight: FontWeight.w400,
+        fontWeight: FontWeight.w600,
         fontSize: 16,
       ),
       bodyText2: TextStyle(
         color: Colors.black,
-        fontWeight: FontWeight.w400,
+        fontWeight: FontWeight.w600,
         fontSize: 16,
       ),
       bodyText1: TextStyle(
@@ -62,19 +62,19 @@ ThemeData getTheme(BuildContext context) {
       ),
     ),
     inputDecorationTheme: InputDecorationTheme(
-      labelStyle: TextStyle(color: Colors.indigo[900]),
-      prefixStyle: TextStyle(color: Colors.indigo[900]),
+      labelStyle: TextStyle(color: Colors.grey[600]),
+      prefixStyle: TextStyle(color: Colors.grey[600]),
       hintStyle: TextStyle(color: Colors.deepOrange),
-      fillColor: Colors.grey[200],
-      alignLabelWithHint: true,
+      fillColor: Colors.grey[300],
       focusColor: Colors.red[900],
       hoverColor: Colors.grey[100],
       suffixStyle: TextStyle(color: Colors.deepOrange),
       errorStyle: TextStyle(color: Colors.red),
       isDense: true,
       filled: true,
+      contentPadding: EdgeInsets.all(12),
     ),
-    hintColor: Colors.indigo[900],
+    hintColor: Colors.grey[900],
     iconTheme: IconThemeData(
       color: Colors.indigo[900],
     ),
@@ -89,9 +89,9 @@ ThemeData getTheme(BuildContext context) {
     ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       elevation: 0,
-      selectedItemColor: Colors.indigo[900],
+      selectedItemColor: Colors.grey[900],
       unselectedItemColor: Colors.black,
-      unselectedLabelStyle: TextStyle(color: Colors.indigo[900]),
+      unselectedLabelStyle: TextStyle(color: Colors.grey[900]),
       backgroundColor: Colors.grey[100],
     ),
   );

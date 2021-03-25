@@ -8,15 +8,16 @@ import 'package:get_it/get_it.dart';
 import 'package:nosso/src/core/controller/categoria_controller.dart';
 import 'package:nosso/src/core/model/categoria.dart';
 import 'package:nosso/src/paginas/subcategoria/subcategoria_produto.dart';
+import 'package:nosso/src/util/load/circular_progresso_mini.dart';
 import 'package:nosso/src/util/load/shimmerListCategoriaHome.dart';
 
-class CategoriaListHome extends StatefulWidget {
+class CategoriaListMenu extends StatefulWidget {
   @override
-  _CategoriaListHomeState createState() => _CategoriaListHomeState();
+  _CategoriaListMenuState createState() => _CategoriaListMenuState();
 }
 
-class _CategoriaListHomeState extends State<CategoriaListHome>
-    with AutomaticKeepAliveClientMixin<CategoriaListHome> {
+class _CategoriaListMenuState extends State<CategoriaListMenu>
+    with AutomaticKeepAliveClientMixin<CategoriaListMenu> {
   var categoriaController = GetIt.I.get<CategoriaController>();
 
   @override
@@ -72,7 +73,7 @@ class _CategoriaListHomeState extends State<CategoriaListHome>
           }
 
           if (categorias == null) {
-            return ShimmerListCategoriaHome();
+            return CircularProgressorMini();
           }
 
           return RefreshIndicator(
@@ -96,55 +97,18 @@ class _CategoriaListHomeState extends State<CategoriaListHome>
 
         return GestureDetector(
           child: Padding(
-            padding: EdgeInsets.only(right: 10),
-            child: AnimatedContainer(
-              width: 250,
-              height: 350,
-              alignment: Alignment.center,
-              duration: Duration(seconds: 1),
-              decoration: BoxDecoration(
-                color: Colors.transparent,
-                border: Border.all(color: Colors.transparent),
-                borderRadius: BorderRadius.circular(0),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.all(1),
-                    color: Colors.grey[300],
-                    width: double.infinity,
-                    height: 200,
-                    child: c.foto != null
-                        ? CircleAvatar(
-                            backgroundColor: Colors.grey[100],
-                            radius: 50,
-                            backgroundImage: NetworkImage(
-                              "${categoriaController.arquivo + c.foto}",
-                            ),
-                          )
-                        : CircleAvatar(
-                            backgroundColor: Colors.grey[100],
-                            radius: 50,
-                          ),
-                  ),
-                  SizedBox(height: 0),
-                  Container(
-                    padding: EdgeInsets.all(0),
-                    height: 80,
-                    width: containerWidth,
-                    color: Colors.white,
-                    alignment: Alignment.center,
-                    child: Text(
-                      c.nome.toLowerCase(),
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.grey[600],
-                      ),
-                    ),
-                  )
-                ],
+            padding: EdgeInsets.only(right: 14),
+            child: Chip(
+              padding: EdgeInsets.all(10),
+              backgroundColor: Colors.deepOrange[400],
+              elevation: 1,
+              label: Text(
+                c.nome.toLowerCase(),
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.grey[300],
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
           ),

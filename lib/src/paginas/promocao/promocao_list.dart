@@ -60,50 +60,6 @@ class _PromocaoListState extends State<PromocaoList>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Container(
-            height: 80,
-            width: double.infinity,
-            color: Colors.grey[300],
-            padding: EdgeInsets.all(10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: Icon(Icons.arrow_back),
-                ),
-                Container(
-                  height: 80,
-                  width: 800,
-                  color: Colors.grey[300],
-                  padding: EdgeInsets.all(0),
-                  child: ListTile(
-                    subtitle: TextFormField(
-                      controller: nomeController,
-                      decoration: InputDecoration(
-                        labelText: "busca por promoções",
-                        prefixIcon: Icon(Icons.search_outlined),
-                        suffixIcon: IconButton(
-                          onPressed: () => nomeController.clear(),
-                          icon: Icon(Icons.clear),
-                        ),
-                      ),
-                      onChanged: filterByNome,
-                    ),
-                  ),
-                ),
-                IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: Icon(Icons.arrow_forward),
-                )
-              ],
-            ),
-          ),
           SizedBox(height: 0),
           Expanded(
             child: Container(
