@@ -145,7 +145,7 @@ class _PromocaoCreatePageState extends State<PromocaoCreatePage>
           }
 
           if (promocaoTipos == null) {
-            return CircularProgressor();
+            return CircularProgressorMini();
           }
 
           return DropdownSearch<PromocaoTipo>(

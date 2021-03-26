@@ -7,6 +7,7 @@ import 'package:get_it/get_it.dart';
 import 'package:nosso/src/core/controller/pedido_controller.dart';
 import 'package:nosso/src/core/controller/produto_controller.dart';
 import 'package:nosso/src/core/model/pedido.dart';
+import 'package:nosso/src/paginas/pagamento/pagamento_create_page.dart';
 import 'package:nosso/src/paginas/pedido/pedido_create_page.dart';
 import 'package:nosso/src/util/load/circular_progresso.dart';
 
@@ -77,6 +78,7 @@ class _PedidoTableState extends State<PedidoTable> {
             DataColumn(label: Text("Visualizar")),
             DataColumn(label: Text("Editar")),
             DataColumn(label: Text("Itens")),
+            DataColumn(label: Text("Pagamento")),
           ],
           source: DataSource(pedidos, context),
         ),
@@ -147,6 +149,18 @@ class DataSource extends DataTableSource {
                   return PedidoCreatePage(
                     pedido: p,
                   );
+                },
+              ),
+            );
+          },
+        )),
+        DataCell(IconButton(
+          icon: Icon(Icons.credit_card_outlined),
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return PagamentoCreatePage();
                 },
               ),
             );

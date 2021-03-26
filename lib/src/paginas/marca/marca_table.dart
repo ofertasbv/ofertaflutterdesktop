@@ -8,6 +8,8 @@ import 'package:intl/intl.dart';
 import 'package:nosso/src/core/controller/marca_controller.dart';
 import 'package:nosso/src/core/model/marca.dart';
 import 'package:nosso/src/paginas/marca/marca_create_page.dart';
+import 'package:nosso/src/paginas/produto/produto_table.dart';
+import 'package:nosso/src/util/filter/produto_filter.dart';
 import 'package:nosso/src/util/load/circular_progresso.dart';
 
 class MarcaTable extends StatefulWidget {
@@ -140,6 +142,8 @@ class DataSource extends DataTableSource {
 
   DataSource(this.marcas, this.context);
 
+  ProdutoFilter filter = ProdutoFilter();
+
   @override
   DataRow getRow(int index) {
     assert(index >= 0);
@@ -179,14 +183,13 @@ class DataSource extends DataTableSource {
           },
         )),
         DataCell(IconButton(
-          icon: Icon(Icons.list),
+          icon: Icon(Icons.list_alt_outlined),
           onPressed: () {
+            filter.promocao = p.id;
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (BuildContext context) {
-                  return MarcaCreatePage(
-                    marca: p,
-                  );
+                  return ProdutoTable(filter: this.filter);
                 },
               ),
             );

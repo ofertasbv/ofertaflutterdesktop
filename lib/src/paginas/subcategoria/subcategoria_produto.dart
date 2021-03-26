@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
+import 'package:nosso/main.dart';
 import 'package:nosso/src/core/controller/subcategoria_controller.dart';
 import 'package:nosso/src/core/model/categoria.dart';
 import 'package:nosso/src/core/model/favorito.dart';
@@ -58,88 +59,183 @@ class _SubCategoriaProdutoState extends State<SubCategoriaProduto>
   @override
   Widget build(BuildContext context) {
     var text = "";
-
     return Scaffold(
-      appBar: AppBar(
-        titleSpacing: 0,
-        elevation: 0,
-        title: categoria.nome == null
-            ? Text("Departamentos")
-            : Text(categoria.nome),
-        actions: <Widget>[
-          Observer(
-            builder: (context) {
-              if (subCategoriaController.error != null) {
-                return Text("Não foi possível carregar");
-              }
-
-              if (subCategoriaController.subCategorias == null) {
-                return Center(
-                  child: Icon(Icons.warning_amber_outlined),
-                );
-              }
-
-              return CircleAvatar(
-                child: Text(
-                  (subCategoriaController.subCategorias.length ?? 0).toString(),
-                ),
-              );
-            },
-          ),
-          SizedBox(width: 10),
-          CircleAvatar(
-            backgroundColor: Theme.of(context).accentColor.withOpacity(0.4),
-            foregroundColor: Colors.black,
-            child: IconButton(
-              icon: Icon(
-                Icons.refresh,
-              ),
-              onPressed: () {
-                subCategoriaController.getAll();
-              },
-            ),
-          ),
-          SizedBox(width: 50),
-        ],
-      ),
-      body: Container(
-        padding: EdgeInsets.only(left: 50, right: 50, top: 10),
-        height: MediaQuery.of(context).size.height,
-        color: Colors.transparent,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            SizedBox(height: 10),
-            Container(
-              height: 80,
+      // appBar: AppBar(
+      //   titleSpacing: 0,
+      //   elevation: 0,
+      //   title: categoria.nome == null
+      //       ? Text("Departamentos")
+      //       : Text(categoria.nome),
+      //   actions: <Widget>[
+      //     Observer(
+      //       builder: (context) {
+      //         if (subCategoriaController.error != null) {
+      //           return Text("Não foi possível carregar");
+      //         }
+      //
+      //         if (subCategoriaController.subCategorias == null) {
+      //           return Center(
+      //             child: Icon(Icons.warning_amber_outlined),
+      //           );
+      //         }
+      //
+      //         return CircleAvatar(
+      //           child: Text(
+      //             (subCategoriaController.subCategorias.length ?? 0).toString(),
+      //           ),
+      //         );
+      //       },
+      //     ),
+      //     SizedBox(width: 10),
+      //     CircleAvatar(
+      //       backgroundColor: Theme.of(context).accentColor.withOpacity(0.4),
+      //       foregroundColor: Colors.black,
+      //       child: IconButton(
+      //         icon: Icon(
+      //           Icons.refresh,
+      //         ),
+      //         onPressed: () {
+      //           subCategoriaController.getAll();
+      //         },
+      //       ),
+      //     ),
+      //     SizedBox(width: 50),
+      //   ],
+      // ),
+      body: ListView(
+        children: [
+          Container(
+            height: 80,
+            color: Colors.grey[800],
+            child: Container(
+              color: Colors.transparent,
               width: double.infinity,
-              color: Colors.grey[200],
-              padding: EdgeInsets.all(0),
-              child: ListTile(
-                subtitle: TextFormField(
-                  controller: nomeController,
-                  decoration: InputDecoration(
-                    labelText: "busca por departamentos",
-                    prefixIcon: Icon(Icons.search_outlined),
-                    suffixIcon: IconButton(
-                      onPressed: () => nomeController.clear(),
-                      icon: Icon(Icons.clear),
+              padding: EdgeInsets.only(top: 0, left: 50, right: 50),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    height: 70,
+                    width: 200,
+                    color: Colors.transparent,
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.shopping_basket,
+                        size: 55,
+                        color: Colors.grey[200],
+                      ),
+                      title: GestureDetector(
+                        child: Text(
+                          "BOOK OFERTAS",
+                          style: TextStyle(
+                            color: Colors.deepOrange[300],
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (BuildContext context) {
+                                return WidgetTree();
+                              },
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                    alignment: Alignment.centerLeft,
+                  ),
+                  Container(
+                    height: 80,
+                    width: 500,
+                    color: Colors.transparent,
+                    alignment: Alignment.center,
+                    child: TextFormField(
+                      controller: nomeController,
+                      decoration: InputDecoration(
+                        hintText: "busca por subcategorias",
+                        suffixIcon: IconButton(
+                          onPressed: () => nomeController.clear(),
+                          icon: Icon(Icons.clear),
+                        ),
+                      ),
+                      onChanged: filterByNome,
                     ),
                   ),
-                  onChanged: filterByNome,
-                ),
+                  Container(
+                    height: 70,
+                    width: 200,
+                    color: Colors.transparent,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Observer(
+                          builder: (context) {
+                            if (subCategoriaController.error != null) {
+                              return Text("Não foi possível carregar");
+                            }
+
+                            if (subCategoriaController.subCategorias == null) {
+                              return Center(
+                                child: Icon(Icons.warning_amber_outlined),
+                              );
+                            }
+
+                            return CircleAvatar(
+                              child: Text(
+                                (subCategoriaController.subCategorias.length ??
+                                        0)
+                                    .toString(),
+                              ),
+                            );
+                          },
+                        ),
+                        SizedBox(width: 10),
+                        CircleAvatar(
+                          backgroundColor:
+                              Theme.of(context).accentColor.withOpacity(0.4),
+                          foregroundColor: Colors.black,
+                          child: IconButton(
+                            icon: Icon(
+                              Icons.refresh,
+                            ),
+                            onPressed: () {
+                              subCategoriaController.getAll();
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
-            SizedBox(height: 10),
-            Expanded(
-              child: Container(
-                color: Colors.grey[200],
-                padding: EdgeInsets.only(bottom: 10),
-                child: builderConteutoListSubCategoria(),
-              ),
+          ),
+          buildContainer(context),
+        ],
+      ),
+    );
+  }
+
+  Container buildContainer(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.only(left: 50, right: 50, top: 10),
+      height: MediaQuery.of(context).size.height,
+      color: Colors.transparent,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          SizedBox(height: 10),
+          Expanded(
+            child: Container(
+              color: Colors.grey[200],
+              padding: EdgeInsets.only(bottom: 10),
+              child: builderConteutoListSubCategoria(),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

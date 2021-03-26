@@ -7,6 +7,7 @@ import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:nosso/src/core/controller/loja_controller.dart';
 import 'package:nosso/src/core/controller/promocao_controller.dart';
+import 'package:nosso/src/core/controller/promocaotipo_controller.dart';
 import 'package:nosso/src/core/model/loja.dart';
 import 'package:nosso/src/core/model/promocao.dart';
 import 'package:nosso/src/core/model/promocaotipo.dart';
@@ -32,6 +33,7 @@ class _PromocaoTableState extends State<PromocaoTable> {
   _PromocaoTableState({this.filter});
 
   var promocaoController = GetIt.I.get<PromoCaoController>();
+  var promocaoTipoController = GetIt.I.get<PromocaoTipoController>();
   var lojaController = GetIt.I.get<LojaController>();
   var nomeController = TextEditingController();
 
@@ -58,6 +60,8 @@ class _PromocaoTableState extends State<PromocaoTable> {
     status = true;
     filter.status = false;
     status = filter.status;
+
+    promocaoTipoController.getAll();
     lojaController.getAll();
     super.initState();
   }
@@ -278,7 +282,7 @@ class _PromocaoTableState extends State<PromocaoTable> {
                 Container(
                   width: 500,
                   color: Colors.grey[200],
-                  child: builderConteudoListLojas(),
+                  child: builderConteudoListTipoPromocoes(),
                 ),
                 Container(
                   width: 500,
@@ -318,6 +322,47 @@ class _PromocaoTableState extends State<PromocaoTable> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  builderConteudoListTipoPromocoes() {
+    return Container(
+      padding: EdgeInsets.only(top: 0),
+      child: Observer(
+        builder: (context) {
+          List<PromocaoTipo> promocaoTipos =
+              promocaoTipoController.promocaoTipos;
+          if (promocaoTipoController.error != null) {
+            return Text("Não foi possível carregados dados");
+          }
+
+          if (promocaoTipos == null) {
+            return CircularProgressorMini();
+          }
+
+          return DropdownSearch<PromocaoTipo>(
+            label: "Selecione tipos",
+            popupTitle: Center(child: Text("Tipos")),
+            items: promocaoTipos,
+            showSearchBox: true,
+            itemAsString: (PromocaoTipo t) => t.descricao,
+            validator: (value) => value == null ? "campo obrigatório" : null,
+            isFilteredOnline: true,
+            showClearButton: true,
+            onChanged: (PromocaoTipo t) {
+              setState(() {
+                promocao.promocaoTipo = t;
+                print("tipo: ${promocao.promocaoTipo.descricao}");
+              });
+            },
+            searchBoxDecoration: InputDecoration(
+              border: OutlineInputBorder(),
+              contentPadding: EdgeInsets.fromLTRB(20, 20, 20, 0),
+              labelText: "Pesquisar por loja",
+            ),
+          );
+        },
       ),
     );
   }
