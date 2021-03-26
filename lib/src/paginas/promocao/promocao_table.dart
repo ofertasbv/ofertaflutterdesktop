@@ -1,30 +1,41 @@
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
+import 'package:nosso/src/core/controller/loja_controller.dart';
 import 'package:nosso/src/core/controller/promocao_controller.dart';
 import 'package:nosso/src/core/model/loja.dart';
 import 'package:nosso/src/core/model/promocao.dart';
 import 'package:nosso/src/core/model/promocaotipo.dart';
-import 'package:nosso/src/paginas/produto/produto_tab.dart';
 import 'package:nosso/src/paginas/produto/produto_table.dart';
 import 'package:nosso/src/paginas/promocao/promocao_create_page.dart';
 import 'package:nosso/src/paginas/promocao/promocao_detalhes_tab.dart';
+import 'package:nosso/src/util/filter/produto_filter.dart';
 import 'package:nosso/src/util/filter/promocao_filter.dart';
 import 'package:nosso/src/util/load/circular_progresso.dart';
+import 'package:nosso/src/util/load/circular_progresso_mini.dart';
 
 class PromocaoTable extends StatefulWidget {
+  PromocaoFilter promocaoFilter;
+
+  PromocaoTable({Key key, this.promocaoFilter}) : super(key: key);
+
   @override
-  _PromocaoTableState createState() => _PromocaoTableState();
+  _PromocaoTableState createState() =>
+      _PromocaoTableState(filter: this.promocaoFilter);
 }
 
 class _PromocaoTableState extends State<PromocaoTable> {
+  _PromocaoTableState({this.filter});
+
   var promocaoController = GetIt.I.get<PromoCaoController>();
+  var lojaController = GetIt.I.get<LojaController>();
   var nomeController = TextEditingController();
 
-  PromocaoFilter filter = PromocaoFilter();
+  PromocaoFilter filter;
   Promocao promocao;
   PromocaoTipo promocaoTipo;
   Loja loja;
@@ -38,12 +49,16 @@ class _PromocaoTableState extends State<PromocaoTable> {
       promocaoTipo = PromocaoTipo();
       loja = Loja();
       status = true;
+      promocaoController.getAll();
     } else {
       filter.status = false;
       status = filter.status;
+      promocaoController.getFilter(filter);
     }
-
-    promocaoController.getAll();
+    status = true;
+    filter.status = false;
+    status = filter.status;
+    lojaController.getAll();
     super.initState();
   }
 
@@ -59,6 +74,56 @@ class _PromocaoTableState extends State<PromocaoTable> {
 
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        titleSpacing: 0,
+        elevation: 0,
+        title: Text("Ofertas"),
+        actions: <Widget>[
+          Observer(
+            builder: (context) {
+              if (promocaoController.error != null) {
+                return Text("Não foi possível carregar");
+              }
+
+              if (promocaoController.promocoes == null) {
+                return Center(
+                  child: Icon(Icons.warning_amber_outlined),
+                );
+              }
+
+              return CircleAvatar(
+                child: Text(
+                  (promocaoController.promocoes.length ?? 0).toString(),
+                ),
+              );
+            },
+          ),
+          SizedBox(width: 10),
+          CircleAvatar(
+            backgroundColor: Theme.of(context).accentColor.withOpacity(0.4),
+            foregroundColor: Colors.black,
+            child: IconButton(
+              icon: Icon(
+                Icons.refresh,
+              ),
+              onPressed: () {
+                promocaoController.getAll();
+                filter = PromocaoFilter();
+              },
+            ),
+          ),
+          SizedBox(width: 50),
+        ],
+      ),
+      body: Container(
+        padding: EdgeInsets.only(left: 50, right: 50, top: 10),
+        child: buildContainer(),
+      ),
+    );
+  }
+
+  buildContainer() {
     var dateFormat = DateFormat('dd/MM/yyyy');
     return Container(
       width: double.infinity,
@@ -200,6 +265,25 @@ class _PromocaoTableState extends State<PromocaoTable> {
                       );
                     },
                   ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 10),
+          Container(
+            width: double.infinity,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  width: 500,
+                  color: Colors.grey[200],
+                  child: builderConteudoListLojas(),
+                ),
+                Container(
+                  width: 500,
+                  color: Colors.grey[200],
+                  child: builderConteudoListLojas(),
                 )
               ],
             ),
@@ -238,6 +322,47 @@ class _PromocaoTableState extends State<PromocaoTable> {
     );
   }
 
+  builderConteudoListLojas() {
+    return Container(
+      padding: EdgeInsets.only(top: 0),
+      child: Observer(
+        builder: (context) {
+          List<Loja> lojas = lojaController.lojas;
+          if (lojaController.error != null) {
+            return Text("Não foi possível carregados dados");
+          }
+
+          if (lojas == null) {
+            return CircularProgressorMini();
+          }
+
+          return DropdownSearch<Loja>(
+            label: "Selecione lojas",
+            popupTitle: Center(child: Text("Lojas")),
+            items: lojas,
+            showSearchBox: true,
+            itemAsString: (Loja s) => s.nome,
+            isFilteredOnline: true,
+            showClearButton: true,
+            onChanged: (Loja l) {
+              setState(() {
+                loja = l;
+                filter.loja = loja.id;
+                print("loja nome: ${loja.nome}");
+              });
+            },
+            searchBoxDecoration: InputDecoration(
+              border: OutlineInputBorder(),
+              contentPadding: EdgeInsets.fromLTRB(20, 20, 20, 0),
+              labelText: "Pesquisar por loja",
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+
   builderConteudoList() {
     return Container(
       padding: EdgeInsets.only(top: 0),
@@ -271,6 +396,7 @@ class _PromocaoTableState extends State<PromocaoTable> {
             DataColumn(label: Text("Cód")),
             DataColumn(label: Text("Foto")),
             DataColumn(label: Text("Nome")),
+            DataColumn(label: Text("Loja")),
             DataColumn(label: Text("Status")),
             DataColumn(label: Text("Início")),
             DataColumn(label: Text("Encerramento")),
@@ -294,6 +420,8 @@ class DataSource extends DataTableSource {
 
   DataSource(this.promocoes, this.context);
 
+  ProdutoFilter filter = ProdutoFilter();
+
   @override
   DataRow getRow(int index) {
     assert(index >= 0);
@@ -315,6 +443,7 @@ class DataSource extends DataTableSource {
               : CircleAvatar(),
         ),
         DataCell(Text(p.nome)),
+        DataCell(Text(p.loja.nome)),
         DataCell(CircleAvatar(
           backgroundColor:
               p.status == true ? Colors.green[600] : Colors.red[600],
@@ -351,10 +480,11 @@ class DataSource extends DataTableSource {
         DataCell(IconButton(
           icon: Icon(Icons.shopping_basket_outlined),
           onPressed: () {
+            filter.promocao = p.id;
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (BuildContext context) {
-                  return ProdutoTab();
+                  return ProdutoTable(filter: this.filter);
                 },
               ),
             );

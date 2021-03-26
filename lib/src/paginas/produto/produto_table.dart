@@ -17,14 +17,18 @@ import 'package:nosso/src/core/model/promocao.dart';
 import 'package:nosso/src/core/model/subcategoria.dart';
 import 'package:nosso/src/paginas/produto/produto_create_page.dart';
 import 'package:nosso/src/paginas/produto/produto_detalhes_tab.dart';
+import 'package:nosso/src/paginas/produto/produto_search.dart';
 import 'package:nosso/src/util/filter/produto_filter.dart';
-import 'package:nosso/src/util/load/circular_progresso.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:nosso/src/util/load/circular_progresso_mini.dart';
 
 class ProdutoTable extends StatefulWidget {
+  ProdutoFilter filter;
+
+  ProdutoTable({Key key, this.filter}) : super(key: key);
+
   @override
-  _ProdutoTableState createState() => _ProdutoTableState();
+  _ProdutoTableState createState() => _ProdutoTableState(filter: this.filter);
 }
 
 class _ProdutoTableState extends State<ProdutoTable> {
@@ -35,7 +39,9 @@ class _ProdutoTableState extends State<ProdutoTable> {
   var lojaController = GetIt.I.get<LojaController>();
   var nomeController = TextEditingController();
 
-  ProdutoFilter filter = ProdutoFilter();
+  _ProdutoTableState({this.filter});
+
+  ProdutoFilter filter;
   SubCategoria subCategoria;
   Promocao promocao;
   Marca marca;
@@ -55,14 +61,15 @@ class _ProdutoTableState extends State<ProdutoTable> {
       marca = Marca();
       loja = Loja();
       produto = Produto();
+      produtoController.getAll();
+    } else {
+      produtoController.getFilter(filter);
     }
 
     subCategoriaController.getAll();
     lojaController.getAll();
     marcaController.getAll();
     promocaoController.getAll();
-
-    produtoController.getAll();
     super.initState();
   }
 
@@ -82,6 +89,74 @@ class _ProdutoTableState extends State<ProdutoTable> {
 
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        titleSpacing: 0,
+        elevation: 0,
+        title: Text("Produtos"),
+        actions: <Widget>[
+          Observer(
+            builder: (context) {
+              if (produtoController.error != null) {
+                return Text("Não foi possível carregar");
+              }
+
+              if (produtoController.produtos == null) {
+                return Center(
+                  child: CircleAvatar(
+                    backgroundColor:
+                        Theme.of(context).accentColor.withOpacity(0.4),
+                    foregroundColor: Colors.black,
+                    child: Icon(Icons.warning_amber_outlined),
+                  ),
+                );
+              }
+
+              return CircleAvatar(
+                backgroundColor: Theme.of(context).accentColor.withOpacity(0.4),
+                foregroundColor: Colors.black,
+                child: Text(
+                  (produtoController.produtos.length ?? 0).toString(),
+                  style: TextStyle(color: Colors.white),
+                ),
+              );
+            },
+          ),
+          SizedBox(width: 10),
+          CircleAvatar(
+            backgroundColor: Theme.of(context).accentColor.withOpacity(0.4),
+            foregroundColor: Colors.black,
+            child: IconButton(
+              icon: Icon(
+                Icons.tune,
+              ),
+              onPressed: () {},
+            ),
+          ),
+          SizedBox(width: 10),
+          CircleAvatar(
+            backgroundColor: Theme.of(context).accentColor.withOpacity(0.4),
+            foregroundColor: Colors.black,
+            child: IconButton(
+              icon: Icon(
+                CupertinoIcons.search,
+              ),
+              onPressed: () {
+                showSearch(context: context, delegate: ProdutoSearchDelegate());
+              },
+            ),
+          ),
+          SizedBox(width: 50),
+        ],
+      ),
+      body: Container(
+        padding: EdgeInsets.only(left: 50, right: 50, top: 10),
+        child: buildContainer(),
+      ),
+    );
+  }
+
+  Container buildContainer() {
     return Container(
       width: double.infinity,
       height: double.infinity,
@@ -198,6 +273,7 @@ class _ProdutoTableState extends State<ProdutoTable> {
                 RaisedButton.icon(
                   onPressed: () {
                     produtoController.getAll();
+                    filter = ProdutoFilter();
                   },
                   icon: Icon(Icons.refresh),
                   label: Text("Atualizar pesquisa"),
@@ -244,7 +320,6 @@ class _ProdutoTableState extends State<ProdutoTable> {
                 loja = l;
                 filter.loja = loja.id;
                 print("loja nome: ${loja.nome}");
-                print("loja filter: ${filter.id}");
               });
             },
             searchBoxDecoration: InputDecoration(

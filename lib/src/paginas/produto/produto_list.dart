@@ -25,6 +25,7 @@ class ProdutoList extends StatefulWidget {
 
 class _ProdutoListState extends State<ProdutoList>
     with AutomaticKeepAliveClientMixin<ProdutoList> {
+
   _ProdutoListState({this.filter});
 
   var produtoController = GetIt.I.get<ProdutoController>();

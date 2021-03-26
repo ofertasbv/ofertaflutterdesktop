@@ -25,17 +25,18 @@ import 'package:nosso/src/util/validador/validador_pedido.dart';
 
 class PedidoCreatePage extends StatefulWidget {
   Pedido pedido;
+  PedidoItem pedidoItem;
 
-  PedidoCreatePage({Key key, this.pedido}) : super(key: key);
+  PedidoCreatePage({Key key, this.pedido, this.pedidoItem}) : super(key: key);
 
   @override
   _PedidoCreatePageState createState() =>
-      _PedidoCreatePageState(p: this.pedido);
+      _PedidoCreatePageState(p: this.pedido, pedidoItem: this.pedidoItem);
 }
 
 class _PedidoCreatePageState extends State<PedidoCreatePage>
     with ValidadorPedido {
-  _PedidoCreatePageState({this.p});
+  _PedidoCreatePageState({this.p, this.pedidoItem});
 
   var pedidoController = GetIt.I.get<PedidoController>();
   var pedidoItemController = GetIt.I.get<PedidoItemController>();
@@ -46,6 +47,7 @@ class _PedidoCreatePageState extends State<PedidoCreatePage>
   Dialogs dialogs = Dialogs();
 
   Pedido p;
+  PedidoItem pedidoItem;
   Cliente clienteSelecionado;
   Loja lojaSelecionda;
   String pedidoStatus;
@@ -63,6 +65,10 @@ class _PedidoCreatePageState extends State<PedidoCreatePage>
     if (p == null) {
       p = Pedido();
       pedidoStatus = "CRIADO";
+      if (pedidoItem != null) {
+        valorInicialCotroller.text = pedidoItem.valorUnitario.toStringAsFixed(1);
+        valorTotalCotroller.text = pedidoItem.valorTotal.toStringAsFixed(2);
+      }
     } else {
       lojaSelecionda = p.loja;
       clienteSelecionado = p.cliente;

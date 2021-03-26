@@ -518,7 +518,14 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
               icon: Icon(Icons.check),
               onPressed: () {
                 if (controller.validate()) {
-                  buildPush(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PedidoCreatePage(
+                        pedidoItem: pedidoItem,
+                      ),
+                    ),
+                  );
                 }
               },
             ),

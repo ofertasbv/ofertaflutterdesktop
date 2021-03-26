@@ -8,6 +8,10 @@ import 'package:nosso/src/core/controller/loja_controller.dart';
 import 'package:nosso/src/core/model/loja.dart';
 import 'package:nosso/src/paginas/loja/loja_create_page.dart';
 import 'package:nosso/src/paginas/loja/loja_detalhes_tab.dart';
+import 'package:nosso/src/paginas/produto/produto_table.dart';
+import 'package:nosso/src/paginas/promocao/promocao_table.dart';
+import 'package:nosso/src/util/filter/produto_filter.dart';
+import 'package:nosso/src/util/filter/promocao_filter.dart';
 import 'package:nosso/src/util/load/circular_progresso.dart';
 
 class LojaTable extends StatefulWidget {
@@ -142,6 +146,9 @@ class DataSource extends DataTableSource {
 
   DataSource(this.lojas, this.context);
 
+  ProdutoFilter produtoFilter = ProdutoFilter();
+  PromocaoFilter promocaoFilter = PromocaoFilter();
+
   @override
   DataRow getRow(int index) {
     assert(index >= 0);
@@ -186,12 +193,11 @@ class DataSource extends DataTableSource {
         DataCell(IconButton(
           icon: Icon(Icons.list),
           onPressed: () {
+            produtoFilter.loja = p.id;
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (BuildContext context) {
-                  return LojaCreatePage(
-                    loja: p,
-                  );
+                  return ProdutoTable(filter: this.produtoFilter);
                 },
               ),
             );
@@ -200,12 +206,11 @@ class DataSource extends DataTableSource {
         DataCell(IconButton(
           icon: Icon(Icons.list),
           onPressed: () {
+            promocaoFilter.loja = p.id;
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (BuildContext context) {
-                  return LojaCreatePage(
-                    loja: p,
-                  );
+                  return PromocaoTable(promocaoFilter: this.promocaoFilter);
                 },
               ),
             );
