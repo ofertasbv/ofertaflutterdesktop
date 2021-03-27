@@ -4,39 +4,42 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
-import 'package:nosso/src/core/controller/vendedor_controller.dart';
-import 'package:nosso/src/core/model/vendedor.dart';
-import 'package:nosso/src/paginas/vendedor/vendedor_create_page.dart';
+import 'package:intl/intl.dart';
+import 'package:nosso/src/core/controller/medida_controller.dart';
+import 'package:nosso/src/core/model/medida.dart';
+import 'package:nosso/src/paginas/medida/medida_create_page.dart';
+import 'package:nosso/src/paginas/produto/produto_table.dart';
+import 'package:nosso/src/util/filter/produto_filter.dart';
 import 'package:nosso/src/util/load/circular_progresso.dart';
 
-class VendedorTable extends StatefulWidget {
+class MedidaTable extends StatefulWidget {
   @override
-  _VendedorTableState createState() => _VendedorTableState();
+  _MedidaTableState createState() => _MedidaTableState();
 }
 
-class _VendedorTableState extends State<VendedorTable>
-    with AutomaticKeepAliveClientMixin<VendedorTable> {
-  var vendedorController = GetIt.I.get<VendedorController>();
+class _MedidaTableState extends State<MedidaTable>
+    with AutomaticKeepAliveClientMixin<MedidaTable> {
+  var medidaController = GetIt.I.get<MedidaController>();
   var nomeController = TextEditingController();
 
   @override
   void initState() {
-    vendedorController.getAll();
+    medidaController.getAll();
     super.initState();
   }
 
   Future<void> onRefresh() {
-    return vendedorController.getAll();
+    return medidaController.getAll();
   }
 
   bool isLoading = true;
 
   filterByNome(String nome) {
     if (nome.trim().isEmpty) {
-      vendedorController.getAll();
+      medidaController.getAll();
     } else {
       nome = nomeController.text;
-      vendedorController.getAllByNome(nome);
+      medidaController.getAllByNome(nome);
     }
   }
 
@@ -53,7 +56,7 @@ class _VendedorTableState extends State<VendedorTable>
             height: 60,
             width: double.infinity,
             color: Colors.grey[200],
-            padding: EdgeInsets.all(5),
+            padding: EdgeInsets.all(0),
             child: ListTile(
               subtitle: TextFormField(
                 controller: nomeController,
@@ -85,25 +88,25 @@ class _VendedorTableState extends State<VendedorTable>
       padding: EdgeInsets.only(top: 0),
       child: Observer(
         builder: (context) {
-          List<Vendedor> vendedores = vendedorController.vendedores;
-          if (vendedorController.error != null) {
+          List<Medida> medidas = medidaController.medidas;
+          if (medidaController.error != null) {
             return Text("Não foi possível carregados dados");
           }
 
-          if (vendedores == null) {
+          if (medidas == null) {
             return CircularProgressor();
           }
 
           return RefreshIndicator(
             onRefresh: onRefresh,
-            child: buildTable(vendedores),
+            child: buildTable(medidas),
           );
         },
       ),
     );
   }
 
-  buildTable(List<Vendedor> vendedores) {
+  buildTable(List<Medida> medidas) {
     return ListView(
       children: [
         PaginatedDataTable(
@@ -112,19 +115,14 @@ class _VendedorTableState extends State<VendedorTable>
           sortColumnIndex: 1,
           sortAscending: true,
           showFirstLastButtons: true,
-          columnSpacing: 10,
           columns: [
-            DataColumn(label: Text("Cód.")),
-            DataColumn(label: Text("Foto")),
-            DataColumn(label: Text("Nome")),
-            DataColumn(label: Text("Telefone")),
-            DataColumn(label: Text("Email")),
+            DataColumn(label: Text("Código")),
+            DataColumn(label: Text("Descrição")),
+            DataColumn(label: Text("Visualizar")),
             DataColumn(label: Text("Editar")),
-            DataColumn(label: Text("Detalhes")),
-            DataColumn(label: Text("Pedidos")),
-            DataColumn(label: Text("Endereços")),
+            DataColumn(label: Text("Produtos")),
           ],
-          source: DataSource(vendedores, context),
+          source: DataSource(medidas, context),
         ),
       ],
     );
@@ -136,51 +134,33 @@ class _VendedorTableState extends State<VendedorTable>
 }
 
 class DataSource extends DataTableSource {
-  var vendedorController = GetIt.I.get<VendedorController>();
   BuildContext context;
-  List<Vendedor> vendedores;
+  List<Medida> medidas;
   int selectedCount = 0;
+  var dateFormat = DateFormat('dd/MM/yyyy');
 
-  DataSource(this.vendedores, this.context);
+  DataSource(this.medidas, this.context);
+
+  ProdutoFilter filter = ProdutoFilter();
 
   @override
   DataRow getRow(int index) {
     assert(index >= 0);
-    if (index >= vendedores.length) return null;
-    Vendedor p = vendedores[index];
+    if (index >= medidas.length) return null;
+    Medida p = medidas[index];
     return DataRow.byIndex(
       index: index,
       cells: [
         DataCell(Text("${p.id}")),
-        DataCell(CircleAvatar(
-          backgroundColor: Colors.grey[200],
-          radius: 20,
-        )),
-        DataCell(Text("${p.nome}")),
-        DataCell(Text("${p.telefone}")),
-        DataCell(Text("${p.usuario.email}")),
-        DataCell(IconButton(
-          icon: Icon(Icons.edit),
-          onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return VendedorCreatePage(
-                    vendedor: p,
-                  );
-                },
-              ),
-            );
-          },
-        )),
+        DataCell(Text("${p.descricao}")),
         DataCell(IconButton(
           icon: Icon(Icons.search),
           onPressed: () {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (BuildContext context) {
-                  return VendedorCreatePage(
-                    vendedor: p,
+                  return MedidaCreatePage(
+                    medida: p,
                   );
                 },
               ),
@@ -188,13 +168,13 @@ class DataSource extends DataTableSource {
           },
         )),
         DataCell(IconButton(
-          icon: Icon(Icons.shopping_basket_outlined),
+          icon: Icon(Icons.edit),
           onPressed: () {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (BuildContext context) {
-                  return VendedorCreatePage(
-                    vendedor: p,
+                  return MedidaCreatePage(
+                    medida: p,
                   );
                 },
               ),
@@ -202,14 +182,13 @@ class DataSource extends DataTableSource {
           },
         )),
         DataCell(IconButton(
-          icon: Icon(Icons.location_on_outlined),
+          icon: Icon(Icons.list_alt_outlined),
           onPressed: () {
+            filter.promocao = p.id;
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (BuildContext context) {
-                  return VendedorCreatePage(
-                    vendedor: p,
-                  );
+                  return ProdutoTable(filter: this.filter);
                 },
               ),
             );
@@ -220,7 +199,7 @@ class DataSource extends DataTableSource {
   }
 
   @override
-  int get rowCount => vendedores.length;
+  int get rowCount => medidas.length;
 
   @override
   bool get isRowCountApproximate => false;

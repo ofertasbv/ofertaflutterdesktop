@@ -437,6 +437,7 @@ class _PromocaoTableState extends State<PromocaoTable> {
           sortColumnIndex: 1,
           sortAscending: true,
           showFirstLastButtons: true,
+          columnSpacing: 10,
           columns: [
             DataColumn(label: Text("Cód")),
             DataColumn(label: Text("Foto")),

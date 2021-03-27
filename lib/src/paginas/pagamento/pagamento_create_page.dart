@@ -144,12 +144,7 @@ class _PagamentoCreatePageState extends State<PagamentoCreatePage>
                         validator: validateQuantidade,
                         decoration: InputDecoration(
                           labelText: "Quantidade",
-                          border: OutlineInputBorder(
-                            gapPadding: 0.0,
-                            borderRadius: BorderRadius.circular(5),
-                          ),
                           hintText: "Quantidade",
-                          hintStyle: TextStyle(color: Colors.grey[400]),
                           prefixIcon: Icon(Icons.confirmation_number_outlined),
                         ),
                         onEditingComplete: () => focus.nextFocus(),
@@ -166,12 +161,7 @@ class _PagamentoCreatePageState extends State<PagamentoCreatePage>
                         validator: validateValorTotal,
                         decoration: InputDecoration(
                           labelText: "Valor total",
-                          border: OutlineInputBorder(
-                            gapPadding: 0.0,
-                            borderRadius: BorderRadius.circular(5),
-                          ),
                           hintText: "valor total",
-                          hintStyle: TextStyle(color: Colors.grey[400]),
                           prefixIcon: Icon(Icons.monetization_on_outlined),
                         ),
                         onEditingComplete: () => focus.nextFocus(),
@@ -192,15 +182,6 @@ class _PagamentoCreatePageState extends State<PagamentoCreatePage>
                             color: Colors.grey,
                           ),
                           suffixIcon: Icon(Icons.close),
-                          contentPadding:
-                              EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.purple[900]),
-                            gapPadding: 1,
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
                         ),
                         onEditingComplete: () => focus.nextFocus(),
                         onShowPicker: (context, currentValue) {

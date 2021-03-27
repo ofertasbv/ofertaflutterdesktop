@@ -271,15 +271,6 @@ class _PedidoItemCreatePageState extends State<PedidoItemCreatePage> {
                           hintText: "Entre com a quantidade",
                           prefixIcon: Icon(Icons.edit, color: Colors.grey),
                           suffixIcon: Icon(Icons.close),
-                          contentPadding:
-                              EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.lime[900]),
-                            gapPadding: 1,
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
                         ),
                         keyboardType: TextInputType.text,
                         maxLength: 50,
@@ -298,7 +289,6 @@ class _PedidoItemCreatePageState extends State<PedidoItemCreatePage> {
                     children: [
                       Container(
                         width: 500,
-                        color: Colors.grey[200],
                         child: TextFormField(
                           initialValue: p.valorUnitario.toString(),
                           onSaved: (value) =>
@@ -311,15 +301,6 @@ class _PedidoItemCreatePageState extends State<PedidoItemCreatePage> {
                             prefixIcon:
                                 Icon(Icons.monetization_on, color: Colors.grey),
                             suffixIcon: Icon(Icons.close),
-                            contentPadding:
-                                EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5.0)),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.lime[900]),
-                              gapPadding: 1,
-                              borderRadius: BorderRadius.circular(5.0),
-                            ),
                           ),
                           keyboardType: TextInputType.text,
                           maxLength: 50,
@@ -329,7 +310,6 @@ class _PedidoItemCreatePageState extends State<PedidoItemCreatePage> {
                       ),
                       Container(
                         width: 500,
-                        color: Colors.grey[200],
                         child: TextFormField(
                           initialValue: p.valorTotal.toString(),
                           onSaved: (value) =>
@@ -342,15 +322,6 @@ class _PedidoItemCreatePageState extends State<PedidoItemCreatePage> {
                             prefixIcon:
                                 Icon(Icons.monetization_on, color: Colors.grey),
                             suffixIcon: Icon(Icons.close),
-                            contentPadding:
-                                EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5.0)),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.lime[900]),
-                              gapPadding: 1,
-                              borderRadius: BorderRadius.circular(5.0),
-                            ),
                           ),
                           keyboardType: TextInputType.text,
                           maxLength: 50,

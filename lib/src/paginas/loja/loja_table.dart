@@ -117,6 +117,7 @@ class _LojaTableState extends State<LojaTable>
           sortColumnIndex: 1,
           sortAscending: true,
           showFirstLastButtons: true,
+          columnSpacing: 10,
           columns: [
             DataColumn(label: Text("Código")),
             DataColumn(label: Text("Foto")),

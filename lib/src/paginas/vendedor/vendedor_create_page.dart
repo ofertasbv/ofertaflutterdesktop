@@ -13,7 +13,6 @@ import 'package:nosso/src/core/model/endereco.dart';
 import 'package:nosso/src/core/model/uploadFileResponse.dart';
 import 'package:nosso/src/core/model/usuario.dart';
 import 'package:nosso/src/core/model/vendedor.dart';
-import 'package:nosso/src/paginas/cliente/cliente_page.dart';
 import 'package:nosso/src/paginas/usuario/usuario_login_page.dart';
 import 'package:nosso/src/paginas/vendedor/vendedor_page.dart';
 import 'package:nosso/src/util/dialogs/dialogs.dart';
@@ -259,212 +258,153 @@ class _VendedorCreatePageState extends State<VendedorCreatePage>
                 SizedBox(height: 10),
                 Container(
                   padding: EdgeInsets.all(5),
-                  child: Column(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      TextFormField(
-                        initialValue: p.nome,
-                        onSaved: (value) => p.nome = value,
-                        validator: (value) =>
-                            value.isEmpty ? "campo obrigário" : null,
-                        decoration: InputDecoration(
-                          labelText: "Nome completo",
-                          hintText: "nome",
-                          prefixIcon: Icon(Icons.people, color: Colors.grey),
-                          suffixIcon: Icon(Icons.close),
-                          contentPadding:
-                              EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.lime[900]),
-                            gapPadding: 1,
-                            borderRadius: BorderRadius.circular(5.0),
+                      Container(
+                        width: 500,
+                        child: TextFormField(
+                          initialValue: p.nome,
+                          onSaved: (value) => p.nome = value,
+                          validator: (value) =>
+                              value.isEmpty ? "campo obrigário" : null,
+                          decoration: InputDecoration(
+                            labelText: "Nome completo",
+                            hintText: "nome",
+                            prefixIcon: Icon(Icons.people, color: Colors.grey),
+                            suffixIcon: Icon(Icons.close),
                           ),
+                          onEditingComplete: () => focus.nextFocus(),
+                          keyboardType: TextInputType.text,
+                          maxLength: 50,
                         ),
-                        onEditingComplete: () => focus.nextFocus(),
-                        keyboardType: TextInputType.text,
-                        maxLength: 50,
                       ),
-                      SizedBox(height: 10),
-                      TextFormField(
-                        initialValue: p.cpf,
-                        onSaved: (value) => p.cpf = value,
-                        validator: (value) =>
-                            value.isEmpty ? "campo obrigário" : null,
-                        decoration: InputDecoration(
-                          labelText: "cpf",
-                          hintText: "cpf",
-                          prefixIcon:
-                              Icon(Icons.contact_mail, color: Colors.grey),
-                          suffixIcon: Icon(Icons.close),
-                          contentPadding:
-                              EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.lime[900]),
-                            gapPadding: 1,
-                            borderRadius: BorderRadius.circular(5.0),
+                      Container(
+                        width: 500,
+                        child: TextFormField(
+                          initialValue: p.cpf,
+                          onSaved: (value) => p.cpf = value,
+                          validator: (value) =>
+                              value.isEmpty ? "campo obrigário" : null,
+                          decoration: InputDecoration(
+                            labelText: "cpf",
+                            hintText: "cpf",
+                            prefixIcon:
+                                Icon(Icons.contact_mail, color: Colors.grey),
+                            suffixIcon: Icon(Icons.close),
                           ),
+                          onEditingComplete: () => focus.nextFocus(),
+                          inputFormatters: [maskFormatterCPF],
+                          keyboardType: TextInputType.number,
+                          maxLength: 14,
                         ),
-                        onEditingComplete: () => focus.nextFocus(),
-                        inputFormatters: [maskFormatterCPF],
-                        keyboardType: TextInputType.number,
-                        maxLength: 14,
                       ),
-                      SizedBox(height: 10),
-                      TextFormField(
-                        initialValue: p.telefone,
-                        onSaved: (value) => p.telefone = value,
-                        validator: (value) =>
-                            value.isEmpty ? "campo obrigário" : null,
-                        decoration: InputDecoration(
-                          labelText: "Telefone",
-                          hintText: "Telefone celular",
-                          prefixIcon: Icon(Icons.phone, color: Colors.grey),
-                          suffixIcon: Icon(Icons.close),
-                          contentPadding:
-                              EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.lime[900]),
-                            gapPadding: 1,
-                            borderRadius: BorderRadius.circular(5.0),
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.all(5),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Container(
+                        width: 500,
+                        child: TextFormField(
+                          initialValue: p.telefone,
+                          onSaved: (value) => p.telefone = value,
+                          validator: (value) =>
+                              value.isEmpty ? "campo obrigário" : null,
+                          decoration: InputDecoration(
+                            labelText: "Telefone",
+                            hintText: "Telefone celular",
+                            prefixIcon: Icon(Icons.phone, color: Colors.grey),
+                            suffixIcon: Icon(Icons.close),
                           ),
+                          onEditingComplete: () => focus.nextFocus(),
+                          keyboardType: TextInputType.phone,
+                          inputFormatters: [maskFormatterCelular],
+                          maxLength: 50,
                         ),
-                        onEditingComplete: () => focus.nextFocus(),
-                        keyboardType: TextInputType.phone,
-                        inputFormatters: [maskFormatterCelular],
-                        maxLength: 50,
                       ),
-                      SizedBox(height: 10),
-                      DateTimeField(
-                        initialValue: p.dataRegistro,
-                        format: dateFormat,
-                        validator: validateDateRegsitro,
-                        onSaved: (value) => p.dataRegistro = value,
-                        decoration: InputDecoration(
-                          labelText: "data registro",
-                          hintText: "99-09-9999",
-                          prefixIcon: Icon(
-                            Icons.calendar_today,
-                            color: Colors.grey,
+                      Container(
+                        width: 500,
+                        child: TextFormField(
+                          initialValue: p.usuario.email,
+                          onSaved: (value) => p.usuario.email = value,
+                          validator: validateEmail,
+                          decoration: InputDecoration(
+                            labelText: "Email",
+                            hintText: "Email",
+                            prefixIcon: Icon(Icons.email, color: Colors.grey),
+                            suffixIcon: Icon(Icons.close),
                           ),
-                          suffixIcon: Icon(Icons.close),
-                          contentPadding:
-                              EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.purple[900]),
-                            gapPadding: 1,
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
+                          onEditingComplete: () => focus.nextFocus(),
+                          keyboardType: TextInputType.emailAddress,
+                          maxLength: 50,
                         ),
-                        onEditingComplete: () => focus.nextFocus(),
-                        onShowPicker: (context, currentValue) {
-                          return showDatePicker(
-                            context: context,
-                            firstDate: DateTime(2000),
-                            initialDate: currentValue ?? DateTime.now(),
-                            locale: Locale('pt', 'BR'),
-                            lastDate: DateTime(2030),
-                          );
-                        },
-                        maxLength: 10,
                       ),
-                      SizedBox(height: 10),
-                      TextFormField(
-                        initialValue: p.usuario.email,
-                        onSaved: (value) => p.usuario.email = value,
-                        validator: validateEmail,
-                        decoration: InputDecoration(
-                          labelText: "Email",
-                          hintText: "Email",
-                          prefixIcon: Icon(Icons.email, color: Colors.grey),
-                          suffixIcon: Icon(Icons.close),
-                          contentPadding:
-                              EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.lime[900]),
-                            gapPadding: 1,
-                            borderRadius: BorderRadius.circular(5.0),
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.all(5),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Container(
+                        width: 500,
+                        child: TextFormField(
+                          controller: senhaController,
+                          onSaved: (value) => p.usuario.senha = value,
+                          validator: validateSenha,
+                          decoration: InputDecoration(
+                            labelText: "Senha",
+                            hintText: "Senha",
+                            prefixIcon:
+                                Icon(Icons.security, color: Colors.grey),
+                            suffixIcon: IconButton(
+                              icon: vendedorController.senhaVisivel == true
+                                  ? Icon(Icons.visibility_outlined,
+                                      color: Colors.grey)
+                                  : Icon(Icons.visibility_off_outlined,
+                                      color: Colors.grey),
+                              onPressed: () {
+                                vendedorController.visualizarSenha();
+                              },
+                            ),
                           ),
+                          onEditingComplete: () => focus.nextFocus(),
+                          keyboardType: TextInputType.text,
+                          obscureText: !vendedorController.senhaVisivel,
+                          maxLength: 8,
                         ),
-                        onEditingComplete: () => focus.nextFocus(),
-                        keyboardType: TextInputType.emailAddress,
-                        maxLength: 50,
                       ),
-                      SizedBox(height: 10),
-                      TextFormField(
-                        controller: senhaController,
-                        onSaved: (value) => p.usuario.senha = value,
-                        validator: validateSenha,
-                        decoration: InputDecoration(
-                          labelText: "Senha",
-                          hintText: "Senha",
-                          prefixIcon: Icon(Icons.security, color: Colors.grey),
-                          suffixIcon: IconButton(
-                            icon: vendedorController.senhaVisivel == true
-                                ? Icon(Icons.visibility_outlined,
-                                    color: Colors.grey)
-                                : Icon(Icons.visibility_off_outlined,
-                                    color: Colors.grey),
-                            onPressed: () {
-                              vendedorController.visualizarSenha();
-                            },
+                      Container(
+                        width: 500,
+                        child: TextFormField(
+                          controller: confirmaSenhaController,
+                          validator: validateSenha,
+                          decoration: InputDecoration(
+                            labelText: "Confirma senha",
+                            hintText: "Confirma senha",
+                            prefixIcon:
+                                Icon(Icons.security, color: Colors.grey),
+                            suffixIcon: IconButton(
+                              icon: vendedorController.senhaVisivel == true
+                                  ? Icon(Icons.visibility_outlined,
+                                      color: Colors.grey)
+                                  : Icon(Icons.visibility_off_outlined,
+                                      color: Colors.grey),
+                              onPressed: () {
+                                vendedorController.visualizarSenha();
+                              },
+                            ),
                           ),
-                          contentPadding:
-                              EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.lime[900]),
-                            gapPadding: 1,
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
+                          onEditingComplete: () => focus.nextFocus(),
+                          keyboardType: TextInputType.text,
+                          obscureText: !vendedorController.senhaVisivel,
+                          maxLength: 8,
                         ),
-                        onEditingComplete: () => focus.nextFocus(),
-                        keyboardType: TextInputType.text,
-                        obscureText: !vendedorController.senhaVisivel,
-                        maxLength: 8,
-                      ),
-                      SizedBox(height: 10),
-                      TextFormField(
-                        controller: confirmaSenhaController,
-                        validator: validateSenha,
-                        decoration: InputDecoration(
-                          labelText: "Confirma senha",
-                          hintText: "Confirma senha",
-                          prefixIcon: Icon(Icons.security, color: Colors.grey),
-                          suffixIcon: IconButton(
-                            icon: vendedorController.senhaVisivel == true
-                                ? Icon(Icons.visibility_outlined,
-                                    color: Colors.grey)
-                                : Icon(Icons.visibility_off_outlined,
-                                    color: Colors.grey),
-                            onPressed: () {
-                              vendedorController.visualizarSenha();
-                            },
-                          ),
-                          contentPadding:
-                              EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.lime[900]),
-                            gapPadding: 1,
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
-                        ),
-                        onEditingComplete: () => focus.nextFocus(),
-                        keyboardType: TextInputType.text,
-                        obscureText: !vendedorController.senhaVisivel,
-                        maxLength: 8,
                       ),
                     ],
                   ),

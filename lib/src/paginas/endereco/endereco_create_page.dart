@@ -302,16 +302,6 @@ class _EnderecoCreatePageState extends State<EnderecoCreatePage>
                             Icons.location_on,
                             color: Colors.grey,
                           ),
-                          contentPadding:
-                              EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                          labelStyle: TextStyle(color: Colors.black),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.purple[900]),
-                            gapPadding: 1,
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
                         ),
                         onEditingComplete: () => focus.nextFocus(),
                         keyboardType: TextInputType.text,
@@ -345,15 +335,6 @@ class _EnderecoCreatePageState extends State<EnderecoCreatePage>
                       Icons.location_on,
                       color: Colors.grey,
                     ),
-                    contentPadding: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                    labelStyle: TextStyle(color: Colors.black),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5.0)),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.purple[900]),
-                      gapPadding: 1,
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
                   ),
                   onEditingComplete: () => focus.nextFocus(),
                   keyboardType: TextInputType.text,
@@ -373,15 +354,6 @@ class _EnderecoCreatePageState extends State<EnderecoCreatePage>
                     prefixIcon: Icon(
                       Icons.location_on,
                       color: Colors.grey,
-                    ),
-                    contentPadding: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                    labelStyle: TextStyle(color: Colors.black),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5.0)),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.purple[900]),
-                      gapPadding: 1,
-                      borderRadius: BorderRadius.circular(5.0),
                     ),
                   ),
                   onEditingComplete: () => focus.nextFocus(),
@@ -414,13 +386,6 @@ class _EnderecoCreatePageState extends State<EnderecoCreatePage>
                       color: Colors.grey,
                     ),
                     labelStyle: TextStyle(color: Colors.black),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5.0)),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.purple[900]),
-                      gapPadding: 1,
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
                   ),
                   onEditingComplete: () => focus.nextFocus(),
                   keyboardType: TextInputType.number,
@@ -445,13 +410,6 @@ class _EnderecoCreatePageState extends State<EnderecoCreatePage>
                       color: Colors.grey,
                     ),
                     labelStyle: TextStyle(color: Colors.black),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5.0)),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.purple[900]),
-                      gapPadding: 1,
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
                   ),
                   onEditingComplete: () => focus.nextFocus(),
                   keyboardType: TextInputType.text,
@@ -484,14 +442,6 @@ class _EnderecoCreatePageState extends State<EnderecoCreatePage>
                       color: Colors.grey,
                     ),
                     labelStyle: TextStyle(color: Colors.black),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.purple[900]),
-                      gapPadding: 1,
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
                   ),
                   onEditingComplete: () => focus.nextFocus(),
                   keyboardType: TextInputType.numberWithOptions(),
@@ -514,14 +464,6 @@ class _EnderecoCreatePageState extends State<EnderecoCreatePage>
                       color: Colors.grey,
                     ),
                     labelStyle: TextStyle(color: Colors.black),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.purple[900]),
-                      gapPadding: 1,
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
                   ),
                   onEditingComplete: () => focus.nextFocus(),
                   keyboardType: TextInputType.numberWithOptions(),

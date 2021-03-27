@@ -66,7 +66,8 @@ class _PedidoCreatePageState extends State<PedidoCreatePage>
       p = Pedido();
       pedidoStatus = "CRIADO";
       if (pedidoItem != null) {
-        valorInicialCotroller.text = pedidoItem.valorUnitario.toStringAsFixed(1);
+        valorInicialCotroller.text =
+            pedidoItem.valorUnitario.toStringAsFixed(1);
         valorTotalCotroller.text = pedidoItem.valorTotal.toStringAsFixed(2);
       }
     } else {
@@ -273,15 +274,6 @@ class _PedidoCreatePageState extends State<PedidoCreatePage>
                           hintText: "Descrição",
                           prefixIcon: Icon(Icons.edit, color: Colors.grey),
                           suffixIcon: Icon(Icons.close),
-                          contentPadding:
-                              EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.lime[900]),
-                            gapPadding: 1,
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
                         ),
                         onEditingComplete: () => focus.nextFocus(),
                         keyboardType: TextInputType.text,
@@ -319,15 +311,6 @@ class _PedidoCreatePageState extends State<PedidoCreatePage>
                               onPressed: () => valorInicialCotroller.clear(),
                               icon: Icon(Icons.clear),
                             ),
-                            contentPadding:
-                                EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5.0)),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.indigo[900]),
-                              gapPadding: 1,
-                              borderRadius: BorderRadius.circular(5.0),
-                            ),
                           ),
                           onEditingComplete: () => focus.nextFocus(),
                           keyboardType:
@@ -354,15 +337,6 @@ class _PedidoCreatePageState extends State<PedidoCreatePage>
                             suffixIcon: IconButton(
                               onPressed: () => valorFreteCotroller.clear(),
                               icon: Icon(Icons.clear),
-                            ),
-                            contentPadding:
-                                EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5.0)),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.indigo[900]),
-                              gapPadding: 1,
-                              borderRadius: BorderRadius.circular(5.0),
                             ),
                           ),
                           onEditingComplete: () => focus.nextFocus(),
@@ -415,15 +389,6 @@ class _PedidoCreatePageState extends State<PedidoCreatePage>
                               onPressed: () => descontoCotroller.clear(),
                               icon: Icon(Icons.clear),
                             ),
-                            contentPadding:
-                                EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5.0)),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.purple[900]),
-                              gapPadding: 1,
-                              borderRadius: BorderRadius.circular(5.0),
-                            ),
                           ),
                           onEditingComplete: () => focus.nextFocus(),
                           keyboardType:
@@ -450,15 +415,6 @@ class _PedidoCreatePageState extends State<PedidoCreatePage>
                             suffixIcon: IconButton(
                               onPressed: () => valorTotalCotroller.clear(),
                               icon: Icon(Icons.clear),
-                            ),
-                            contentPadding:
-                                EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5.0)),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.indigo[900]),
-                              gapPadding: 1,
-                              borderRadius: BorderRadius.circular(5.0),
                             ),
                           ),
                           onEditingComplete: () => focus.nextFocus(),
@@ -490,15 +446,6 @@ class _PedidoCreatePageState extends State<PedidoCreatePage>
                             hintText: "99-09-9999",
                             prefixIcon: Icon(Icons.calendar_today),
                             suffixIcon: Icon(Icons.close),
-                            contentPadding:
-                                EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5.0)),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.indigo[900]),
-                              gapPadding: 1,
-                              borderRadius: BorderRadius.circular(5.0),
-                            ),
                           ),
                           onEditingComplete: () => focus.nextFocus(),
                           onShowPicker: (context, currentValue) {
@@ -526,15 +473,6 @@ class _PedidoCreatePageState extends State<PedidoCreatePage>
                             hintText: "99-09-9999",
                             prefixIcon: Icon(Icons.calendar_today),
                             suffixIcon: Icon(Icons.close),
-                            contentPadding:
-                                EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5.0)),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.indigo[900]),
-                              gapPadding: 1,
-                              borderRadius: BorderRadius.circular(5.0),
-                            ),
                           ),
                           onEditingComplete: () => focus.nextFocus(),
                           onShowPicker: (context, currentValue) {

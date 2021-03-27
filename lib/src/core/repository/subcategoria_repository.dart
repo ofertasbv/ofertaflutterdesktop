@@ -8,9 +8,6 @@ import 'package:nosso/src/core/model/subcategoria.dart';
 class SubCategoriaRepository {
   CustonDio dio = CustonDio();
 
-
-
-
   Future<List<SubCategoria>> getAll() async {
     try {
       print("carregando subcategorias");

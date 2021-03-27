@@ -248,7 +248,6 @@ class _LojaCreatePageState extends State<LojaCreatePage> with ValidadorPessoa {
                           children: [
                             Container(
                               width: 500,
-                              color: Colors.grey[200],
                               child: TextFormField(
                                 initialValue: p.nome,
                                 onSaved: (value) => p.nome = value,
@@ -261,17 +260,6 @@ class _LojaCreatePageState extends State<LojaCreatePage> with ValidadorPessoa {
                                   prefixIcon:
                                       Icon(Icons.people, color: Colors.grey),
                                   suffixIcon: Icon(Icons.close),
-                                  contentPadding: EdgeInsets.fromLTRB(
-                                      20.0, 20.0, 20.0, 20.0),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(5.0),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Colors.lime[900]),
-                                    gapPadding: 1,
-                                    borderRadius: BorderRadius.circular(5.0),
-                                  ),
                                 ),
                                 onEditingComplete: () => focus.nextFocus(),
                                 keyboardType: TextInputType.text,
@@ -280,7 +268,6 @@ class _LojaCreatePageState extends State<LojaCreatePage> with ValidadorPessoa {
                             ),
                             Container(
                               width: 500,
-                              color: Colors.grey[200],
                               child: TextFormField(
                                 initialValue: p.razaoSocial,
                                 onSaved: (value) => p.razaoSocial = value,
@@ -293,16 +280,6 @@ class _LojaCreatePageState extends State<LojaCreatePage> with ValidadorPessoa {
                                   prefixIcon:
                                       Icon(Icons.people, color: Colors.grey),
                                   suffixIcon: Icon(Icons.close),
-                                  contentPadding: EdgeInsets.fromLTRB(
-                                      20.0, 20.0, 20.0, 20.0),
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(5.0)),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Colors.lime[900]),
-                                    gapPadding: 1,
-                                    borderRadius: BorderRadius.circular(5.0),
-                                  ),
                                 ),
                                 onEditingComplete: () => focus.nextFocus(),
                                 keyboardType: TextInputType.text,
@@ -313,7 +290,6 @@ class _LojaCreatePageState extends State<LojaCreatePage> with ValidadorPessoa {
                         ),
                       ),
                       SizedBox(height: 10),
-
                       Container(
                         height: 100,
                         padding: EdgeInsets.all(0),
@@ -323,7 +299,6 @@ class _LojaCreatePageState extends State<LojaCreatePage> with ValidadorPessoa {
                           children: [
                             Container(
                               width: 500,
-                              color: Colors.grey[200],
                               child: TextFormField(
                                 initialValue: p.cnpj,
                                 onSaved: (value) => p.cnpj = value,
@@ -335,16 +310,6 @@ class _LojaCreatePageState extends State<LojaCreatePage> with ValidadorPessoa {
                                   prefixIcon: Icon(Icons.contact_mail,
                                       color: Colors.grey),
                                   suffixIcon: Icon(Icons.close),
-                                  contentPadding: EdgeInsets.fromLTRB(
-                                      20.0, 20.0, 20.0, 20.0),
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(5.0)),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Colors.lime[900]),
-                                    gapPadding: 1,
-                                    borderRadius: BorderRadius.circular(5.0),
-                                  ),
                                 ),
                                 onEditingComplete: () => focus.nextFocus(),
                                 keyboardType: TextInputType.number,
@@ -354,7 +319,6 @@ class _LojaCreatePageState extends State<LojaCreatePage> with ValidadorPessoa {
                             ),
                             Container(
                               width: 500,
-                              color: Colors.grey[200],
                               child: TextFormField(
                                 initialValue: p.telefone,
                                 onSaved: (value) => p.telefone = value,
@@ -367,16 +331,6 @@ class _LojaCreatePageState extends State<LojaCreatePage> with ValidadorPessoa {
                                   prefixIcon:
                                       Icon(Icons.phone, color: Colors.grey),
                                   suffixIcon: Icon(Icons.close),
-                                  contentPadding: EdgeInsets.fromLTRB(
-                                      20.0, 20.0, 20.0, 20.0),
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(5.0)),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Colors.lime[900]),
-                                    gapPadding: 1,
-                                    borderRadius: BorderRadius.circular(5.0),
-                                  ),
                                 ),
                                 onEditingComplete: () => focus.nextFocus(),
                                 keyboardType: TextInputType.phone,
@@ -387,43 +341,6 @@ class _LojaCreatePageState extends State<LojaCreatePage> with ValidadorPessoa {
                           ],
                         ),
                       ),
-
-                      SizedBox(height: 10),
-                      // DateTimeField(
-                      //   initialValue: p.dataRegistro,
-                      //   format: dateFormat,
-                      //   validator: validateDateRegsitro,
-                      //   onSaved: (value) => p.dataRegistro = value,
-                      //   decoration: InputDecoration(
-                      //     labelText: "data registro",
-                      //     hintText: "99-09-9999",
-                      //     prefixIcon: Icon(
-                      //       Icons.calendar_today,
-                      //       color: Colors.grey,
-                      //     ),
-                      //     suffixIcon: Icon(Icons.close),
-                      //     contentPadding:
-                      //         EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                      //     border: OutlineInputBorder(
-                      //         borderRadius: BorderRadius.circular(5.0)),
-                      //     focusedBorder: OutlineInputBorder(
-                      //       borderSide: BorderSide(color: Colors.purple[900]),
-                      //       gapPadding: 1,
-                      //       borderRadius: BorderRadius.circular(5.0),
-                      //     ),
-                      //   ),
-                      //   onEditingComplete: () => focus.nextFocus(),
-                      //   onShowPicker: (context, currentValue) {
-                      //     return showDatePicker(
-                      //       context: context,
-                      //       firstDate: DateTime(2000),
-                      //       initialDate: currentValue ?? DateTime.now(),
-                      //       locale: Locale('pt', 'BR'),
-                      //       lastDate: DateTime(2030),
-                      //     );
-                      //   },
-                      //   maxLength: 10,
-                      // ),
                       SizedBox(height: 10),
                       TextFormField(
                         initialValue: p.usuario.email,
@@ -434,15 +351,6 @@ class _LojaCreatePageState extends State<LojaCreatePage> with ValidadorPessoa {
                           hintText: "Email",
                           prefixIcon: Icon(Icons.email, color: Colors.grey),
                           suffixIcon: Icon(Icons.close),
-                          contentPadding:
-                              EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.lime[900]),
-                            gapPadding: 1,
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
                         ),
                         onEditingComplete: () => focus.nextFocus(),
                         keyboardType: TextInputType.emailAddress,
@@ -461,7 +369,6 @@ class _LojaCreatePageState extends State<LojaCreatePage> with ValidadorPessoa {
                     children: [
                       Container(
                         width: 500,
-                        color: Colors.grey[200],
                         child: TextFormField(
                           controller: senhaController,
                           onSaved: (value) => p.usuario.senha = value,
@@ -481,15 +388,6 @@ class _LojaCreatePageState extends State<LojaCreatePage> with ValidadorPessoa {
                                 lojaController.visualizarSenha();
                               },
                             ),
-                            contentPadding:
-                                EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5.0)),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.lime[900]),
-                              gapPadding: 1,
-                              borderRadius: BorderRadius.circular(5.0),
-                            ),
                           ),
                           onEditingComplete: () => focus.nextFocus(),
                           keyboardType: TextInputType.text,
@@ -499,7 +397,6 @@ class _LojaCreatePageState extends State<LojaCreatePage> with ValidadorPessoa {
                       ),
                       Container(
                         width: 500,
-                        color: Colors.grey[200],
                         child: TextFormField(
                           controller: confirmaSenhaController,
                           validator: validateSenha,
@@ -517,15 +414,6 @@ class _LojaCreatePageState extends State<LojaCreatePage> with ValidadorPessoa {
                               onPressed: () {
                                 lojaController.visualizarSenha();
                               },
-                            ),
-                            contentPadding:
-                                EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5.0)),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.lime[900]),
-                              gapPadding: 1,
-                              borderRadius: BorderRadius.circular(5.0),
                             ),
                           ),
                           onEditingComplete: () => focus.nextFocus(),

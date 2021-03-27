@@ -3,6 +3,7 @@ import 'package:nosso/src/core/model/cor.dart';
 import 'package:nosso/src/core/model/estoque.dart';
 import 'package:nosso/src/core/model/loja.dart';
 import 'package:nosso/src/core/model/marca.dart';
+import 'package:nosso/src/core/model/medida.dart';
 import 'package:nosso/src/core/model/promocao.dart';
 import 'package:nosso/src/core/model/subcategoria.dart';
 import 'package:nosso/src/core/model/tamanho.dart';
@@ -17,39 +18,40 @@ class Produto {
   bool status;
   bool novo;
   bool destaque;
-  String medida;
   String origem;
   double valorTotal;
   SubCategoria subCategoria;
   Promocao promocao;
   Loja loja;
   List<Arquivo> arquivos = new List<Arquivo>();
-  List<Tamanho> tamanhos = new  List<Tamanho>();
+  List<Tamanho> tamanhos = new List<Tamanho>();
   List<Cor> cores = new List<Cor>();
   Estoque estoque = new Estoque();
   Marca marca;
+  Medida medida;
 
-  Produto(
-      {this.id,
-      this.sku,
-      this.nome,
-      this.descricao,
-      this.foto,
-      this.codigoBarra,
-      this.status,
-      this.novo,
-      this.destaque,
-      this.medida,
-      this.origem,
-      this.valorTotal,
-      this.subCategoria,
-      this.promocao,
-      this.loja,
-      this.arquivos,
-      this.tamanhos,
-      this.cores,
-      this.estoque,
-      this.marca});
+  Produto({
+    this.id,
+    this.sku,
+    this.nome,
+    this.descricao,
+    this.foto,
+    this.codigoBarra,
+    this.status,
+    this.novo,
+    this.destaque,
+    this.origem,
+    this.valorTotal,
+    this.subCategoria,
+    this.promocao,
+    this.loja,
+    this.arquivos,
+    this.tamanhos,
+    this.cores,
+    this.estoque,
+    this.marca,
+    this.medida,
+  });
 
   Produto.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -61,7 +63,6 @@ class Produto {
     status = json['status'];
     novo = json['novo'];
     destaque = json['destaque'];
-    medida = json['medida'];
     origem = json['origem'];
     valorTotal = json['valorTotal'];
 
@@ -99,6 +100,9 @@ class Produto {
     estoque =
         json['estoque'] != null ? new Estoque.fromJson(json['estoque']) : null;
     marca = json['marca'] != null ? new Marca.fromJson(json['marca']) : null;
+
+    medida =
+        json['medida'] != null ? new Medida.fromJson(json['medida']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -112,7 +116,7 @@ class Produto {
     data['status'] = this.status;
     data['novo'] = this.novo;
     data['destaque'] = this.destaque;
-    data['medida'] = this.medida;
+
     data['origem'] = this.origem;
     data['valorTotal'] = this.valorTotal;
 
@@ -142,6 +146,10 @@ class Produto {
     }
     if (this.marca != null) {
       data['marca'] = this.marca.toJson();
+    }
+
+    if (this.medida != null) {
+      data['medida'] = this.medida.toJson();
     }
     return data;
   }

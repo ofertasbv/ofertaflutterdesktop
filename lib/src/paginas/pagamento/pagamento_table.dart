@@ -7,6 +7,7 @@ import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:nosso/src/core/controller/pagamento_controller.dart';
 import 'package:nosso/src/core/model/pagamento.dart';
+import 'package:nosso/src/paginas/pagamento/pagamento_create_page.dart';
 import 'package:nosso/src/util/load/circular_progresso.dart';
 
 class PagamentoTable extends StatefulWidget {
@@ -102,6 +103,7 @@ class _PagamentoTableState extends State<PagamentoTable>
           sortColumnIndex: 1,
           sortAscending: true,
           showFirstLastButtons: true,
+          columnSpacing: 10,
           columns: [
             DataColumn(label: Text("Código")),
             DataColumn(label: Text("Quantidade")),
@@ -150,11 +152,31 @@ class DataSource extends DataTableSource {
         DataCell(Text("${p.pedido.descricao}")),
         DataCell(IconButton(
           icon: Icon(Icons.search),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return PagamentoCreatePage(
+                    pagamento: p,
+                  );
+                },
+              ),
+            );
+          },
         )),
         DataCell(IconButton(
           icon: Icon(Icons.edit),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return PagamentoCreatePage(
+                    pagamento: p,
+                  );
+                },
+              ),
+            );
+          },
         )),
         DataCell(IconButton(
           icon: Icon(Icons.monetization_on_outlined),

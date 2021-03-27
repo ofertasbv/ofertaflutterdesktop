@@ -263,7 +263,7 @@ class _PromocaoCreatePageState extends State<PromocaoCreatePage>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Container(
-                  height: 350,
+                  height: 150,
                   color: Colors.grey[400],
                   child: GestureDetector(
                     onTap: () {
@@ -416,7 +416,7 @@ class _PromocaoCreatePageState extends State<PromocaoCreatePage>
                   ],
                 ),
                 Container(
-                  padding: EdgeInsets.all(10),
+                  padding: EdgeInsets.all(15),
                   child: Container(
                     child: Column(
                       children: <Widget>[
@@ -445,65 +445,52 @@ class _PromocaoCreatePageState extends State<PromocaoCreatePage>
                     ),
                   ),
                 ),
-                SizedBox(height: 20),
                 Container(
                   padding: EdgeInsets.all(15),
-                  child: Column(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      TextFormField(
-                        initialValue: p.nome,
-                        onSaved: (value) => p.nome = value,
-                        validator: validateNome,
-                        decoration: InputDecoration(
-                          labelText: "Título",
-                          hintText: "título promoção",
-                          prefixIcon: Icon(
-                            Icons.edit,
-                            color: Colors.grey,
+                      Container(
+                        width: 500,
+                        child: TextFormField(
+                          initialValue: p.nome,
+                          onSaved: (value) => p.nome = value,
+                          validator: validateNome,
+                          decoration: InputDecoration(
+                            labelText: "Título",
+                            hintText: "título promoção",
+                            prefixIcon: Icon(
+                              Icons.edit,
+                              color: Colors.grey,
+                            ),
+                            suffixIcon: Icon(Icons.close),
                           ),
-                          suffixIcon: Icon(Icons.close),
-                          contentPadding:
-                              EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.purple[900]),
-                            gapPadding: 1,
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
+                          onEditingComplete: () => focus.nextFocus(),
+                          keyboardType: TextInputType.text,
+                          maxLength: 100,
+                          maxLines: null,
                         ),
-                        onEditingComplete: () => focus.nextFocus(),
-                        keyboardType: TextInputType.text,
-                        maxLength: 100,
-                        maxLines: null,
                       ),
-                      SizedBox(height: 10),
-                      TextFormField(
-                        initialValue: p.descricao,
-                        onSaved: (value) => p.descricao = value,
-                        validator: validateDescricao,
-                        decoration: InputDecoration(
-                          labelText: "Descrição",
-                          hintText: "descrição promoção",
-                          prefixIcon: Icon(
-                            Icons.description,
-                            color: Colors.grey,
+                      Container(
+                        width: 500,
+                        child: TextFormField(
+                          initialValue: p.descricao,
+                          onSaved: (value) => p.descricao = value,
+                          validator: validateDescricao,
+                          decoration: InputDecoration(
+                            labelText: "Descrição",
+                            hintText: "descrição promoção",
+                            prefixIcon: Icon(
+                              Icons.description,
+                              color: Colors.grey,
+                            ),
+                            suffixIcon: Icon(Icons.close),
                           ),
-                          suffixIcon: Icon(Icons.close),
-                          contentPadding:
-                              EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.purple[900]),
-                            gapPadding: 1,
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
+                          maxLength: 100,
+                          maxLines: null,
+                          onEditingComplete: () => focus.nextFocus(),
+                          keyboardType: TextInputType.text,
                         ),
-                        maxLength: 100,
-                        maxLines: null,
-                        onEditingComplete: () => focus.nextFocus(),
-                        keyboardType: TextInputType.text,
                       ),
                     ],
                   ),
@@ -517,7 +504,6 @@ class _PromocaoCreatePageState extends State<PromocaoCreatePage>
                     children: [
                       Container(
                         width: 500,
-                        color: Colors.grey[200],
                         child: TextFormField(
                           controller: descontoController,
                           onSaved: (value) =>
@@ -531,15 +517,6 @@ class _PromocaoCreatePageState extends State<PromocaoCreatePage>
                               color: Colors.grey,
                             ),
                             suffixIcon: Icon(Icons.close),
-                            contentPadding:
-                                EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5.0)),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.purple[900]),
-                              gapPadding: 1,
-                              borderRadius: BorderRadius.circular(5.0),
-                            ),
                           ),
                           onEditingComplete: () => focus.nextFocus(),
                           keyboardType:
@@ -549,7 +526,6 @@ class _PromocaoCreatePageState extends State<PromocaoCreatePage>
                       ),
                       Container(
                         width: 500,
-                        color: Colors.grey[200],
                         child: DateTimeField(
                           initialValue: p.dataRegistro,
                           format: dateFormat,
@@ -563,15 +539,6 @@ class _PromocaoCreatePageState extends State<PromocaoCreatePage>
                               color: Colors.grey,
                             ),
                             suffixIcon: Icon(Icons.close),
-                            contentPadding:
-                                EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5.0)),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.purple[900]),
-                              gapPadding: 1,
-                              borderRadius: BorderRadius.circular(5.0),
-                            ),
                           ),
                           onEditingComplete: () => focus.nextFocus(),
                           onShowPicker: (context, currentValue) {
@@ -599,7 +566,6 @@ class _PromocaoCreatePageState extends State<PromocaoCreatePage>
                     children: [
                       Container(
                         width: 500,
-                        color: Colors.grey[200],
                         child: DateTimeField(
                           initialValue: p.dataInicio,
                           format: dateFormat,
@@ -613,15 +579,6 @@ class _PromocaoCreatePageState extends State<PromocaoCreatePage>
                               color: Colors.grey,
                             ),
                             suffixIcon: Icon(Icons.close),
-                            contentPadding:
-                                EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5.0)),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.purple[900]),
-                              gapPadding: 1,
-                              borderRadius: BorderRadius.circular(5.0),
-                            ),
                           ),
                           onEditingComplete: () => focus.nextFocus(),
                           onShowPicker: (context, currentValue) {
@@ -638,7 +595,6 @@ class _PromocaoCreatePageState extends State<PromocaoCreatePage>
                       ),
                       Container(
                         width: 500,
-                        color: Colors.grey[200],
                         child: DateTimeField(
                           initialValue: p.dataFinal,
                           format: dateFormat,
@@ -652,15 +608,6 @@ class _PromocaoCreatePageState extends State<PromocaoCreatePage>
                               color: Colors.grey,
                             ),
                             suffixIcon: Icon(Icons.close),
-                            contentPadding:
-                                EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5.0)),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.purple[900]),
-                              gapPadding: 1,
-                              borderRadius: BorderRadius.circular(5.0),
-                            ),
                           ),
                           onEditingComplete: () => focus.nextFocus(),
                           onShowPicker: (context, currentValue) {

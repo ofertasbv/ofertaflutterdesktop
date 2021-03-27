@@ -18,6 +18,7 @@ import 'package:nosso/src/core/controller/estado_controller.dart';
 import 'package:nosso/src/core/controller/favorito_controller.dart';
 import 'package:nosso/src/core/controller/loja_controller.dart';
 import 'package:nosso/src/core/controller/marca_controller.dart';
+import 'package:nosso/src/core/controller/medida_controller.dart';
 import 'package:nosso/src/core/controller/pagamento_controller.dart';
 import 'package:nosso/src/core/controller/pedidoItem_controller.dart';
 import 'package:nosso/src/core/controller/pedido_controller.dart';
@@ -65,6 +66,7 @@ void main() async {
   getIt.registerSingleton<PagamentoController>(PagamentoController());
   getIt.registerSingleton<CaixaController>(CaixaController());
   getIt.registerSingleton<CaixafluxoController>(CaixafluxoController());
+  getIt.registerSingleton<MedidaController>(MedidaController());
 
   getIt.registerSingleton<CaixafluxosaidaController>(
       CaixafluxosaidaController());

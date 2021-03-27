@@ -486,6 +486,7 @@ class _ProdutoTableState extends State<ProdutoTable> {
           sortColumnIndex: 1,
           sortAscending: true,
           showFirstLastButtons: true,
+          columnSpacing: 10,
           columns: [
             DataColumn(label: Text("Cód.")),
             DataColumn(label: Text("Foto")),
