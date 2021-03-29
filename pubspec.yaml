@@ -16,19 +16,23 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 
-  dio: ^3.0.10
+  http: ^0.13.1
+  dio: ^4.0.0
   mobx: ^1.2.1+4
   flutter_mobx:
   build_runner:
   mobx_codegen:
   get_it:
-  shared_preferences: ^0.5.8
+#  shared_preferences: ^0.5.8
+  http_parser: ^4.0.0
 
   steps: ^1.0.1
   carousel_pro: ^1.0.0
   fluttertoast: ^3.1.0
-  image_picker: ^0.6.1+11
-  #flutter_web_image_picker: ^0.0.2
+  image_picker: ^0.7.3
+  image_picker_web: any
+  file_picker: ^3.0.0
+  file: ^6.1.0
   image_cropper: ^1.3.1
   flutter_colorpicker: ^0.3.5
   dropdown_search: ^0.4.9
@@ -36,27 +40,21 @@ dependencies:
   multiselect_dropdown: ^2.0.0+1
   skeleton_loader: ^1.0.2+3
 
-  #search_map_place: ^0.3.0
-  #flutter_google_places: ^0.2.3
-  #google_maps_flutter: ^0.5.28
-
-  #geolocator: ^5.1.4+1
-  geolocator: ^6.1.7
-  geocoding: ^1.0.5
+  geolocator: ^7.0.1
+  geocoding: ^2.0.0
   flutter_polyline_points: ^0.2.4
 
-  google_maps_flutter_web: ^0.1.0
-  google_maps_flutter: ^1.0.6
+  stream_transform: ^2.0.0
+  google_maps_flutter: ^2.0.1
   geocoder: ^0.2.1
-  location: ^3.1.0
+  location: ^4.1.1
 
 
   barcode_scan: ^1.0.0
   webview_flutter: ^1.0.7
-  url_launcher: ^5.0.2
-  launchers: ^0.4.6
-  audioplayers: 0.13.2
-  path_provider: ^1.6.27
+  url_launcher: ^6.0.3
+#  audioplayers: ^0.18.2
+  path_provider: ^2.0.1
 
   masked_text_input_formatter: ^0.0.1
   datetime_picker_formfield:
@@ -66,11 +64,8 @@ dependencies:
 #  brasil_fields: ^0.4.0
 
   cupertino_icons: ^1.0.0
-  flutter_launcher_icons: "^0.8.0"
   flutter_feather_icons:
   google_fonts:
-
-  bitsdojo_window: ^0.0.9
 
 dev_dependencies:
   flutter_test:

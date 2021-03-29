@@ -9,6 +9,8 @@ import 'package:nosso/src/paginas/arquivo/arquivo_page.dart';
 import 'package:nosso/src/paginas/caixa/caixa_page.dart';
 import 'package:nosso/src/paginas/caixacontrole/caixa_controle_page.dart';
 import 'package:nosso/src/paginas/caixafluxo/caixafluxo_page.dart';
+import 'package:nosso/src/paginas/caixafluxoentrada/caixafluxoentrada_page.dart';
+import 'package:nosso/src/paginas/caixafluxosaida/caixafluxosaida_page.dart';
 import 'package:nosso/src/paginas/cartao/cartao_page.dart';
 import 'package:nosso/src/paginas/categoria/categoria_page.dart';
 import 'package:nosso/src/paginas/cliente/cliente_page.dart';
@@ -103,7 +105,7 @@ class _ConfigPageState extends State<ConfigPage> {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (BuildContext context) {
-                  return WidgetTree();
+                  return HomePage();
                 },
               ),
             );
@@ -141,7 +143,7 @@ class _ConfigPageState extends State<ConfigPage> {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (BuildContext context) {
-                  return WidgetTree();
+                  return HomePage();
                 },
               ),
             );
@@ -251,75 +253,6 @@ class _ConfigPageState extends State<ConfigPage> {
       childAspectRatio: MediaQuery.of(context).size.aspectRatio * 2,
       scrollDirection: Axis.vertical,
       children: <Widget>[
-        GestureDetector(
-          onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return LeitorCodigoBarra();
-                },
-              ),
-            );
-          },
-          child: Container(
-            width: 200,
-            child: ListTile(
-              leading: Icon(
-                Icons.qr_code_outlined,
-                size: 40,
-                color: Theme.of(context).accentColor.withOpacity(1),
-              ),
-              title: Text("Código de barra"),
-              subtitle: Text("Leitor de código de barra"),
-            ),
-          ),
-        ),
-        GestureDetector(
-          onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return LeitorQRCode();
-                },
-              ),
-            );
-          },
-          child: Container(
-            width: 200,
-            child: ListTile(
-              leading: Icon(
-                Icons.qr_code_outlined,
-                size: 40,
-                color: Theme.of(context).accentColor.withOpacity(1),
-              ),
-              title: Text("Qr coder"),
-              subtitle: Text("Leitor de qr coder"),
-            ),
-          ),
-        ),
-        GestureDetector(
-          onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return ProdutoTable();
-                },
-              ),
-            );
-          },
-          child: Container(
-            width: 200,
-            child: ListTile(
-              leading: Icon(
-                Icons.shopping_basket_outlined,
-                size: 40,
-                color: Theme.of(context).accentColor.withOpacity(1),
-              ),
-              title: Text("Produtos"),
-              subtitle: Text("Lista de produtos"),
-            ),
-          ),
-        ),
         GestureDetector(
           onTap: () {
             Navigator.of(context).push(
@@ -800,6 +733,52 @@ class _ConfigPageState extends State<ConfigPage> {
               ),
               title: Text("Caixas"),
               subtitle: Text("lista de caixas"),
+            ),
+          ),
+        ),
+        GestureDetector(
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return CaixaFluxoEntradaPage();
+                },
+              ),
+            );
+          },
+          child: Container(
+            width: 200,
+            child: ListTile(
+              leading: Icon(
+                Icons.recent_actors,
+                size: 40,
+                color: Theme.of(context).accentColor.withOpacity(1),
+              ),
+              title: Text("Caixas entradas"),
+              subtitle: Text("lista de caixas entradas"),
+            ),
+          ),
+        ),
+        GestureDetector(
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return CaixaFluxoSaidaPage();
+                },
+              ),
+            );
+          },
+          child: Container(
+            width: 200,
+            child: ListTile(
+              leading: Icon(
+                Icons.recent_actors,
+                size: 40,
+                color: Theme.of(context).accentColor.withOpacity(1),
+              ),
+              title: Text("Caixas saídas"),
+              subtitle: Text("lista de caixas saídas"),
             ),
           ),
         ),

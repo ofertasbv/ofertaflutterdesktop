@@ -11,6 +11,9 @@ class ImageSourceSheet extends StatelessWidget {
   UploadFileResponse uploadFileResponse;
   UploadRespnse uploadRespnse;
 
+  File image;
+  var picker = ImagePicker();
+
   ImageSourceSheet({this.onImageSelected});
 
   imageSelected(File image) async {
@@ -31,18 +34,17 @@ class ImageSourceSheet extends StatelessWidget {
             leading: Icon(Icons.camera_alt_outlined),
             title: Text("Camera"),
             onTap: () async {
-              File image =
-                  await ImagePicker.pickImage(source: ImageSource.camera);
-              imageSelected(image);
+              final pickedFile = await picker.getImage(source: ImageSource.camera);
+              // imageSelected(pickedFile);
             },
           ),
           ListTile(
             leading: Icon(Icons.photo),
             title: Text("Galeria"),
             onTap: () async {
-              File image =
-                  await ImagePicker.pickImage(source: ImageSource.gallery);
-              imageSelected(image);
+              final pickedFile = await picker.getImage(source: ImageSource.gallery);
+              print("picker: ${pickedFile.path}");
+              // imageSelected(image);
             },
           ),
         ],

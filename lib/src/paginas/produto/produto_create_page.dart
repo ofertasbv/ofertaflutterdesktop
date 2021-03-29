@@ -35,8 +35,6 @@ import 'package:nosso/src/util/load/circular_progresso_mini.dart';
 import 'package:nosso/src/util/upload/upload_response.dart';
 import 'package:nosso/src/util/validador/validador_produto.dart';
 import 'package:search_choices/search_choices.dart';
-import 'package:multiselect_dropdown/multiple_dropdown.dart';
-import 'package:multiselect_dropdown/multiple_select.dart';
 
 class ProdutoCreatePage extends StatefulWidget {
   Produto produto;
@@ -81,7 +79,7 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
   Marca marcaSelecionada;
   List<Cor> coreSelecionados;
   List<Tamanho> tamanhoSelecionados;
-  List<int> coresSelecionadas = [];
+  List<Cor> coresSelecionadas = [];
   List<int> tamanhosSelecionados = [];
 
   String corSelecionda;
@@ -237,6 +235,47 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
     controllerValorVenda.text = valor.toStringAsFixed(2);
   }
 
+
+  // builderConteudoListCores2() {
+  //   return Container(
+  //     color: Colors.grey[200],
+  //     padding: EdgeInsets.only(top: 0),
+  //     child: Observer(
+  //       builder: (context) {
+  //         List<Cor> cores = corController.cores;
+  //         if (corController.error != null) {
+  //           return Text("Não foi possível carregados dados");
+  //         }
+  //
+  //         if (cores == null) {
+  //           return CircularProgressorMini();
+  //         }
+  //
+  //         return customSearchableDropDown(
+  //           items: cores,
+  //           label: 'Selecione uma cor',
+  //           multiSelectTag: 'cores',
+  //           multiSelectValuesAsWidget: true,
+  //           decoration: BoxDecoration(border: Border.all(color: Colors.black)),
+  //           multiSelect: true,
+  //           prefixIcon: Padding(
+  //             padding: const EdgeInsets.all(8),
+  //             child: Icon(Icons.search),
+  //           ),
+  //
+  //           dropDownMenuItems: cores.map((e) {
+  //             return e.descricao;
+  //           }).toList(),
+  //           onChanged: (value) {
+  //             coresSelecionadas = value;
+  //             print("Cores selecionadas index: ${coresSelecionadas}");
+  //           },
+  //         );
+  //       },
+  //     ),
+  //   );
+  // }
+
   builderConteudoListCores() {
     return Container(
       color: Colors.grey[200],
@@ -263,7 +302,7 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
                 },
               );
             }).toList(),
-            selectedItems: coresSelecionadas,
+            // selectedItems: coresSelecionadas,
             hint: "Selecione uma cor",
             searchHint: "Selecione uma cor",
             validator: (value) => value == null ? "campo obrigatório" : null,
@@ -788,7 +827,6 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
                     ],
                   ),
                 ),
-
                 Container(
                   height: 100,
                   padding: EdgeInsets.all(15),

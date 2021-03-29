@@ -2,11 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
-import 'package:nosso/main.dart';
 import 'package:nosso/src/core/controller/subcategoria_controller.dart';
 import 'package:nosso/src/core/model/categoria.dart';
 import 'package:nosso/src/core/model/favorito.dart';
 import 'package:nosso/src/core/model/subcategoria.dart';
+import 'package:nosso/src/home/home.dart';
 import 'package:nosso/src/paginas/produto/produto_page.dart';
 import 'package:nosso/src/util/filter/produto_filter.dart';
 import 'package:nosso/src/util/load/circular_progresso_mini.dart';
@@ -96,7 +96,7 @@ class _SubCategoriaProdutoState extends State<SubCategoriaProduto>
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (BuildContext context) {
-                                return WidgetTree();
+                                return HomePage();
                               },
                             ),
                           );

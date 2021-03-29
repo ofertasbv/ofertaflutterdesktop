@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
-import 'package:launchers/launchers.dart';
 import 'package:nosso/src/api/constants/constant_api.dart';
 import 'package:nosso/src/core/controller/loja_controller.dart';
 import 'package:nosso/src/core/model/loja.dart';
@@ -36,13 +35,6 @@ class _LojaDetalhesViewState extends State<LojaDetalhesView> {
     scheme: 'u-nosso',
     path: 'ofertasbv@gmail.com',
     queryParameters: {'subject': 'Receba ofertas todos os dias!'},
-  );
-
-  final Email email = Email(
-    body: "Hello, world",
-    subject: "My first message",
-    recipients: ["projetogdados@gmail.com"],
-    attachmentPath: "ofertasbv@gmail.com",
   );
 
   buildContainer(Loja p) {

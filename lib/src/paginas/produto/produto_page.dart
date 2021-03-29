@@ -5,6 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:nosso/main.dart';
 import 'package:nosso/src/core/controller/produto_controller.dart';
 import 'package:nosso/src/core/model/produto.dart';
+import 'package:nosso/src/home/home.dart';
 import 'package:nosso/src/paginas/produto/produto_grid.dart';
 import 'package:nosso/src/paginas/produto/produto_list.dart';
 import 'package:nosso/src/paginas/subcategoria/subcategoria_create_page.dart';
@@ -89,7 +90,7 @@ class _ProdutoPageState extends State<ProdutoPage> {
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (BuildContext context) {
-                                return WidgetTree();
+                                return HomePage();
                               },
                             ),
                           );

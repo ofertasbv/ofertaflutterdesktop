@@ -11,7 +11,7 @@ class CaixafluxosaidaController = CaixafluxosaidaControllerBase
 abstract class CaixafluxosaidaControllerBase with Store {
   CaixaSaidaRepository caixaSaidaRepository;
 
-  CaixafluxoSaidaControllerBase() {
+  CaixafluxosaidaControllerBase() {
     caixaSaidaRepository = CaixaSaidaRepository();
   }
 

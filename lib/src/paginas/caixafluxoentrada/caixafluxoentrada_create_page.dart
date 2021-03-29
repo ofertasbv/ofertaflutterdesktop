@@ -59,6 +59,9 @@ class _CaixaFluxoEntradaCreatePageState
   void initState() {
     if (c == null) {
       c = CaixaFluxoEntrada();
+    }else{
+      pedidoSelecionado = c.pedido;
+      valorEntradaController.text = c.valorEntrada.toStringAsFixed(2);
     }
     pedidoController.getAll();
     super.initState();
@@ -300,41 +303,6 @@ class _CaixaFluxoEntradaCreatePageState
                         keyboardType:
                             TextInputType.numberWithOptions(decimal: false),
                         maxLength: 6,
-                      ),
-                      SizedBox(height: 10),
-                      DateTimeField(
-                        initialValue: c.dataRegistro,
-                        onSaved: (value) => c.dataRegistro = value,
-                        validator: validateDataAbertura,
-                        format: dateFormat,
-                        decoration: InputDecoration(
-                          labelText: "Data de registro",
-                          prefixIcon: Icon(
-                            Icons.calendar_today,
-                            color: Colors.grey,
-                          ),
-                          suffixIcon: Icon(Icons.close),
-                          contentPadding:
-                              EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.purple[900]),
-                            gapPadding: 1,
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
-                        ),
-                        onEditingComplete: () => focus.nextFocus(),
-                        onShowPicker: (context, currentValue) {
-                          return showDatePicker(
-                            context: context,
-                            firstDate: DateTime(2000),
-                            initialDate: currentValue ?? DateTime.now(),
-                            locale: Locale('pt', 'BR'),
-                            lastDate: DateTime(2030),
-                          );
-                        },
-                        keyboardType: TextInputType.datetime,
                       ),
                     ],
                   ),

@@ -6,231 +6,294 @@ import 'package:get_it/get_it.dart';
 import 'package:nosso/src/core/controller/pedidoItem_controller.dart';
 import 'package:nosso/src/core/controller/usuario_controller.dart';
 import 'package:nosso/src/home/catalogo_home.dart';
+import 'package:nosso/src/home/categoria_list_home.dart';
+import 'package:nosso/src/home/categoria_list_menu.dart';
 import 'package:nosso/src/home/drawer_list.dart';
+import 'package:nosso/src/home/promocao_list_home.dart';
 import 'package:nosso/src/paginas/categoria/categoria_subcategoria.dart';
 import 'package:nosso/src/paginas/loja/loja_list.dart';
 import 'package:nosso/src/paginas/pedidoitem/itens_page.dart';
 import 'package:nosso/src/paginas/produto/produto_search.dart';
 import 'package:nosso/src/paginas/promocao/promocao_list.dart';
+import 'package:nosso/src/paginas/promocao/promocao_page_list.dart';
 import 'package:nosso/src/paginas/usuario/usuario_perfil_page.dart';
 import 'package:nosso/src/util/Examples/teste_mapa.dart';
+import 'package:nosso/src/util/config/config_page.dart';
 
-class HomePage extends StatefulWidget {
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage>
-    with SingleTickerProviderStateMixin<HomePage> {
-  var pedidoItemController = GetIt.I.get<PedidoItemController>();
-  var usuarioController = GetIt.I.get<UsuarioController>();
-  var pageController = PageController();
-
-  int elementIndex = 0;
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
+class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 5,
-      child: WillPopScope(
-        onWillPop: onBackPressed,
-        child: Scaffold(
-          appBar: AppBar(
-            elevation: 0,
-            bottomOpacity: 0,
-            titleSpacing: 0,
-            title: Text("U-NOSSO"),
-            actions: <Widget>[
-              CircleAvatar(
-                backgroundColor: Theme.of(context).accentColor.withOpacity(0.4),
-                foregroundColor: Colors.black,
-                child: IconButton(
-                  icon: Icon(Icons.location_on_outlined),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => TesteMapa(
-                          androidFusedLocation: true,
-                        ),
-                      ),
-                    );
-                  },
-                ),
+    Size _size = MediaQuery.of(context).size;
+    return Scaffold(
+      body: ResponsiveLayout(
+        iphone: Container(
+          width: double.infinity,
+          height: double.infinity,
+          color: Colors.pink,
+        ),
+        ipad: Row(
+          children: [
+            Expanded(
+              flex: 9,
+              child: Container(
+                width: 500,
+                height: double.infinity,
+                color: Colors.green,
               ),
-              SizedBox(width: 10),
-              CircleAvatar(
-                backgroundColor: Theme.of(context).accentColor.withOpacity(0.4),
-                foregroundColor: Colors.black,
-                child: IconButton(
-                  icon: Icon(Icons.search_outlined),
-                  onPressed: () {
-                    showSearch(
-                      context: context,
-                      delegate: ProdutoSearchDelegate(),
-                    );
-                  },
-                ),
+            ),
+            Expanded(
+              flex: 9,
+              child: Container(
+                width: 500,
+                height: double.infinity,
+                color: Colors.blue,
               ),
-              SizedBox(width: 10),
-              GestureDetector(
-                child: CircleAvatar(
-                  backgroundColor:
-                      Theme.of(context).accentColor.withOpacity(0.4),
-                  foregroundColor: Colors.black,
-                  child: Stack(
-                    alignment: Alignment.topRight,
-                    children: <Widget>[
+            ),
+          ],
+        ),
+        macbook: Scrollbar(
+          child: ListView(
+            children: [
+              Container(
+                height: 80,
+                color: Colors.blue[800],
+                child: Container(
+                  color: Colors.transparent,
+                  width: 800,
+                  padding: EdgeInsets.only(top: 0, left: 50, right: 50),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
                       Container(
-                        padding: const EdgeInsets.only(top: 0, right: 0),
-                        child: Icon(Icons.shopping_basket),
-                      ),
-                      Container(
-                        child: Container(
-                          margin: EdgeInsets.only(top: 0, right: 0),
-                          width: 18,
-                          height: 18,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(25),
-                            border: Border.all(color: Colors.black, width: 1),
-                            color: Colors.white.withOpacity(.7),
+                        height: 70,
+                        width: 200,
+                        color: Colors.transparent,
+                        child: ListTile(
+                          leading: Icon(
+                            Icons.shopping_basket,
+                            size: 55,
+                            color: Colors.grey[200],
                           ),
-                          child: Center(
-                            child: Text(
-                              (pedidoItemController.itens.length ?? 0)
-                                  .toString(),
-                              style: TextStyle(color: Colors.deepOrangeAccent),
+                          title: Text(
+                            "BOOK OFERTAS",
+                            style: TextStyle(
+                              color: Colors.deepOrange[300],
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
-                      )
+                        alignment: Alignment.centerLeft,
+                      ),
+                      Container(
+                        height: 70,
+                        width: 500,
+                        color: Colors.transparent,
+                        child: Text(
+                          "CATALOGO DE OFERTAS DE TODOS OS DIAS",
+                          style: TextStyle(
+                            color: Colors.grey[200],
+                            fontSize: 24,
+                          ),
+                        ),
+                        alignment: Alignment.centerLeft,
+                      ),
+                      Container(
+                        height: 70,
+                        width: 200,
+                        color: Colors.transparent,
+                        child: CircleAvatar(
+                          child: IconButton(
+                            onPressed: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (BuildContext context) {
+                                    return ConfigPage();
+                                  },
+                                ),
+                              );
+                            },
+                            icon: Icon(
+                              Icons.dashboard,
+                              color: Colors.grey[200],
+                            ),
+                          ),
+                        ),
+                        alignment: Alignment.centerRight,
+                      ),
                     ],
                   ),
                 ),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ItemPage(),
+              ),
+              Container(
+                height: 50,
+                color: Colors.deepOrange[400],
+                padding: EdgeInsets.only(top: 0, left: 60, right: 50),
+                child: Container(
+                  child: CategoriaListMenu(),
+                ),
+              ),
+              Container(
+                height: 1500,
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: _size.width > 1340 ? 1 : 2,
+                      child: Container(
+                        height: double.infinity,
+                        color: Colors.grey[100],
+                      ),
                     ),
-                  );
-                },
+                    Expanded(
+                      flex: _size.width > 1340 ? 22 : 24,
+                      child: Container(
+                        height: double.infinity,
+                        color: Colors.grey[100],
+                        child: Column(
+                          children: [
+                            Container(
+                              height: 300,
+                              color: Colors.grey[400],
+                            ),
+                            SizedBox(height: 10),
+                            Container(
+                              height: 100,
+                              color: Colors.grey[100],
+                              child: Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "DESTAQUES DA SEMANA",
+                                    style: TextStyle(
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  GestureDetector(
+                                    child: Text(
+                                      "VER MAIS",
+                                      style: TextStyle(
+                                        fontSize: 30,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    onTap: () {
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (BuildContext context) {
+                                            return PromocaoPageList();
+                                          },
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ],
+                              ),
+                              alignment: Alignment.center,
+                            ),
+                            SizedBox(height: 10),
+                            Container(
+                              height: 400,
+                              color: Colors.transparent,
+                              child: PromocaoListHome(),
+                            ),
+                            SizedBox(height: 10),
+                            Container(
+                              height: 100,
+                              color: Colors.grey[100],
+                              child: Text(
+                                "CATEGORIAS EM DESTAQUE",
+                                style: TextStyle(
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              alignment: Alignment.center,
+                            ),
+                            SizedBox(height: 10),
+                            Container(
+                              height: 300,
+                              color: Colors.transparent,
+                              child: CategoriaListHome(),
+                            ),
+                            SizedBox(height: 10),
+                            Container(
+                              height: 100,
+                              color: Colors.grey[100],
+                              child: Text(
+                                "PRODUTOS EM DESTAQUE",
+                                style: TextStyle(
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              alignment: Alignment.center,
+                            ),
+                            SizedBox(height: 10),
+                            Expanded(
+                              child: Container(
+                                color: Colors.grey[400],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: _size.width > 1340 ? 1 : 2,
+                      child: Container(
+                        height: double.infinity,
+                        color: Colors.grey[100],
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              SizedBox(width: 50),
+              SizedBox(height: 20)
             ],
           ),
-          body: Scrollbar(child: Center(child: lista[elementIndex])),
-          // bottomNavigationBar: buildBottomNavigationBar(),
-
-/* ======================= Menu lateral ======================= */
-          drawer: DrawerList(),
-/* ======================= Botão Flutuante ======================= */
         ),
       ),
     );
   }
+}
 
-  BottomNavigationBar buildBottomNavigationBar() {
-    return BottomNavigationBar(
-      type: BottomNavigationBarType.fixed,
-      items: const <BottomNavigationBarItem>[
-        BottomNavigationBarItem(
-          icon: Icon(Icons.home_outlined),
-          title: Text('home'),
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.list_alt_outlined),
-          title: Text('categorias'),
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.local_convenience_store_outlined),
-          title: Text('lojas'),
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.add_alert_outlined),
-          title: Text('ofertas'),
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.account_circle_outlined),
-          title: Text('conta'),
-        ),
-      ],
-      currentIndex: elementIndex,
-      onTap: changeIndex,
-      elevation: 4,
+class ResponsiveLayout extends StatelessWidget {
+  final Widget iphone;
+  final Widget ipad;
+  final Widget macbook;
+
+  const ResponsiveLayout({Key key, this.ipad, this.iphone, this.macbook})
+      : super(key: key);
+
+  static int iphoneLimit = 600;
+  static int ipadLimit = 1200;
+
+  static bool isIphone(BuildContext context) =>
+      MediaQuery.of(context).size.width < iphoneLimit;
+
+  static bool isIpad(BuildContext context) =>
+      MediaQuery.of(context).size.width < ipadLimit &&
+          MediaQuery.of(context).size.width >= iphoneLimit;
+
+  static bool isMacbook(BuildContext context) =>
+      MediaQuery.of(context).size.width >= ipadLimit;
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        if (constraints.maxWidth < iphoneLimit) {
+          return iphone;
+        }
+        if (constraints.maxWidth < ipadLimit) {
+          return ipad;
+        } else {
+          return macbook;
+        }
+      },
     );
-  }
-
-  buildGestureDetector(BuildContext context) {
-    return GestureDetector(
-      child: Stack(
-        alignment: Alignment.centerLeft,
-        children: <Widget>[
-          Container(
-            padding: const EdgeInsets.only(top: 2, right: 2),
-            child: Icon(Icons.shopping_basket),
-          ),
-          Container(
-            margin: EdgeInsets.only(bottom: 10, left: 16),
-            width: 18,
-            height: 18,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(25),
-              border: Border.all(color: Colors.black, width: 1),
-              color: Colors.white.withOpacity(.7),
-            ),
-            child: Center(
-              child: Text("0"),
-            ),
-          ),
-        ],
-      ),
-      onTap: () {},
-    );
-  }
-
-  Future<bool> onBackPressed() {
-    return showDialog(
-          context: context,
-          builder: (context) => new AlertDialog(
-            title: new Text('Deseja sair do aplicativo?'),
-            content: new Text(''),
-            actions: <Widget>[
-              FlatButton(
-                onPressed: () => Navigator.of(context).pop(false),
-                child: new Text('Não'),
-              ),
-              FlatButton(
-                // onPressed: () {
-                //   Navigator.push(
-                //     context,
-                //     MaterialPageRoute(builder: (context) => MyApp()),
-                //   );
-                // },
-                child: new Text('Sim'),
-              ),
-            ],
-          ),
-        ) ??
-        false;
-  }
-
-  List lista = [
-    CatalogoHome(),
-    CategoriaSubCategoria(),
-    LojaList(),
-    PromocaoList(),
-    UsuarioPerfilPage(),
-  ];
-
-  changeIndex(int index) {
-    setState(() {
-      elementIndex = index;
-    });
   }
 }

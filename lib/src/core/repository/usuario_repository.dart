@@ -1,8 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:nosso/src/api/dio/custom_dio.dart';
 import 'package:nosso/src/api/dio/custon_dio.dart';
 import 'package:nosso/src/core/model/usuario.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class UsuarioRepository {
   CustonDio dio = CustonDio();
@@ -68,7 +66,7 @@ class UsuarioRepository {
 
     print(response.data);
     print(response.headers);
-    print(response.request);
+    // print(response.request);
     print(response.statusCode);
 
     return response.statusCode;

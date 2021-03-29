@@ -92,7 +92,7 @@ class _PromocaoPageListState extends State<PromocaoPageList> {
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (BuildContext context) {
-                                return WidgetTree();
+                                return HomePage();
                               },
                             ),
                           );

@@ -11,7 +11,7 @@ class CaixafluxoentradaController = CaixafluxoentradaControllerBase
 abstract class CaixafluxoentradaControllerBase with Store {
   CaixaEntradaRepository caixaEntradaRepository;
 
-  CaixafluxoEntradaControllerBase() {
+  CaixafluxoentradaControllerBase() {
     caixaEntradaRepository = CaixaEntradaRepository();
   }
 

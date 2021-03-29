@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:audioplayers/audio_cache.dart';
+// import 'package:audioplayers/audio_cache.dart';
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +37,7 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
   var pedidoItemController = GetIt.I.get<PedidoItemController>();
   var focusScopeNode = FocusScopeNode();
   var formatMoeda = new NumberFormat("#,##0.00", "pt_BR");
-  var audioCache = AudioCache(prefix: "audios/");
+  // var audioCache = AudioCache(prefix: "audios/");
 
   String barcode = "";
   Produto p;
@@ -56,7 +56,7 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
 
   @override
   void initState() {
-    audioCache.loadAll(["beep-07.mp3"]);
+    // audioCache.loadAll(["beep-07.mp3"]);
     pedidoItemController.pedidosItens();
     if (p == null) {
       p = Produto();
@@ -78,7 +78,7 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
   }
 
   executar(String nomeAudio) {
-    audioCache.play(nomeAudio + ".mp3");
+    // audioCache.play(nomeAudio + ".mp3");
   }
 
   buscarByCodigoDeBarraTeste(String codBarra) async {

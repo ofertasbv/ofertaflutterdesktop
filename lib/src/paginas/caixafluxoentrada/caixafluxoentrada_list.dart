@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
+import 'package:intl/intl.dart';
 import 'package:nosso/src/core/controller/caixafluxoentrada_controller.dart';
 import 'package:nosso/src/core/model/caixaentrada.dart';
 import 'package:nosso/src/paginas/caixafluxoentrada/caixafluxoentrada_create_page.dart';
@@ -52,121 +53,33 @@ class _CaixaFluxoEntradaListState extends State<CaixaFluxoEntradaList>
 
           return RefreshIndicator(
             onRefresh: onRefresh,
-            child: builderList(entradas),
+            child: buildTable(entradas),
           );
         },
       ),
     );
   }
 
-  builderList(List<CaixaFluxoEntrada> entradas) {
-    double containerWidth = 160;
-    double containerHeight = 20;
-
-    return ListView.builder(
-      itemCount: entradas.length,
-      itemBuilder: (context, index) {
-        CaixaFluxoEntrada c = entradas[index];
-
-        return GestureDetector(
-          child: ListTile(
-            isThreeLine: true,
-            leading: Container(
-              padding: EdgeInsets.all(1),
-              decoration: new BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Theme.of(context).primaryColor,
-                    Theme.of(context).primaryColor
-                  ],
-                ),
-                border: Border.all(
-                  color: Colors.black,
-                  width: 1,
-                ),
-                borderRadius: BorderRadius.circular(35),
-              ),
-              child: CircleAvatar(
-                backgroundColor: Colors.grey[100],
-                radius: 20,
-                child: Text(
-                  c.descricao.substring(0, 1).toUpperCase(),
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-            title: Text(c.descricao),
-            subtitle: Text("cod: ${c.id}"),
-            trailing: Container(
-              height: 80,
-              width: 50,
-              child: buildPopupMenuButton(context, c),
-            ),
-          ),
-          onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return CaixaFluxoEntradaCreatePage(entrada: c);
-                },
-              ),
-            );
-          },
-        );
-      },
-    );
-  }
-
-  PopupMenuButton<String> buildPopupMenuButton(
-      BuildContext context, CaixaFluxoEntrada c) {
-    return PopupMenuButton<String>(
-      padding: EdgeInsets.zero,
-      icon: Icon(Icons.more_vert),
-      onSelected: (valor) {
-        if (valor == "novo") {
-          print("novo");
-        }
-        if (valor == "editar") {
-          print("editar");
-          Navigator.of(context).pop();
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (BuildContext context) {
-                return CaixaFluxoEntradaCreatePage(entrada: c);
-              },
-            ),
-          );
-        }
-        if (valor == "delete") {
-          print("delete");
-        }
-      },
-      itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-        const PopupMenuItem<String>(
-          value: 'novo',
-          child: ListTile(
-            leading: Icon(Icons.add),
-            title: Text('novo'),
-          ),
+  buildTable(List<CaixaFluxoEntrada> caixaFluxosEntradas) {
+    return ListView(
+      children: [
+        PaginatedDataTable(
+          rowsPerPage: 8,
+          showCheckboxColumn: true,
+          sortColumnIndex: 1,
+          sortAscending: true,
+          showFirstLastButtons: true,
+          columnSpacing: 10,
+          columns: [
+            DataColumn(label: Text("Cód")),
+            DataColumn(label: Text("Descrição")),
+            DataColumn(label: Text("Caixa fluxo")),
+            DataColumn(label: Text("Total")),
+            DataColumn(label: Text("Visualizar")),
+            DataColumn(label: Text("Editar")),
+          ],
+          source: DataSource(caixaFluxosEntradas, context),
         ),
-        const PopupMenuItem<String>(
-          value: 'editar',
-          child: ListTile(
-            leading: Icon(Icons.edit),
-            title: Text('editar'),
-          ),
-        ),
-        const PopupMenuItem<String>(
-          value: 'delete',
-          child: ListTile(
-            leading: Icon(Icons.delete),
-            title: Text('Delete'),
-          ),
-        )
       ],
     );
   }
@@ -174,4 +87,66 @@ class _CaixaFluxoEntradaListState extends State<CaixaFluxoEntradaList>
   @override
   // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
+}
+
+class DataSource extends DataTableSource {
+  BuildContext context;
+  List<CaixaFluxoEntrada> caixaFluxosEntradas;
+  int selectedCount = 0;
+  var formatMoeda = new NumberFormat("#,##0.00", "pt_BR");
+
+  DataSource(this.caixaFluxosEntradas, this.context);
+
+  @override
+  DataRow getRow(int index) {
+    assert(index >= 0);
+    if (index >= caixaFluxosEntradas.length) return null;
+    CaixaFluxoEntrada p = caixaFluxosEntradas[index];
+    return DataRow.byIndex(
+      index: index,
+      cells: [
+        DataCell(Text("${p.id}")),
+        DataCell(Text("${p.descricao}")),
+        DataCell(Text("${p.caixaFluxo.descricao}")),
+        DataCell(Text("${p.valorEntrada}")),
+        DataCell(IconButton(
+          icon: Icon(Icons.search),
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return CaixaFluxoEntradaCreatePage(
+                    entrada: p,
+                  );
+                },
+              ),
+            );
+          },
+        )),
+        DataCell(IconButton(
+          icon: Icon(Icons.edit),
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return CaixaFluxoEntradaCreatePage(
+                    entrada: p,
+                  );
+                },
+              ),
+            );
+          },
+        )),
+      ],
+    );
+  }
+
+  @override
+  int get rowCount => caixaFluxosEntradas.length;
+
+  @override
+  bool get isRowCountApproximate => false;
+
+  @override
+  int get selectedRowCount => selectedCount;
 }

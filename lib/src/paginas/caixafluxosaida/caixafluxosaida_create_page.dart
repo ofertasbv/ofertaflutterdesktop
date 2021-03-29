@@ -17,7 +17,6 @@ import 'package:nosso/src/core/model/vendedor.dart';
 import 'package:nosso/src/paginas/caixafluxosaida/caixafluxosaida_page.dart';
 import 'package:nosso/src/paginas/produto/produto_search.dart';
 import 'package:nosso/src/util/dialogs/dialogs.dart';
-import 'package:nosso/src/util/dropdown/dropdown_vendedor.dart';
 import 'package:nosso/src/util/validador/validador_caixafluxo.dart';
 
 class CaixaFluxoSaidaCreatePage extends StatefulWidget {
@@ -53,6 +52,8 @@ class _CaixaFluxoSaidaCreatePageState extends State<CaixaFluxoSaidaCreatePage>
   void initState() {
     if (c == null) {
       c = CaixaFluxoSaida();
+    }else{
+      valorSaidaController.text = c.valorSaida.toStringAsPrecision(2);
     }
     super.initState();
   }
@@ -190,40 +191,6 @@ class _CaixaFluxoSaidaCreatePageState extends State<CaixaFluxoSaidaCreatePage>
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                DropDownVendedor(vendedorSelecionado),
-                Observer(
-                  builder: (context) {
-                    if (vendedorController.vendedoreSelecionado == null) {
-                      return Container(
-                        padding: EdgeInsets.only(left: 25),
-                        child: Container(
-                          child: vendedorController.mensagem == null
-                              ? Text(
-                                  "campo obrigatório *",
-                                  style: TextStyle(
-                                    color: Colors.red,
-                                    fontSize: 12,
-                                  ),
-                                )
-                              : Text(
-                                  "${vendedorController.mensagem}",
-                                  style: TextStyle(
-                                    color: Colors.red,
-                                    fontSize: 12,
-                                  ),
-                                ),
-                        ),
-                      );
-                    }
-                    return Container(
-                      padding: EdgeInsets.only(left: 25),
-                      child: Container(
-                        child: Icon(Icons.check_outlined, color: Colors.green),
-                      ),
-                    );
-                  },
-                ),
-                SizedBox(height: 0),
                 Container(
                   padding: EdgeInsets.all(15),
                   child: Column(
@@ -281,41 +248,6 @@ class _CaixaFluxoSaidaCreatePageState extends State<CaixaFluxoSaidaCreatePage>
                         keyboardType:
                             TextInputType.numberWithOptions(decimal: false),
                         maxLength: 6,
-                      ),
-                      SizedBox(height: 10),
-                      DateTimeField(
-                        initialValue: c.dataRegistro,
-                        onSaved: (value) => c.dataRegistro = value,
-                        validator: validateDataAbertura,
-                        format: dateFormat,
-                        decoration: InputDecoration(
-                          labelText: "Data de registro",
-                          prefixIcon: Icon(
-                            Icons.calendar_today,
-                            color: Colors.grey,
-                          ),
-                          suffixIcon: Icon(Icons.close),
-                          contentPadding:
-                              EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.purple[900]),
-                            gapPadding: 1,
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
-                        ),
-                        onEditingComplete: () => focus.nextFocus(),
-                        onShowPicker: (context, currentValue) {
-                          return showDatePicker(
-                            context: context,
-                            firstDate: DateTime(2000),
-                            initialDate: currentValue ?? DateTime.now(),
-                            locale: Locale('pt', 'BR'),
-                            lastDate: DateTime(2030),
-                          );
-                        },
-                        keyboardType: TextInputType.datetime,
                       ),
                     ],
                   ),

@@ -7,7 +7,7 @@ import 'package:get_it/get_it.dart';
 import 'package:nosso/src/core/controller/produto_controller.dart';
 import 'package:nosso/src/core/model/produto.dart';
 import 'package:nosso/src/paginas/produto/produto_detalhes_tab.dart';
-import 'package:audioplayers/audio_cache.dart';
+// import 'package:audioplayers/audio_cache.dart';
 
 class LeitorCodigoBarra extends StatefulWidget {
   @override
@@ -22,12 +22,12 @@ class _LeitorCodigoBarraState extends State<LeitorCodigoBarra> {
 
   var codigoBarraController = TextEditingController();
 
-  AudioCache audioCache = AudioCache(prefix: "audios/");
+  // AudioCache audioCache = AudioCache(prefix: "audios/");
 
   @override
   initState() {
     p = Produto();
-    audioCache.loadAll(["beep-07.mp3"]);
+    // audioCache.loadAll(["beep-07.mp3"]);
     super.initState();
   }
 
@@ -42,7 +42,7 @@ class _LeitorCodigoBarraState extends State<LeitorCodigoBarra> {
   }
 
   executar(String nomeAudio) {
-    audioCache.play(nomeAudio + ".mp3");
+    // audioCache.play(nomeAudio + ".mp3");
   }
 
   showToast(String cardTitle) {

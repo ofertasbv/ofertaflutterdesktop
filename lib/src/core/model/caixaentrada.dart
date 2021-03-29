@@ -1,20 +1,18 @@
-import 'package:nosso/src/core/model/caixa.dart';
+import 'package:nosso/src/core/model/caixafluxo.dart';
 import 'package:nosso/src/core/model/pedido.dart';
 
 class CaixaFluxoEntrada {
   int id;
   String descricao;
   double valorEntrada;
-  DateTime dataRegistro;
-  Caixa caixa;
+  CaixaFluxo caixaFluxo;
   Pedido pedido;
 
   CaixaFluxoEntrada({
     this.id,
     this.descricao,
     this.valorEntrada,
-    this.dataRegistro,
-    this.caixa,
+    this.caixaFluxo,
     this.pedido,
   });
 
@@ -22,9 +20,7 @@ class CaixaFluxoEntrada {
     id = json['id'];
     descricao = json['descricao'];
     valorEntrada = json['valorEntrada'];
-    dataRegistro = DateTime.tryParse(json['dataRegistro'].toString());
-
-    caixa = json['caixa'] != null ? new Caixa.fromJson(json['caixa']) : null;
+    caixaFluxo = json['caixaFluxo'] != null ? new CaixaFluxo.fromJson(json['caixaFluxo']) : null;
 
     pedido =
         json['pedido'] != null ? new Pedido.fromJson(json['pedido']) : null;
@@ -35,10 +31,9 @@ class CaixaFluxoEntrada {
     data['id'] = this.id;
     data['descricao'] = this.descricao;
     data['valorEntrada'] = this.valorEntrada;
-    data['dataRegistro'] = this.dataRegistro.toIso8601String();
 
-    if (this.caixa != null) {
-      data['caixa'] = this.caixa.toJson();
+    if (this.caixaFluxo != null) {
+      data['caixaFluxo'] = this.caixaFluxo.toJson();
     }
 
     if (this.pedido != null) {
