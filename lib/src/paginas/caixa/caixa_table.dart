@@ -103,6 +103,7 @@ class _CaixaTableState extends State<CaixaTable>
           sortColumnIndex: 1,
           sortAscending: true,
           showFirstLastButtons: true,
+          columnSpacing: 10,
           columns: [
             DataColumn(label: Text("Cód")),
             DataColumn(label: Text("Descrição")),

@@ -57,7 +57,7 @@ class _ProdutoPageState extends State<ProdutoPage> {
         children: [
           Container(
             height: 80,
-            color: Colors.grey[800],
+            color: Colors.blue[800],
             child: Container(
               color: Colors.transparent,
               width: double.infinity,
@@ -144,7 +144,7 @@ class _ProdutoPageState extends State<ProdutoPage> {
                         SizedBox(width: 10),
                         CircleAvatar(
                           backgroundColor:
-                              Theme.of(context).accentColor.withOpacity(0.4),
+                              Theme.of(context).accentColor.withOpacity(1),
                           foregroundColor: Colors.black,
                           child: IconButton(
                             icon: Icon(
@@ -160,7 +160,7 @@ class _ProdutoPageState extends State<ProdutoPage> {
                         SizedBox(width: 10),
                         CircleAvatar(
                           backgroundColor:
-                              Theme.of(context).accentColor.withOpacity(0.4),
+                              Theme.of(context).accentColor.withOpacity(1),
                           foregroundColor: Colors.black,
                           child: IconButton(
                             icon: Icon(
@@ -176,7 +176,7 @@ class _ProdutoPageState extends State<ProdutoPage> {
                         SizedBox(width: 10),
                         CircleAvatar(
                           backgroundColor:
-                              Theme.of(context).accentColor.withOpacity(0.4),
+                              Theme.of(context).accentColor.withOpacity(1),
                           foregroundColor: Colors.black,
                           child: IconButton(
                             icon: Icon(
@@ -203,27 +203,18 @@ class _ProdutoPageState extends State<ProdutoPage> {
           ),
         ],
       ),
-      floatingActionButton: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: <Widget>[
-          SizedBox(
-            width: 8,
-            height: 8,
-          ),
-          FloatingActionButton(
-            elevation: 10,
-            child: Icon(Icons.add),
-            onPressed: () {
-              Navigator.of(context).pop();
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) {
-                  return SubCategoriaCreatePage();
-                }),
-              );
-            },
-          )
-        ],
+      floatingActionButton: FloatingActionButton(
+        elevation: 10,
+        child: Icon(Icons.add),
+        onPressed: () {
+          Navigator.of(context).pop();
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) {
+              return SubCategoriaCreatePage();
+            }),
+          );
+        },
       ),
     );
   }

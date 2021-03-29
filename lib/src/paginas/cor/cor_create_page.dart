@@ -127,15 +127,6 @@ class _CorCreatePageState extends State<CorCreatePage> {
                           hintText: "descrição da cor",
                           prefixIcon: Icon(Icons.edit, color: Colors.grey),
                           suffixIcon: Icon(Icons.close),
-                          contentPadding:
-                              EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.lime[900]),
-                            gapPadding: 1,
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
                         ),
                         inputFormatters: [LowerCaseText()],
                         onEditingComplete: () => focus.nextFocus(),

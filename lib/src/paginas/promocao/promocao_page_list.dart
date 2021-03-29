@@ -60,7 +60,7 @@ class _PromocaoPageListState extends State<PromocaoPageList> {
         children: [
           Container(
             height: 80,
-            color: Colors.grey[800],
+            color: Colors.blue[800],
             child: Container(
               color: Colors.transparent,
               width: double.infinity,
@@ -123,7 +123,7 @@ class _PromocaoPageListState extends State<PromocaoPageList> {
                     width: 200,
                     color: Colors.transparent,
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Observer(
                           builder: (context) {
@@ -148,7 +148,7 @@ class _PromocaoPageListState extends State<PromocaoPageList> {
                         SizedBox(width: 10),
                         CircleAvatar(
                           backgroundColor:
-                              Theme.of(context).accentColor.withOpacity(0.4),
+                              Theme.of(context).accentColor.withOpacity(1),
                           foregroundColor: Colors.black,
                           child: IconButton(
                             icon: Icon(

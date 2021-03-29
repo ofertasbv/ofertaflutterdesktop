@@ -41,25 +41,6 @@ class _TamanhoTableState extends State<TamanhoTable>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           SizedBox(height: 0),
-          Container(
-            height: 60,
-            width: double.infinity,
-            color: Colors.grey[200],
-            padding: EdgeInsets.all(5),
-            child: ListTile(
-              subtitle: TextFormField(
-                controller: nomeController,
-                decoration: InputDecoration(
-                  labelText: "busca por nome",
-                  prefixIcon: Icon(Icons.search_outlined),
-                  suffixIcon: IconButton(
-                    onPressed: () => nomeController.clear(),
-                    icon: Icon(Icons.clear),
-                  ),
-                ),
-              ),
-            ),
-          ),
           Expanded(
             child: Container(
               color: Colors.transparent,
@@ -103,6 +84,7 @@ class _TamanhoTableState extends State<TamanhoTable>
           sortColumnIndex: 1,
           sortAscending: true,
           showFirstLastButtons: true,
+          columnSpacing: 10,
           columns: [
             DataColumn(label: Text("Código")),
             DataColumn(label: Text("Descrição")),

@@ -153,6 +153,19 @@ class _ProdutoTableState extends State<ProdutoTable> {
         padding: EdgeInsets.only(left: 50, right: 50, top: 10),
         child: buildContainer(),
       ),
+      floatingActionButton: FloatingActionButton(
+        elevation: 10,
+        child: Icon(Icons.add),
+        onPressed: () {
+          Navigator.of(context).pop();
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) {
+              return ProdutoCreatePage();
+            }),
+          );
+        },
+      ),
     );
   }
 

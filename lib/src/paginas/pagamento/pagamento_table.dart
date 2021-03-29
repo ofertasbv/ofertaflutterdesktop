@@ -105,7 +105,7 @@ class _PagamentoTableState extends State<PagamentoTable>
           showFirstLastButtons: true,
           columnSpacing: 10,
           columns: [
-            DataColumn(label: Text("Código")),
+            DataColumn(label: Text("Cód.")),
             DataColumn(label: Text("Quantidade")),
             DataColumn(label: Text("Forma")),
             DataColumn(label: Text("Tipo")),
@@ -132,6 +132,7 @@ class DataSource extends DataTableSource {
   List<Pagamento> pagamentos;
   int selectedCount = 0;
   var dateFormat = DateFormat('dd/MM/yyyy');
+  var numberFormat = NumberFormat("00.00");
 
   DataSource(this.pagamentos, this.context);
 
@@ -147,7 +148,7 @@ class DataSource extends DataTableSource {
         DataCell(Text("${p.quantidade}")),
         DataCell(Text(p.pagamentoForma)),
         DataCell(Text("${p.pagamentoTipo}")),
-        DataCell(Text("${p.valor}")),
+        DataCell(Text("${numberFormat.format(p.valor)}")),
         DataCell(Text("${dateFormat.format(p.dataPagamento)}")),
         DataCell(Text("${p.pedido.descricao}")),
         DataCell(IconButton(

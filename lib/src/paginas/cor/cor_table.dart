@@ -7,6 +7,7 @@ import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:nosso/src/core/controller/cor_controller.dart';
 import 'package:nosso/src/core/model/cor.dart';
+import 'package:nosso/src/paginas/cor/cor_create_page.dart';
 import 'package:nosso/src/util/load/circular_progresso.dart';
 
 class CorTable extends StatefulWidget {
@@ -39,12 +40,6 @@ class _CorTableState extends State<CorTable>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           SizedBox(height: 0),
-          Container(
-            height: 60,
-            width: double.infinity,
-            color: Colors.grey[200],
-            padding: EdgeInsets.all(5),
-          ),
           Expanded(
             child: Container(
               color: Colors.transparent,
@@ -130,11 +125,31 @@ class DataSource extends DataTableSource {
         DataCell(Text("${p.descricao}")),
         DataCell(IconButton(
           icon: Icon(Icons.search),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return CorCreatePage(
+                    cor: p,
+                  );
+                },
+              ),
+            );
+          },
         )),
         DataCell(IconButton(
           icon: Icon(Icons.edit),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return CorCreatePage(
+                    cor: p,
+                  );
+                },
+              ),
+            );
+          },
         )),
       ],
     );

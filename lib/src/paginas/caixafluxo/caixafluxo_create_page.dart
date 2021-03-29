@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -18,10 +17,10 @@ import 'package:nosso/src/core/model/caixa.dart';
 import 'package:nosso/src/core/model/caixafluxo.dart';
 import 'package:nosso/src/core/model/vendedor.dart';
 import 'package:nosso/src/paginas/caixafluxo/caixafluxo_page.dart';
-import 'package:nosso/src/paginas/cartao/cartao_page.dart';
 import 'package:nosso/src/paginas/produto/produto_search.dart';
 import 'package:nosso/src/util/dialogs/dialogs.dart';
 import 'package:nosso/src/util/load/circular_progresso.dart';
+import 'package:nosso/src/util/load/circular_progresso_mini.dart';
 import 'package:nosso/src/util/validador/validador_caixafluxo.dart';
 
 class CaixaFluxoCreatePage extends StatefulWidget {
@@ -160,7 +159,7 @@ class _CaixaFluxoCreatePageState extends State<CaixaFluxoCreatePage>
           }
 
           if (vendedores == null) {
-            return CircularProgressor();
+            return CircularProgressorMini();
           }
 
           return DropdownSearch<Vendedor>(

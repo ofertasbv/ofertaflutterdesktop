@@ -60,53 +60,11 @@ class _SubCategoriaProdutoState extends State<SubCategoriaProduto>
   Widget build(BuildContext context) {
     var text = "";
     return Scaffold(
-      // appBar: AppBar(
-      //   titleSpacing: 0,
-      //   elevation: 0,
-      //   title: categoria.nome == null
-      //       ? Text("Departamentos")
-      //       : Text(categoria.nome),
-      //   actions: <Widget>[
-      //     Observer(
-      //       builder: (context) {
-      //         if (subCategoriaController.error != null) {
-      //           return Text("Não foi possível carregar");
-      //         }
-      //
-      //         if (subCategoriaController.subCategorias == null) {
-      //           return Center(
-      //             child: Icon(Icons.warning_amber_outlined),
-      //           );
-      //         }
-      //
-      //         return CircleAvatar(
-      //           child: Text(
-      //             (subCategoriaController.subCategorias.length ?? 0).toString(),
-      //           ),
-      //         );
-      //       },
-      //     ),
-      //     SizedBox(width: 10),
-      //     CircleAvatar(
-      //       backgroundColor: Theme.of(context).accentColor.withOpacity(0.4),
-      //       foregroundColor: Colors.black,
-      //       child: IconButton(
-      //         icon: Icon(
-      //           Icons.refresh,
-      //         ),
-      //         onPressed: () {
-      //           subCategoriaController.getAll();
-      //         },
-      //       ),
-      //     ),
-      //     SizedBox(width: 50),
-      //   ],
-      // ),
       body: ListView(
         children: [
           Container(
             height: 80,
-            color: Colors.grey[800],
+            color: Colors.blue[800],
             child: Container(
               color: Colors.transparent,
               width: double.infinity,
@@ -169,7 +127,7 @@ class _SubCategoriaProdutoState extends State<SubCategoriaProduto>
                     width: 200,
                     color: Colors.transparent,
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Observer(
                           builder: (context) {
@@ -195,7 +153,7 @@ class _SubCategoriaProdutoState extends State<SubCategoriaProduto>
                         SizedBox(width: 10),
                         CircleAvatar(
                           backgroundColor:
-                              Theme.of(context).accentColor.withOpacity(0.4),
+                              Theme.of(context).accentColor.withOpacity(1),
                           foregroundColor: Colors.black,
                           child: IconButton(
                             icon: Icon(

@@ -5,7 +5,7 @@ ThemeData getTheme(BuildContext context) {
   return ThemeData(
     tabBarTheme: TabBarTheme(),
     brightness: Brightness.light,
-    primaryColor: Colors.grey[800],
+    primaryColor: Colors.blue[800],
     accentColor: Colors.deepOrange[400],
     primarySwatch: Colors.deepOrange,
     textTheme: GoogleFonts.sourceSansProTextTheme().copyWith(

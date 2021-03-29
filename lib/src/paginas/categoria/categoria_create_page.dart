@@ -166,7 +166,7 @@ class _CategoriaCreatePageState extends State<CategoriaCreatePage> {
             child: Column(
               children: <Widget>[
                 Container(
-                  height: 350,
+                  height: 150,
                   color: Colors.grey[400],
                   child: GestureDetector(
                     onTap: () {
@@ -291,15 +291,6 @@ class _CategoriaCreatePageState extends State<CategoriaCreatePage> {
                           prefixIcon: Icon(
                             Icons.edit,
                             color: Colors.grey,
-                          ),
-                          contentPadding:
-                              EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.lime[900]),
-                            gapPadding: 1,
-                            borderRadius: BorderRadius.circular(5.0),
                           ),
                         ),
                         onEditingComplete: () => focus.nextFocus(),

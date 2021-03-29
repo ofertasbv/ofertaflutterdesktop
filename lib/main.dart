@@ -145,7 +145,7 @@ class WidgetTree extends StatelessWidget {
             children: [
               Container(
                 height: 80,
-                color: Colors.grey[800],
+                color: Colors.blue[800],
                 child: Container(
                   color: Colors.transparent,
                   width: 800,
@@ -242,7 +242,7 @@ class WidgetTree extends StatelessWidget {
                         child: Column(
                           children: [
                             Container(
-                              height: 250,
+                              height: 300,
                               color: Colors.grey[400],
                             ),
                             SizedBox(height: 10),

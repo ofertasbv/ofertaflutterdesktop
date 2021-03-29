@@ -178,104 +178,100 @@ class _CartaoCreatePageState extends State<CartaoCreatePage>
               children: <Widget>[
                 Container(
                   padding: EdgeInsets.all(5),
-                  child: Column(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      TextFormField(
-                        initialValue: c.numeroCartao,
-                        onSaved: (value) => c.numeroCartao = value,
-                        validator: validateNumeroCartao,
-                        decoration: InputDecoration(
-                          labelText: "Número do cartão",
-                          border: OutlineInputBorder(
-                            gapPadding: 0.0,
-                            borderRadius: BorderRadius.circular(5),
+                      Container(
+                        width: 500,
+                        child: TextFormField(
+                          initialValue: c.numeroCartao,
+                          onSaved: (value) => c.numeroCartao = value,
+                          validator: validateNumeroCartao,
+                          decoration: InputDecoration(
+                            labelText: "Número do cartão",
                           ),
-                          hintText: "Nº do cartão",
-                          hintStyle: TextStyle(color: Colors.grey[400]),
-                          prefixIcon: Icon(Icons.credit_card),
+                          onEditingComplete: () => focus.nextFocus(),
+                          keyboardType: TextInputType.number,
+                          inputFormatters: [maskFormatterNumero],
+                          maxLength: 23,
                         ),
-                        onEditingComplete: () => focus.nextFocus(),
-                        keyboardType: TextInputType.number,
-                        inputFormatters: [maskFormatterNumero],
-                        maxLength: 23,
                       ),
-                      SizedBox(height: 10),
-                      TextFormField(
-                        initialValue: c.nome,
-                        onSaved: (value) => c.nome = value,
-                        validator: validateNome,
-                        decoration: InputDecoration(
-                          labelText: "Nome do titular",
-                          border: OutlineInputBorder(
-                            gapPadding: 0.0,
-                            borderRadius: BorderRadius.circular(5),
+                      Container(
+                        width: 500,
+                        child: TextFormField(
+                          initialValue: c.nome,
+                          onSaved: (value) => c.nome = value,
+                          validator: validateNome,
+                          decoration: InputDecoration(
+                            labelText: "Nome do titular",
+                            hintText: "Nome do cartão",
+                            hintStyle: TextStyle(color: Colors.grey[400]),
+                            prefixIcon: Icon(Icons.account_circle),
                           ),
-                          hintText: "Nome do cartão",
-                          hintStyle: TextStyle(color: Colors.grey[400]),
-                          prefixIcon: Icon(Icons.account_circle),
+                          onEditingComplete: () => focus.nextFocus(),
+                          keyboardType: TextInputType.text,
+                          inputFormatters: [UpperCaeseText()],
+                          maxLength: 50,
                         ),
-                        onEditingComplete: () => focus.nextFocus(),
-                        keyboardType: TextInputType.text,
-                        inputFormatters: [UpperCaeseText()],
-                        maxLength: 50,
-                      ),
-                      SizedBox(height: 10),
-                      DateTimeField(
-                        initialValue: c.dataValidade,
-                        onSaved: (value) => c.dataValidade = value,
-                        validator: validateDataValidade,
-                        format: dateFormat,
-                        decoration: InputDecoration(
-                          labelText: "Data de validade",
-                          prefixIcon: Icon(
-                            Icons.calendar_today,
-                            color: Colors.grey,
-                          ),
-                          suffixIcon: Icon(Icons.close),
-                          contentPadding:
-                              EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.purple[900]),
-                            gapPadding: 1,
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
-                        ),
-                        onEditingComplete: () => focus.nextFocus(),
-                        onShowPicker: (context, currentValue) {
-                          return showDatePicker(
-                            context: context,
-                            firstDate: DateTime(2000),
-                            initialDate: currentValue ?? DateTime.now(),
-                            locale: Locale('pt', 'BR'),
-                            lastDate: DateTime(2030),
-                          );
-                        },
-                        keyboardType: TextInputType.datetime,
-                      ),
-                      SizedBox(height: 10),
-                      TextFormField(
-                        initialValue: c.numeroSeguranca,
-                        onSaved: (value) => c.numeroSeguranca = value,
-                        validator: validateNumeroSeguranca,
-                        decoration: InputDecoration(
-                          labelText: "Código de segurança",
-                          border: OutlineInputBorder(
-                            gapPadding: 0.0,
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          hintText: "Código de segurança",
-                          hintStyle: TextStyle(color: Colors.grey[400]),
-                          prefixIcon: Icon(Icons.enhanced_encryption),
-                        ),
-                        onEditingComplete: () => focus.nextFocus(),
-                        keyboardType: TextInputType.number,
-                        maxLength: 3,
                       ),
                     ],
                   ),
                 ),
+
+                Container(
+                  padding: EdgeInsets.all(5),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        width: 500,
+                        child: DateTimeField(
+                          initialValue: c.dataValidade,
+                          onSaved: (value) => c.dataValidade = value,
+                          validator: validateDataValidade,
+                          format: dateFormat,
+                          decoration: InputDecoration(
+                            labelText: "Data de validade",
+                            prefixIcon: Icon(
+                              Icons.calendar_today,
+                              color: Colors.grey,
+                            ),
+                            suffixIcon: Icon(Icons.close),
+                          ),
+                          onEditingComplete: () => focus.nextFocus(),
+                          onShowPicker: (context, currentValue) {
+                            return showDatePicker(
+                              context: context,
+                              firstDate: DateTime(2000),
+                              initialDate: currentValue ?? DateTime.now(),
+                              locale: Locale('pt', 'BR'),
+                              lastDate: DateTime(2030),
+                            );
+                          },
+                          keyboardType: TextInputType.datetime,
+                        ),
+                      ),
+                      Container(
+                        width: 500,
+                        child: TextFormField(
+                          initialValue: c.numeroSeguranca,
+                          onSaved: (value) => c.numeroSeguranca = value,
+                          validator: validateNumeroSeguranca,
+                          decoration: InputDecoration(
+                            labelText: "Código de segurança",
+                            hintText: "Código de segurança",
+                            hintStyle: TextStyle(color: Colors.grey[400]),
+                            prefixIcon: Icon(Icons.enhanced_encryption),
+                          ),
+                          onEditingComplete: () => focus.nextFocus(),
+                          keyboardType: TextInputType.number,
+                          maxLength: 3,
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+
               ],
             ),
           ),

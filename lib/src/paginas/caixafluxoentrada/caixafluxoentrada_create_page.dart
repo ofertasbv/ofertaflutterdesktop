@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -10,14 +11,17 @@ import 'package:intl/intl.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:nosso/src/core/controller/caixafluxo_controller.dart';
 import 'package:nosso/src/core/controller/caixafluxoentrada_controller.dart';
+import 'package:nosso/src/core/controller/pedido_controller.dart';
 import 'package:nosso/src/core/controller/vendedor_controller.dart';
 import 'package:nosso/src/core/model/caixaentrada.dart';
 import 'package:nosso/src/core/model/caixafluxo.dart';
+import 'package:nosso/src/core/model/pedido.dart';
 import 'package:nosso/src/core/model/vendedor.dart';
 import 'package:nosso/src/paginas/caixafluxoentrada/caixafluxoentrada_page.dart';
 import 'package:nosso/src/paginas/produto/produto_search.dart';
 import 'package:nosso/src/util/dialogs/dialogs.dart';
 import 'package:nosso/src/util/dropdown/dropdown_vendedor.dart';
+import 'package:nosso/src/util/load/circular_progresso_mini.dart';
 import 'package:nosso/src/util/validador/validador_caixafluxo.dart';
 
 class CaixaFluxoEntradaCreatePage extends StatefulWidget {
@@ -36,7 +40,8 @@ class _CaixaFluxoEntradaCreatePageState
 
   var caixafluxoentradaController = GetIt.I.get<CaixafluxoentradaController>();
   var caixafluxoController = GetIt.I.get<CaixafluxoController>();
-  var vendedorController = GetIt.I.get<VendedorController>();
+  var pedidoController = GetIt.I.get<PedidoController>();
+
   var dialogs = Dialogs();
 
   var saldoAnteriorController = TextEditingController();
@@ -47,6 +52,7 @@ class _CaixaFluxoEntradaCreatePageState
   CaixaFluxoEntrada c;
   CaixaFluxo caixaFluxo;
   Vendedor vendedorSelecionado;
+  Pedido pedidoSelecionado;
   Controller controller;
 
   @override
@@ -54,6 +60,7 @@ class _CaixaFluxoEntradaCreatePageState
     if (c == null) {
       c = CaixaFluxoEntrada();
     }
+    pedidoController.getAll();
     super.initState();
   }
 
@@ -61,6 +68,49 @@ class _CaixaFluxoEntradaCreatePageState
   didChangeDependencies() {
     controller = Controller();
     super.didChangeDependencies();
+  }
+
+  builderConteudoListPedidos() {
+    return Container(
+      padding: EdgeInsets.only(top: 0),
+      child: Observer(
+        builder: (context) {
+          List<Pedido> pedidos = pedidoController.pedidos;
+          if (pedidoController.error != null) {
+            return Text("Não foi possível buscar permissões");
+          }
+
+          if (pedidos == null) {
+            return Center(
+              child: CircularProgressorMini(),
+            );
+          }
+
+          return DropdownSearch<Pedido>(
+            label: "Selecione pedidos",
+            popupTitle: Center(child: Text("Pedidos")),
+            items: pedidos,
+            showSearchBox: true,
+            itemAsString: (Pedido s) => s.descricao,
+            validator: (value) => value == null ? "campo obrigatório" : null,
+            isFilteredOnline: true,
+            showClearButton: true,
+            selectedItem: pedidoSelecionado,
+            onChanged: (Pedido l) {
+              setState(() {
+                c.pedido = l;
+                print("pedido: ${c.pedido.descricao}");
+              });
+            },
+            searchBoxDecoration: InputDecoration(
+              border: OutlineInputBorder(),
+              contentPadding: EdgeInsets.fromLTRB(20, 20, 20, 0),
+              labelText: "Pesquisar por pedido",
+            ),
+          );
+        },
+      ),
+    );
   }
 
   @override
@@ -190,40 +240,10 @@ class _CaixaFluxoEntradaCreatePageState
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                DropDownVendedor(vendedorSelecionado),
-                Observer(
-                  builder: (context) {
-                    if (vendedorController.vendedoreSelecionado == null) {
-                      return Container(
-                        padding: EdgeInsets.only(left: 25),
-                        child: Container(
-                          child: vendedorController.mensagem == null
-                              ? Text(
-                                  "campo obrigatório *",
-                                  style: TextStyle(
-                                    color: Colors.red,
-                                    fontSize: 12,
-                                  ),
-                                )
-                              : Text(
-                                  "${vendedorController.mensagem}",
-                                  style: TextStyle(
-                                    color: Colors.red,
-                                    fontSize: 12,
-                                  ),
-                                ),
-                        ),
-                      );
-                    }
-                    return Container(
-                      padding: EdgeInsets.only(left: 25),
-                      child: Container(
-                        child: Icon(Icons.check_outlined, color: Colors.green),
-                      ),
-                    );
-                  },
+                Container(
+                  padding: EdgeInsets.all(15),
+                  child: builderConteudoListPedidos(),
                 ),
-                SizedBox(height: 0),
                 Container(
                   padding: EdgeInsets.all(15),
                   child: Column(
@@ -234,7 +254,7 @@ class _CaixaFluxoEntradaCreatePageState
                         onSaved: (value) => c.descricao = value,
                         validator: validateDescricao,
                         decoration: InputDecoration(
-                          labelText: "Descrição do caixa",
+                          labelText: "Descrição da entrada",
                           border: OutlineInputBorder(
                             gapPadding: 0.0,
                             borderRadius: BorderRadius.circular(5),
