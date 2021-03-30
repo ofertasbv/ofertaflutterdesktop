@@ -13,6 +13,7 @@ import 'package:nosso/src/paginas/produto/produto_detalhes_tab.dart';
 import 'package:nosso/src/util/container/container_produto.dart';
 import 'package:nosso/src/util/filter/produto_filter.dart';
 import 'package:nosso/src/util/load/circular_progresso.dart';
+import 'package:nosso/src/util/load/circular_progresso_mini.dart';
 
 class ProdutoList extends StatefulWidget {
   ProdutoFilter filter;
@@ -81,7 +82,7 @@ class _ProdutoListState extends State<ProdutoList>
           }
 
           if (produtos == null) {
-            return CircularProgressor();
+            return CircularProgressorMini();
           }
 
           return RefreshIndicator(

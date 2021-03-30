@@ -8,6 +8,7 @@ import 'package:nosso/src/core/controller/categoria_controller.dart';
 import 'package:nosso/src/core/model/categoria.dart';
 import 'package:nosso/src/paginas/categoria/categoria_create_page.dart';
 import 'package:nosso/src/paginas/categoria/categoria_subcategoria.dart';
+import 'package:nosso/src/paginas/subcategoria/subcategoria_produto.dart';
 import 'package:nosso/src/util/container/container_categoria.dart';
 import 'package:nosso/src/util/load/circular_progresso.dart';
 
@@ -81,7 +82,7 @@ class _CategoriaListState extends State<CategoriaList>
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (BuildContext context) {
-                  return CategoriaSubCategoria();
+                  return SubCategoriaProduto(c: c);
                 },
               ),
             );

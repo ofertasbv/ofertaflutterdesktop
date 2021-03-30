@@ -10,6 +10,8 @@ import 'package:nosso/src/home/categoria_list_home.dart';
 import 'package:nosso/src/home/categoria_list_menu.dart';
 import 'package:nosso/src/home/drawer_list.dart';
 import 'package:nosso/src/home/promocao_list_home.dart';
+import 'package:nosso/src/paginas/categoria/categoria_page.dart';
+import 'package:nosso/src/paginas/categoria/categoria_page_list.dart';
 import 'package:nosso/src/paginas/categoria/categoria_subcategoria.dart';
 import 'package:nosso/src/paginas/loja/loja_list.dart';
 import 'package:nosso/src/paginas/pedidoitem/itens_page.dart';
@@ -203,12 +205,36 @@ class HomePage extends StatelessWidget {
                             Container(
                               height: 100,
                               color: Colors.grey[100],
-                              child: Text(
-                                "CATEGORIAS EM DESTAQUE",
-                                style: TextStyle(
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                              child: Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "CATEGORIAS EM DESTAQUE",
+                                    style: TextStyle(
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  GestureDetector(
+                                    child: Text(
+                                      "VER MAIS",
+                                      style: TextStyle(
+                                        fontSize: 30,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    onTap: () {
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (BuildContext context) {
+                                            return CategoriaPageList();
+                                          },
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ],
                               ),
                               alignment: Alignment.center,
                             ),

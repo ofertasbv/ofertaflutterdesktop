@@ -23,6 +23,7 @@ import 'package:nosso/src/paginas/pagamento/pagamento_page.dart';
 import 'package:nosso/src/paginas/pedido/pedido_page.dart';
 import 'package:nosso/src/paginas/pedidoitem/pedidoitem_page.dart';
 import 'package:nosso/src/paginas/permissao/permissao_page.dart';
+import 'package:nosso/src/paginas/produto/produto_page.dart';
 import 'package:nosso/src/paginas/produto/produto_tab.dart';
 import 'package:nosso/src/paginas/produto/produto_table.dart';
 import 'package:nosso/src/paginas/promocao/promocao_page.dart';
@@ -296,6 +297,29 @@ class _ConfigPageState extends State<ConfigPage> {
               ),
               title: Text("SubCategorias"),
               subtitle: Text("lista de subcategorias"),
+            ),
+          ),
+        ),
+        GestureDetector(
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return ProdutoTable();
+                },
+              ),
+            );
+          },
+          child: Container(
+            width: 200,
+            child: ListTile(
+              leading: Icon(
+                Icons.shopping_basket_outlined,
+                size: 40,
+                color: Theme.of(context).accentColor.withOpacity(1),
+              ),
+              title: Text("Produto"),
+              subtitle: Text("Lista de produtos"),
             ),
           ),
         ),
