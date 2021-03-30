@@ -151,6 +151,7 @@ class _ProdutoPageState extends State<ProdutoPage> {
                           child: IconButton(
                             icon: Icon(
                               Icons.dashboard,
+                              color: Colors.grey[200],
                             ),
                             onPressed: () {
                               setState(() {
@@ -167,6 +168,7 @@ class _ProdutoPageState extends State<ProdutoPage> {
                           child: IconButton(
                             icon: Icon(
                               Icons.table_rows,
+                              color: Colors.grey[200],
                             ),
                             onPressed: () {
                               setState(() {
@@ -183,6 +185,7 @@ class _ProdutoPageState extends State<ProdutoPage> {
                           child: IconButton(
                             icon: Icon(
                               Icons.refresh,
+                              color: Colors.grey[200],
                             ),
                             onPressed: () {
                               produtoController.getAll();

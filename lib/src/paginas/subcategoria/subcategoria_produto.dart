@@ -137,7 +137,10 @@ class _SubCategoriaProdutoState extends State<SubCategoriaProduto>
 
                             if (subCategoriaController.subCategorias == null) {
                               return Center(
-                                child: Icon(Icons.warning_amber_outlined),
+                                child: Icon(
+                                  Icons.warning_amber_outlined,
+                                  color: Colors.grey[200],
+                                ),
                               );
                             }
 
@@ -158,6 +161,7 @@ class _SubCategoriaProdutoState extends State<SubCategoriaProduto>
                           child: IconButton(
                             icon: Icon(
                               Icons.refresh,
+                              color: Colors.grey[200],
                             ),
                             onPressed: () {
                               subCategoriaController.getAll();

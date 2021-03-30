@@ -40,7 +40,10 @@ class _SubcategoriaPageState extends State<SubcategoriaPage> {
 
               if (subCategoriaController.subCategorias == null) {
                 return Center(
-                  child: Icon(Icons.warning_amber_outlined),
+                  child: Icon(
+                    Icons.warning_amber_outlined,
+                    color: Colors.grey[200],
+                  ),
                 );
               }
 
@@ -58,6 +61,7 @@ class _SubcategoriaPageState extends State<SubcategoriaPage> {
             child: IconButton(
               icon: Icon(
                 Icons.refresh,
+                color: Colors.grey[200],
               ),
               onPressed: () {
                 subCategoriaController.getAll();

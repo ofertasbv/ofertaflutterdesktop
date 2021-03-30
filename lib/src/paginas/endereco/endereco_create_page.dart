@@ -1,14 +1,11 @@
 import 'dart:async';
 import 'dart:core';
 import 'dart:io';
-import 'dart:math';
 
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:masked_text_input_formatter/masked_text_input_formatter.dart';
 import 'package:nosso/src/core/controller/cidade_controller.dart';
 import 'package:nosso/src/core/controller/endereco_controller.dart';
@@ -28,7 +25,7 @@ class EnderecoCreatePage extends StatefulWidget {
 
   @override
   _EnderecoCreatePageState createState() =>
-      _EnderecoCreatePageState(endereco: endereco);
+      _EnderecoCreatePageState(e: endereco);
 }
 
 class _EnderecoCreatePageState extends State<EnderecoCreatePage>
@@ -39,48 +36,31 @@ class _EnderecoCreatePageState extends State<EnderecoCreatePage>
 
   Dialogs dialogs = Dialogs();
 
-  Endereco endereco;
+  Endereco e;
   Estado estadoSelecionado;
   Cidade cidadeSelecionada;
 
   Future<List<Estado>> estados;
   Future<List<Cidade>> cidades;
 
-  File file;
-  bool isButtonDesable = false;
-
   String tipoEndereco;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
-  _EnderecoCreatePageState({this.endereco});
-
-  var controllerNome = TextEditingController();
-  var latitudeController = TextEditingController();
-  var longitudeController = TextEditingController();
-
-  var controllerDestino = TextEditingController();
-  var controllerLogradouro = TextEditingController();
-  var controllerNumero = TextEditingController();
-  var controllerBairro = TextEditingController();
-  var controllerCidade = TextEditingController();
-  var controllerCep = TextEditingController();
-  var controllerLatitude = TextEditingController();
-  var controllerLongitude = TextEditingController();
+  _EnderecoCreatePageState({this.e});
 
   @override
   void initState() {
     cidadeController.getAll();
     estados = estadoController.getAll();
 
-    if (endereco == null) {
-      endereco = Endereco();
+    if (e == null) {
+      e = Endereco();
+      tipoEndereco = "COMERCIAL";
     } else {
-      cidadeSelecionada = endereco.cidade;
+      cidadeSelecionada = e.cidade;
       estadoSelecionado = cidadeSelecionada.estado;
     }
-
-    tipoEndereco = "COMERCIAL";
     super.initState();
   }
 
@@ -172,7 +152,8 @@ class _EnderecoCreatePageState extends State<EnderecoCreatePage>
             selectedItem: cidadeSelecionada,
             onChanged: (Cidade m) {
               setState(() {
-                print("cidade: ${m.nome}");
+                e.cidade = m;
+                print("cidade: ${e.cidade.nome}");
               });
             },
             searchBoxDecoration: InputDecoration(
@@ -193,9 +174,9 @@ class _EnderecoCreatePageState extends State<EnderecoCreatePage>
       appBar: AppBar(
         titleSpacing: 50,
         elevation: 0,
-        title: endereco.logradouro == null
+        title: e.logradouro == null
             ? Text("Cadastro de endereço")
-            : Text(endereco.logradouro),
+            : Text(e.logradouro),
       ),
       body: Container(
         padding: EdgeInsets.only(left: 100, right: 100, top: 10),
@@ -236,7 +217,7 @@ class _EnderecoCreatePageState extends State<EnderecoCreatePage>
               children: <Widget>[
                 SizedBox(height: 10),
                 Container(
-                  padding: EdgeInsets.all(5),
+                  padding: EdgeInsets.all(15),
                   child: Container(
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.grey),
@@ -254,13 +235,13 @@ class _EnderecoCreatePageState extends State<EnderecoCreatePage>
                               controlAffinity: ListTileControlAffinity.trailing,
                               title: Text("COMERCIAL"),
                               value: "COMERCIAL",
-                              groupValue: endereco.tipoEndereco == null
+                              groupValue: e.tipoEndereco == null
                                   ? tipoEndereco
-                                  : endereco.tipoEndereco,
+                                  : e.tipoEndereco,
                               onChanged: (String valor) {
                                 setState(() {
-                                  endereco.tipoEndereco = valor;
-                                  print("resultado: " + endereco.tipoEndereco);
+                                  e.tipoEndereco = valor;
+                                  print("resultado: " + e.tipoEndereco);
                                 });
                               },
                             ),
@@ -268,13 +249,13 @@ class _EnderecoCreatePageState extends State<EnderecoCreatePage>
                               controlAffinity: ListTileControlAffinity.trailing,
                               title: Text("RESIDENCIAL"),
                               value: "RESIDENCIAL",
-                              groupValue: endereco.tipoEndereco == null
+                              groupValue: e.tipoEndereco == null
                                   ? tipoEndereco
-                                  : endereco.tipoEndereco,
+                                  : e.tipoEndereco,
                               onChanged: (String valor) {
                                 setState(() {
-                                  endereco.tipoEndereco = valor;
-                                  print("resultado: " + endereco.tipoEndereco);
+                                  e.tipoEndereco = valor;
+                                  print("resultado: " + e.tipoEndereco);
                                 });
                               },
                             ),
@@ -287,13 +268,13 @@ class _EnderecoCreatePageState extends State<EnderecoCreatePage>
                 SizedBox(height: 10),
                 Container(
                   width: double.infinity,
-                  padding: EdgeInsets.all(5),
+                  padding: EdgeInsets.all(15),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       TextFormField(
-                        initialValue: endereco.logradouro,
-                        onSaved: (value) => endereco.logradouro = value,
+                        initialValue: e.logradouro,
+                        onSaved: (value) => e.logradouro = value,
                         validator: validateLogradouro,
                         decoration: InputDecoration(
                           labelText: "Logradouro",
@@ -310,187 +291,186 @@ class _EnderecoCreatePageState extends State<EnderecoCreatePage>
                     ],
                   ),
                 ),
+                Container(
+                  height: 100,
+                  padding: EdgeInsets.all(15),
+                  width: double.infinity,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        width: 500,
+                        color: Colors.grey[200],
+                        child: TextFormField(
+                          initialValue: e.complemento,
+                          onSaved: (value) => e.complemento = value,
+                          validator: validateComplemento,
+                          decoration: InputDecoration(
+                            labelText: "Complemento",
+                            hintText: "Complemento",
+                            prefixIcon: Icon(
+                              Icons.location_on,
+                              color: Colors.grey,
+                            ),
+                          ),
+                          onEditingComplete: () => focus.nextFocus(),
+                          keyboardType: TextInputType.text,
+                          maxLength: 50,
+                        ),
+                      ),
+                      Container(
+                        width: 500,
+                        color: Colors.grey[200],
+                        child: TextFormField(
+                          initialValue: e.numero,
+                          onSaved: (value) => e.numero = value,
+                          validator: validateNumero,
+                          decoration: InputDecoration(
+                            labelText: "Número",
+                            hintText: "Número",
+                            prefixIcon: Icon(
+                              Icons.location_on,
+                              color: Colors.grey,
+                            ),
+                          ),
+                          onEditingComplete: () => focus.nextFocus(),
+                          keyboardType: TextInputType.text,
+                          maxLength: 10,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                Container(
+                  height: 100,
+                  padding: EdgeInsets.all(15),
+                  width: double.infinity,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        width: 500,
+                        color: Colors.grey[200],
+                        child: TextFormField(
+                          initialValue: e.cep,
+                          onSaved: (value) => e.cep = value,
+                          validator: validateCep,
+                          decoration: InputDecoration(
+                            labelText: "Cep",
+                            hintText: "Cep",
+                            prefixIcon: Icon(
+                              Icons.location_on,
+                              color: Colors.grey,
+                            ),
+                            labelStyle: TextStyle(color: Colors.black),
+                          ),
+                          onEditingComplete: () => focus.nextFocus(),
+                          keyboardType: TextInputType.text,
+                          inputFormatters: [
+                            MaskedTextInputFormatter(
+                                mask: '99999-999', separator: '-')
+                          ],
+                          maxLength: 9,
+                        ),
+                      ),
+                      Container(
+                        width: 500,
+                        color: Colors.grey[200],
+                        child: TextFormField(
+                          initialValue: e.bairro,
+                          onSaved: (value) => e.bairro = value,
+                          validator: validateBairro,
+                          decoration: InputDecoration(
+                            labelText: "Bairro",
+                            hintText: "Bairro",
+                            prefixIcon: Icon(
+                              Icons.location_on,
+                              color: Colors.grey,
+                            ),
+                            labelStyle: TextStyle(color: Colors.black),
+                          ),
+                          onEditingComplete: () => focus.nextFocus(),
+                          keyboardType: TextInputType.text,
+                          maxLength: 50,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                Container(
+                  height: 100,
+                  padding: EdgeInsets.all(15),
+                  width: double.infinity,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        width: 500,
+                        color: Colors.grey[200],
+                        child: TextFormField(
+                          initialValue: e.latitude.toString(),
+                          onSaved: (value) =>
+                              e.latitude = double.tryParse(value),
+                          validator: validateLatitude,
+                          decoration: InputDecoration(
+                            labelText: "Latitude",
+                            hintText: "Latidute",
+                            prefixIcon: Icon(
+                              Icons.location_on,
+                              color: Colors.grey,
+                            ),
+                            labelStyle: TextStyle(color: Colors.black),
+                          ),
+                          onEditingComplete: () => focus.nextFocus(),
+                          maxLength: 50,
+                        ),
+                      ),
+                      Container(
+                        width: 500,
+                        color: Colors.grey[200],
+                        child: TextFormField(
+                          initialValue: e.longitude.toString(),
+                          onSaved: (value) =>
+                              e.longitude = double.tryParse(value),
+                          validator: validateLongitude,
+                          decoration: InputDecoration(
+                            labelText: "Longitude",
+                            hintText: "Longitude",
+                            prefixIcon: Icon(
+                              Icons.location_on,
+                              color: Colors.grey,
+                            ),
+                            labelStyle: TextStyle(color: Colors.black),
+                          ),
+                          onEditingComplete: () => focus.nextFocus(),
+                          maxLength: 50,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                Container(
+                  height: 100,
+                  padding: EdgeInsets.all(15),
+                  width: double.infinity,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        width: 500,
+                        color: Colors.grey[200],
+                        child: builderConteudoListEstados(),
+                      ),
+                      Container(
+                        width: 500,
+                        color: Colors.grey[200],
+                        child: builderConteudoListCiadades(),
+                      )
+                    ],
+                  ),
+                ),
               ],
             ),
-          ),
-        ),
-        Container(
-          height: 100,
-          padding: EdgeInsets.all(15),
-          width: double.infinity,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                width: 500,
-                color: Colors.grey[200],
-                child: TextFormField(
-                  initialValue: endereco.complemento,
-                  onSaved: (value) => endereco.complemento = value,
-                  validator: validateComplemento,
-                  decoration: InputDecoration(
-                    labelText: "Complemento",
-                    hintText: "Complemento",
-                    prefixIcon: Icon(
-                      Icons.location_on,
-                      color: Colors.grey,
-                    ),
-                  ),
-                  onEditingComplete: () => focus.nextFocus(),
-                  keyboardType: TextInputType.text,
-                  maxLength: 50,
-                ),
-              ),
-              Container(
-                width: 500,
-                color: Colors.grey[200],
-                child: TextFormField(
-                  initialValue: endereco.numero,
-                  onSaved: (value) => endereco.numero = value,
-                  validator: validateNumero,
-                  decoration: InputDecoration(
-                    labelText: "Número",
-                    hintText: "Número",
-                    prefixIcon: Icon(
-                      Icons.location_on,
-                      color: Colors.grey,
-                    ),
-                  ),
-                  onEditingComplete: () => focus.nextFocus(),
-                  keyboardType: TextInputType.number,
-                  maxLength: 10,
-                ),
-              )
-            ],
-          ),
-        ),
-        Container(
-          height: 100,
-          padding: EdgeInsets.all(15),
-          width: double.infinity,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                width: 500,
-                color: Colors.grey[200],
-                child: TextFormField(
-                  initialValue: endereco.cep,
-                  onSaved: (value) => endereco.cep = value,
-                  validator: validateCep,
-                  decoration: InputDecoration(
-                    labelText: "Cep",
-                    hintText: "Cep",
-                    prefixIcon: Icon(
-                      Icons.location_on,
-                      color: Colors.grey,
-                    ),
-                    labelStyle: TextStyle(color: Colors.black),
-                  ),
-                  onEditingComplete: () => focus.nextFocus(),
-                  keyboardType: TextInputType.number,
-                  inputFormatters: [
-                    MaskedTextInputFormatter(mask: '99999-999', separator: '-')
-                  ],
-                  maxLength: 9,
-                ),
-              ),
-              Container(
-                width: 500,
-                color: Colors.grey[200],
-                child: TextFormField(
-                  initialValue: endereco.bairro,
-                  onSaved: (value) => endereco.bairro = value,
-                  validator: validateBairro,
-                  decoration: InputDecoration(
-                    labelText: "Bairro",
-                    hintText: "Bairro",
-                    prefixIcon: Icon(
-                      Icons.location_on,
-                      color: Colors.grey,
-                    ),
-                    labelStyle: TextStyle(color: Colors.black),
-                  ),
-                  onEditingComplete: () => focus.nextFocus(),
-                  keyboardType: TextInputType.text,
-                  maxLength: 50,
-                ),
-              )
-            ],
-          ),
-        ),
-        Container(
-          height: 100,
-          padding: EdgeInsets.all(15),
-          width: double.infinity,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                width: 500,
-                color: Colors.grey[200],
-                child: TextFormField(
-                  initialValue: endereco.latitude.toString(),
-                  onSaved: (value) =>
-                      endereco.latitude = double.tryParse(value),
-                  validator: validateLatitude,
-                  decoration: InputDecoration(
-                    labelText: "Latitude",
-                    hintText: "Latidute",
-                    prefixIcon: Icon(
-                      Icons.location_on,
-                      color: Colors.grey,
-                    ),
-                    labelStyle: TextStyle(color: Colors.black),
-                  ),
-                  onEditingComplete: () => focus.nextFocus(),
-                  keyboardType: TextInputType.numberWithOptions(),
-                  maxLength: 50,
-                ),
-              ),
-              Container(
-                width: 500,
-                color: Colors.grey[200],
-                child: TextFormField(
-                  initialValue: endereco.longitude.toString(),
-                  onSaved: (value) =>
-                      endereco.longitude = double.tryParse(value),
-                  validator: validateLongitude,
-                  decoration: InputDecoration(
-                    labelText: "Longitude",
-                    hintText: "Longitude",
-                    prefixIcon: Icon(
-                      Icons.location_on,
-                      color: Colors.grey,
-                    ),
-                    labelStyle: TextStyle(color: Colors.black),
-                  ),
-                  onEditingComplete: () => focus.nextFocus(),
-                  keyboardType: TextInputType.numberWithOptions(),
-                  maxLength: 50,
-                ),
-              )
-            ],
-          ),
-        ),
-        Container(
-          height: 100,
-          padding: EdgeInsets.all(15),
-          width: double.infinity,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                width: 500,
-                color: Colors.grey[200],
-                child: builderConteudoListEstados(),
-              ),
-              Container(
-                width: 500,
-                color: Colors.grey[200],
-                child: builderConteudoListCiadades(),
-              )
-            ],
           ),
         ),
         SizedBox(height: 0),
@@ -501,20 +481,20 @@ class _EnderecoCreatePageState extends State<EnderecoCreatePage>
             icon: Icon(Icons.check),
             onPressed: () {
               if (controller.validate()) {
-                if (endereco.id == null) {
+                if (e.id == null) {
                   dialogs.information(context, "prepando para o cadastro...");
                   Timer(Duration(seconds: 3), () {
-                    print("Logradouro: ${endereco.logradouro}");
-                    print("Complemento: ${endereco.complemento}");
-                    print("Bairro: ${endereco.bairro}");
-                    print("Numero: ${endereco.numero}");
-                    print("Cep: ${endereco.cep}");
-                    print("Cidade: ${endereco.cidade}");
+                    print("Logradouro: ${e.logradouro}");
+                    print("Complemento: ${e.complemento}");
+                    print("Bairro: ${e.bairro}");
+                    print("Numero: ${e.numero}");
+                    print("Cep: ${e.cep}");
+                    print("Cidade: ${e.cidade.nome}");
 
-                    print("Latitude: ${endereco.latitude}");
-                    print("Longitude: ${endereco.longitude}");
+                    print("Latitude: ${e.latitude}");
+                    print("Longitude: ${e.longitude}");
 
-                    enderecoController.create(endereco).then((value) {
+                    enderecoController.create(e).then((value) {
                       print("resultado : ${value}");
                     });
                     buildPush(context);
@@ -523,19 +503,17 @@ class _EnderecoCreatePageState extends State<EnderecoCreatePage>
                   dialogs.information(
                       context, "preparando para o alteração...");
                   Timer(Duration(seconds: 3), () {
-                    print("Logradouro: ${endereco.logradouro}");
-                    print("Complemento: ${endereco.complemento}");
-                    print("Bairro: ${endereco.bairro}");
-                    print("Numero: ${endereco.numero}");
-                    print("Cep: ${endereco.cep}");
-                    print("Cidade: ${endereco.cidade}");
+                    print("Logradouro: ${e.logradouro}");
+                    print("Complemento: ${e.complemento}");
+                    print("Bairro: ${e.bairro}");
+                    print("Numero: ${e.numero}");
+                    print("Cep: ${e.cep}");
+                    print("Cidade: ${e.cidade.nome}");
 
-                    print("Latitude: ${endereco.latitude}");
-                    print("Longitude: ${endereco.longitude}");
+                    print("Latitude: ${e.latitude}");
+                    print("Longitude: ${e.longitude}");
 
-                    enderecoController
-                        .update(endereco.id, endereco)
-                        .then((value) {
+                    enderecoController.update(e.id, e).then((value) {
                       print("resultado : ${value}");
                     });
                     buildPush(context);

@@ -125,7 +125,7 @@ class HomePage extends StatelessWidget {
                 ),
               ),
               Container(
-                height: 1500,
+                height: 1600,
                 child: Row(
                   children: [
                     Expanded(

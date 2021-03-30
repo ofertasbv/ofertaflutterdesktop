@@ -128,7 +128,10 @@ class _PromocaoPageListState extends State<PromocaoPageList> {
 
                             if (promocaoController.promocoes == null) {
                               return Center(
-                                child: Icon(Icons.warning_amber_outlined),
+                                child: Icon(
+                                  Icons.warning_amber_outlined,
+                                  color: Colors.grey[200],
+                                ),
                               );
                             }
 
@@ -148,6 +151,7 @@ class _PromocaoPageListState extends State<PromocaoPageList> {
                           child: IconButton(
                             icon: Icon(
                               Icons.refresh,
+                              color: Colors.grey[200],
                             ),
                             onPressed: () {
                               promocaoController.getAll();
