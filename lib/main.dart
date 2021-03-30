@@ -32,12 +32,7 @@ import 'package:flutter/services.dart';
 import 'package:nosso/src/core/controller/tamanho_controller.dart';
 import 'package:nosso/src/core/controller/usuario_controller.dart';
 import 'package:nosso/src/core/controller/vendedor_controller.dart';
-import 'package:nosso/src/home/categoria_list_home.dart';
-import 'package:nosso/src/home/categoria_list_menu.dart';
 import 'package:nosso/src/home/home.dart';
-import 'package:nosso/src/home/promocao_list_home.dart';
-import 'package:nosso/src/paginas/promocao/promocao_page_list.dart';
-import 'package:nosso/src/util/config/config_page.dart';
 import 'package:nosso/src/util/themes/theme.dart';
 
 void main() async {

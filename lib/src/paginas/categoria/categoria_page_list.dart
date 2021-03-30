@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
-import 'package:multiselect_dropdown/main.dart';
 import 'package:nosso/src/core/controller/categoria_controller.dart';
 import 'package:nosso/src/core/model/loja.dart';
+import 'package:nosso/src/home/home.dart';
 import 'package:nosso/src/paginas/categoria/categoria_list.dart';
 import 'package:nosso/src/util/filter/produto_filter.dart';
 
