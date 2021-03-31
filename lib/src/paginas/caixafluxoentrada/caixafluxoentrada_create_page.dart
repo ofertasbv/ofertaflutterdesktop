@@ -50,7 +50,7 @@ class _CaixaFluxoEntradaCreatePageState
   var valorTotalController = TextEditingController();
 
   CaixaFluxoEntrada c;
-  CaixaFluxo caixaFluxo;
+  CaixaFluxo caixaFluxoSelecionado;
   Vendedor vendedorSelecionado;
   Pedido pedidoSelecionado;
   Controller controller;
@@ -59,10 +59,12 @@ class _CaixaFluxoEntradaCreatePageState
   void initState() {
     if (c == null) {
       c = CaixaFluxoEntrada();
-    }else{
+    } else {
       pedidoSelecionado = c.pedido;
+      caixaFluxoSelecionado = c.caixaFluxo;
       valorEntradaController.text = c.valorEntrada.toStringAsFixed(2);
     }
+    caixafluxoController.getAll();
     pedidoController.getAll();
     super.initState();
   }
@@ -109,6 +111,47 @@ class _CaixaFluxoEntradaCreatePageState
               border: OutlineInputBorder(),
               contentPadding: EdgeInsets.fromLTRB(20, 20, 20, 0),
               labelText: "Pesquisar por pedido",
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  builderConteudoListCaixaFluxos() {
+    return Container(
+      padding: EdgeInsets.only(top: 0),
+      child: Observer(
+        builder: (context) {
+          List<CaixaFluxo> caixaFluxos = caixafluxoController.caixaFluxos;
+          if (caixafluxoController.error != null) {
+            return Text("Não foi possível carregados dados");
+          }
+
+          if (caixaFluxos == null) {
+            return CircularProgressorMini();
+          }
+
+          return DropdownSearch<CaixaFluxo>(
+            label: "Selecione fluxos do dia",
+            popupTitle: Center(child: Text("Caixa Fluxos")),
+            items: caixaFluxos,
+            showSearchBox: true,
+            itemAsString: (CaixaFluxo s) => s.descricao,
+            validator: (value) => value == null ? "campo obrigatório" : null,
+            isFilteredOnline: true,
+            showClearButton: true,
+            selectedItem: caixaFluxoSelecionado,
+            onChanged: (CaixaFluxo l) {
+              setState(() {
+                c.caixaFluxo = l;
+                print("fluxo: ${c.caixaFluxo.descricao}");
+              });
+            },
+            searchBoxDecoration: InputDecoration(
+              border: OutlineInputBorder(),
+              contentPadding: EdgeInsets.fromLTRB(20, 20, 20, 0),
+              labelText: "Pesquisar por fluxo",
             ),
           );
         },
@@ -243,9 +286,20 @@ class _CaixaFluxoEntradaCreatePageState
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Container(
-                  padding: EdgeInsets.all(15),
-                  child: builderConteudoListPedidos(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.all(15),
+                      width: 500,
+                      child: builderConteudoListPedidos(),
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(15),
+                      width: 500,
+                      child: builderConteudoListCaixaFluxos(),
+                    ),
+                  ],
                 ),
                 Container(
                   padding: EdgeInsets.all(15),

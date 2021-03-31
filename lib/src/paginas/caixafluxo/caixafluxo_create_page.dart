@@ -117,7 +117,7 @@ class _CaixaFluxoCreatePageState extends State<CaixaFluxoCreatePage>
           }
 
           if (caixas == null) {
-            return CircularProgressor();
+            return CircularProgressorMini();
           }
 
           return DropdownSearch<Caixa>(

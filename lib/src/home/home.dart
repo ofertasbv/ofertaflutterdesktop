@@ -2,13 +2,17 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:nosso/src/api/constants/constant_api.dart';
 import 'package:nosso/src/home/categoria_list_home.dart';
 import 'package:nosso/src/home/categoria_list_menu.dart';
 import 'package:nosso/src/home/promocao_list_home.dart';
 import 'package:nosso/src/paginas/categoria/categoria_page_list.dart';
 import 'package:nosso/src/paginas/loja/loja_page.dart';
+import 'package:nosso/src/paginas/promocao/promocao_banner.dart';
 import 'package:nosso/src/paginas/promocao/promocao_page_list.dart';
 import 'package:nosso/src/util/config/config_page.dart';
+import 'package:gscarousel/gscarousel.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -132,7 +136,7 @@ class HomePage extends StatelessWidget {
                       flex: _size.width > 1340 ? 1 : 2,
                       child: Container(
                         height: double.infinity,
-                        color: Colors.grey[100],
+                        color: Colors.grey[200],
                       ),
                     ),
                     Expanded(
@@ -143,16 +147,16 @@ class HomePage extends StatelessWidget {
                         child: Column(
                           children: [
                             Container(
-                              height: 300,
+                              height: 400,
                               color: Colors.grey[400],
+                              child: PromocaoBanner(),
                             ),
-                            SizedBox(height: 10),
                             Container(
                               height: 100,
                               color: Colors.grey[100],
                               child: Row(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     "DESTAQUES DA SEMANA",
@@ -195,7 +199,7 @@ class HomePage extends StatelessWidget {
                               color: Colors.grey[100],
                               child: Row(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     "CATEGORIAS EM DESTAQUE",
@@ -238,7 +242,7 @@ class HomePage extends StatelessWidget {
                               color: Colors.grey[100],
                               child: Row(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     "LOJAS EM DESTAQUE",
@@ -315,7 +319,7 @@ class ResponsiveLayout extends StatelessWidget {
 
   static bool isIpad(BuildContext context) =>
       MediaQuery.of(context).size.width < ipadLimit &&
-          MediaQuery.of(context).size.width >= iphoneLimit;
+      MediaQuery.of(context).size.width >= iphoneLimit;
 
   static bool isMacbook(BuildContext context) =>
       MediaQuery.of(context).size.width >= ipadLimit;

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -17,6 +18,7 @@ import 'package:nosso/src/core/model/vendedor.dart';
 import 'package:nosso/src/paginas/caixafluxosaida/caixafluxosaida_page.dart';
 import 'package:nosso/src/paginas/produto/produto_search.dart';
 import 'package:nosso/src/util/dialogs/dialogs.dart';
+import 'package:nosso/src/util/load/circular_progresso_mini.dart';
 import 'package:nosso/src/util/validador/validador_caixafluxo.dart';
 
 class CaixaFluxoSaidaCreatePage extends StatefulWidget {
@@ -44,7 +46,7 @@ class _CaixaFluxoSaidaCreatePageState extends State<CaixaFluxoSaidaCreatePage>
   var valorTotalController = TextEditingController();
 
   CaixaFluxoSaida c;
-  CaixaFluxo caixaFluxo;
+  CaixaFluxo caixaFluxoSelecionado;
   Vendedor vendedorSelecionado;
   Controller controller;
 
@@ -53,8 +55,10 @@ class _CaixaFluxoSaidaCreatePageState extends State<CaixaFluxoSaidaCreatePage>
     if (c == null) {
       c = CaixaFluxoSaida();
     }else{
-      valorSaidaController.text = c.valorSaida.toStringAsPrecision(2);
+      caixaFluxoSelecionado = c.caixaFluxo;
+      valorSaidaController.text = c.valorSaida.toStringAsFixed(2);
     }
+    caixafluxoController.getAll();
     super.initState();
   }
 
@@ -62,6 +66,47 @@ class _CaixaFluxoSaidaCreatePageState extends State<CaixaFluxoSaidaCreatePage>
   didChangeDependencies() {
     controller = Controller();
     super.didChangeDependencies();
+  }
+
+  builderConteudoListCaixaFluxos() {
+    return Container(
+      padding: EdgeInsets.only(top: 0),
+      child: Observer(
+        builder: (context) {
+          List<CaixaFluxo> caixaFluxos = caixafluxoController.caixaFluxos;
+          if (caixafluxoController.error != null) {
+            return Text("Não foi possível carregados dados");
+          }
+
+          if (caixaFluxos == null) {
+            return CircularProgressorMini();
+          }
+
+          return DropdownSearch<CaixaFluxo>(
+            label: "Selecione fluxos do dia",
+            popupTitle: Center(child: Text("Caixa Fluxos")),
+            items: caixaFluxos,
+            showSearchBox: true,
+            itemAsString: (CaixaFluxo s) => s.descricao,
+            validator: (value) => value == null ? "campo obrigatório" : null,
+            isFilteredOnline: true,
+            showClearButton: true,
+            selectedItem: caixaFluxoSelecionado,
+            onChanged: (CaixaFluxo l) {
+              setState(() {
+                c.caixaFluxo = l;
+                print("fluxo: ${c.caixaFluxo.descricao}");
+              });
+            },
+            searchBoxDecoration: InputDecoration(
+              border: OutlineInputBorder(),
+              contentPadding: EdgeInsets.fromLTRB(20, 20, 20, 0),
+              labelText: "Pesquisar por fluxo",
+            ),
+          );
+        },
+      ),
+    );
   }
   
   @override
@@ -195,7 +240,12 @@ class _CaixaFluxoSaidaCreatePageState extends State<CaixaFluxoSaidaCreatePage>
                   padding: EdgeInsets.all(15),
                   child: Column(
                     children: <Widget>[
-                      SizedBox(height: 0),
+                      Container(
+                        padding: EdgeInsets.all(0),
+                        width: double.infinity,
+                        child: builderConteudoListCaixaFluxos(),
+                      ),
+                      SizedBox(height: 30),
                       TextFormField(
                         initialValue: c.descricao,
                         onSaved: (value) => c.descricao = value,
