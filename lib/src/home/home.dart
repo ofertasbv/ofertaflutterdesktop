@@ -12,7 +12,7 @@ import 'package:nosso/src/paginas/loja/loja_page.dart';
 import 'package:nosso/src/paginas/promocao/promocao_banner.dart';
 import 'package:nosso/src/paginas/promocao/promocao_page_list.dart';
 import 'package:nosso/src/util/config/config_page.dart';
-import 'package:gscarousel/gscarousel.dart';
+// import 'package:gscarousel/gscarousel.dart';
 
 class HomePage extends StatelessWidget {
   @override

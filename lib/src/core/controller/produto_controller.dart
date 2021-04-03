@@ -9,6 +9,7 @@ import 'package:nosso/src/core/model/produto.dart';
 import 'package:nosso/src/core/model/produtopage.dart';
 import 'package:nosso/src/core/model/tamanho.dart';
 import 'package:nosso/src/core/repository/produto_repository.dart';
+import 'package:nosso/src/paginas/produto/produto_page.dart';
 import 'package:nosso/src/util/filter/produto_filter.dart';
 
 part 'produto_controller.g.dart';
@@ -21,6 +22,9 @@ abstract class ProdutoControllerBase with Store {
   ProdutoControllerBase() {
     produtoRepository = ProdutoRepository();
   }
+
+  @observable
+  ObservableList<ProdutoPage> observableList;
 
   @observable
   List<Produto> produtos;

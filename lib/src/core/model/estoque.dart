@@ -7,8 +7,9 @@ class Estoque {
   double valorVenda;
   double percentual;
   String estoqueStatus;
-  // DateTime dataRegistro;
-  // DateTime dataVencimento;
+  DateTime dataRegistro;
+  DateTime dataFabricacao;
+  DateTime dataVencimento;
 
   Estoque({
     this.id,
@@ -17,8 +18,9 @@ class Estoque {
     this.percentual,
     this.valorVenda,
     this.estoqueStatus,
-    // this.dataRegistro,
-    // this.dataVencimento,
+    this.dataRegistro,
+    this.dataFabricacao,
+    this.dataVencimento,
   });
 
   Estoque.fromJson(Map<String, dynamic> json) {
@@ -28,8 +30,9 @@ class Estoque {
     valorVenda = json['valorVenda'];
     percentual = json['percentual'];
     estoqueStatus = json['estoqueStatus'];
-    // dataRegistro = DateTime.tryParse(json['dataRegistro'].toString());
-    // dataVencimento = DateTime.tryParse(json['dataVencimento'].toString());
+    dataRegistro = DateTime.tryParse(json['dataRegistro'].toString());
+    dataFabricacao = DateTime.tryParse(json['dataFabricacao'].toString());
+    dataVencimento = DateTime.tryParse(json['dataVencimento'].toString());
   }
 
   Map<String, dynamic> toJson() {
@@ -40,8 +43,9 @@ class Estoque {
     data['valorVenda'] = this.valorVenda;
     data['percentual'] = this.percentual;
     data['estoqueStatus'] = this.estoqueStatus;
-    // data['dataRegistro'] = this.dataRegistro.toIso8601String();
-    // data['dataVencimento'] = this.dataVencimento.toIso8601String();
+    data['dataRegistro'] = this.dataRegistro.toIso8601String();
+    data['dataFabricacao'] = this.dataFabricacao.toIso8601String();
+    data['dataVencimento'] = this.dataVencimento.toIso8601String();
     return data;
   }
 }

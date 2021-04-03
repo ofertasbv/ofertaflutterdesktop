@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:barcode_scan/barcode_scan.dart';
+import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +30,7 @@ import 'package:nosso/src/core/model/subcategoria.dart';
 import 'package:nosso/src/core/model/tamanho.dart';
 import 'package:nosso/src/core/model/uploadFileResponse.dart';
 import 'package:nosso/src/paginas/produto/produto_tab.dart';
+import 'package:nosso/src/paginas/produto/produto_table.dart';
 import 'package:nosso/src/util/componentes/image_source_sheet.dart';
 import 'package:nosso/src/util/dialogs/dialogs.dart';
 import 'package:nosso/src/util/load/circular_progresso_mini.dart';
@@ -103,12 +105,7 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
   double desconto;
   double valor;
   int quantidade;
-
-  String medida;
   String tamanho;
-  String origem;
-  String estoqueStatus;
-
   File file;
 
   @override
@@ -120,10 +117,6 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
       novo = false;
       status = false;
       destaque = false;
-
-      medida = "UNIDADE";
-      origem = "NACIONAL";
-      estoqueStatus = "BAIXO";
     } else {
       novo = p.novo;
       status = p.status;
@@ -234,7 +227,6 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
         100;
     controllerValorVenda.text = valor.toStringAsFixed(2);
   }
-
 
   // builderConteudoListCores2() {
   //   return Container(
@@ -835,7 +827,7 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Container(
-                        width: 200,
+                        width: 500,
                         child: TextFormField(
                           initialValue: p.nome,
                           onSaved: (value) => p.nome = value,
@@ -856,7 +848,7 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
                         ),
                       ),
                       Container(
-                        width: 200,
+                        width: 500,
                         child: TextFormField(
                           initialValue: p.descricao,
                           onSaved: (value) => p.descricao = value,
@@ -876,38 +868,11 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
                           maxLines: null,
                         ),
                       ),
-                      Container(
-                        width: 200,
-                        child: TextFormField(
-                          initialValue: p.sku,
-                          onSaved: (value) => p.sku = value,
-                          validator: validateSKU,
-                          decoration: InputDecoration(
-                            labelText: "SKU",
-                            hintText: "sku produto",
-                            prefixIcon: Icon(
-                              Icons.shopping_cart,
-                              color: Colors.grey,
-                            ),
-                            suffixIcon: Icon(Icons.close),
-                          ),
-                          onEditingComplete: () => focus.nextFocus(),
-                          keyboardType: TextInputType.text,
-                          maxLength: 100,
-                          maxLines: 1,
-                        ),
-                      ),
-                      Container(
-                        width: 200,
-                        color: Colors.grey[200],
-                        child: builderConteudoListMedidas(),
-                      )
                     ],
                   ),
                 ),
 
                 /* ================ Cadastro produto ================ */
-                SizedBox(height: 10),
                 Container(
                   padding: EdgeInsets.all(15),
                   child: Column(
@@ -919,7 +884,7 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Container(
-                              width: 200,
+                              width: 500,
                               child: TextFormField(
                                 controller: controllerQuantidade,
                                 onSaved: (value) {
@@ -942,7 +907,7 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
                               ),
                             ),
                             Container(
-                              width: 200,
+                              width: 500,
                               child: TextFormField(
                                 controller: controllerValorUnitario,
                                 onSaved: (value) {
@@ -969,8 +934,18 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
                                 maxLength: 10,
                               ),
                             ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Container(
+                        padding: EdgeInsets.all(0),
+                        width: double.infinity,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
                             Container(
-                              width: 200,
+                              width: 500,
                               child: TextFormField(
                                 controller: controllerPecentual,
                                 onSaved: (value) {
@@ -1008,7 +983,7 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
                               ),
                             ),
                             Container(
-                              width: 200,
+                              width: 500,
                               child: TextFormField(
                                 controller: controllerValorVenda,
                                 onSaved: (value) {
@@ -1038,77 +1013,6 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
                           ],
                         ),
                       ),
-                      SizedBox(height: 10),
-                      // DateTimeField(
-                      //   initialValue: p.estoque.dataRegistro,
-                      //   format: dateFormat,
-                      //   validator: validateDateRegistro,
-                      //   onSaved: (value) => p.estoque.dataRegistro = value,
-                      //   decoration: InputDecoration(
-                      //     labelText: "Data registro",
-                      //     hintText: "99-09-9999",
-                      //     prefixIcon: Icon(
-                      //       Icons.calendar_today,
-                      //       color: Colors.grey,
-                      //     ),
-                      //     suffixIcon: Icon(Icons.close),
-                      //     contentPadding:
-                      //         EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                      //     border: OutlineInputBorder(
-                      //         borderRadius: BorderRadius.circular(5.0)),
-                      //     focusedBorder: OutlineInputBorder(
-                      //       borderSide: BorderSide(color: Colors.purple[900]),
-                      //       gapPadding: 1,
-                      //       borderRadius: BorderRadius.circular(5.0),
-                      //     ),
-                      //   ),
-                      //   onEditingComplete: () => focus.nextFocus(),
-                      //   onShowPicker: (context, currentValue) {
-                      //     return showDatePicker(
-                      //       context: context,
-                      //       firstDate: DateTime(2000),
-                      //       initialDate: currentValue ?? DateTime.now(),
-                      //       locale: Locale('pt', 'BR'),
-                      //       lastDate: DateTime(2030),
-                      //     );
-                      //   },
-                      //   maxLength: 10,
-                      // ),
-                      // DateTimeField(
-                      //   initialValue: p.estoque.dataVencimento,
-                      //   format: dateFormat,
-                      //   validator: validateDateVencimento,
-                      //   onSaved: (value) => p.estoque.dataVencimento = value,
-                      //   decoration: InputDecoration(
-                      //     labelText: "Data vencimento",
-                      //     hintText: "99-09-9999",
-                      //     prefixIcon: Icon(
-                      //       Icons.calendar_today,
-                      //       color: Colors.grey,
-                      //     ),
-                      //     suffixIcon: Icon(Icons.close),
-                      //     contentPadding:
-                      //     EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                      //     border: OutlineInputBorder(
-                      //         borderRadius: BorderRadius.circular(5.0)),
-                      //     focusedBorder: OutlineInputBorder(
-                      //       borderSide: BorderSide(color: Colors.purple[900]),
-                      //       gapPadding: 1,
-                      //       borderRadius: BorderRadius.circular(5.0),
-                      //     ),
-                      //   ),
-                      //   onEditingComplete: () => focus.nextFocus(),
-                      //   onShowPicker: (context, currentValue) {
-                      //     return showDatePicker(
-                      //       context: context,
-                      //       firstDate: DateTime(2000),
-                      //       initialDate: currentValue ?? DateTime.now(),
-                      //       locale: Locale('pt', 'BR'),
-                      //       lastDate: DateTime(2030),
-                      //     );
-                      //   },
-                      //   maxLength: 10,
-                      // ),
                     ],
                   ),
                 ),
@@ -1121,17 +1025,100 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Container(
-                        width: 300,
+                        width: 500,
+                        child: DateTimeField(
+                          initialValue: p.estoque.dataFabricacao,
+                          format: dateFormat,
+                          validator: validateDateFabricacao,
+                          onSaved: (value) => p.estoque.dataFabricacao = value,
+                          decoration: InputDecoration(
+                            labelText: "Data fabricação",
+                            hintText: "99-09-9999",
+                            prefixIcon: Icon(
+                              Icons.calendar_today,
+                              color: Colors.grey,
+                            ),
+                            suffixIcon: Icon(Icons.close),
+                          ),
+                          onEditingComplete: () => focus.nextFocus(),
+                          onShowPicker: (context, currentValue) {
+                            return showDatePicker(
+                              context: context,
+                              firstDate: DateTime(2000),
+                              initialDate: currentValue ?? DateTime.now(),
+                              locale: Locale('pt', 'BR'),
+                              lastDate: DateTime(2030),
+                            );
+                          },
+                          maxLength: 10,
+                        ),
+                      ),
+                      Container(
+                        width: 500,
+                        child: DateTimeField(
+                          initialValue: p.estoque.dataVencimento,
+                          format: dateFormat,
+                          validator: validateDateVencimento,
+                          onSaved: (value) => p.estoque.dataVencimento = value,
+                          decoration: InputDecoration(
+                            labelText: "Data vencimento",
+                            hintText: "99-09-9999",
+                            prefixIcon: Icon(
+                              Icons.calendar_today,
+                              color: Colors.grey,
+                            ),
+                            suffixIcon: Icon(Icons.close),
+                          ),
+                          onEditingComplete: () => focus.nextFocus(),
+                          onShowPicker: (context, currentValue) {
+                            return showDatePicker(
+                              context: context,
+                              firstDate: DateTime(2000),
+                              initialDate: currentValue ?? DateTime.now(),
+                              locale: Locale('pt', 'BR'),
+                              lastDate: DateTime(2030),
+                            );
+                          },
+                          maxLength: 10,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  height: 100,
+                  padding: EdgeInsets.all(15),
+                  width: double.infinity,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        width: 500,
                         color: Colors.grey[200],
                         child: builderConteudoListLojas(),
                       ),
                       Container(
-                        width: 300,
+                        width: 500,
                         color: Colors.grey[200],
                         child: builderConteudoListPromocaoes(),
                       ),
+                    ],
+                  ),
+                ),
+                Container(
+                  height: 100,
+                  padding: EdgeInsets.all(15),
+                  width: double.infinity,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
                       Container(
-                        width: 300,
+                        width: 500,
+                        color: Colors.grey[200],
+                        child: builderConteudoListSubCategorias(),
+                      ),
+                      Container(
+                        width: 500,
                         color: Colors.grey[200],
                         child: builderConteudoListMarcas(),
                       )
@@ -1145,17 +1132,31 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Container(
-                        width: 300,
+                        width: 500,
                         color: Colors.grey[200],
-                        child: builderConteudoListSubCategorias(),
+                        child: builderConteudoListMedidas(),
                       ),
                       Container(
-                        width: 300,
+                        width: 500,
+                        color: Colors.grey[200],
+                        child: builderConteudoLisTamanhos(),
+                      )
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.all(15),
+                  width: double.infinity,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        width: 500,
                         color: Colors.grey[200],
                         child: builderConteudoListCores(),
                       ),
                       Container(
-                        width: 300,
+                        width: 500,
                         color: Colors.grey[200],
                         child: builderConteudoLisTamanhos(),
                       )
@@ -1237,10 +1238,8 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
                     dialogs.information(context, "prepando para o cadastro...");
                     Timer(Duration(seconds: 3), () {
                       DateTime agora = DateTime.now();
+                      p.estoque.dataRegistro = agora;
 
-                      p.estoque.estoqueStatus = estoqueStatus;
-
-                      //
                       // for (Cor c in corController.cores) {
                       //   print("Cores: ${c.descricao}");
                       // }
@@ -1268,24 +1267,20 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
                       print("Novo: ${p.novo}");
                       print("Status: ${p.status}");
                       print("Destaque: ${p.destaque}");
+                      print("Medida: ${p.medida.descricao}");
 
-                      print("Medida: ${p.medida}");
-                      print("Origem: ${p.origem}");
-
-                      // print("Registro: ${p.estoque.dataRegistro}");
-                      // print("Vencimento: ${p.estoque.dataVencimento}");
-                      print("Agora: ${agora}");
-
-                      for (Cor c in coreSelecionados) {
-                        print("Cores: ${c.descricao}");
-                      }
-
-                      for (Tamanho c in tamanhoSelecionados) {
-                        print("Tamanhos: ${c.descricao}");
-                      }
-
-                      p.cores.addAll(coreSelecionados);
-                      p.tamanhos.addAll(tamanhoSelecionados);
+                      print("Registro: ${p.estoque.dataRegistro}");
+                      print("Vencimento: ${p.estoque.dataVencimento}");
+                      // for (Cor c in coreSelecionados) {
+                      //   print("Cores: ${c.descricao}");
+                      // }
+                      //
+                      // for (Tamanho c in tamanhoSelecionados) {
+                      //   print("Tamanhos: ${c.descricao}");
+                      // }
+                      //
+                      // p.cores.addAll(coreSelecionados);
+                      // p.tamanhos.addAll(tamanhoSelecionados);
 
                       p.estoque.quantidade =
                           int.tryParse(controllerQuantidade.text);
@@ -1324,23 +1319,20 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
                       print("Status: ${p.status}");
                       print("Destaque: ${p.destaque}");
 
-                      print("Medida: ${p.medida}");
-                      print("Origem: ${p.origem}");
+                      print("Medida: ${p.medida.descricao}");
+                      print("Registro: ${p.estoque.dataRegistro}");
+                      print("Vencimento: ${p.estoque.dataVencimento}");
 
-                      // print("Registro: ${p.estoque.dataRegistro}");
-                      // print("Vencimento: ${p.estoque.dataVencimento}");
-                      print("Agora: ${agora}");
-
-                      for (Cor c in coreSelecionados) {
-                        print("Cores: ${c.descricao}");
-                      }
-
-                      for (Tamanho c in tamanhoSelecionados) {
-                        print("Tamanhos: ${c.descricao}");
-                      }
-
-                      p.cores.addAll(coreSelecionados);
-                      p.tamanhos.addAll(tamanhoSelecionados);
+                      // for (Cor c in coreSelecionados) {
+                      //   print("Cores: ${c.descricao}");
+                      // }
+                      //
+                      // for (Tamanho c in tamanhoSelecionados) {
+                      //   print("Tamanhos: ${c.descricao}");
+                      // }
+                      //
+                      // p.cores.addAll(coreSelecionados);
+                      // p.tamanhos.addAll(tamanhoSelecionados);
 
                       p.estoque.quantidade =
                           int.tryParse(controllerQuantidade.text);
@@ -1355,7 +1347,7 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
                         print("resultado : ${value}");
                       });
                       Navigator.of(context).pop();
-                      // buildPush(context);
+                      buildPush(context);
                     });
                   }
                 }
@@ -1370,7 +1362,7 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
     return Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => ProdutoTab(),
+        builder: (context) => ProdutoTable(),
       ),
     );
   }

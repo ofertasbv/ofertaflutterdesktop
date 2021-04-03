@@ -1,11 +1,13 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:mobx/mobx.dart';
 import 'package:nosso/src/api/constants/constant_api.dart';
 import 'package:nosso/src/api/dio/custon_dio.dart';
 import 'package:nosso/src/core/model/produto.dart';
 import 'package:nosso/src/core/model/produtopage.dart';
 import 'package:nosso/src/core/model/produtoprincipal.dart';
+import 'package:nosso/src/paginas/produto/produto_page.dart';
 import 'package:nosso/src/util/filter/produto_filter.dart';
 
 class ProdutoRepository {
@@ -55,19 +57,6 @@ class ProdutoRepository {
     return null;
   }
 
-  Future<ProdutoData> getAllPageable(
-      ProdutoFilter filter, int size, int page) async {
-    try {
-      return dio.client
-          .get(
-              "/produtos?nomeProduto=${filter.nomeProduto}&size=${size}&page=${page}")
-          .then((p) => ProdutoData.fromJson(p.data));
-    } on DioError catch (e) {
-      print(e.message);
-    }
-    return null;
-  }
-
   Future<List<Produto>> getFilter(ProdutoFilter filter) async {
     try {
       print("carregando produtos filtrados");
@@ -89,6 +78,18 @@ class ProdutoRepository {
     }
     return null;
   }
+
+  // static Future listaTodos1() async {
+  //   var response = await Dio().get("http://10.0.0.102:8081/produtos/filter");
+  //   print("response pageable 1: ${response.data}");
+  //   return ProdutoData.fromJson(response.data);
+  // }
+
+  // static Future<ObservableList<Produto>> listaTodos2() async {
+  //   var response = await Dio().get("http://10.0.0.102:8081/produtos/filter");
+  //   print("response pageable 2: ${response.data}");
+  //   return (response.data).map((c) => Produto.fromJson(c)).toList();
+  // }
 
   Future<List<Produto>> getAllBySubCategoriaById(int id) async {
     try {

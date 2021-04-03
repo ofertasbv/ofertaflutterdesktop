@@ -15,6 +15,7 @@ import 'package:nosso/src/core/model/marca.dart';
 import 'package:nosso/src/core/model/produto.dart';
 import 'package:nosso/src/core/model/promocao.dart';
 import 'package:nosso/src/core/model/subcategoria.dart';
+import 'package:nosso/src/core/repository/produto_repository.dart';
 import 'package:nosso/src/paginas/produto/produto_create_page.dart';
 import 'package:nosso/src/paginas/produto/produto_detalhes_tab.dart';
 import 'package:nosso/src/paginas/produto/produto_search.dart';

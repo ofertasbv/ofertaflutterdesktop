@@ -74,6 +74,13 @@ class ValidadorProduto {
     return null;
   }
 
+  String validateDateFabricacao(DateTime dataFabricacao) {
+    if (dataFabricacao == null) {
+      return "Preencha a data de Fabricaçao";
+    }
+    return null;
+  }
+
   String validateDateVencimento(DateTime dataRegistro) {
     if (dataRegistro == null) {
       return "Preencha a data de vencimento";

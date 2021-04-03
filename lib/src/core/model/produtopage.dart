@@ -1,9 +1,9 @@
-import 'package:nosso/src/core/model/content.dart';
 import 'package:nosso/src/core/model/pageable.dart';
+import 'package:nosso/src/core/model/produto.dart';
 import 'package:nosso/src/core/model/sort.dart';
 
 class ProdutoData {
-  List<Content> content;
+  List<Produto> produto;
   Pageable pageable;
   int totalPages;
   int totalElements;
@@ -16,7 +16,7 @@ class ProdutoData {
   bool empty;
 
   ProdutoData(
-      {this.content,
+      {this.produto,
       this.pageable,
       this.totalPages,
       this.totalElements,
@@ -29,10 +29,10 @@ class ProdutoData {
       this.empty});
 
   ProdutoData.fromJson(Map<String, dynamic> json) {
-    if (json['content'] != null) {
-      content = new List<Content>();
-      json['content'].forEach((v) {
-        content.add(new Content.fromJson(v));
+    if (json['produto'] != null) {
+      produto = new List<Produto>();
+      json['produto'].forEach((v) {
+        produto.add(new Produto.fromJson(v));
       });
     }
     pageable = json['pageable'] != null
@@ -51,8 +51,8 @@ class ProdutoData {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.content != null) {
-      data['content'] = this.content.map((v) => v.toJson()).toList();
+    if (this.produto != null) {
+      data['produto'] = this.produto.map((v) => v.toJson()).toList();
     }
     if (this.pageable != null) {
       data['pageable'] = this.pageable.toJson();
