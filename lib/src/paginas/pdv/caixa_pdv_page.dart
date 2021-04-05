@@ -261,24 +261,24 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
       ),
       body: Container(
         color: Colors.grey[200],
-        padding: EdgeInsets.only(left: 100, right: 100, top: 0),
+        padding: EdgeInsets.only(left: 100, right: 100, top: 40),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Container(
-              color: Theme.of(context).primaryColor.withOpacity(0.1),
-              padding: EdgeInsets.all(0),
-              child: ListTile(
-                title: caixa == null
-                    ? Text("CAIXA SEM STATUS")
-                    : Text("CAIXA ESTÁ ${caixa.caixaStatus}"),
-                subtitle: caixa == null
-                    ? Text("CAIXA SEM REFERENCIA")
-                    : Text("${caixa.descricao} - ${caixa.referencia}"),
-                trailing: Text("${dateFormat.format(DateTime.now())}"),
-              ),
-            ),
+            // Container(
+            //   color: Theme.of(context).primaryColor.withOpacity(0.1),
+            //   padding: EdgeInsets.all(0),
+            //   child: ListTile(
+            //     title: caixa == null
+            //         ? Text("CAIXA SEM STATUS")
+            //         : Text("CAIXA ESTÁ ${caixa.caixaStatus}"),
+            //     subtitle: caixa == null
+            //         ? Text("CAIXA SEM REFERENCIA")
+            //         : Text("${caixa.descricao} - ${caixa.referencia}"),
+            //     trailing: Text("${dateFormat.format(DateTime.now())}"),
+            //   ),
+            // ),
             Container(
               height: 600,
               color: Colors.red[400],
@@ -288,18 +288,187 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
                   Container(
                     width: 450,
                     height: 600,
-                    color: Colors.grey[400],
-                    child: buildForm(dateFormat, context),
+                    color: Colors.grey[200],
+                    child: Column(
+                      children: [
+                        Card(
+                          child: Container(
+                            width: 450,
+                            height: 500,
+                            color: Colors.grey[200],
+                            padding: EdgeInsets.all(20),
+                            child: buildForm(dateFormat, context),
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.all(0),
+                          width: double.infinity,
+                          height: 100,
+                          color: Colors.grey[400],
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                width: 200,
+                                child: ListTile(
+                                  title: Text(
+                                    "DESCONTO",
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  subtitle: TextFormField(
+                                    controller: descontoController,
+                                    validator: validateDesconto,
+                                    decoration: InputDecoration(
+                                      suffixIcon: IconButton(
+                                        onPressed: () => descontoController.clear(),
+                                        icon: Icon(Icons.clear),
+                                      ),
+                                    ),
+                                    keyboardType: TextInputType.number,
+                                    maxLength: 6,
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                width: 200,
+                                child: ListTile(
+                                  title: Text(
+                                    "VALOR TOTAL",
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  subtitle: TextFormField(
+                                    controller: valorPedidoController,
+                                    validator: validateValorTotal,
+                                    decoration: InputDecoration(
+                                      suffixIcon: IconButton(
+                                        onPressed: () => valorPedidoController.clear(),
+                                        icon: Icon(Icons.clear),
+                                      ),
+                                    ),
+                                    keyboardType: TextInputType.number,
+                                    maxLength: 6,
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                   Expanded(
                     child: Container(
+                      width: double.infinity,
                       height: 600,
-                      color: Colors.grey[300],
-                      child: builderConteudoList(),
+                      color: Colors.grey[200],
+                      child: Column(
+                        children: [
+                          Container(
+                            width: double.infinity,
+                            height: 500,
+                            color: Colors.grey[100],
+                            child: builderConteudoList(),
+                          ),
+                          Container(
+                            width: double.infinity,
+                            height: 100,
+                            color: Colors.grey[400],
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                FlatButton.icon(
+                                  label: Text(
+                                    "CANCELAR COMPRAR",
+                                    style: TextStyle(fontSize: 20),
+                                  ),
+                                  icon: Icon(Icons.cancel_outlined),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                    side: BorderSide(color: Colors.green),
+                                  ),
+                                  color: Colors.white,
+                                  textColor: Colors.green,
+                                  padding: EdgeInsets.only(left: 40, right: 40, top: 30, bottom: 30),
+                                  onPressed: () {
+                                    if (controller.validate()) {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              PedidoCreatePage(
+                                            pedidoItem: pedidoItem,
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                  },
+                                ),
+                                FlatButton.icon(
+                                  label: Text(
+                                    "FECHAR VENDA",
+                                    style: TextStyle(fontSize: 20),
+                                  ),
+                                  icon: Icon(Icons.shopping_basket_outlined),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                    side: BorderSide(color: Colors.green),
+                                  ),
+                                  color: Colors.white,
+                                  textColor: Colors.green,
+                                  padding: EdgeInsets.only(left: 40, right: 40, top: 30, bottom: 30),
+                                  onPressed: () {
+                                    if (controller.validate()) {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              PedidoCreatePage(
+                                            pedidoItem: pedidoItem,
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                  },
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   )
                 ],
               ),
+            ),
+            Container(
+              height: 50,
+              width: double.infinity,
+              color: Theme.of(context).primaryColor.withOpacity(0.1),
+              padding: EdgeInsets.all(0),
+              // child: Row(
+              //   children: [
+              //     Container(
+              //       width: 300,
+              //       height: 80,
+              //       color: Colors.blue[600],
+              //       // child: ListTile(
+              //       //   title: Text("TOTAL"),
+              //       // ),
+              //     ),
+              //     Container(
+              //       width: 300,
+              //       height: 80,
+              //       color: Colors.blue[600],
+              //     )
+              //   ],
+              // )
             ),
           ],
         ),
@@ -418,82 +587,64 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
               ),
             ),
           ),
-          Container(
-            padding: EdgeInsets.all(0),
-            width: double.infinity,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  width: 200,
-                  child: ListTile(
-                    title: Text(
-                      "DESCONTO",
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    subtitle: TextFormField(
-                      controller: descontoController,
-                      validator: validateDesconto,
-                      decoration: InputDecoration(
-                        suffixIcon: IconButton(
-                          onPressed: () => descontoController.clear(),
-                          icon: Icon(Icons.clear),
-                        ),
-                      ),
-                      keyboardType: TextInputType.number,
-                      maxLength: 6,
-                    ),
-                  ),
-                ),
-                Container(
-                  width: 200,
-                  child: ListTile(
-                    title: Text(
-                      "VALOR TOTAL",
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    subtitle: TextFormField(
-                      controller: valorPedidoController,
-                      validator: validateValorTotal,
-                      decoration: InputDecoration(
-                        suffixIcon: IconButton(
-                          onPressed: () => valorPedidoController.clear(),
-                          icon: Icon(Icons.clear),
-                        ),
-                      ),
-                      keyboardType: TextInputType.number,
-                      maxLength: 6,
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.all(15),
-            child: RaisedButton.icon(
-              label: Text("FECHAR PEDIDO"),
-              icon: Icon(Icons.check),
-              onPressed: () {
-                if (controller.validate()) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => PedidoCreatePage(
-                        pedidoItem: pedidoItem,
-                      ),
-                    ),
-                  );
-                }
-              },
-            ),
-          ),
+          // Container(
+          //   padding: EdgeInsets.all(0),
+          //   width: double.infinity,
+          //   color: Colors.orange[400],
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //     children: [
+          //       Container(
+          //         width: 200,
+          //         child: ListTile(
+          //           title: Text(
+          //             "DESCONTO",
+          //             style: TextStyle(
+          //               fontSize: 14,
+          //               fontWeight: FontWeight.bold,
+          //             ),
+          //           ),
+          //           subtitle: TextFormField(
+          //             controller: descontoController,
+          //             validator: validateDesconto,
+          //             decoration: InputDecoration(
+          //               suffixIcon: IconButton(
+          //                 onPressed: () => descontoController.clear(),
+          //                 icon: Icon(Icons.clear),
+          //               ),
+          //             ),
+          //             keyboardType: TextInputType.number,
+          //             maxLength: 6,
+          //           ),
+          //         ),
+          //       ),
+          //       Container(
+          //         width: 200,
+          //         child: ListTile(
+          //           title: Text(
+          //             "VALOR TOTAL",
+          //             style: TextStyle(
+          //               fontSize: 14,
+          //               fontWeight: FontWeight.bold,
+          //             ),
+          //           ),
+          //           subtitle: TextFormField(
+          //             controller: valorPedidoController,
+          //             validator: validateValorTotal,
+          //             decoration: InputDecoration(
+          //               suffixIcon: IconButton(
+          //                 onPressed: () => valorPedidoController.clear(),
+          //                 icon: Icon(Icons.clear),
+          //               ),
+          //             ),
+          //             keyboardType: TextInputType.number,
+          //             maxLength: 6,
+          //           ),
+          //         ),
+          //       )
+          //     ],
+          //   ),
+          // ),
         ],
       ),
     );
