@@ -70,9 +70,9 @@ ThemeData getTheme(BuildContext context) {
       hoverColor: Colors.grey[100],
       suffixStyle: TextStyle(color: Colors.deepOrange),
       errorStyle: TextStyle(color: Colors.red),
-      isDense: true,
-      filled: true,
-      contentPadding: EdgeInsets.all(12),
+      isDense: false,
+      filled: false,
+      contentPadding: EdgeInsets.all(18),
     ),
     hintColor: Colors.grey[900],
     iconTheme: IconThemeData(

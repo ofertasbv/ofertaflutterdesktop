@@ -124,10 +124,12 @@ class _ProdutoDetalhesViewState extends State<ProdutoDetalhesView>
                   images: p.arquivos.map((a) {
                     return NetworkImage(produtoController.arquivo + a.foto);
                   }).toList())
-              : Image.network(
-                  produtoController.arquivo + p.foto,
-                  fit: BoxFit.cover,
-                ),
+              : p.foto != null
+                  ? Image.network(
+                      produtoController.arquivo + p.foto,
+                      fit: BoxFit.cover,
+                    )
+                  : Image.asset(ConstantApi.urlLogo),
         ),
         Container(
           child: ListTile(

@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:mobx/mobx.dart';
 import 'package:nosso/src/core/model/pedido.dart';
 import 'package:nosso/src/core/repository/pedido_repository.dart';
+import 'package:nosso/src/util/filter/pedido_filter.dart';
 
 part 'pedido_controller.g.dart';
 
@@ -45,6 +46,16 @@ abstract class PedidoControllerBase with Store {
   Future<List<Pedido>> getAll() async {
     try {
       pedidos = await pedidoRepository.getAll();
+      return pedidos;
+    } catch (e) {
+      error = e;
+    }
+  }
+
+  @action
+  Future<List<Pedido>> getFilter(PedidoFilter filter) async {
+    try {
+      pedidos = await pedidoRepository.getFilter(filter);
       return pedidos;
     } catch (e) {
       error = e;

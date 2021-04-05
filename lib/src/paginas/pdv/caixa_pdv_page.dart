@@ -37,6 +37,7 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
   var pedidoItemController = GetIt.I.get<PedidoItemController>();
   var focusScopeNode = FocusScopeNode();
   var formatMoeda = new NumberFormat("#,##0.00", "pt_BR");
+
   // var audioCache = AudioCache(prefix: "audios/");
 
   String barcode = "";
@@ -311,210 +312,173 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
       key: controller.formKey,
       child: ListView(
         children: [
+          SizedBox(height: 20),
           Container(
-            padding: EdgeInsets.all(10),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "CÓDIGO DE BARRA",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
+            child: ListTile(
+              title: Text(
+                "CÓDIGO DE BARRA",
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
                 ),
-                TextFormField(
-                  controller: codigoBarraController,
-                  validator: validateCodigoBarra,
-                  onFieldSubmitted: (valor) {
-                    if (controller.validate()) {
-                      setState(() {
-                        codigoBarraController.text = valor;
-                        buscarByCodigoDeBarra(codigoBarraController.text);
-                      });
-                    }
-                  },
-                  decoration: InputDecoration(
-                    suffixIcon: IconButton(
-                      onPressed: () => codigoBarraController.clear(),
-                      icon: Icon(Icons.clear),
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.purple[900]),
-                      gapPadding: 1,
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
-                  ),
-                  keyboardType: TextInputType.number,
-                  maxLength: 20,
-                ),
-                RaisedButton.icon(
-                  elevation: 0.0,
-                  icon: Icon(Icons.photo_camera_outlined),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(10),
-                    side: BorderSide(color: Colors.transparent),
-                  ),
-                  label: Text("pesquisar"),
-                  onPressed: () {
+              ),
+              subtitle: TextFormField(
+                controller: codigoBarraController,
+                validator: validateCodigoBarra,
+                onFieldSubmitted: (valor) {
+                  if (controller.validate()) {
                     setState(() {
+                      codigoBarraController.text = valor;
                       buscarByCodigoDeBarra(codigoBarraController.text);
                     });
-                  },
-                ),
-                SizedBox(height: 10),
-                Text(
-                  "QUANTIDADE",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+                  }
+                },
+                onChanged: (valor) {
+                  setState(() {
+                    buscarByCodigoDeBarra(codigoBarraController.text);
+                  });
+                },
+                decoration: InputDecoration(
+                  suffixIcon: IconButton(
+                    onPressed: () => codigoBarraController.clear(),
+                    icon: Icon(Icons.clear),
                   ),
                 ),
-                TextFormField(
-                  controller: quantidadeController,
-                  validator: validateQuantidade,
-                  decoration: InputDecoration(
-                    suffixIcon: IconButton(
-                      onPressed: () => quantidadeController.clear(),
-                      icon: Icon(Icons.clear),
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.purple[900]),
-                      gapPadding: 1,
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
-                  ),
-                  keyboardType: TextInputType.number,
-                  maxLength: 20,
+                keyboardType: TextInputType.number,
+                maxLength: 20,
+              ),
+            ),
+          ),
+          Container(
+            child: ListTile(
+              title: Text(
+                "QUANTIDADE",
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
                 ),
-                SizedBox(height: 5),
-                Text(
-                  "VALOR UNITÁRIO",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+              ),
+              subtitle: TextFormField(
+                controller: quantidadeController,
+                validator: validateQuantidade,
+                decoration: InputDecoration(
+                  suffixIcon: IconButton(
+                    onPressed: () => quantidadeController.clear(),
+                    icon: Icon(Icons.clear),
                   ),
                 ),
-                TextFormField(
-                  controller: valorUnitarioController,
-                  validator: validateValorUnitario,
-                  decoration: InputDecoration(
-                    suffixIcon: IconButton(
-                      onPressed: () => valorUnitarioController.clear(),
-                      icon: Icon(Icons.clear),
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.purple[900]),
-                      gapPadding: 1,
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
-                  ),
-                  keyboardType: TextInputType.number,
-                  maxLength: 13,
+                keyboardType: TextInputType.number,
+                maxLength: 20,
+              ),
+            ),
+          ),
+          Container(
+            child: ListTile(
+              title: Text(
+                "VALOR UNITÁRIO",
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
                 ),
-                SizedBox(height: 5),
-                Text(
-                  "SUBTOTAL",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+              ),
+              subtitle: TextFormField(
+                controller: valorUnitarioController,
+                validator: validateValorUnitario,
+                decoration: InputDecoration(
+                  suffixIcon: IconButton(
+                    onPressed: () => valorUnitarioController.clear(),
+                    icon: Icon(Icons.clear),
                   ),
                 ),
-                TextFormField(
-                  controller: valorTotalController,
-                  validator: validateValorTotal,
-                  decoration: InputDecoration(
-                    suffixIcon: IconButton(
-                      onPressed: () => valorTotalController.clear(),
-                      icon: Icon(Icons.clear),
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.purple[900]),
-                      gapPadding: 1,
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
-                  ),
-                  keyboardType: TextInputType.number,
-                  maxLength: 20,
+                keyboardType: TextInputType.number,
+                maxLength: 20,
+              ),
+            ),
+          ),
+          Container(
+            child: ListTile(
+              title: Text(
+                "SUBTOTAL",
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
                 ),
-                SizedBox(height: 5),
-                Text(
-                  "DESCONTO",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+              ),
+              subtitle: TextFormField(
+                controller: valorTotalController,
+                validator: validateSubTotal,
+                decoration: InputDecoration(
+                  suffixIcon: IconButton(
+                    onPressed: () => valorTotalController.clear(),
+                    icon: Icon(Icons.clear),
                   ),
                 ),
-                TextFormField(
-                  controller: descontoController,
-                  validator: validateDesconto,
-                  decoration: InputDecoration(
-                    filled: true,
-                    suffixIcon: IconButton(
-                      onPressed: () => descontoController.clear(),
-                      icon: Icon(Icons.clear),
+                keyboardType: TextInputType.number,
+                maxLength: 20,
+              ),
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.all(0),
+            width: double.infinity,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  width: 200,
+                  child: ListTile(
+                    title: Text(
+                      "DESCONTO",
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                    labelStyle: TextStyle(color: Colors.black),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.lime[900]),
-                      gapPadding: 1,
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
-                  ),
-                  keyboardType: TextInputType.number,
-                ),
-                SizedBox(height: 10),
-                Text(
-                  "VALOR TOTAL",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                TextFormField(
-                  controller: valorPedidoController,
-                  validator: validateValorTotal,
-                  decoration: InputDecoration(
-                    filled: true,
-                    suffixIcon: IconButton(
-                      onPressed: () => valorPedidoController.clear(),
-                      icon: Icon(Icons.clear),
-                    ),
-                    labelStyle: TextStyle(color: Colors.black),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.lime[900]),
-                      gapPadding: 1,
-                      borderRadius: BorderRadius.circular(5.0),
+                    subtitle: TextFormField(
+                      controller: descontoController,
+                      validator: validateDesconto,
+                      decoration: InputDecoration(
+                        suffixIcon: IconButton(
+                          onPressed: () => descontoController.clear(),
+                          icon: Icon(Icons.clear),
+                        ),
+                      ),
+                      keyboardType: TextInputType.number,
+                      maxLength: 6,
                     ),
                   ),
-                  keyboardType: TextInputType.number,
                 ),
+                Container(
+                  width: 200,
+                  child: ListTile(
+                    title: Text(
+                      "VALOR TOTAL",
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    subtitle: TextFormField(
+                      controller: valorPedidoController,
+                      validator: validateValorTotal,
+                      decoration: InputDecoration(
+                        suffixIcon: IconButton(
+                          onPressed: () => valorPedidoController.clear(),
+                          icon: Icon(Icons.clear),
+                        ),
+                      ),
+                      keyboardType: TextInputType.number,
+                      maxLength: 6,
+                    ),
+                  ),
+                )
               ],
             ),
           ),
           Container(
-            padding: EdgeInsets.all(10),
+            padding: EdgeInsets.all(15),
             child: RaisedButton.icon(
-              label: Text("Enviar formulário"),
+              label: Text("FECHAR PEDIDO"),
               icon: Icon(Icons.check),
               onPressed: () {
                 if (controller.validate()) {
@@ -595,18 +559,15 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
       rows: itens
           .map(
             (p) => DataRow(
+              selected: false,
               onSelectChanged: (i) {
                 setState(() {
                   selecionaItem(p);
                 });
               },
               cells: [
-                DataCell(
-                  Text("${p.produto.id}"),
-                ),
-                DataCell(
-                  Text("${p.quantidade}"),
-                ),
+                DataCell(Text("${p.produto.id}")),
+                DataCell(Text("${p.quantidade}")),
                 DataCell(
                   Text(
                     "R\$ ${formatMoeda.format(p.valorUnitario)}",

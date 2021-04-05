@@ -18,7 +18,6 @@ import 'package:nosso/src/core/model/pedidoitem.dart';
 import 'package:nosso/src/paginas/pedido/pedido_page.dart';
 import 'package:nosso/src/paginas/pedidoitem/pedito_itens_page.dart';
 import 'package:nosso/src/util/dialogs/dialogs.dart';
-import 'package:nosso/src/util/load/circular_progresso.dart';
 import 'package:nosso/src/util/load/circular_progresso_mini.dart';
 import 'package:nosso/src/util/steps/step_menu_etapa.dart';
 import 'package:nosso/src/util/validador/validador_pedido.dart';
@@ -66,15 +65,14 @@ class _PedidoCreatePageState extends State<PedidoCreatePage>
       p = Pedido();
       pedidoStatus = "CRIADO";
       if (pedidoItem != null) {
-        valorInicialCotroller.text =
-            pedidoItem.valorUnitario.toStringAsFixed(1);
+        valorInicialCotroller.text = pedidoItem.valorUnitario.toStringAsFixed(1);
         valorTotalCotroller.text = pedidoItem.valorTotal.toStringAsFixed(2);
       }
     } else {
       lojaSelecionda = p.loja;
       clienteSelecionado = p.cliente;
 
-      valorInicialCotroller.text = p.valorInicial.toStringAsFixed(1);
+      valorInicialCotroller.text = p.valorInicial.toStringAsFixed(2);
       descontoCotroller.text = p.valorDesconto.toStringAsFixed(2);
       valorFreteCotroller.text = p.valorFrete.toStringAsFixed(2);
       valorTotalCotroller.text = p.valorTotal.toStringAsFixed(2);
@@ -464,10 +462,10 @@ class _PedidoCreatePageState extends State<PedidoCreatePage>
                         width: 500,
                         color: Colors.grey[200],
                         child: DateTimeField(
-                          initialValue: p.dataHoraEntrega,
+                          initialValue: p.dataEntrega,
                           format: dateFormat,
                           validator: validateDateHoraEntrega,
-                          onSaved: (value) => p.dataHoraEntrega = value,
+                          onSaved: (value) => p.dataEntrega = value,
                           decoration: InputDecoration(
                             labelText: "data e hora da entrega",
                             hintText: "99-09-9999",
@@ -616,7 +614,7 @@ class _PedidoCreatePageState extends State<PedidoCreatePage>
                     print("Status: ${p.pedidoStatus}");
 
                     print("Data de regsitro: ${p.dataRegistro}");
-                    print("Data e hora da entrega: ${p.dataHoraEntrega}");
+                    print("Data de dataEntrega: ${p.dataEntrega}");
 
                     for (PedidoItem item in pedidoItemController.itens) {
                       print("Produto: ${item.produto.nome}");
@@ -627,6 +625,7 @@ class _PedidoCreatePageState extends State<PedidoCreatePage>
                     pedidoController.create(p).then((value) {
                       print("resultado : ${value}");
                     });
+                    pedidoItemController.itens.clear();
                     Navigator.of(context).pop();
                     buildPush(context);
                   });
@@ -648,9 +647,10 @@ class _PedidoCreatePageState extends State<PedidoCreatePage>
                     print("Status: ${p.pedidoStatus}");
 
                     print("Data de resgistro: ${p.dataRegistro}");
-                    print("Data e hora da entrega: ${p.dataHoraEntrega}");
+                    print("Data de dataEntrega: ${p.dataEntrega}");
 
                     pedidoController.update(p.id, p);
+                    pedidoItemController.itens.clear();
                     Navigator.of(context).pop();
                     buildPush(context);
                   });

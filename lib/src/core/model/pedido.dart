@@ -14,7 +14,7 @@ class Pedido {
   Cliente cliente;
   Loja loja;
   String pedidoStatus;
-  DateTime dataHoraEntrega;
+  DateTime dataEntrega;
   DateTime dataRegistro;
 
   Pedido({
@@ -28,7 +28,7 @@ class Pedido {
     this.cliente,
     this.loja,
     this.pedidoStatus,
-    this.dataHoraEntrega,
+    this.dataEntrega,
     this.dataRegistro,
   });
 
@@ -61,7 +61,7 @@ class Pedido {
 
     pedidoStatus = json['pedidoStatus'];
 
-    dataHoraEntrega = DateTime.tryParse(json['dataHoraEntrega'].toString());
+    dataEntrega = DateTime.tryParse(json['dataEntrega'].toString());
     dataRegistro = DateTime.tryParse(json['dataRegistro'].toString());
   }
 
@@ -87,7 +87,7 @@ class Pedido {
 
     data['pedidoStatus'] = this.pedidoStatus;
 
-    data['dataHoraEntrega'] = this.dataHoraEntrega.toIso8601String();
+    data['dataEntrega'] = this.dataEntrega.toIso8601String();
     data['dataRegistro'] = this.dataRegistro.toIso8601String();
     return data;
   }
