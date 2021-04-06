@@ -30,8 +30,10 @@ class UsuarioPage extends StatelessWidget {
                 );
               }
 
-              return Chip(
-                label: Text(
+              return CircleAvatar(
+                backgroundColor: Theme.of(context).accentColor,
+                foregroundColor: Colors.white,
+                child: Text(
                   (usuarioController.usuarios.length ?? 0).toString(),
                 ),
               );

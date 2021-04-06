@@ -15,7 +15,7 @@ class CaixaFluxoPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        titleSpacing: 50,
+        titleSpacing: 0,
         title: Text("Caixa fluxos"),
         actions: <Widget>[
           Observer(
@@ -31,6 +31,8 @@ class CaixaFluxoPage extends StatelessWidget {
               }
 
               return CircleAvatar(
+                backgroundColor: Theme.of(context).accentColor,
+                foregroundColor: Colors.white,
                 child: Text(
                   (caixafluxoController.caixaFluxos.length ?? 0).toString(),
                 ),
@@ -39,8 +41,8 @@ class CaixaFluxoPage extends StatelessWidget {
           ),
           SizedBox(width: 10),
           CircleAvatar(
-            backgroundColor: Theme.of(context).accentColor.withOpacity(0.4),
-            foregroundColor: Colors.black,
+            backgroundColor: Theme.of(context).accentColor,
+            foregroundColor: Colors.white,
             child: IconButton(
               icon: Icon(
                 Icons.refresh,
@@ -50,7 +52,7 @@ class CaixaFluxoPage extends StatelessWidget {
               },
             ),
           ),
-          SizedBox(width: 100),
+          SizedBox(width: 50),
         ],
       ),
       body: Container(

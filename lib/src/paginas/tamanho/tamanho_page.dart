@@ -14,7 +14,7 @@ class TamanhoPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        titleSpacing: 50,
+        titleSpacing: 0,
         title: Text("Tamanhos"),
         actions: <Widget>[
           Observer(
@@ -30,6 +30,8 @@ class TamanhoPage extends StatelessWidget {
               }
 
               return CircleAvatar(
+                backgroundColor: Theme.of(context).accentColor,
+                foregroundColor: Colors.white,
                 child: Text(
                   (tamanhoController.tamanhos.length ?? 0).toString(),
                 ),
@@ -38,8 +40,8 @@ class TamanhoPage extends StatelessWidget {
           ),
           SizedBox(width: 10),
           CircleAvatar(
-            backgroundColor: Theme.of(context).accentColor.withOpacity(0.4),
-            foregroundColor: Colors.black,
+            backgroundColor: Theme.of(context).accentColor,
+            foregroundColor: Colors.white,
             child: IconButton(
               icon: Icon(
                 Icons.refresh,
@@ -49,11 +51,11 @@ class TamanhoPage extends StatelessWidget {
               },
             ),
           ),
-          SizedBox(width: 100),
+          SizedBox(width: 50),
         ],
       ),
       body: Container(
-        padding: EdgeInsets.only(left: 100, right: 100, top: 10),
+        padding: EdgeInsets.only(left: 50, right: 50, top: 10),
         child: Card(child: TamanhoTable()),
       ),
       floatingActionButton: Column(

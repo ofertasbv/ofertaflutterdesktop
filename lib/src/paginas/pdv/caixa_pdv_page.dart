@@ -13,9 +13,11 @@ import 'package:nosso/src/api/constants/constant_api.dart';
 import 'package:nosso/src/core/controller/pedidoItem_controller.dart';
 import 'package:nosso/src/core/controller/produto_controller.dart';
 import 'package:nosso/src/core/model/caixa.dart';
+import 'package:nosso/src/core/model/pedido.dart';
 import 'package:nosso/src/core/model/pedidoitem.dart';
 import 'package:nosso/src/core/model/produto.dart';
 import 'package:nosso/src/paginas/pedido/pedido_create_page.dart';
+import 'package:nosso/src/paginas/pedido/pedido_page.dart';
 import 'package:nosso/src/paginas/pedidoitem/itens_page.dart';
 import 'package:nosso/src/util/load/circular_progresso.dart';
 import 'package:nosso/src/util/snackbar/snackbar_global.dart';
@@ -41,8 +43,10 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
   // var audioCache = AudioCache(prefix: "audios/");
 
   String barcode = "";
-  Produto p;
+
   PedidoItem pedidoItem;
+  Pedido pedido;
+  Produto p;
   var codigoBarraController = TextEditingController();
   var quantidadeController = TextEditingController();
   var valorUnitarioController = TextEditingController();
@@ -61,6 +65,7 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
     pedidoItemController.pedidosItens();
     if (p == null) {
       p = Produto();
+      pedido = Pedido();
       pedidoItem = PedidoItem();
       quantidadeController.text = 1.toString();
     }
@@ -129,11 +134,9 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
       setState(() {
         pedidoItem.valorUnitario = p.estoque.valorUnitario;
         pedidoItem.quantidade = int.tryParse(quantidadeController.text);
-        pedidoItem.valorTotal =
-            (pedidoItem.quantidade * pedidoItem.valorUnitario);
+        pedidoItem.valorTotal = (pedidoItem.quantidade * pedidoItem.valorUnitario);
 
-        valorUnitarioController.text =
-            pedidoItem.valorUnitario.toStringAsFixed(2);
+        valorUnitarioController.text = pedidoItem.valorUnitario.toStringAsFixed(2);
         valorTotalController.text = pedidoItem.valorTotal.toStringAsFixed(2);
 
         pedidoItemController.calculateTotal();
@@ -207,6 +210,22 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
         titleSpacing: 50,
         title: Text("PDV2020"),
         actions: <Widget>[
+          Container(
+            height: 80,
+            width: 200,
+            padding: EdgeInsets.only(top: 15),
+            child: caixa == null
+                ? Text("CAIXA SEM STATUS")
+                : Text("CAIXA ESTÁ ${caixa.caixaStatus}"),
+          ),
+          Container(
+            height: 80,
+            width: 200,
+            padding: EdgeInsets.only(top: 15),
+            child: caixa == null
+                ? Text("CAIXA SEM REFERENCIA")
+                : Text("${caixa.descricao} - ${caixa.referencia}"),
+          ),
           Observer(
             builder: (context) {
               if (pedidoItemController.error != null) {
@@ -266,19 +285,6 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Container(
-            //   color: Theme.of(context).primaryColor.withOpacity(0.1),
-            //   padding: EdgeInsets.all(0),
-            //   child: ListTile(
-            //     title: caixa == null
-            //         ? Text("CAIXA SEM STATUS")
-            //         : Text("CAIXA ESTÁ ${caixa.caixaStatus}"),
-            //     subtitle: caixa == null
-            //         ? Text("CAIXA SEM REFERENCIA")
-            //         : Text("${caixa.descricao} - ${caixa.referencia}"),
-            //     trailing: Text("${dateFormat.format(DateTime.now())}"),
-            //   ),
-            // ),
             Container(
               height: 600,
               color: Colors.red[400],
@@ -323,7 +329,8 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
                                     validator: validateDesconto,
                                     decoration: InputDecoration(
                                       suffixIcon: IconButton(
-                                        onPressed: () => descontoController.clear(),
+                                        onPressed: () =>
+                                            descontoController.clear(),
                                         icon: Icon(Icons.clear),
                                       ),
                                     ),
@@ -347,7 +354,8 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
                                     validator: validateValorTotal,
                                     decoration: InputDecoration(
                                       suffixIcon: IconButton(
-                                        onPressed: () => valorPedidoController.clear(),
+                                        onPressed: () =>
+                                            valorPedidoController.clear(),
                                         icon: Icon(Icons.clear),
                                       ),
                                     ),
@@ -384,32 +392,30 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 FlatButton.icon(
-                                  label: Text(
-                                    "CANCELAR COMPRAR",
-                                    style: TextStyle(fontSize: 20),
-                                  ),
-                                  icon: Icon(Icons.cancel_outlined),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    side: BorderSide(color: Colors.green),
-                                  ),
-                                  color: Colors.white,
-                                  textColor: Colors.green,
-                                  padding: EdgeInsets.only(left: 40, right: 40, top: 30, bottom: 30),
-                                  onPressed: () {
-                                    if (controller.validate()) {
+                                    label: Text(
+                                      "CANCELAR COMPRAR",
+                                      style: TextStyle(fontSize: 20),
+                                    ),
+                                    icon: Icon(Icons.cancel_outlined),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5),
+                                      side: BorderSide(color: Colors.red),
+                                    ),
+                                    color: Colors.white,
+                                    textColor: Colors.red,
+                                    padding: EdgeInsets.only(
+                                        left: 40,
+                                        right: 40,
+                                        top: 30,
+                                        bottom: 30),
+                                    onPressed: () {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) =>
-                                              PedidoCreatePage(
-                                            pedidoItem: pedidoItem,
-                                          ),
+                                          builder: (context) => PedidoPage(),
                                         ),
                                       );
-                                    }
-                                  },
-                                ),
+                                    }),
                                 FlatButton.icon(
                                   label: Text(
                                     "FECHAR VENDA",
@@ -417,12 +423,13 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
                                   ),
                                   icon: Icon(Icons.shopping_basket_outlined),
                                   shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
+                                    borderRadius: BorderRadius.circular(5),
                                     side: BorderSide(color: Colors.green),
                                   ),
                                   color: Colors.white,
                                   textColor: Colors.green,
-                                  padding: EdgeInsets.only(left: 40, right: 40, top: 30, bottom: 30),
+                                  padding: EdgeInsets.only(
+                                      left: 40, right: 40, top: 30, bottom: 30),
                                   onPressed: () {
                                     if (controller.validate()) {
                                       Navigator.push(

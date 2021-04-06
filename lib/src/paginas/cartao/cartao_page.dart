@@ -14,7 +14,7 @@ class CartaoPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        titleSpacing: 50,
+        titleSpacing: 0,
         title: Text("Cartões"),
         actions: <Widget>[
           Observer(
@@ -29,18 +29,20 @@ class CartaoPage extends StatelessWidget {
                 );
               }
 
-              return Chip(
-                label: Text(
+              return CircleAvatar(
+                backgroundColor: Theme.of(context).accentColor,
+                foregroundColor: Colors.white,
+                child: Text(
                   (cartaoController.cartoes.length ?? 0).toString(),
                 ),
               );
             },
           ),
-          SizedBox(width: 100),
+          SizedBox(width: 50),
         ],
       ),
       body: Container(
-        padding: EdgeInsets.only(left: 100, right: 100, top: 10),
+        padding: EdgeInsets.only(left: 50, right: 50, top: 10),
         child: Card(child: CartaoList()),
       ),
       floatingActionButton: FloatingActionButton(

@@ -15,7 +15,7 @@ class PermissaoPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        titleSpacing: 50,
+        titleSpacing: 0,
         title: Text("Permissões"),
         actions: <Widget>[
           Observer(
@@ -31,6 +31,8 @@ class PermissaoPage extends StatelessWidget {
               }
 
               return CircleAvatar(
+                backgroundColor: Theme.of(context).accentColor,
+                foregroundColor: Colors.white,
                 child: Text(
                   (permissaoController.permissoes.length ?? 0).toString(),
                 ),
@@ -39,8 +41,8 @@ class PermissaoPage extends StatelessWidget {
           ),
           SizedBox(width: 10),
           CircleAvatar(
-            backgroundColor: Theme.of(context).accentColor.withOpacity(0.4),
-            foregroundColor: Colors.black,
+            backgroundColor: Theme.of(context).accentColor,
+            foregroundColor: Colors.white,
             child: IconButton(
               icon: Icon(
                 Icons.refresh,
@@ -50,11 +52,11 @@ class PermissaoPage extends StatelessWidget {
               },
             ),
           ),
-          SizedBox(width: 100),
+          SizedBox(width: 50),
         ],
       ),
       body: Container(
-        padding: EdgeInsets.only(left: 100, right: 100, top: 10),
+        padding: EdgeInsets.only(left: 50, right: 50, top: 10),
         child: Card(child: PermissaoTable()),
       ),
       floatingActionButton: Column(

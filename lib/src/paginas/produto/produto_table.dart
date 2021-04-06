@@ -105,17 +105,16 @@ class _ProdutoTableState extends State<ProdutoTable> {
               if (produtoController.produtos == null) {
                 return Center(
                   child: CircleAvatar(
-                    backgroundColor:
-                        Theme.of(context).accentColor.withOpacity(0.4),
-                    foregroundColor: Colors.black,
+                    backgroundColor: Theme.of(context).accentColor,
+                    foregroundColor: Colors.white,
                     child: Icon(Icons.warning_amber_outlined),
                   ),
                 );
               }
 
               return CircleAvatar(
-                backgroundColor: Theme.of(context).accentColor.withOpacity(0.4),
-                foregroundColor: Colors.black,
+                backgroundColor: Theme.of(context).accentColor,
+                foregroundColor: Colors.white,
                 child: Text(
                   (produtoController.produtos.length ?? 0).toString(),
                   style: TextStyle(color: Colors.white),
@@ -125,8 +124,8 @@ class _ProdutoTableState extends State<ProdutoTable> {
           ),
           SizedBox(width: 10),
           CircleAvatar(
-            backgroundColor: Theme.of(context).accentColor.withOpacity(0.4),
-            foregroundColor: Colors.black,
+            backgroundColor: Theme.of(context).accentColor,
+            foregroundColor: Colors.white,
             child: IconButton(
               icon: Icon(
                 Icons.tune,
@@ -136,14 +135,27 @@ class _ProdutoTableState extends State<ProdutoTable> {
           ),
           SizedBox(width: 10),
           CircleAvatar(
-            backgroundColor: Theme.of(context).accentColor.withOpacity(0.4),
-            foregroundColor: Colors.black,
+            backgroundColor: Theme.of(context).accentColor,
+            foregroundColor: Colors.white,
             child: IconButton(
               icon: Icon(
                 CupertinoIcons.search,
               ),
               onPressed: () {
                 showSearch(context: context, delegate: ProdutoSearchDelegate());
+              },
+            ),
+          ),
+          SizedBox(width: 10),
+          CircleAvatar(
+            backgroundColor: Theme.of(context).accentColor,
+            foregroundColor: Colors.white,
+            child: IconButton(
+              icon: Icon(
+                Icons.refresh,
+              ),
+              onPressed: () {
+                promocaoController.getAll();
               },
             ),
           ),

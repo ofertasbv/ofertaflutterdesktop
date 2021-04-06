@@ -97,6 +97,8 @@ class _PromocaoTableState extends State<PromocaoTable> {
               }
 
               return CircleAvatar(
+                backgroundColor: Theme.of(context).accentColor,
+                foregroundColor: Colors.white,
                 child: Text(
                   (promocaoController.promocoes.length ?? 0).toString(),
                 ),
@@ -105,8 +107,8 @@ class _PromocaoTableState extends State<PromocaoTable> {
           ),
           SizedBox(width: 10),
           CircleAvatar(
-            backgroundColor: Theme.of(context).accentColor.withOpacity(0.4),
-            foregroundColor: Colors.black,
+            backgroundColor: Theme.of(context).accentColor,
+            foregroundColor: Colors.white,
             child: IconButton(
               icon: Icon(
                 Icons.refresh,

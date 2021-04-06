@@ -31,6 +31,8 @@ class PedidoItemPage extends StatelessWidget {
               }
 
               return CircleAvatar(
+                backgroundColor: Theme.of(context).accentColor,
+                foregroundColor: Colors.white,
                 child: Text(
                   (pedidoItemController.pedidoItens.length ?? 0).toString(),
                 ),
@@ -39,8 +41,8 @@ class PedidoItemPage extends StatelessWidget {
           ),
           SizedBox(width: 10),
           CircleAvatar(
-            backgroundColor: Theme.of(context).accentColor.withOpacity(0.4),
-            foregroundColor: Colors.black,
+            backgroundColor: Theme.of(context).accentColor,
+            foregroundColor: Colors.white,
             child: IconButton(
               icon: Icon(
                 Icons.refresh,
