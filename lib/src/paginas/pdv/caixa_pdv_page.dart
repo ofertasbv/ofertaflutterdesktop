@@ -11,6 +11,7 @@ import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:nosso/src/api/constants/constant_api.dart';
 import 'package:nosso/src/core/controller/pedidoItem_controller.dart';
+import 'package:nosso/src/core/controller/pedido_controller.dart';
 import 'package:nosso/src/core/controller/produto_controller.dart';
 import 'package:nosso/src/core/model/caixa.dart';
 import 'package:nosso/src/core/model/pedido.dart';
@@ -68,6 +69,7 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
       pedido = Pedido();
       pedidoItem = PedidoItem();
       quantidadeController.text = 1.toString();
+      descontoController.text = 0.00.toString();
     }
     super.initState();
   }
@@ -134,9 +136,11 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
       setState(() {
         pedidoItem.valorUnitario = p.estoque.valorUnitario;
         pedidoItem.quantidade = int.tryParse(quantidadeController.text);
-        pedidoItem.valorTotal = (pedidoItem.quantidade * pedidoItem.valorUnitario);
+        pedidoItem.valorTotal =
+            (pedidoItem.quantidade * pedidoItem.valorUnitario);
 
-        valorUnitarioController.text = pedidoItem.valorUnitario.toStringAsFixed(2);
+        valorUnitarioController.text =
+            pedidoItem.valorUnitario.toStringAsFixed(2);
         valorTotalController.text = pedidoItem.valorTotal.toStringAsFixed(2);
 
         pedidoItemController.calculateTotal();
@@ -280,14 +284,14 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
       ),
       body: Container(
         color: Colors.grey[200],
-        padding: EdgeInsets.only(left: 100, right: 100, top: 40),
+        padding: EdgeInsets.only(left: 100, right: 100, top: 0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Container(
               height: 600,
-              color: Colors.red[400],
+              color: Colors.transparent,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -299,155 +303,186 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
                       children: [
                         Card(
                           child: Container(
-                            width: 450,
-                            height: 500,
-                            color: Colors.grey[200],
-                            padding: EdgeInsets.all(20),
+                            width: double.infinity,
+                            height: 490,
+                            color: Colors.white,
+                            // padding: EdgeInsets.only(top: 10),
                             child: buildForm(dateFormat, context),
                           ),
                         ),
-                        Container(
-                          padding: EdgeInsets.all(0),
-                          width: double.infinity,
-                          height: 100,
-                          color: Colors.grey[400],
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                width: 200,
-                                child: ListTile(
-                                  title: Text(
-                                    "DESCONTO",
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  subtitle: TextFormField(
-                                    controller: descontoController,
-                                    validator: validateDesconto,
-                                    decoration: InputDecoration(
-                                      suffixIcon: IconButton(
-                                        onPressed: () =>
-                                            descontoController.clear(),
-                                        icon: Icon(Icons.clear),
+                        Card(
+                          child: Container(
+                            padding: EdgeInsets.all(0),
+                            width: double.infinity,
+                            height: 100,
+                            color: Colors.orange[800],
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  width: 200,
+                                  child: ListTile(
+                                    title: Text(
+                                      "DESCONTO",
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                    keyboardType: TextInputType.number,
-                                    maxLength: 6,
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                width: 200,
-                                child: ListTile(
-                                  title: Text(
-                                    "VALOR TOTAL",
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold,
+                                    subtitle: TextFormField(
+                                      controller: descontoController,
+                                      validator: validateDesconto,
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 30),
+                                      decoration: InputDecoration(
+                                        filled: true,
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(Radius.circular(0)),
+                                          borderSide: BorderSide(color: Colors.transparent, width: 2),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(Radius.circular(0)),
+                                          borderSide: BorderSide(color: Colors.transparent, width: 2),
+                                        ),
+                                        hintStyle: TextStyle(color: Colors.white),
+                                        suffixIcon: IconButton(
+                                          onPressed: () =>
+                                              descontoController.clear(),
+                                          icon: Icon(Icons.clear),
+                                        ),
+                                      ),
+                                      keyboardType: TextInputType.number,
                                     ),
                                   ),
-                                  subtitle: TextFormField(
-                                    controller: valorPedidoController,
-                                    validator: validateValorTotal,
-                                    decoration: InputDecoration(
-                                      suffixIcon: IconButton(
-                                        onPressed: () =>
-                                            valorPedidoController.clear(),
-                                        icon: Icon(Icons.clear),
+                                ),
+                                Container(
+                                  width: 200,
+                                  child: ListTile(
+                                    title: Text(
+                                      "VALOR TOTAL",
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                    keyboardType: TextInputType.number,
-                                    maxLength: 6,
+                                    subtitle: TextFormField(
+                                      controller: valorPedidoController,
+                                      validator: validateValorTotal,
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 30),
+                                      decoration: InputDecoration(
+                                        filled: true,
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(Radius.circular(0)),
+                                          borderSide: BorderSide(color: Colors.transparent, width: 2),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(Radius.circular(0)),
+                                          borderSide: BorderSide(color: Colors.transparent, width: 2),
+                                        ),
+                                        suffixIcon: IconButton(
+                                          onPressed: () =>
+                                              valorPedidoController.clear(),
+                                          icon: Icon(Icons.clear),
+                                        ),
+                                      ),
+                                      enabled: false,
+                                      keyboardType: TextInputType.number,
+                                    ),
                                   ),
-                                ),
-                              )
-                            ],
+                                )
+                              ],
+                            ),
                           ),
                         ),
                       ],
                     ),
                   ),
                   Expanded(
-                    child: Container(
-                      width: double.infinity,
-                      height: 600,
-                      color: Colors.grey[200],
-                      child: Column(
-                        children: [
-                          Container(
-                            width: double.infinity,
-                            height: 500,
-                            color: Colors.grey[100],
-                            child: builderConteudoList(),
-                          ),
-                          Container(
-                            width: double.infinity,
-                            height: 100,
-                            color: Colors.grey[400],
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                FlatButton.icon(
+                    child: Card(
+                      child: Container(
+                        width: double.infinity,
+                        height: 600,
+                        color: Colors.grey[100],
+                        child: Column(
+                          children: [
+                            Container(
+                              width: double.infinity,
+                              height: 490,
+                              color: Colors.grey[100],
+                              child: builderConteudoList(),
+                            ),
+                            Container(
+                              width: double.infinity,
+                              height: 100,
+                              color: Colors.blue,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  FlatButton.icon(
+                                      label: Text(
+                                        "CANCELAR COMPRAR",
+                                        style: TextStyle(fontSize: 20),
+                                      ),
+                                      icon: Icon(Icons.cancel_outlined),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(35),
+                                        side: BorderSide(color: Colors.red),
+                                      ),
+                                      color: Colors.white,
+                                      textColor: Colors.red,
+                                      padding: EdgeInsets.only(
+                                          left: 40,
+                                          right: 40,
+                                          top: 25,
+                                          bottom: 25),
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => PedidoPage(),
+                                          ),
+                                        );
+                                      }),
+                                  FlatButton.icon(
                                     label: Text(
-                                      "CANCELAR COMPRAR",
+                                      "FECHAR VENDA",
                                       style: TextStyle(fontSize: 20),
                                     ),
-                                    icon: Icon(Icons.cancel_outlined),
+                                    icon: Icon(Icons.shopping_basket_outlined),
                                     shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(5),
-                                      side: BorderSide(color: Colors.red),
+                                      borderRadius: BorderRadius.circular(35),
+                                      side: BorderSide(color: Colors.green),
                                     ),
                                     color: Colors.white,
-                                    textColor: Colors.red,
+                                    textColor: Colors.green,
                                     padding: EdgeInsets.only(
                                         left: 40,
                                         right: 40,
-                                        top: 30,
-                                        bottom: 30),
+                                        top: 25,
+                                        bottom: 25),
                                     onPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => PedidoPage(),
-                                        ),
-                                      );
-                                    }),
-                                FlatButton.icon(
-                                  label: Text(
-                                    "FECHAR VENDA",
-                                    style: TextStyle(fontSize: 20),
-                                  ),
-                                  icon: Icon(Icons.shopping_basket_outlined),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5),
-                                    side: BorderSide(color: Colors.green),
-                                  ),
-                                  color: Colors.white,
-                                  textColor: Colors.green,
-                                  padding: EdgeInsets.only(
-                                      left: 40, right: 40, top: 30, bottom: 30),
-                                  onPressed: () {
-                                    if (controller.validate()) {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              PedidoCreatePage(
-                                            pedidoItem: pedidoItem,
+                                      if (controller.validate()) {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                PedidoCreatePage(
+                                              pedidoItem: pedidoItem,
+                                            ),
                                           ),
-                                        ),
-                                      );
-                                    }
-                                  },
-                                )
-                              ],
+                                        );
+                                      }
+                                    },
+                                  )
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   )
@@ -515,6 +550,15 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
                   });
                 },
                 decoration: InputDecoration(
+                  filled: true,
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(0)),
+                    borderSide: BorderSide(color: Colors.transparent, width: 2),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(0)),
+                    borderSide: BorderSide(color: Colors.transparent, width: 2),
+                  ),
                   suffixIcon: IconButton(
                     onPressed: () => codigoBarraController.clear(),
                     icon: Icon(Icons.clear),
@@ -538,6 +582,15 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
                 controller: quantidadeController,
                 validator: validateQuantidade,
                 decoration: InputDecoration(
+                  filled: true,
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(0)),
+                    borderSide: BorderSide(color: Colors.transparent, width: 2),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(0)),
+                    borderSide: BorderSide(color: Colors.transparent, width: 2),
+                  ),
                   suffixIcon: IconButton(
                     onPressed: () => quantidadeController.clear(),
                     icon: Icon(Icons.clear),
@@ -561,6 +614,15 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
                 controller: valorUnitarioController,
                 validator: validateValorUnitario,
                 decoration: InputDecoration(
+                  filled: true,
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(0)),
+                    borderSide: BorderSide(color: Colors.transparent, width: 2),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(0)),
+                    borderSide: BorderSide(color: Colors.transparent, width: 2),
+                  ),
                   suffixIcon: IconButton(
                     onPressed: () => valorUnitarioController.clear(),
                     icon: Icon(Icons.clear),
@@ -584,6 +646,15 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
                 controller: valorTotalController,
                 validator: validateSubTotal,
                 decoration: InputDecoration(
+                  filled: true,
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(0)),
+                    borderSide: BorderSide(color: Colors.transparent, width: 2),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(0)),
+                    borderSide: BorderSide(color: Colors.transparent, width: 2),
+                  ),
                   suffixIcon: IconButton(
                     onPressed: () => valorTotalController.clear(),
                     icon: Icon(Icons.clear),
@@ -704,8 +775,35 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
     );
   }
 
+  buildTable(List<PedidoItem> itens) {
+    return ListView(
+      children: [
+        PaginatedDataTable(
+          rowsPerPage: 8,
+          showCheckboxColumn: true,
+          sortColumnIndex: 1,
+          sortAscending: true,
+          showFirstLastButtons: true,
+          columnSpacing: 10,
+          columns: [
+            DataColumn(label: Text("Cód")),
+            DataColumn(label: Text("Quant.")),
+            DataColumn(label: Text("Unit.")),
+            DataColumn(label: Text("Descrição")),
+            DataColumn(label: Text("Total")),
+            DataColumn(label: Text("Excluir"))
+          ],
+          source: DataSource(itens, context),
+        ),
+      ],
+    );
+  }
+
   builderTable(List<PedidoItem> itens) {
     return DataTable(
+      columnSpacing: 6,
+      showCheckboxColumn: false,
+      dataTextStyle: TextStyle(color: Colors.grey[700]),
       columns: [
         DataColumn(label: Text("Cód")),
         DataColumn(label: Text("Quant.")),
@@ -925,4 +1023,58 @@ class Controller {
     } else
       return false;
   }
+}
+
+class DataSource extends DataTableSource {
+  var pedidoController = GetIt.I.get<PedidoController>();
+  BuildContext context;
+  List<PedidoItem> itens;
+  int selectedCount = 0;
+  var formatMoeda = new NumberFormat("#,##0.00", "pt_BR");
+
+  DataSource(this.itens, this.context);
+
+  @override
+  DataRow getRow(int index) {
+    assert(index >= 0);
+    if (index >= itens.length) return null;
+    PedidoItem p = itens[index];
+    return DataRow.byIndex(
+      index: index,
+      cells: [
+        DataCell(Text("${p.produto.id}")),
+        DataCell(Text("${p.quantidade}")),
+        DataCell(
+          Text(
+            "R\$ ${formatMoeda.format(p.valorUnitario)}",
+            style: TextStyle(color: Colors.red),
+          ),
+        ),
+        DataCell(Text(p.produto.nome)),
+        DataCell(
+          Text(
+            "R\$ ${formatMoeda.format(p.valorTotal)}",
+            style: TextStyle(color: Colors.red),
+          ),
+        ),
+        DataCell(
+          IconButton(
+            icon: Icon(Icons.delete_outline),
+            onPressed: () {
+              // showDialogAlertExcluir(context, p);
+            },
+          ),
+        )
+      ],
+    );
+  }
+
+  @override
+  int get rowCount => itens.length;
+
+  @override
+  bool get isRowCountApproximate => false;
+
+  @override
+  int get selectedRowCount => selectedCount;
 }

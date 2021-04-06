@@ -143,7 +143,7 @@ class _PromocaoTableState extends State<PromocaoTable> {
   }
 
   buildContainer() {
-    var dateFormat = DateFormat('dd/MM/yyyy');
+    var dateFormat = DateFormat('dd-MM-yyyy');
     return Container(
       width: double.infinity,
       height: double.infinity,
@@ -209,7 +209,7 @@ class _PromocaoTableState extends State<PromocaoTable> {
                     onChanged: (DateTime dataInicio) {
                       setState(() {
                         String convertedDateInicio =
-                            "${dataInicio.day.toString().padLeft(2, '0')}/${dataInicio.month.toString().padLeft(2, '0')}/${dataInicio.year.toString()}";
+                            "${dataInicio.day.toString().padLeft(2, '0')}-${dataInicio.month.toString().padLeft(2, '0')}-${dataInicio.year.toString()}";
                         filter.dataInicio = convertedDateInicio;
                         print("dataInicio: ${filter.dataFinal}");
                       });
@@ -250,7 +250,7 @@ class _PromocaoTableState extends State<PromocaoTable> {
                     onChanged: (DateTime dataFinal) {
                       setState(() {
                         String convertedDateFinal =
-                            "${dataFinal.day.toString().padLeft(2, '0')}/${dataFinal.month.toString().padLeft(2, '0')}/${dataFinal.year.toString()}";
+                            "${dataFinal.day.toString().padLeft(2, '0')}-${dataFinal.month.toString().padLeft(2, '0')}-${dataFinal.year.toString()}";
                         filter.dataFinal = convertedDateFinal;
                         print("dataFinal: ${filter.dataFinal}");
                       });

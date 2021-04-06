@@ -116,7 +116,7 @@ class _ConfigPageState extends State<ConfigPage> {
             child: ListTile(
               leading: CircleAvatar(
                 radius: 30,
-                backgroundColor: Colors.grey,
+                backgroundColor: Colors.grey[400],
                 child: Icon(
                   Icons.account_circle_outlined,
                   size: 30,
@@ -133,7 +133,7 @@ class _ConfigPageState extends State<ConfigPage> {
               subtitle: Text(
                 "ofertasbv@gmail.com",
                 style: TextStyle(
-                  color: Theme.of(context).accentColor,
+                  color: Colors.grey[400],
                 ),
               ),
             ),
@@ -155,7 +155,7 @@ class _ConfigPageState extends State<ConfigPage> {
               leading: Icon(
                 Icons.home,
                 size: 40,
-                color: Theme.of(context).accentColor,
+                color: Colors.grey[400],
               ),
               title: Text(
                 "Home page",
@@ -167,7 +167,7 @@ class _ConfigPageState extends State<ConfigPage> {
               subtitle: Text(
                 "Página inicial",
                 style: TextStyle(
-                  color: Theme.of(context).accentColor,
+                  color: Colors.grey[400],
                 ),
               ),
             ),
@@ -189,7 +189,7 @@ class _ConfigPageState extends State<ConfigPage> {
               leading: Icon(
                 Icons.account_box_outlined,
                 size: 40,
-                color: Theme.of(context).accentColor.withOpacity(1),
+                color: Colors.grey[400],
               ),
               title: Text(
                 "Controle de caixa",
@@ -201,7 +201,7 @@ class _ConfigPageState extends State<ConfigPage> {
               subtitle: Text(
                 "compra e vendas",
                 style: TextStyle(
-                  color: Theme.of(context).accentColor,
+                  color: Colors.grey[400],
                 ),
               ),
             ),
@@ -225,7 +225,7 @@ class _ConfigPageState extends State<ConfigPage> {
               leading: Icon(
                 Icons.location_on_outlined,
                 size: 40,
-                color: Theme.of(context).accentColor,
+                color: Colors.grey[400],
               ),
               title: Text(
                 "Locais de comerciais",
@@ -237,7 +237,7 @@ class _ConfigPageState extends State<ConfigPage> {
               subtitle: Text(
                 "Locais de lojas",
                 style: TextStyle(
-                  color: Theme.of(context).accentColor,
+                  color: Colors.grey[400],
                 ),
               ),
             ),

@@ -508,7 +508,7 @@ class _ProdutoTableState extends State<ProdutoTable> {
       children: [
         PaginatedDataTable(
           rowsPerPage: 8,
-          showCheckboxColumn: true,
+          showCheckboxColumn: false,
           sortColumnIndex: 1,
           sortAscending: true,
           showFirstLastButtons: true,

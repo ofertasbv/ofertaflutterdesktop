@@ -125,7 +125,7 @@ class _PedidoItensListState extends State<PedidoItensList> {
                 padding: EdgeInsets.symmetric(vertical: 2),
                 child: Card(
                   child: Container(
-                    color: Colors.grey[200],
+                    color: Colors.white,
                     padding: EdgeInsets.all(10),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
