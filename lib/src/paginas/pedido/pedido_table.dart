@@ -165,7 +165,7 @@ class _PedidoTableState extends State<PedidoTable> {
             child: TextFormField(
               controller: descricaoController,
               decoration: InputDecoration(
-                labelText: "busca por promoções",
+                labelText: "busca por pedidos",
                 prefixIcon: Icon(Icons.search_outlined),
                 suffixIcon: IconButton(
                   onPressed: () => descricaoController.clear(),

@@ -15,6 +15,7 @@ import 'package:nosso/src/core/model/subcategoria.dart';
 import 'package:nosso/src/paginas/subcategoria/subcategoria_page.dart';
 import 'package:nosso/src/util/dialogs/dialogs.dart';
 import 'package:nosso/src/util/load/circular_progresso.dart';
+import 'package:nosso/src/util/load/circular_progresso_mini.dart';
 
 class SubCategoriaCreatePage extends StatefulWidget {
   SubCategoria subCategoria;
@@ -83,7 +84,7 @@ class _SubCategoriaCreatePageState extends State<SubCategoriaCreatePage> {
           }
 
           if (categoriaController == null) {
-            return CircularProgressor();
+            return CircularProgressorMini();
           }
 
           return DropdownSearch<Categoria>(

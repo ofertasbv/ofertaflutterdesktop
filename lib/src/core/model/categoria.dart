@@ -1,3 +1,4 @@
+import 'package:nosso/src/core/model/seguimento.dart';
 import 'package:nosso/src/core/model/subcategoria.dart';
 
 class Categoria {
@@ -5,6 +6,7 @@ class Categoria {
   String nome;
   String foto;
   String color;
+  Seguimento seguimento;
   List<SubCategoria> subCategorias;
 
   Categoria({
@@ -12,6 +14,8 @@ class Categoria {
     this.nome,
     this.foto,
     this.color,
+    this.seguimento,
+    this.subCategorias,
   });
 
   Categoria.fromJson(Map<String, dynamic> json) {
@@ -19,6 +23,10 @@ class Categoria {
     nome = json['nome'];
     foto = json['foto'];
     color = json['color'];
+
+    seguimento = json['seguimento'] != null
+        ? new Seguimento.fromJson(json['seguimento'])
+        : null;
 
     if (json['subCategorias'] != null) {
       subCategorias = new List<SubCategoria>();
@@ -34,6 +42,16 @@ class Categoria {
     data['nome'] = this.nome;
     data['foto'] = this.foto;
     data['color'] = this.color;
+
+    if (this.seguimento != null) {
+      data['seguimento'] = this.seguimento.toJson();
+    }
+
+    if (this.subCategorias != null) {
+      data['subCategorias'] =
+          this.subCategorias.map((v) => v.toJson()).toList();
+    }
+
     return data;
   }
 }

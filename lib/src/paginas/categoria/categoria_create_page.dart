@@ -2,17 +2,21 @@ import 'dart:async';
 import 'dart:core';
 import 'dart:io';
 
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:nosso/src/core/controller/categoria_controller.dart';
+import 'package:nosso/src/core/controller/seguimento_controller.dart';
 import 'package:nosso/src/core/model/categoria.dart';
+import 'package:nosso/src/core/model/seguimento.dart';
 import 'package:nosso/src/core/model/uploadFileResponse.dart';
 import 'package:nosso/src/paginas/categoria/categoria_page.dart';
 import 'package:nosso/src/util/componentes/image_source_sheet.dart';
 import 'package:nosso/src/util/dialogs/dialogs.dart';
+import 'package:nosso/src/util/load/circular_progresso_mini.dart';
 import 'package:nosso/src/util/upload/upload_response.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
@@ -28,9 +32,11 @@ class CategoriaCreatePage extends StatefulWidget {
 
 class _CategoriaCreatePageState extends State<CategoriaCreatePage> {
   var categoriaController = GetIt.I.get<CategoriaController>();
+  var seguimentoController = GetIt.I.get<SeguimentoController>();
   Dialogs dialogs = Dialogs();
 
   Categoria c;
+  Seguimento seguimento;
   File file;
   bool isButtonDesable = false;
 
@@ -58,10 +64,14 @@ class _CategoriaCreatePageState extends State<CategoriaCreatePage> {
 
   @override
   void initState() {
-    categoriaController.getAll();
     if (c == null) {
       c = Categoria();
+      seguimento = Seguimento();
+    } else {
+      seguimento = c.seguimento;
     }
+    seguimentoController.getAll();
+    categoriaController.getAll();
     super.initState();
   }
 
@@ -112,7 +122,7 @@ class _CategoriaCreatePageState extends State<CategoriaCreatePage> {
       showSnackbar(context, "Arquivo anexada com sucesso!");
     }
   }
-  
+
   showSnackbar(BuildContext context, String content) {
     scaffoldKey.currentState.showSnackBar(
       SnackBar(
@@ -121,6 +131,48 @@ class _CategoriaCreatePageState extends State<CategoriaCreatePage> {
           label: "OK",
           onPressed: () {},
         ),
+      ),
+    );
+  }
+
+  builderConteudoListSeguimentos() {
+    return Container(
+      padding: EdgeInsets.only(top: 0),
+      child: Observer(
+        builder: (context) {
+          List<Seguimento> seguimentos = seguimentoController.seguimentos;
+          if (seguimentoController.error != null) {
+            return Text("Não foi possível carregados dados");
+          }
+
+          if (seguimentoController == null) {
+            return CircularProgressorMini();
+          }
+
+          return DropdownSearch<Seguimento>(
+            label: "Selecione seguimentos",
+            popupTitle: Center(child: Text("Seguimentos")),
+            items: seguimentos,
+            showSearchBox: true,
+            itemAsString: (Seguimento s) => s.nome,
+            validator: (categoria) =>
+                categoria == null ? "campo obrigatório" : null,
+            isFilteredOnline: true,
+            showClearButton: true,
+            selectedItem: seguimento,
+            onChanged: (Seguimento s) {
+              setState(() {
+                c.seguimento = s;
+                print("Seguimento: ${c.seguimento.nome}");
+              });
+            },
+            searchBoxDecoration: InputDecoration(
+              border: OutlineInputBorder(),
+              contentPadding: EdgeInsets.fromLTRB(20, 20, 20, 0),
+              labelText: "Pesquisar por seguimentos",
+            ),
+          );
+        },
       ),
     );
   }
@@ -160,7 +212,7 @@ class _CategoriaCreatePageState extends State<CategoriaCreatePage> {
       children: <Widget>[
         Container(
           padding: EdgeInsets.all(0),
-          color: Colors.grey[300],
+          color: Colors.transparent,
           child: Form(
             key: controller.formKey,
             child: Column(
@@ -217,6 +269,57 @@ class _CategoriaCreatePageState extends State<CategoriaCreatePage> {
                         ),
                       ),
                     ),
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.all(15),
+                  child: ExpansionTile(
+                    title: Text("Descrição"),
+                    children: [
+                      uploadFileResponse.fileName != null
+                          ? Container(
+                              height: 300,
+                              padding: EdgeInsets.all(5),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    child: ListTile(
+                                      title: Text("fileName"),
+                                      subtitle: Text(
+                                          "${uploadFileResponse.fileName}"),
+                                    ),
+                                  ),
+                                  Container(
+                                    child: ListTile(
+                                      title: Text("fileDownloadUri"),
+                                      subtitle: Text(
+                                          "${uploadFileResponse.fileDownloadUri}"),
+                                    ),
+                                  ),
+                                  Container(
+                                    child: ListTile(
+                                      title: Text("fileType"),
+                                      subtitle: Text(
+                                          "${uploadFileResponse.fileType}"),
+                                    ),
+                                  ),
+                                  Container(
+                                    child: ListTile(
+                                      title: Text("size"),
+                                      subtitle:
+                                          Text("${uploadFileResponse.size}"),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
+                          : Container(
+                              padding: EdgeInsets.all(15),
+                              child: Text("Deve anexar uma foto"),
+                              alignment: Alignment.bottomLeft,
+                            ),
+                    ],
                   ),
                 ),
                 Container(
@@ -301,60 +404,22 @@ class _CategoriaCreatePageState extends State<CategoriaCreatePage> {
                     ],
                   ),
                 ),
+                Container(
+                  padding: EdgeInsets.all(15),
+                  child: builderConteudoListSeguimentos(),
+                ),
+                Container(
+                  padding: EdgeInsets.all(15),
+                  child: ColorPicker(
+                    pickerColor: pickerColor,
+                    onColorChanged: changeColor,
+                    showLabel: true,
+                    pickerAreaHeightPercent: 0.8,
+                  ),
+                ),
               ],
             ),
           ),
-        ),
-        ColorPicker(
-          pickerColor: pickerColor,
-          onColorChanged: changeColor,
-          showLabel: true,
-          pickerAreaHeightPercent: 0.8,
-        ),
-        ExpansionTile(
-          title: Text("Descrição"),
-          children: [
-            uploadFileResponse.fileName != null
-                ? Container(
-                    height: 300,
-                    padding: EdgeInsets.all(5),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          child: ListTile(
-                            title: Text("fileName"),
-                            subtitle: Text("${uploadFileResponse.fileName}"),
-                          ),
-                        ),
-                        Container(
-                          child: ListTile(
-                            title: Text("fileDownloadUri"),
-                            subtitle:
-                                Text("${uploadFileResponse.fileDownloadUri}"),
-                          ),
-                        ),
-                        Container(
-                          child: ListTile(
-                            title: Text("fileType"),
-                            subtitle: Text("${uploadFileResponse.fileType}"),
-                          ),
-                        ),
-                        Container(
-                          child: ListTile(
-                            title: Text("size"),
-                            subtitle: Text("${uploadFileResponse.size}"),
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
-                : Container(
-                    padding: EdgeInsets.all(15),
-                    child: Text("Deve anexar uma foto"),
-                    alignment: Alignment.bottomLeft,
-                  ),
-          ],
         ),
         SizedBox(height: 20),
         Container(

@@ -116,6 +116,7 @@ class _CategoriaTableState extends State<CategoriaTable>
             DataColumn(label: Text("Código")),
             DataColumn(label: Text("Foto")),
             DataColumn(label: Text("Nome")),
+            DataColumn(label: Text("Seguimento")),
             DataColumn(label: Text("Color")),
             DataColumn(label: Text("Visualizar")),
             DataColumn(label: Text("Editar")),
@@ -160,6 +161,7 @@ class DataSource extends DataTableSource {
               : CircleAvatar(),
         ),
         DataCell(Text("${p.nome}")),
+        DataCell(Text("${p.seguimento.nome}")),
         DataCell(Text(p.color.toString())),
         DataCell(IconButton(
           icon: Icon(Icons.search),
