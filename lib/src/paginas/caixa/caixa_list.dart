@@ -160,7 +160,7 @@ class _CaixaListState extends State<CaixaList>
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (BuildContext context) {
-                return CaixaPDVPage(caixa: c);
+                return CaixaPDVPage();
               },
             ),
           );

@@ -183,13 +183,11 @@ class _PedidoTableState extends State<PedidoTable> {
           Container(
             width: double.infinity,
             height: 50,
-            color: Colors.grey[200],
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
                   width: 500,
-                  color: Colors.grey[200],
                   child: DateTimeField(
                     format: dateFormat,
                     onChanged: (DateTime dataRegistro) {
@@ -222,7 +220,6 @@ class _PedidoTableState extends State<PedidoTable> {
                 ),
                 Container(
                   width: 500,
-                  color: Colors.grey[200],
                   child: DateTimeField(
                     onChanged: (DateTime dataRegistro) {
                       setState(() {

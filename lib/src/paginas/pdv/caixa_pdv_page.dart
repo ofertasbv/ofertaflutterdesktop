@@ -14,6 +14,7 @@ import 'package:nosso/src/core/controller/pedidoItem_controller.dart';
 import 'package:nosso/src/core/controller/pedido_controller.dart';
 import 'package:nosso/src/core/controller/produto_controller.dart';
 import 'package:nosso/src/core/model/caixa.dart';
+import 'package:nosso/src/core/model/caixafluxo.dart';
 import 'package:nosso/src/core/model/pedido.dart';
 import 'package:nosso/src/core/model/pedidoitem.dart';
 import 'package:nosso/src/core/model/produto.dart';
@@ -25,7 +26,7 @@ import 'package:nosso/src/util/snackbar/snackbar_global.dart';
 import 'package:nosso/src/util/validador/validador_pdv.dart';
 
 class CaixaPDVPage extends StatefulWidget {
-  Caixa caixa;
+  CaixaFluxo caixa;
 
   CaixaPDVPage({Key key, this.caixa}) : super(key: key);
 
@@ -57,7 +58,7 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
   var totalVolumesController = TextEditingController();
   var foto;
 
-  Caixa caixa;
+  CaixaFluxo caixa;
   Controller controller;
 
   @override
@@ -216,19 +217,28 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
         actions: <Widget>[
           Container(
             height: 80,
-            width: 200,
-            padding: EdgeInsets.only(top: 15),
-            child: caixa == null
-                ? Text("CAIXA SEM STATUS")
-                : Text("CAIXA ESTÁ ${caixa.caixaStatus}"),
+            width: 250,
+            padding: EdgeInsets.only(top: 0),
+            child: Chip(
+                label: Text("HORÁRIO: ${dateFormat.format(DateTime.now())}")),
           ),
           Container(
             height: 80,
             width: 200,
-            padding: EdgeInsets.only(top: 15),
+            padding: EdgeInsets.only(top: 0),
             child: caixa == null
-                ? Text("CAIXA SEM REFERENCIA")
-                : Text("${caixa.descricao} - ${caixa.referencia}"),
+                ? Chip(label: Text("CAIXA SEM STATUS"))
+                : Chip(label: Text("CAIXA ESTÁ ${caixa.caixaStatus}")),
+          ),
+          Container(
+            height: 80,
+            width: 200,
+            padding: EdgeInsets.only(top: 0),
+            child: caixa != null
+                ? Chip(
+                    label:
+                        Text("${caixa.caixa.referencia} - ${caixa.descricao}"))
+                : Chip(label: Text("CAIXA SEM REFERENCIA")),
           ),
           Observer(
             builder: (context) {
@@ -312,7 +322,7 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
                         ),
                         Card(
                           child: Container(
-                            padding: EdgeInsets.all(0),
+                            padding: EdgeInsets.all(5),
                             width: double.infinity,
                             height: 100,
                             color: Colors.orange[800],
@@ -334,18 +344,25 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
                                       controller: descontoController,
                                       validator: validateDesconto,
                                       style: TextStyle(
-                                          color: Colors.white, fontSize: 30),
+                                          color: Colors.black, fontSize: 25),
                                       decoration: InputDecoration(
                                         filled: true,
                                         enabledBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(Radius.circular(0)),
-                                          borderSide: BorderSide(color: Colors.transparent, width: 2),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(0)),
+                                          borderSide: BorderSide(
+                                              color: Colors.transparent,
+                                              width: 2),
                                         ),
                                         focusedBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(Radius.circular(0)),
-                                          borderSide: BorderSide(color: Colors.transparent, width: 2),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(0)),
+                                          borderSide: BorderSide(
+                                              color: Colors.transparent,
+                                              width: 2),
                                         ),
-                                        hintStyle: TextStyle(color: Colors.white),
+                                        hintStyle:
+                                            TextStyle(color: Colors.white),
                                         suffixIcon: IconButton(
                                           onPressed: () =>
                                               descontoController.clear(),
@@ -371,16 +388,22 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
                                       controller: valorPedidoController,
                                       validator: validateValorTotal,
                                       style: TextStyle(
-                                          color: Colors.white, fontSize: 30),
+                                          color: Colors.black, fontSize: 25),
                                       decoration: InputDecoration(
                                         filled: true,
                                         enabledBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(Radius.circular(0)),
-                                          borderSide: BorderSide(color: Colors.transparent, width: 2),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(0)),
+                                          borderSide: BorderSide(
+                                              color: Colors.transparent,
+                                              width: 2),
                                         ),
                                         focusedBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(Radius.circular(0)),
-                                          borderSide: BorderSide(color: Colors.transparent, width: 2),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(0)),
+                                          borderSide: BorderSide(
+                                              color: Colors.transparent,
+                                              width: 2),
                                         ),
                                         suffixIcon: IconButton(
                                           onPressed: () =>
@@ -419,7 +442,8 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
                               height: 100,
                               color: Colors.blue,
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   FlatButton.icon(
@@ -494,23 +518,6 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
               width: double.infinity,
               color: Theme.of(context).primaryColor.withOpacity(0.1),
               padding: EdgeInsets.all(0),
-              // child: Row(
-              //   children: [
-              //     Container(
-              //       width: 300,
-              //       height: 80,
-              //       color: Colors.blue[600],
-              //       // child: ListTile(
-              //       //   title: Text("TOTAL"),
-              //       // ),
-              //     ),
-              //     Container(
-              //       width: 300,
-              //       height: 80,
-              //       color: Colors.blue[600],
-              //     )
-              //   ],
-              // )
             ),
           ],
         ),
@@ -549,6 +556,7 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
                     buscarByCodigoDeBarra(codigoBarraController.text);
                   });
                 },
+                style: TextStyle(color: Colors.black, fontSize: 25),
                 decoration: InputDecoration(
                   filled: true,
                   enabledBorder: OutlineInputBorder(
@@ -581,6 +589,7 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
               subtitle: TextFormField(
                 controller: quantidadeController,
                 validator: validateQuantidade,
+                style: TextStyle(color: Colors.black, fontSize: 25),
                 decoration: InputDecoration(
                   filled: true,
                   enabledBorder: OutlineInputBorder(
@@ -613,6 +622,7 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
               subtitle: TextFormField(
                 controller: valorUnitarioController,
                 validator: validateValorUnitario,
+                style: TextStyle(color: Colors.black, fontSize: 25),
                 decoration: InputDecoration(
                   filled: true,
                   enabledBorder: OutlineInputBorder(
@@ -645,6 +655,7 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
               subtitle: TextFormField(
                 controller: valorTotalController,
                 validator: validateSubTotal,
+                style: TextStyle(color: Colors.black, fontSize: 25),
                 decoration: InputDecoration(
                   filled: true,
                   enabledBorder: OutlineInputBorder(
@@ -665,64 +676,6 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
               ),
             ),
           ),
-          // Container(
-          //   padding: EdgeInsets.all(0),
-          //   width: double.infinity,
-          //   color: Colors.orange[400],
-          //   child: Row(
-          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //     children: [
-          //       Container(
-          //         width: 200,
-          //         child: ListTile(
-          //           title: Text(
-          //             "DESCONTO",
-          //             style: TextStyle(
-          //               fontSize: 14,
-          //               fontWeight: FontWeight.bold,
-          //             ),
-          //           ),
-          //           subtitle: TextFormField(
-          //             controller: descontoController,
-          //             validator: validateDesconto,
-          //             decoration: InputDecoration(
-          //               suffixIcon: IconButton(
-          //                 onPressed: () => descontoController.clear(),
-          //                 icon: Icon(Icons.clear),
-          //               ),
-          //             ),
-          //             keyboardType: TextInputType.number,
-          //             maxLength: 6,
-          //           ),
-          //         ),
-          //       ),
-          //       Container(
-          //         width: 200,
-          //         child: ListTile(
-          //           title: Text(
-          //             "VALOR TOTAL",
-          //             style: TextStyle(
-          //               fontSize: 14,
-          //               fontWeight: FontWeight.bold,
-          //             ),
-          //           ),
-          //           subtitle: TextFormField(
-          //             controller: valorPedidoController,
-          //             validator: validateValorTotal,
-          //             decoration: InputDecoration(
-          //               suffixIcon: IconButton(
-          //                 onPressed: () => valorPedidoController.clear(),
-          //                 icon: Icon(Icons.clear),
-          //               ),
-          //             ),
-          //             keyboardType: TextInputType.number,
-          //             maxLength: 6,
-          //           ),
-          //         ),
-          //       )
-          //     ],
-          //   ),
-          // ),
         ],
       ),
     );

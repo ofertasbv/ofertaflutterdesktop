@@ -11,6 +11,7 @@ import 'package:nosso/src/core/model/caixafluxo.dart';
 import 'package:nosso/src/paginas/caixafluxo/caixafluxo_create_page.dart';
 import 'package:nosso/src/paginas/caixafluxoentrada/caixafluxoentrada_create_page.dart';
 import 'package:nosso/src/paginas/caixafluxosaida/caixafluxosaida_create_page.dart';
+import 'package:nosso/src/paginas/pdv/caixa_pdv_page.dart';
 import 'package:nosso/src/util/load/circular_progresso.dart';
 
 class CaixaFluxoTable extends StatefulWidget {
@@ -48,7 +49,7 @@ class _CaixaFluxoTableState extends State<CaixaFluxoTable>
             height: 60,
             width: double.infinity,
             color: Colors.grey[200],
-            padding: EdgeInsets.all(5),
+            padding: EdgeInsets.all(0),
             child: ListTile(
               subtitle: TextFormField(
                 controller: nomeController,
@@ -116,6 +117,7 @@ class _CaixaFluxoTableState extends State<CaixaFluxoTable>
             DataColumn(label: Text("Editar")),
             DataColumn(label: Text("Entrada")),
             DataColumn(label: Text("Saída")),
+            DataColumn(label: Text("PDV")),
           ],
           source: DataSource(caixaFluxos, context),
         ),
@@ -148,8 +150,9 @@ class DataSource extends DataTableSource {
         DataCell(Text("${p.descricao}")),
         DataCell(Text("${p.caixa.descricao}")),
         DataCell(CircleAvatar(
-          backgroundColor:
-          p.caixa.caixaStatus == "ABERTO" ? Colors.green[600] : Colors.red[600],
+          backgroundColor: p.caixa.caixaStatus == "ABERTO"
+              ? Colors.green[600]
+              : Colors.red[600],
           child: Text("${p.caixa.caixaStatus.substring(0, 1)}"),
         )),
         DataCell(Text("${p.valorTotal}")),
@@ -188,6 +191,19 @@ class DataSource extends DataTableSource {
               MaterialPageRoute(
                 builder: (BuildContext context) {
                   return CaixaFluxoSaidaCreatePage();
+                },
+              ),
+            );
+          },
+        )),
+        DataCell(RaisedButton(
+          color: Colors.blue,
+          child: Text("PDV"),
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return CaixaPDVPage(caixa: p);
                 },
               ),
             );

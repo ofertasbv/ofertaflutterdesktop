@@ -56,7 +56,7 @@ class CaixaFluxoPage extends StatelessWidget {
         ],
       ),
       body: Container(
-        padding: EdgeInsets.only(left: 100, right: 100, top: 10),
+        padding: EdgeInsets.only(left: 50, right: 50, top: 10),
         child: Card(child: CaixaFluxoTable()),
       ),
       floatingActionButton: FloatingActionButton(

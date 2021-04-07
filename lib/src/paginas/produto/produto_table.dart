@@ -21,6 +21,7 @@ import 'package:nosso/src/paginas/produto/produto_detalhes_tab.dart';
 import 'package:nosso/src/paginas/produto/produto_search.dart';
 import 'package:nosso/src/util/filter/produto_filter.dart';
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:nosso/src/util/load/circular_progresso.dart';
 import 'package:nosso/src/util/load/circular_progresso_mini.dart';
 
 class ProdutoTable extends StatefulWidget {
@@ -186,12 +187,13 @@ class _ProdutoTableState extends State<ProdutoTable> {
     return Container(
       width: double.infinity,
       height: double.infinity,
+      color: Colors.white,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
             padding: new EdgeInsets.all(0),
-            color: Colors.grey[200],
+            color: Colors.grey[100],
             child: Column(
               children: <Widget>[
                 RangeSlider(
@@ -253,12 +255,10 @@ class _ProdutoTableState extends State<ProdutoTable> {
               children: [
                 Container(
                   width: 500,
-                  color: Colors.grey[200],
                   child: builderConteudoListSubCategorias(),
                 ),
                 Container(
                   width: 500,
-                  color: Colors.grey[200],
                   child: builderConteudoListMarcas(),
                 )
               ],
@@ -494,7 +494,7 @@ class _ProdutoTableState extends State<ProdutoTable> {
           }
 
           if (produtos == null) {
-            return CircularProgressorMini();
+            return CircularProgressor();
           }
 
           return buildTable(produtos);

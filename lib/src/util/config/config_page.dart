@@ -51,11 +51,7 @@ class _ConfigPageState extends State<ConfigPage> {
     return Scaffold(
       body: Stack(
         children: <Widget>[
-          // builderBodyBack(),
-          Container(
-            width: double.infinity,
-            height: 1000,
-          ),
+          builderBodyBack(),
           Container(
             padding: EdgeInsets.only(left: 0, right: 0),
             child: Column(
@@ -70,38 +66,71 @@ class _ConfigPageState extends State<ConfigPage> {
                 SizedBox(height: 0),
                 Expanded(
                   child: Container(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          Colors.grey[400],
-                          Colors.grey[700],
-                        ],
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                      ),
-                    ),
+                    color: Colors.transparent,
                     padding: EdgeInsets.only(left: 0, right: 0),
                     child: Row(
                       children: [
                         Container(
-                          width: 400,
-                          color: Colors.transparent,
-                          alignment: Alignment.center,
-                          child: ListTile(
-                            title: Text(
-                              "OFERTAS TODOS OS DIAS PRA VOCÊ!",
-                              style: TextStyle(
-                                fontSize: 40,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            subtitle: Text(
-                              "Em todas as plataformas",
-                              style: TextStyle(fontSize: 30),
-                            ),
-                          ),
-                        ),
+                            width: 400,
+                            color: Colors.transparent,
+                            alignment: Alignment.center,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                Container(
+                                  child: ListTile(
+                                    title: Text(
+                                      "PAINEL DE CONTROLE!",
+                                      style: TextStyle(
+                                        fontSize: 50,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    subtitle: Text(
+                                      "Em todas as plataformas",
+                                      style: TextStyle(fontSize: 30),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(height: 20),
+                                Container(
+                                  child: ListTile(
+                                    title: Text(
+                                      "OFERTAS TODOS OS DIAS PRA VOCÊ!",
+                                      style: TextStyle(
+                                        fontSize: 40,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    subtitle: Text(
+                                      "Em todas as plataformas",
+                                      style: TextStyle(fontSize: 30),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(height: 20),
+                                Container(
+                                  padding: EdgeInsets.all(20),
+                                  child: FlatButton.icon(
+                                    onPressed: () {
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (BuildContext context) {
+                                            return HomePage();
+                                          },
+                                        ),
+                                      );
+                                    },
+                                    icon: Icon(Icons.home_outlined),
+                                    label: Text("VOLTAR PRA HOME"),
+                                    color: Colors.blue,
+                                  ),
+                                )
+                              ],
+                            )),
                         Expanded(
                           child: Container(
                             child: buildGridViewConfig(context),
@@ -120,15 +149,18 @@ class _ConfigPageState extends State<ConfigPage> {
   }
 
   builderBodyBack() {
-    return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            Colors.grey[200],
-            Colors.grey[400],
-          ],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
+    return Opacity(
+      opacity: 1,
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Colors.grey[300],
+              Colors.grey[600],
+            ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
         ),
       ),
     );
@@ -311,13 +343,15 @@ class _ConfigPageState extends State<ConfigPage> {
             color: Colors.grey[100],
             alignment: Alignment.center,
             child: ListTile(
-              leading: Icon(
+              title: Icon(
                 Icons.list_alt_outlined,
                 size: 40,
                 color: Theme.of(context).accentColor.withOpacity(1),
               ),
-              title: Text("Categoria"),
-              subtitle: Text("Lista de categorias"),
+              subtitle: Text(
+                "Lista de categorias",
+                textAlign: TextAlign.center,
+              ),
             ),
           ),
         ),
@@ -337,13 +371,15 @@ class _ConfigPageState extends State<ConfigPage> {
             color: Colors.grey[100],
             alignment: Alignment.center,
             child: ListTile(
-              leading: Icon(
+              title: Icon(
                 Icons.list_alt_sharp,
                 size: 40,
                 color: Theme.of(context).accentColor.withOpacity(1),
               ),
-              title: Text("SubCategorias"),
-              subtitle: Text("lista de subcategorias"),
+              subtitle: Text(
+                "lista de subcategorias",
+                textAlign: TextAlign.center,
+              ),
             ),
           ),
         ),
@@ -363,13 +399,15 @@ class _ConfigPageState extends State<ConfigPage> {
             color: Colors.grey[100],
             alignment: Alignment.center,
             child: ListTile(
-              leading: Icon(
+              title: Icon(
                 Icons.shopping_basket_outlined,
                 size: 40,
                 color: Theme.of(context).accentColor.withOpacity(1),
               ),
-              title: Text("Produto"),
-              subtitle: Text("Lista de produtos"),
+              subtitle: Text(
+                "Lista de produtos",
+                textAlign: TextAlign.center,
+              ),
             ),
           ),
         ),
@@ -389,13 +427,15 @@ class _ConfigPageState extends State<ConfigPage> {
             color: Colors.grey[100],
             alignment: Alignment.center,
             child: ListTile(
-              leading: Icon(
+              title: Icon(
                 Icons.add_alert_outlined,
                 size: 40,
                 color: Theme.of(context).accentColor.withOpacity(1),
               ),
-              title: Text("Promoções"),
-              subtitle: Text("lista de promoções"),
+              subtitle: Text(
+                "lista de promoções",
+                textAlign: TextAlign.center,
+              ),
             ),
           ),
         ),
@@ -415,13 +455,15 @@ class _ConfigPageState extends State<ConfigPage> {
             color: Colors.grey[100],
             alignment: Alignment.center,
             child: ListTile(
-              leading: Icon(
+              title: Icon(
                 Icons.add_alert_outlined,
                 size: 40,
                 color: Theme.of(context).accentColor.withOpacity(1),
               ),
-              title: Text("Promoção tipo"),
-              subtitle: Text("lista de tipos de promoções"),
+              subtitle: Text(
+                "lista de tipos de promoções",
+                textAlign: TextAlign.center,
+              ),
             ),
           ),
         ),
@@ -441,13 +483,15 @@ class _ConfigPageState extends State<ConfigPage> {
             color: Colors.grey[100],
             alignment: Alignment.center,
             child: ListTile(
-              leading: Icon(
+              title: Icon(
                 Icons.local_convenience_store_outlined,
                 size: 40,
                 color: Theme.of(context).accentColor.withOpacity(1),
               ),
-              title: Text("Lojas"),
-              subtitle: Text("lista de lojas"),
+              subtitle: Text(
+                "lista de lojas",
+                textAlign: TextAlign.center,
+              ),
             ),
           ),
         ),
@@ -467,13 +511,15 @@ class _ConfigPageState extends State<ConfigPage> {
             color: Colors.grey[100],
             alignment: Alignment.center,
             child: ListTile(
-              leading: Icon(
+              title: Icon(
                 Icons.person_add_alt,
                 size: 40,
                 color: Theme.of(context).accentColor.withOpacity(1),
               ),
-              title: Text("Clientes"),
-              subtitle: Text("lista de clientes"),
+              subtitle: Text(
+                "lista de clientes",
+                textAlign: TextAlign.center,
+              ),
             ),
           ),
         ),
@@ -493,13 +539,15 @@ class _ConfigPageState extends State<ConfigPage> {
             color: Colors.grey[100],
             alignment: Alignment.center,
             child: ListTile(
-              leading: Icon(
+              title: Icon(
                 Icons.supervised_user_circle_outlined,
                 size: 40,
                 color: Theme.of(context).accentColor.withOpacity(1),
               ),
-              title: Text("Vendedores"),
-              subtitle: Text("lista de vendedores"),
+              subtitle: Text(
+                "lista de vendedores",
+                textAlign: TextAlign.center,
+              ),
             ),
           ),
         ),
@@ -519,13 +567,15 @@ class _ConfigPageState extends State<ConfigPage> {
             color: Colors.grey[100],
             alignment: Alignment.center,
             child: ListTile(
-              leading: Icon(
+              title: Icon(
                 Icons.supervised_user_circle,
                 size: 40,
                 color: Theme.of(context).accentColor.withOpacity(1),
               ),
-              title: Text("Usuários"),
-              subtitle: Text("lista de usuários"),
+              subtitle: Text(
+                "lista de usuários",
+                textAlign: TextAlign.center,
+              ),
             ),
           ),
         ),
@@ -545,13 +595,15 @@ class _ConfigPageState extends State<ConfigPage> {
             color: Colors.grey[100],
             alignment: Alignment.center,
             child: ListTile(
-              leading: Icon(
+              title: Icon(
                 Icons.vpn_key_outlined,
                 size: 40,
                 color: Theme.of(context).accentColor.withOpacity(1),
               ),
-              title: Text("Permissões"),
-              subtitle: Text("lista de permissões"),
+              subtitle: Text(
+                "lista de permissões",
+                textAlign: TextAlign.center,
+              ),
             ),
           ),
         ),
@@ -571,13 +623,15 @@ class _ConfigPageState extends State<ConfigPage> {
             color: Colors.grey[100],
             alignment: Alignment.center,
             child: ListTile(
-              leading: Icon(
+              title: Icon(
                 Icons.filter,
                 size: 40,
                 color: Theme.of(context).accentColor.withOpacity(1),
               ),
-              title: Text("Arquivos"),
-              subtitle: Text("lista de arquivos"),
+              subtitle: Text(
+                "lista de arquivos",
+                textAlign: TextAlign.center,
+              ),
             ),
           ),
         ),
@@ -597,13 +651,15 @@ class _ConfigPageState extends State<ConfigPage> {
             color: Colors.grey[100],
             alignment: Alignment.center,
             child: ListTile(
-              leading: Icon(
+              title: Icon(
                 Icons.list_alt_sharp,
                 size: 40,
                 color: Theme.of(context).accentColor.withOpacity(1),
               ),
-              title: Text("Marcas"),
-              subtitle: Text("lista de marcas"),
+              subtitle: Text(
+                "lista de marcas",
+                textAlign: TextAlign.center,
+              ),
             ),
           ),
         ),
@@ -623,13 +679,15 @@ class _ConfigPageState extends State<ConfigPage> {
             color: Colors.grey[100],
             alignment: Alignment.center,
             child: ListTile(
-              leading: Icon(
+              title: Icon(
                 Icons.shop_outlined,
                 size: 40,
                 color: Theme.of(context).accentColor.withOpacity(1),
               ),
-              title: Text("Itens"),
-              subtitle: Text("lista de itens"),
+              subtitle: Text(
+                "lista de itens",
+                textAlign: TextAlign.center,
+              ),
             ),
           ),
         ),
@@ -649,13 +707,15 @@ class _ConfigPageState extends State<ConfigPage> {
             color: Colors.grey[100],
             alignment: Alignment.center,
             child: ListTile(
-              leading: Icon(
+              title: Icon(
                 Icons.location_on_outlined,
                 size: 40,
                 color: Theme.of(context).accentColor.withOpacity(1),
               ),
-              title: Text("Endereços"),
-              subtitle: Text("lista de endereços"),
+              subtitle: Text(
+                "lista de endereços",
+                textAlign: TextAlign.center,
+              ),
             ),
           ),
         ),
@@ -675,13 +735,15 @@ class _ConfigPageState extends State<ConfigPage> {
             color: Colors.grey[100],
             alignment: Alignment.center,
             child: ListTile(
-              leading: Icon(
+              title: Icon(
                 Icons.color_lens_outlined,
                 size: 40,
                 color: Theme.of(context).accentColor.withOpacity(1),
               ),
-              title: Text("Cores"),
-              subtitle: Text("lista de cores"),
+              subtitle: Text(
+                "lista de cores",
+                textAlign: TextAlign.center,
+              ),
             ),
           ),
         ),
@@ -701,13 +763,15 @@ class _ConfigPageState extends State<ConfigPage> {
             color: Colors.grey[100],
             alignment: Alignment.center,
             child: ListTile(
-              leading: Icon(
+              title: Icon(
                 Icons.format_size,
                 size: 40,
                 color: Theme.of(context).accentColor.withOpacity(1),
               ),
-              title: Text("Tamanhos"),
-              subtitle: Text("lista de tamanhos"),
+              subtitle: Text(
+                "lista de tamanhos",
+                textAlign: TextAlign.center,
+              ),
             ),
           ),
         ),
@@ -727,13 +791,15 @@ class _ConfigPageState extends State<ConfigPage> {
             color: Colors.grey[100],
             alignment: Alignment.center,
             child: ListTile(
-              leading: Icon(
+              title: Icon(
                 Icons.shop_outlined,
                 size: 40,
                 color: Theme.of(context).accentColor.withOpacity(1),
               ),
-              title: Text("Pedidos"),
-              subtitle: Text("lista de pedidos"),
+              subtitle: Text(
+                "lista de pedidos",
+                textAlign: TextAlign.center,
+              ),
             ),
           ),
         ),
@@ -753,13 +819,15 @@ class _ConfigPageState extends State<ConfigPage> {
             color: Colors.grey[100],
             alignment: Alignment.center,
             child: ListTile(
-              leading: Icon(
+              title: Icon(
                 Icons.favorite_border_outlined,
                 size: 40,
                 color: Theme.of(context).accentColor.withOpacity(1),
               ),
-              title: Text("Favoritos"),
-              subtitle: Text("lista de favoritos"),
+              subtitle: Text(
+                "lista de favoritos",
+                textAlign: TextAlign.center,
+              ),
             ),
           ),
         ),
@@ -779,13 +847,15 @@ class _ConfigPageState extends State<ConfigPage> {
             color: Colors.grey[100],
             alignment: Alignment.center,
             child: ListTile(
-              leading: Icon(
+              title: Icon(
                 Icons.credit_card_outlined,
                 size: 40,
                 color: Theme.of(context).accentColor.withOpacity(1),
               ),
-              title: Text("Cartões"),
-              subtitle: Text("lista de cartões"),
+              subtitle: Text(
+                "lista de cartões",
+                textAlign: TextAlign.center,
+              ),
             ),
           ),
         ),
@@ -805,13 +875,15 @@ class _ConfigPageState extends State<ConfigPage> {
             color: Colors.grey[100],
             alignment: Alignment.center,
             child: ListTile(
-              leading: Icon(
+              title: Icon(
                 Icons.payment_outlined,
                 size: 40,
                 color: Theme.of(context).accentColor.withOpacity(1),
               ),
-              title: Text("Pagamentos"),
-              subtitle: Text("lista de pagamentos"),
+              subtitle: Text(
+                "lista de pagamentos",
+                textAlign: TextAlign.center,
+              ),
             ),
           ),
         ),
@@ -831,13 +903,15 @@ class _ConfigPageState extends State<ConfigPage> {
             color: Colors.grey[100],
             alignment: Alignment.center,
             child: ListTile(
-              leading: Icon(
+              title: Icon(
                 Icons.recent_actors_outlined,
                 size: 40,
                 color: Theme.of(context).accentColor.withOpacity(1),
               ),
-              title: Text("Fluxos"),
-              subtitle: Text("lista de fluxos de caixas"),
+              subtitle: Text(
+                "lista de fluxos de caixas",
+                textAlign: TextAlign.center,
+              ),
             ),
           ),
         ),
@@ -857,13 +931,15 @@ class _ConfigPageState extends State<ConfigPage> {
             color: Colors.grey[100],
             alignment: Alignment.center,
             child: ListTile(
-              leading: Icon(
+              title: Icon(
                 Icons.recent_actors,
                 size: 40,
                 color: Theme.of(context).accentColor.withOpacity(1),
               ),
-              title: Text("Caixas"),
-              subtitle: Text("lista de caixas"),
+              subtitle: Text(
+                "lista de caixas",
+                textAlign: TextAlign.center,
+              ),
             ),
           ),
         ),
@@ -883,13 +959,15 @@ class _ConfigPageState extends State<ConfigPage> {
             color: Colors.grey[100],
             alignment: Alignment.center,
             child: ListTile(
-              leading: Icon(
+              title: Icon(
                 Icons.recent_actors,
                 size: 40,
                 color: Theme.of(context).accentColor.withOpacity(1),
               ),
-              title: Text("Caixas entradas"),
-              subtitle: Text("lista de caixas entradas"),
+              subtitle: Text(
+                "lista de caixas entradas",
+                textAlign: TextAlign.center,
+              ),
             ),
           ),
         ),
@@ -909,13 +987,15 @@ class _ConfigPageState extends State<ConfigPage> {
             color: Colors.grey[100],
             alignment: Alignment.center,
             child: ListTile(
-              leading: Icon(
+              title: Icon(
                 Icons.recent_actors,
                 size: 40,
                 color: Theme.of(context).accentColor.withOpacity(1),
               ),
-              title: Text("Caixas saídas"),
-              subtitle: Text("lista de caixas saídas"),
+              subtitle: Text(
+                "lista de caixas saídas",
+                textAlign: TextAlign.center,
+              ),
             ),
           ),
         ),

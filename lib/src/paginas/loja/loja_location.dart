@@ -117,7 +117,7 @@ class _LojaLocationState extends State<LojaLocation> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        titleSpacing: 50,
+        titleSpacing: 0,
         title: Text("Localzação comercial"),
       ),
       body: Stack(
