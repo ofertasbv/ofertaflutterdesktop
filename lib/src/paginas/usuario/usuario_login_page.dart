@@ -16,7 +16,7 @@ class _UsuarioLoginPageState extends State<UsuarioLoginPage> {
         title: Text("Login"),
       ),
       body: Container(
-        padding: EdgeInsets.only(left: 550, right: 550, top: 20),
+        padding: EdgeInsets.only(left: 400, right: 400, top: 20),
         height: 700,
         child: Card(child: UsuarioLogin()),
       ),

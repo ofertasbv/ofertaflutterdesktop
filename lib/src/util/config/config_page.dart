@@ -51,24 +51,64 @@ class _ConfigPageState extends State<ConfigPage> {
     return Scaffold(
       body: Stack(
         children: <Widget>[
-          builderBodyBack(),
+          // builderBodyBack(),
+          Container(
+            width: double.infinity,
+            height: 1000,
+          ),
           Container(
             padding: EdgeInsets.only(left: 0, right: 0),
             child: Column(
               children: [
                 Container(
-                  height: 190,
+                  height: 70,
                   width: double.infinity,
                   color: Theme.of(context).primaryColor,
-                  padding: EdgeInsets.only(left: 50, right: 50, top: 10),
+                  padding: EdgeInsets.only(left: 0, right: 0, top: 0),
                   child: buildGridViewHeader(context),
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 0),
                 Expanded(
                   child: Container(
-                    color: Colors.grey[200],
-                    padding: EdgeInsets.only(left: 50, right: 50),
-                    child: buildGridViewConfig(context),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          Colors.grey[400],
+                          Colors.grey[700],
+                        ],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                      ),
+                    ),
+                    padding: EdgeInsets.only(left: 0, right: 0),
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 400,
+                          color: Colors.transparent,
+                          alignment: Alignment.center,
+                          child: ListTile(
+                            title: Text(
+                              "OFERTAS TODOS OS DIAS PRA VOCÊ!",
+                              style: TextStyle(
+                                fontSize: 40,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            subtitle: Text(
+                              "Em todas as plataformas",
+                              style: TextStyle(fontSize: 30),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Container(
+                            child: buildGridViewConfig(context),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 )
               ],
@@ -84,11 +124,11 @@ class _ConfigPageState extends State<ConfigPage> {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            Colors.grey[900],
-            Colors.grey[900],
+            Colors.grey[200],
+            Colors.grey[400],
           ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
         ),
       ),
     );
@@ -96,7 +136,7 @@ class _ConfigPageState extends State<ConfigPage> {
 
   buildGridViewHeader(BuildContext context) {
     return GridView.count(
-      padding: EdgeInsets.all(50),
+      padding: EdgeInsets.all(0),
       crossAxisCount: 4,
       childAspectRatio: MediaQuery.of(context).size.aspectRatio * 2,
       scrollDirection: Axis.vertical,
@@ -115,17 +155,17 @@ class _ConfigPageState extends State<ConfigPage> {
             width: 200,
             child: ListTile(
               leading: CircleAvatar(
-                radius: 30,
+                radius: 25,
                 backgroundColor: Colors.grey[400],
                 child: Icon(
                   Icons.account_circle_outlined,
-                  size: 30,
+                  size: 25,
                 ),
               ),
               title: Text(
                 "Fabio Resplandes",
                 style: TextStyle(
-                  fontSize: 25,
+                  fontSize: 20,
                   fontWeight: FontWeight.bold,
                   color: Colors.grey[200],
                 ),
@@ -249,10 +289,11 @@ class _ConfigPageState extends State<ConfigPage> {
 
   buildGridViewConfig(BuildContext context) {
     return GridView.count(
-      padding: EdgeInsets.all(50),
       crossAxisCount: 4,
-      childAspectRatio: MediaQuery.of(context).size.aspectRatio * 2,
-      scrollDirection: Axis.vertical,
+      crossAxisSpacing: 10,
+      mainAxisSpacing: 20,
+      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      scrollDirection: Axis.horizontal,
       children: <Widget>[
         GestureDetector(
           onTap: () {
@@ -265,7 +306,10 @@ class _ConfigPageState extends State<ConfigPage> {
             );
           },
           child: Container(
-            width: 200,
+            width: 150,
+            height: 150,
+            color: Colors.grey[100],
+            alignment: Alignment.center,
             child: ListTile(
               leading: Icon(
                 Icons.list_alt_outlined,
@@ -288,7 +332,10 @@ class _ConfigPageState extends State<ConfigPage> {
             );
           },
           child: Container(
-            width: 200,
+            width: 150,
+            height: 150,
+            color: Colors.grey[100],
+            alignment: Alignment.center,
             child: ListTile(
               leading: Icon(
                 Icons.list_alt_sharp,
@@ -311,7 +358,10 @@ class _ConfigPageState extends State<ConfigPage> {
             );
           },
           child: Container(
-            width: 200,
+            width: 150,
+            height: 150,
+            color: Colors.grey[100],
+            alignment: Alignment.center,
             child: ListTile(
               leading: Icon(
                 Icons.shopping_basket_outlined,
@@ -334,7 +384,10 @@ class _ConfigPageState extends State<ConfigPage> {
             );
           },
           child: Container(
-            width: 200,
+            width: 150,
+            height: 150,
+            color: Colors.grey[100],
+            alignment: Alignment.center,
             child: ListTile(
               leading: Icon(
                 Icons.add_alert_outlined,
@@ -357,7 +410,10 @@ class _ConfigPageState extends State<ConfigPage> {
             );
           },
           child: Container(
-            width: 200,
+            width: 150,
+            height: 150,
+            color: Colors.grey[100],
+            alignment: Alignment.center,
             child: ListTile(
               leading: Icon(
                 Icons.add_alert_outlined,
@@ -380,7 +436,10 @@ class _ConfigPageState extends State<ConfigPage> {
             );
           },
           child: Container(
-            width: 200,
+            width: 150,
+            height: 150,
+            color: Colors.grey[100],
+            alignment: Alignment.center,
             child: ListTile(
               leading: Icon(
                 Icons.local_convenience_store_outlined,
@@ -403,7 +462,10 @@ class _ConfigPageState extends State<ConfigPage> {
             );
           },
           child: Container(
-            width: 200,
+            width: 150,
+            height: 150,
+            color: Colors.grey[100],
+            alignment: Alignment.center,
             child: ListTile(
               leading: Icon(
                 Icons.person_add_alt,
@@ -426,7 +488,10 @@ class _ConfigPageState extends State<ConfigPage> {
             );
           },
           child: Container(
-            width: 200,
+            width: 150,
+            height: 150,
+            color: Colors.grey[100],
+            alignment: Alignment.center,
             child: ListTile(
               leading: Icon(
                 Icons.supervised_user_circle_outlined,
@@ -449,7 +514,10 @@ class _ConfigPageState extends State<ConfigPage> {
             );
           },
           child: Container(
-            width: 200,
+            width: 150,
+            height: 150,
+            color: Colors.grey[100],
+            alignment: Alignment.center,
             child: ListTile(
               leading: Icon(
                 Icons.supervised_user_circle,
@@ -472,7 +540,10 @@ class _ConfigPageState extends State<ConfigPage> {
             );
           },
           child: Container(
-            width: 200,
+            width: 150,
+            height: 150,
+            color: Colors.grey[100],
+            alignment: Alignment.center,
             child: ListTile(
               leading: Icon(
                 Icons.vpn_key_outlined,
@@ -495,7 +566,10 @@ class _ConfigPageState extends State<ConfigPage> {
             );
           },
           child: Container(
-            width: 200,
+            width: 150,
+            height: 150,
+            color: Colors.grey[100],
+            alignment: Alignment.center,
             child: ListTile(
               leading: Icon(
                 Icons.filter,
@@ -518,7 +592,10 @@ class _ConfigPageState extends State<ConfigPage> {
             );
           },
           child: Container(
-            width: 200,
+            width: 150,
+            height: 150,
+            color: Colors.grey[100],
+            alignment: Alignment.center,
             child: ListTile(
               leading: Icon(
                 Icons.list_alt_sharp,
@@ -541,7 +618,10 @@ class _ConfigPageState extends State<ConfigPage> {
             );
           },
           child: Container(
-            width: 200,
+            width: 150,
+            height: 150,
+            color: Colors.grey[100],
+            alignment: Alignment.center,
             child: ListTile(
               leading: Icon(
                 Icons.shop_outlined,
@@ -564,7 +644,10 @@ class _ConfigPageState extends State<ConfigPage> {
             );
           },
           child: Container(
-            width: 200,
+            width: 150,
+            height: 150,
+            color: Colors.grey[100],
+            alignment: Alignment.center,
             child: ListTile(
               leading: Icon(
                 Icons.location_on_outlined,
@@ -587,7 +670,10 @@ class _ConfigPageState extends State<ConfigPage> {
             );
           },
           child: Container(
-            width: 200,
+            width: 150,
+            height: 150,
+            color: Colors.grey[100],
+            alignment: Alignment.center,
             child: ListTile(
               leading: Icon(
                 Icons.color_lens_outlined,
@@ -610,7 +696,10 @@ class _ConfigPageState extends State<ConfigPage> {
             );
           },
           child: Container(
-            width: 200,
+            width: 150,
+            height: 150,
+            color: Colors.grey[100],
+            alignment: Alignment.center,
             child: ListTile(
               leading: Icon(
                 Icons.format_size,
@@ -633,7 +722,10 @@ class _ConfigPageState extends State<ConfigPage> {
             );
           },
           child: Container(
-            width: 200,
+            width: 150,
+            height: 150,
+            color: Colors.grey[100],
+            alignment: Alignment.center,
             child: ListTile(
               leading: Icon(
                 Icons.shop_outlined,
@@ -656,7 +748,10 @@ class _ConfigPageState extends State<ConfigPage> {
             );
           },
           child: Container(
-            width: 200,
+            width: 150,
+            height: 150,
+            color: Colors.grey[100],
+            alignment: Alignment.center,
             child: ListTile(
               leading: Icon(
                 Icons.favorite_border_outlined,
@@ -679,7 +774,10 @@ class _ConfigPageState extends State<ConfigPage> {
             );
           },
           child: Container(
-            width: 200,
+            width: 150,
+            height: 150,
+            color: Colors.grey[100],
+            alignment: Alignment.center,
             child: ListTile(
               leading: Icon(
                 Icons.credit_card_outlined,
@@ -702,7 +800,10 @@ class _ConfigPageState extends State<ConfigPage> {
             );
           },
           child: Container(
-            width: 200,
+            width: 150,
+            height: 150,
+            color: Colors.grey[100],
+            alignment: Alignment.center,
             child: ListTile(
               leading: Icon(
                 Icons.payment_outlined,
@@ -725,7 +826,10 @@ class _ConfigPageState extends State<ConfigPage> {
             );
           },
           child: Container(
-            width: 200,
+            width: 150,
+            height: 150,
+            color: Colors.grey[100],
+            alignment: Alignment.center,
             child: ListTile(
               leading: Icon(
                 Icons.recent_actors_outlined,
@@ -748,7 +852,10 @@ class _ConfigPageState extends State<ConfigPage> {
             );
           },
           child: Container(
-            width: 200,
+            width: 150,
+            height: 150,
+            color: Colors.grey[100],
+            alignment: Alignment.center,
             child: ListTile(
               leading: Icon(
                 Icons.recent_actors,
@@ -771,7 +878,10 @@ class _ConfigPageState extends State<ConfigPage> {
             );
           },
           child: Container(
-            width: 200,
+            width: 150,
+            height: 150,
+            color: Colors.grey[100],
+            alignment: Alignment.center,
             child: ListTile(
               leading: Icon(
                 Icons.recent_actors,
@@ -794,7 +904,10 @@ class _ConfigPageState extends State<ConfigPage> {
             );
           },
           child: Container(
-            width: 200,
+            width: 150,
+            height: 150,
+            color: Colors.grey[100],
+            alignment: Alignment.center,
             child: ListTile(
               leading: Icon(
                 Icons.recent_actors,

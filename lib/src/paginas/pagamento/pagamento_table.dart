@@ -45,7 +45,7 @@ class _PagamentoTableState extends State<PagamentoTable>
             height: 60,
             width: double.infinity,
             color: Colors.grey[200],
-            padding: EdgeInsets.all(5),
+            padding: EdgeInsets.all(0),
             child: ListTile(
               subtitle: TextFormField(
                 controller: nomeController,

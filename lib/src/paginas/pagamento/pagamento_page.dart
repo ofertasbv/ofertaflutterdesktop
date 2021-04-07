@@ -14,7 +14,7 @@ class PagamentoPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        titleSpacing: 50,
+        titleSpacing: 0,
         title: Text("Pagamentos"),
         actions: <Widget>[
           Observer(

@@ -14,7 +14,7 @@ class UsuarioPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        titleSpacing: 50,
+        titleSpacing: 0,
         elevation: 0,
         title: Text("Usuários"),
         actions: <Widget>[
