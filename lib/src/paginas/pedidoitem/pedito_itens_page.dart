@@ -131,15 +131,26 @@ class _PedidoItensListState extends State<PedidoItensList> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Image.network(
-                            ConstantApi.urlArquivoProduto + p.produto.foto,
-                            fit: BoxFit.cover,
-                            width: 100,
-                            height: 130,
-                          ),
-                        ),
+                        p.produto.foto != null
+                            ? ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: Image.network(
+                                  ConstantApi.urlArquivoProduto +
+                                      p.produto.foto,
+                                  fit: BoxFit.cover,
+                                  width: 100,
+                                  height: 130,
+                                ),
+                              )
+                            : ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: Image.asset(
+                                  ConstantApi.urlLogo,
+                                  fit: BoxFit.cover,
+                                  width: 100,
+                                  height: 130,
+                                ),
+                              ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
@@ -251,10 +262,14 @@ class _PedidoItensListState extends State<PedidoItensList> {
                                               onPressed: () {
                                                 setState(() {
                                                   print("removendo - ");
-                                                  print("Quantidade: ${p.quantidade}");
-                                                  pedidoItemController.decremento(p);
-                                                  pedidoItemController.calculateTotal();
-                                                  print("Total: ${pedidoItemController.total}");
+                                                  print(
+                                                      "Quantidade: ${p.quantidade}");
+                                                  pedidoItemController
+                                                      .decremento(p);
+                                                  pedidoItemController
+                                                      .calculateTotal();
+                                                  print(
+                                                      "Total: ${pedidoItemController.total}");
                                                   pedidoItemController.itens;
                                                 });
                                               },
@@ -286,10 +301,14 @@ class _PedidoItensListState extends State<PedidoItensList> {
                                               onPressed: () {
                                                 setState(() {
                                                   print("adicionando + ");
-                                                  print("Quantidade: ${p.quantidade}");
-                                                  pedidoItemController.incremento(p);
-                                                  pedidoItemController.calculateTotal();
-                                                  print("Total: ${pedidoItemController.total}");
+                                                  print(
+                                                      "Quantidade: ${p.quantidade}");
+                                                  pedidoItemController
+                                                      .incremento(p);
+                                                  pedidoItemController
+                                                      .calculateTotal();
+                                                  print(
+                                                      "Total: ${pedidoItemController.total}");
                                                   pedidoItemController.itens;
                                                 });
                                               },

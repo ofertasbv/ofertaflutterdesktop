@@ -2,8 +2,6 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:nosso/main.dart';
-import 'package:nosso/src/api/constants/constant_api.dart';
 import 'package:nosso/src/home/home.dart';
 import 'package:nosso/src/paginas/arquivo/arquivo_page.dart';
 import 'package:nosso/src/paginas/caixa/caixa_page.dart';
@@ -23,10 +21,7 @@ import 'package:nosso/src/paginas/pagamento/pagamento_page.dart';
 import 'package:nosso/src/paginas/pedido/pedido_page.dart';
 import 'package:nosso/src/paginas/pedidoitem/pedidoitem_page.dart';
 import 'package:nosso/src/paginas/permissao/permissao_page.dart';
-import 'package:nosso/src/paginas/produto/produto_page.dart';
-import 'package:nosso/src/paginas/produto/produto_tab.dart';
 import 'package:nosso/src/paginas/produto/produto_table.dart';
-import 'package:nosso/src/paginas/promocao/promocao_page.dart';
 import 'package:nosso/src/paginas/promocao/promocao_table.dart';
 import 'package:nosso/src/paginas/promocaotipo/promocaotipo_page.dart';
 import 'package:nosso/src/paginas/subcategoria/subcategoria_page.dart';
@@ -34,8 +29,6 @@ import 'package:nosso/src/paginas/tamanho/tamanho_page.dart';
 import 'package:nosso/src/paginas/usuario/usuario_page.dart';
 import 'package:nosso/src/paginas/vendedor/vendedor_page.dart';
 import 'package:nosso/src/util/Examples/teste_mapa.dart';
-import 'package:nosso/src/util/barcodigo/leitor_codigo_barra.dart';
-import 'package:nosso/src/util/barcodigo/leitor_qr_code.dart';
 
 class ConfigPage extends StatefulWidget {
   @override
@@ -81,16 +74,12 @@ class _ConfigPageState extends State<ConfigPage> {
                                 Container(
                                   child: ListTile(
                                     title: Text(
-                                      "PAINEL DE CONTROLE!",
+                                      "SHOW SMART OFFERS",
                                       style: TextStyle(
                                         fontSize: 50,
-                                        color: Colors.black,
+                                        color: Colors.deepOrange[400],
                                         fontWeight: FontWeight.bold,
                                       ),
-                                    ),
-                                    subtitle: Text(
-                                      "Em todas as plataformas",
-                                      style: TextStyle(fontSize: 30),
                                     ),
                                   ),
                                 ),
@@ -101,13 +90,17 @@ class _ConfigPageState extends State<ConfigPage> {
                                       "OFERTAS TODOS OS DIAS PRA VOCÊ!",
                                       style: TextStyle(
                                         fontSize: 40,
-                                        color: Colors.black,
+                                        color: Colors.white,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                     subtitle: Text(
                                       "Em todas as plataformas",
-                                      style: TextStyle(fontSize: 30),
+                                      style: TextStyle(
+                                        fontSize: 30,
+                                        color: Colors.grey[600],
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -155,8 +148,8 @@ class _ConfigPageState extends State<ConfigPage> {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Colors.grey[300],
-              Colors.grey[600],
+              Colors.grey[700],
+              Colors.grey[900],
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -340,17 +333,20 @@ class _ConfigPageState extends State<ConfigPage> {
           child: Container(
             width: 150,
             height: 150,
-            color: Colors.grey[100],
+            color: Colors.blue[600],
             alignment: Alignment.center,
             child: ListTile(
               title: Icon(
                 Icons.list_alt_outlined,
                 size: 40,
-                color: Theme.of(context).accentColor.withOpacity(1),
+                color: Colors.grey[100],
               ),
               subtitle: Text(
                 "Lista de categorias",
                 textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ),
@@ -368,7 +364,7 @@ class _ConfigPageState extends State<ConfigPage> {
           child: Container(
             width: 150,
             height: 150,
-            color: Colors.grey[100],
+            color: Colors.deepOrange[600],
             alignment: Alignment.center,
             child: ListTile(
               title: Icon(
@@ -379,6 +375,10 @@ class _ConfigPageState extends State<ConfigPage> {
               subtitle: Text(
                 "lista de subcategorias",
                 textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey[200],
+                ),
               ),
             ),
           ),
@@ -396,7 +396,7 @@ class _ConfigPageState extends State<ConfigPage> {
           child: Container(
             width: 150,
             height: 150,
-            color: Colors.grey[100],
+            color: Colors.green[800],
             alignment: Alignment.center,
             child: ListTile(
               title: Icon(
@@ -407,6 +407,10 @@ class _ConfigPageState extends State<ConfigPage> {
               subtitle: Text(
                 "Lista de produtos",
                 textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey[200],
+                ),
               ),
             ),
           ),
@@ -424,7 +428,7 @@ class _ConfigPageState extends State<ConfigPage> {
           child: Container(
             width: 150,
             height: 150,
-            color: Colors.grey[100],
+            color: Colors.deepPurple[800],
             alignment: Alignment.center,
             child: ListTile(
               title: Icon(
@@ -435,6 +439,10 @@ class _ConfigPageState extends State<ConfigPage> {
               subtitle: Text(
                 "lista de promoções",
                 textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey[200],
+                ),
               ),
             ),
           ),
@@ -452,7 +460,7 @@ class _ConfigPageState extends State<ConfigPage> {
           child: Container(
             width: 150,
             height: 150,
-            color: Colors.grey[100],
+            color: Colors.pink[600],
             alignment: Alignment.center,
             child: ListTile(
               title: Icon(
@@ -463,6 +471,10 @@ class _ConfigPageState extends State<ConfigPage> {
               subtitle: Text(
                 "lista de tipos de promoções",
                 textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey[200],
+                ),
               ),
             ),
           ),
@@ -480,7 +492,7 @@ class _ConfigPageState extends State<ConfigPage> {
           child: Container(
             width: 150,
             height: 150,
-            color: Colors.grey[100],
+            color: Colors.indigo[800],
             alignment: Alignment.center,
             child: ListTile(
               title: Icon(
@@ -491,6 +503,10 @@ class _ConfigPageState extends State<ConfigPage> {
               subtitle: Text(
                 "lista de lojas",
                 textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey[200],
+                ),
               ),
             ),
           ),
@@ -508,7 +524,7 @@ class _ConfigPageState extends State<ConfigPage> {
           child: Container(
             width: 150,
             height: 150,
-            color: Colors.grey[100],
+            color: Colors.grey[800],
             alignment: Alignment.center,
             child: ListTile(
               title: Icon(
@@ -519,6 +535,10 @@ class _ConfigPageState extends State<ConfigPage> {
               subtitle: Text(
                 "lista de clientes",
                 textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey[200],
+                ),
               ),
             ),
           ),
@@ -536,7 +556,7 @@ class _ConfigPageState extends State<ConfigPage> {
           child: Container(
             width: 150,
             height: 150,
-            color: Colors.grey[100],
+            color: Colors.grey[600],
             alignment: Alignment.center,
             child: ListTile(
               title: Icon(
@@ -547,6 +567,10 @@ class _ConfigPageState extends State<ConfigPage> {
               subtitle: Text(
                 "lista de vendedores",
                 textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey[200],
+                ),
               ),
             ),
           ),
@@ -564,7 +588,7 @@ class _ConfigPageState extends State<ConfigPage> {
           child: Container(
             width: 150,
             height: 150,
-            color: Colors.grey[100],
+            color: Colors.cyan[600],
             alignment: Alignment.center,
             child: ListTile(
               title: Icon(
@@ -575,6 +599,10 @@ class _ConfigPageState extends State<ConfigPage> {
               subtitle: Text(
                 "lista de usuários",
                 textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey[200],
+                ),
               ),
             ),
           ),
@@ -592,7 +620,7 @@ class _ConfigPageState extends State<ConfigPage> {
           child: Container(
             width: 150,
             height: 150,
-            color: Colors.grey[100],
+            color: Colors.purple[800],
             alignment: Alignment.center,
             child: ListTile(
               title: Icon(
@@ -603,6 +631,10 @@ class _ConfigPageState extends State<ConfigPage> {
               subtitle: Text(
                 "lista de permissões",
                 textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey[200],
+                ),
               ),
             ),
           ),
@@ -620,7 +652,7 @@ class _ConfigPageState extends State<ConfigPage> {
           child: Container(
             width: 150,
             height: 150,
-            color: Colors.grey[100],
+            color: Colors.red[800],
             alignment: Alignment.center,
             child: ListTile(
               title: Icon(
@@ -631,6 +663,10 @@ class _ConfigPageState extends State<ConfigPage> {
               subtitle: Text(
                 "lista de arquivos",
                 textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey[200],
+                ),
               ),
             ),
           ),
@@ -648,7 +684,7 @@ class _ConfigPageState extends State<ConfigPage> {
           child: Container(
             width: 150,
             height: 150,
-            color: Colors.grey[100],
+            color: Colors.amber[800],
             alignment: Alignment.center,
             child: ListTile(
               title: Icon(
@@ -659,6 +695,10 @@ class _ConfigPageState extends State<ConfigPage> {
               subtitle: Text(
                 "lista de marcas",
                 textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey[200],
+                ),
               ),
             ),
           ),
@@ -676,7 +716,7 @@ class _ConfigPageState extends State<ConfigPage> {
           child: Container(
             width: 150,
             height: 150,
-            color: Colors.grey[100],
+            color: Colors.yellow[800],
             alignment: Alignment.center,
             child: ListTile(
               title: Icon(
@@ -687,6 +727,10 @@ class _ConfigPageState extends State<ConfigPage> {
               subtitle: Text(
                 "lista de itens",
                 textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey[200],
+                ),
               ),
             ),
           ),
@@ -704,7 +748,7 @@ class _ConfigPageState extends State<ConfigPage> {
           child: Container(
             width: 150,
             height: 150,
-            color: Colors.grey[100],
+            color: Colors.deepPurpleAccent,
             alignment: Alignment.center,
             child: ListTile(
               title: Icon(
@@ -715,6 +759,10 @@ class _ConfigPageState extends State<ConfigPage> {
               subtitle: Text(
                 "lista de endereços",
                 textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey[200],
+                ),
               ),
             ),
           ),
@@ -732,7 +780,7 @@ class _ConfigPageState extends State<ConfigPage> {
           child: Container(
             width: 150,
             height: 150,
-            color: Colors.grey[100],
+            color: Colors.blueGrey[800],
             alignment: Alignment.center,
             child: ListTile(
               title: Icon(
@@ -743,6 +791,10 @@ class _ConfigPageState extends State<ConfigPage> {
               subtitle: Text(
                 "lista de cores",
                 textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey[200],
+                ),
               ),
             ),
           ),
@@ -760,7 +812,7 @@ class _ConfigPageState extends State<ConfigPage> {
           child: Container(
             width: 150,
             height: 150,
-            color: Colors.grey[100],
+            color: Colors.purple,
             alignment: Alignment.center,
             child: ListTile(
               title: Icon(
@@ -771,6 +823,10 @@ class _ConfigPageState extends State<ConfigPage> {
               subtitle: Text(
                 "lista de tamanhos",
                 textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey[200],
+                ),
               ),
             ),
           ),
@@ -788,7 +844,7 @@ class _ConfigPageState extends State<ConfigPage> {
           child: Container(
             width: 150,
             height: 150,
-            color: Colors.grey[100],
+            color: Colors.blue[800],
             alignment: Alignment.center,
             child: ListTile(
               title: Icon(
@@ -799,6 +855,10 @@ class _ConfigPageState extends State<ConfigPage> {
               subtitle: Text(
                 "lista de pedidos",
                 textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey[200],
+                ),
               ),
             ),
           ),
@@ -816,7 +876,7 @@ class _ConfigPageState extends State<ConfigPage> {
           child: Container(
             width: 150,
             height: 150,
-            color: Colors.grey[100],
+            color: Colors.redAccent,
             alignment: Alignment.center,
             child: ListTile(
               title: Icon(
@@ -827,6 +887,10 @@ class _ConfigPageState extends State<ConfigPage> {
               subtitle: Text(
                 "lista de favoritos",
                 textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey[200],
+                ),
               ),
             ),
           ),
@@ -844,7 +908,7 @@ class _ConfigPageState extends State<ConfigPage> {
           child: Container(
             width: 150,
             height: 150,
-            color: Colors.grey[100],
+            color: Colors.indigo[800],
             alignment: Alignment.center,
             child: ListTile(
               title: Icon(
@@ -855,6 +919,10 @@ class _ConfigPageState extends State<ConfigPage> {
               subtitle: Text(
                 "lista de cartões",
                 textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey[200],
+                ),
               ),
             ),
           ),
@@ -872,7 +940,7 @@ class _ConfigPageState extends State<ConfigPage> {
           child: Container(
             width: 150,
             height: 150,
-            color: Colors.grey[100],
+            color: Colors.teal[800],
             alignment: Alignment.center,
             child: ListTile(
               title: Icon(
@@ -883,6 +951,10 @@ class _ConfigPageState extends State<ConfigPage> {
               subtitle: Text(
                 "lista de pagamentos",
                 textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey[200],
+                ),
               ),
             ),
           ),
@@ -900,7 +972,7 @@ class _ConfigPageState extends State<ConfigPage> {
           child: Container(
             width: 150,
             height: 150,
-            color: Colors.grey[100],
+            color: Colors.grey[700],
             alignment: Alignment.center,
             child: ListTile(
               title: Icon(
@@ -911,6 +983,10 @@ class _ConfigPageState extends State<ConfigPage> {
               subtitle: Text(
                 "lista de fluxos de caixas",
                 textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey[200],
+                ),
               ),
             ),
           ),
@@ -928,7 +1004,7 @@ class _ConfigPageState extends State<ConfigPage> {
           child: Container(
             width: 150,
             height: 150,
-            color: Colors.grey[100],
+            color: Colors.grey[700],
             alignment: Alignment.center,
             child: ListTile(
               title: Icon(
@@ -939,6 +1015,10 @@ class _ConfigPageState extends State<ConfigPage> {
               subtitle: Text(
                 "lista de caixas",
                 textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey[200],
+                ),
               ),
             ),
           ),
@@ -956,7 +1036,7 @@ class _ConfigPageState extends State<ConfigPage> {
           child: Container(
             width: 150,
             height: 150,
-            color: Colors.grey[100],
+            color: Colors.grey[700],
             alignment: Alignment.center,
             child: ListTile(
               title: Icon(
@@ -967,6 +1047,10 @@ class _ConfigPageState extends State<ConfigPage> {
               subtitle: Text(
                 "lista de caixas entradas",
                 textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey[200],
+                ),
               ),
             ),
           ),
@@ -984,7 +1068,7 @@ class _ConfigPageState extends State<ConfigPage> {
           child: Container(
             width: 150,
             height: 150,
-            color: Colors.grey[100],
+            color: Colors.grey[700],
             alignment: Alignment.center,
             child: ListTile(
               title: Icon(
@@ -995,6 +1079,10 @@ class _ConfigPageState extends State<ConfigPage> {
               subtitle: Text(
                 "lista de caixas saídas",
                 textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey[200],
+                ),
               ),
             ),
           ),
