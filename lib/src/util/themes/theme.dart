@@ -5,8 +5,8 @@ ThemeData getTheme(BuildContext context) {
   return ThemeData(
     tabBarTheme: TabBarTheme(),
     brightness: Brightness.light,
-    primaryColor: Colors.blue[800],
-    accentColor: Colors.deepOrange[400],
+    primaryColor: Colors.deepPurple[600],
+    accentColor: Colors.deepOrangeAccent[400],
     primarySwatch: Colors.deepOrange,
     textTheme: GoogleFonts.sourceSansProTextTheme().copyWith(
       subtitle2: TextStyle(
@@ -40,7 +40,7 @@ ThemeData getTheme(BuildContext context) {
       headline2: TextStyle(color: Colors.green),
       headline1: TextStyle(color: Colors.cyan),
     ),
-    scaffoldBackgroundColor: Colors.blue.shade50,
+    scaffoldBackgroundColor: Colors.grey[100],
     cardTheme: CardTheme(
       elevation: 1,
       color: Colors.white,

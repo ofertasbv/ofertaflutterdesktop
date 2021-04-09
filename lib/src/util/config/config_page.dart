@@ -2,6 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:nosso/src/api/constants/constant_api.dart';
 import 'package:nosso/src/home/home.dart';
 import 'package:nosso/src/paginas/arquivo/arquivo_page.dart';
 import 'package:nosso/src/paginas/caixa/caixa_page.dart';
@@ -17,6 +19,7 @@ import 'package:nosso/src/paginas/endereco/endereco_page.dart';
 import 'package:nosso/src/paginas/favorito/favorito_page.dart';
 import 'package:nosso/src/paginas/loja/loja_page.dart';
 import 'package:nosso/src/paginas/marca/marca_page.dart';
+import 'package:nosso/src/paginas/medida/medida_table.dart';
 import 'package:nosso/src/paginas/pagamento/pagamento_page.dart';
 import 'package:nosso/src/paginas/pedido/pedido_page.dart';
 import 'package:nosso/src/paginas/pedidoitem/pedidoitem_page.dart';
@@ -49,14 +52,6 @@ class _ConfigPageState extends State<ConfigPage> {
             padding: EdgeInsets.only(left: 0, right: 0),
             child: Column(
               children: [
-                Container(
-                  height: 70,
-                  width: double.infinity,
-                  color: Theme.of(context).primaryColor,
-                  padding: EdgeInsets.only(left: 0, right: 0, top: 0),
-                  child: buildGridViewHeader(context),
-                ),
-                SizedBox(height: 0),
                 Expanded(
                   child: Container(
                     color: Colors.transparent,
@@ -64,66 +59,99 @@ class _ConfigPageState extends State<ConfigPage> {
                     child: Row(
                       children: [
                         Container(
-                            width: 400,
-                            color: Colors.transparent,
-                            alignment: Alignment.center,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                Container(
-                                  child: ListTile(
-                                    title: Text(
-                                      "SHOW SMART OFFERS",
-                                      style: TextStyle(
-                                        fontSize: 50,
-                                        color: Colors.deepOrange[400],
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                          width: 400,
+                          color: Colors.transparent,
+                          alignment: Alignment.center,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Container(
+                                height: 188,
+                                width: double.infinity,
+                                color: Colors.grey[800],
+                                padding:
+                                    EdgeInsets.only(left: 0, right: 0, top: 40),
+                                child: ListTile(
+                                  leading: CircleAvatar(
+                                    child: Icon(FeatherIcons.home),
+                                    radius: 40,
+                                  ),
+                                  title: Text(
+                                    "OFERTASBV",
+                                    style: TextStyle(
+                                      fontSize: 40,
+                                      color: Colors.grey[400],
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  subtitle: Text(
+                                    "Painel de controle",
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.grey[400],
+                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                 ),
-                                SizedBox(height: 20),
-                                Container(
-                                  child: ListTile(
-                                    title: Text(
-                                      "OFERTAS TODOS OS DIAS PRA VOCÊ!",
-                                      style: TextStyle(
-                                        fontSize: 40,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    subtitle: Text(
-                                      "Em todas as plataformas",
-                                      style: TextStyle(
-                                        fontSize: 30,
-                                        color: Colors.grey[600],
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                              ),
+                              Container(
+                                child: ListTile(
+                                  title: Text(
+                                    "SHOW SMART OFFERS",
+                                    style: TextStyle(
+                                      fontSize: 50,
+                                      color: Theme.of(context).accentColor,
+                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                 ),
-                                SizedBox(height: 20),
-                                Container(
-                                  padding: EdgeInsets.all(20),
-                                  child: FlatButton.icon(
-                                    onPressed: () {
-                                      Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder: (BuildContext context) {
-                                            return HomePage();
-                                          },
-                                        ),
-                                      );
-                                    },
-                                    icon: Icon(Icons.home_outlined),
-                                    label: Text("VOLTAR PRA HOME"),
-                                    color: Colors.blue,
+                              ),
+                              SizedBox(height: 20),
+                              Container(
+                                child: ListTile(
+                                  title: Text(
+                                    "OFERTAS TODOS OS DIAS PRA VOCÊ!",
+                                    style: TextStyle(
+                                      fontSize: 40,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
-                                )
-                              ],
-                            )),
+                                  subtitle: Text(
+                                    "Em todas as plataformas",
+                                    style: TextStyle(
+                                      fontSize: 30,
+                                      color: Colors.grey[600],
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: 20),
+                              Container(
+                                padding: EdgeInsets.all(20),
+                                child: FlatButton.icon(
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (BuildContext context) {
+                                          return HomePage();
+                                        },
+                                      ),
+                                    );
+                                  },
+                                  icon: Icon(Icons.home_outlined),
+                                  label: Text("VOLTAR PRA HOME"),
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
                         Expanded(
                           child: Container(
                             child: buildGridViewConfig(context),
@@ -148,7 +176,7 @@ class _ConfigPageState extends State<ConfigPage> {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Colors.grey[700],
+              Colors.grey[800],
               Colors.grey[900],
             ],
             begin: Alignment.topCenter,
@@ -156,159 +184,6 @@ class _ConfigPageState extends State<ConfigPage> {
           ),
         ),
       ),
-    );
-  }
-
-  buildGridViewHeader(BuildContext context) {
-    return GridView.count(
-      padding: EdgeInsets.all(0),
-      crossAxisCount: 4,
-      childAspectRatio: MediaQuery.of(context).size.aspectRatio * 2,
-      scrollDirection: Axis.vertical,
-      children: <Widget>[
-        GestureDetector(
-          onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return HomePage();
-                },
-              ),
-            );
-          },
-          child: Container(
-            width: 200,
-            child: ListTile(
-              leading: CircleAvatar(
-                radius: 25,
-                backgroundColor: Colors.grey[400],
-                child: Icon(
-                  Icons.account_circle_outlined,
-                  size: 25,
-                ),
-              ),
-              title: Text(
-                "Fabio Resplandes",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.grey[200],
-                ),
-              ),
-              subtitle: Text(
-                "ofertasbv@gmail.com",
-                style: TextStyle(
-                  color: Colors.grey[400],
-                ),
-              ),
-            ),
-          ),
-        ),
-        GestureDetector(
-          onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return HomePage();
-                },
-              ),
-            );
-          },
-          child: Container(
-            width: 200,
-            child: ListTile(
-              leading: Icon(
-                Icons.home,
-                size: 40,
-                color: Colors.grey[400],
-              ),
-              title: Text(
-                "Home page",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.grey[200],
-                ),
-              ),
-              subtitle: Text(
-                "Página inicial",
-                style: TextStyle(
-                  color: Colors.grey[400],
-                ),
-              ),
-            ),
-          ),
-        ),
-        GestureDetector(
-          onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return CaixaControlePage();
-                },
-              ),
-            );
-          },
-          child: Container(
-            width: 200,
-            child: ListTile(
-              leading: Icon(
-                Icons.account_box_outlined,
-                size: 40,
-                color: Colors.grey[400],
-              ),
-              title: Text(
-                "Controle de caixa",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.grey[200],
-                ),
-              ),
-              subtitle: Text(
-                "compra e vendas",
-                style: TextStyle(
-                  color: Colors.grey[400],
-                ),
-              ),
-            ),
-          ),
-        ),
-        GestureDetector(
-          onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return TesteMapa(
-                    androidFusedLocation: true,
-                  );
-                },
-              ),
-            );
-          },
-          child: Container(
-            width: 200,
-            child: ListTile(
-              leading: Icon(
-                Icons.location_on_outlined,
-                size: 40,
-                color: Colors.grey[400],
-              ),
-              title: Text(
-                "Locais de comerciais",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.grey[200],
-                ),
-              ),
-              subtitle: Text(
-                "Locais de lojas",
-                style: TextStyle(
-                  color: Colors.grey[400],
-                ),
-              ),
-            ),
-          ),
-        ),
-      ],
     );
   }
 
@@ -345,6 +220,7 @@ class _ConfigPageState extends State<ConfigPage> {
                 "Lista de categorias",
                 textAlign: TextAlign.center,
                 style: TextStyle(
+                  color: Colors.grey[300],
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -822,6 +698,38 @@ class _ConfigPageState extends State<ConfigPage> {
               ),
               subtitle: Text(
                 "lista de tamanhos",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey[200],
+                ),
+              ),
+            ),
+          ),
+        ),
+        GestureDetector(
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return MedidaTable();
+                },
+              ),
+            );
+          },
+          child: Container(
+            width: 150,
+            height: 150,
+            color: Colors.purple,
+            alignment: Alignment.center,
+            child: ListTile(
+              title: Icon(
+                Icons.format_size,
+                size: 40,
+                color: Theme.of(context).accentColor.withOpacity(1),
+              ),
+              subtitle: Text(
+                "lista de medidas",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,

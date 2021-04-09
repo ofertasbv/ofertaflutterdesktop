@@ -7,6 +7,7 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
@@ -29,7 +30,6 @@ import 'package:nosso/src/core/model/promocao.dart';
 import 'package:nosso/src/core/model/subcategoria.dart';
 import 'package:nosso/src/core/model/tamanho.dart';
 import 'package:nosso/src/core/model/uploadFileResponse.dart';
-import 'package:nosso/src/paginas/produto/produto_tab.dart';
 import 'package:nosso/src/paginas/produto/produto_table.dart';
 import 'package:nosso/src/util/componentes/image_source_sheet.dart';
 import 'package:nosso/src/util/dialogs/dialogs.dart';
@@ -89,10 +89,31 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
   Controller controller;
   var controllerCodigoBarra = TextEditingController();
   var controllerQuantidade = TextEditingController();
-  var controllerValorUnitario = TextEditingController();
-  var controllerDesconto = TextEditingController();
-  var controllerPecentual = TextEditingController();
-  var controllerValorVenda = TextEditingController();
+
+  var controllerValorUnit = MoneyMaskedTextController(
+    decimalSeparator: ",",
+    thousandSeparator: ".",
+    initialValue: 0.00,
+    precision: 2,
+  );
+  var controllerDesconto = MoneyMaskedTextController(
+    decimalSeparator: ",",
+    thousandSeparator: ".",
+    initialValue: 0.00,
+    precision: 2,
+  );
+  var controllerPecentual = MoneyMaskedTextController(
+    decimalSeparator: ",",
+    thousandSeparator: ".",
+    initialValue: 0.00,
+    precision: 2,
+  );
+  var controllerValorVenda = MoneyMaskedTextController(
+    decimalSeparator: ",",
+    thousandSeparator: ".",
+    initialValue: 0.00,
+    precision: 2,
+  );
 
   var uploadFileResponse = UploadFileResponse();
   var response = UploadRespnse();
@@ -130,7 +151,7 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
       promocaoSelecionada = p.promocao;
 
       controllerQuantidade.text = p.estoque.quantidade.toStringAsFixed(0);
-      controllerValorUnitario.text = p.estoque.valorUnitario.toStringAsFixed(2);
+      controllerValorUnit.text = p.estoque.valorUnitario.toStringAsFixed(2);
       controllerValorVenda.text = p.estoque.valorVenda.toStringAsFixed(2);
       controllerPecentual.text = p.estoque.percentual.toStringAsFixed(2);
     }
@@ -222,7 +243,7 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
   }
 
   calcularValorVenda() {
-    double valor = (double.tryParse(controllerValorUnitario.text) *
+    double valor = (double.tryParse(controllerValorUnit.text) *
             double.tryParse(controllerPecentual.text)) /
         100;
     controllerValorVenda.text = valor.toStringAsFixed(2);
@@ -909,29 +930,16 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
                             Container(
                               width: 500,
                               child: TextFormField(
-                                controller: controllerValorUnitario,
-                                onSaved: (value) {
-                                  p.estoque.valorUnitario =
-                                      double.tryParse(value);
-                                },
-                                validator: validateValorUnitario,
+                                controller: controllerValorUnit,
                                 decoration: InputDecoration(
-                                  labelText: "Valor unitário",
-                                  hintText: "Valor unitário",
-                                  prefixIcon: Icon(
-                                    Icons.monetization_on_outlined,
-                                    color: Colors.grey,
-                                  ),
-                                  suffixIcon: IconButton(
-                                    onPressed: () =>
-                                        controllerValorUnitario.clear(),
-                                    icon: Icon(Icons.clear),
-                                  ),
-                                ),
-                                onEditingComplete: () => focus.nextFocus(),
-                                keyboardType: TextInputType.numberWithOptions(
-                                    decimal: true),
-                                maxLength: 10,
+                                    labelText: 'Valor Unitário'),
+                                onChanged: (value) {
+                                  value = controllerValorUnit.text;
+                                  print("Valor Unitário: ${value}");
+                                },
+                                onSaved: (value) {
+                                  controllerValorUnit.updateValue(valor);
+                                },
                               ),
                             ),
                           ],
@@ -948,66 +956,30 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
                               width: 500,
                               child: TextFormField(
                                 controller: controllerPecentual,
-                                onSaved: (value) {
-                                  p.estoque.percentual = double.tryParse(value);
-                                },
-                                validator: validatePercentual,
-                                onChanged: (percentual) {
-                                  valor = (double.tryParse(
-                                          controllerValorUnitario.text) +
-                                      (double.tryParse(controllerValorUnitario
-                                                  .text) *
-                                              double.tryParse(
-                                                  controllerPecentual.text)) /
-                                          100);
-                                  controllerValorVenda.text =
-                                      valor.toStringAsFixed(2);
-                                },
                                 decoration: InputDecoration(
-                                  labelText: "Percentual de ganho",
-                                  hintText: "Percentual de ganho",
-                                  prefixIcon: Icon(
-                                    Icons.monetization_on_outlined,
-                                    color: Colors.grey,
-                                  ),
-                                  suffixIcon: IconButton(
-                                    onPressed: () =>
-                                        controllerPecentual.clear(),
-                                    icon: Icon(Icons.clear),
-                                  ),
-                                ),
-                                onEditingComplete: () => focus.nextFocus(),
-                                keyboardType: TextInputType.numberWithOptions(
-                                    decimal: true),
-                                maxLength: 10,
+                                    labelText: 'Percentual de venda'),
+                                onChanged: (value) {
+                                  value = controllerPecentual.text;
+                                  print("Percentual de venda: ${value}");
+                                },
+                                onSaved: (value) {
+                                  controllerPecentual.updateValue(valor);
+                                },
                               ),
                             ),
                             Container(
                               width: 500,
                               child: TextFormField(
                                 controller: controllerValorVenda,
-                                onSaved: (value) {
-                                  p.estoque.valorVenda = double.tryParse(value);
-                                },
-                                validator: validateValorVenda,
                                 decoration: InputDecoration(
-                                  labelText: "Valor de venda",
-                                  hintText: "Valor de venda",
-                                  prefixIcon: Icon(
-                                    Icons.monetization_on_outlined,
-                                    color: Colors.grey,
-                                  ),
-                                  suffixIcon: IconButton(
-                                    onPressed: () =>
-                                        controllerValorVenda.clear(),
-                                    icon: Icon(Icons.clear),
-                                  ),
-                                ),
-                                onEditingComplete: () => focus.nextFocus(),
-                                keyboardType: TextInputType.numberWithOptions(
-                                    decimal: true),
-                                maxLength: 10,
-                                enabled: false,
+                                    labelText: 'Valor de venda '),
+                                onChanged: (value) {
+                                  value = controllerValorVenda.text;
+                                  print("Valor de venda: ${value}");
+                                },
+                                onSaved: (value) {
+                                  controllerValorVenda.updateValue(valor);
+                                },
                               ),
                             )
                           ],
@@ -1027,7 +999,9 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
                       Container(
                         width: 500,
                         child: DateTimeField(
-                          initialValue: p.estoque.dataFabricacao,
+                          initialValue: p.estoque.dataFabricacao != null
+                              ? p.estoque.dataFabricacao
+                              : DateTime.now(),
                           format: dateFormat,
                           validator: validateDateFabricacao,
                           onSaved: (value) => p.estoque.dataFabricacao = value,
@@ -1056,7 +1030,9 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
                       Container(
                         width: 500,
                         child: DateTimeField(
-                          initialValue: p.estoque.dataVencimento,
+                          initialValue: p.estoque.dataVencimento != null
+                              ? p.estoque.dataVencimento
+                              : DateTime.now(),
                           format: dateFormat,
                           validator: validateDateVencimento,
                           onSaved: (value) => p.estoque.dataVencimento = value,
@@ -1262,7 +1238,9 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
                       print("Descrição: ${p.descricao}");
                       print("Quantidade: ${p.estoque.quantidade}");
                       print("Estoque Status: ${p.estoque.estoqueStatus}");
-                      print("Valor: ${p.estoque.valorUnitario}");
+                      print("Valor unitário: ${p.estoque.valorUnitario}");
+                      print("Percentual de ganho: ${p.estoque.percentual}");
+                      print("Valor de venda: ${p.estoque.valorVenda}");
 
                       print("Novo: ${p.novo}");
                       print("Status: ${p.status}");
@@ -1285,17 +1263,17 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
                       p.estoque.quantidade =
                           int.tryParse(controllerQuantidade.text);
                       p.estoque.valorUnitario =
-                          double.tryParse(controllerValorUnitario.text);
+                          double.tryParse(controllerValorUnit.text);
                       p.estoque.valorVenda =
                           double.tryParse(controllerValorVenda.text);
                       p.estoque.percentual =
                           double.tryParse(controllerPecentual.text);
 
-                      produtoController.create(p).then((value) {
-                        print("resultado : ${value}");
-                      });
+                      // produtoController.create(p).then((value) {
+                      //   print("resultado : ${value}");
+                      // });
                       Navigator.of(context).pop();
-                      buildPush(context);
+                      // buildPush(context);
                     });
                   } else {
                     dialogs.information(
@@ -1313,7 +1291,9 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
                       print("Produto: ${p.nome}");
                       print("Descrição: ${p.descricao}");
                       print("Quantidade: ${p.estoque.quantidade}");
-                      print("Valor: ${p.estoque.valorUnitario}");
+                      print("Valor unitário: ${p.estoque.valorUnitario}");
+                      print("Percentual de ganho: ${p.estoque.percentual}");
+                      print("Valor de venda: ${p.estoque.valorVenda}");
 
                       print("Novo: ${p.novo}");
                       print("Status: ${p.status}");
@@ -1337,17 +1317,17 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
                       p.estoque.quantidade =
                           int.tryParse(controllerQuantidade.text);
                       p.estoque.valorUnitario =
-                          double.tryParse(controllerValorUnitario.text);
+                          double.tryParse(controllerValorUnit.text);
                       p.estoque.valorVenda =
                           double.tryParse(controllerValorVenda.text);
                       p.estoque.percentual =
                           double.tryParse(controllerPecentual.text);
 
-                      produtoController.update(p.id, p).then((value) {
-                        print("resultado : ${value}");
-                      });
+                      // produtoController.update(p.id, p).then((value) {
+                      //   print("resultado : ${value}");
+                      // });
                       Navigator.of(context).pop();
-                      buildPush(context);
+                      // buildPush(context);
                     });
                   }
                 }

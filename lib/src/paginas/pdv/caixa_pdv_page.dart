@@ -311,205 +311,194 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
                     color: Colors.grey[200],
                     child: Column(
                       children: [
-                        Card(
-                          child: Container(
-                            width: double.infinity,
-                            height: 490,
-                            color: Colors.white,
-                            // padding: EdgeInsets.only(top: 10),
-                            child: buildForm(dateFormat, context),
-                          ),
+                        Container(
+                          width: double.infinity,
+                          height: 500,
+                          color: Colors.blueGrey[200],
+                          // padding: EdgeInsets.only(top: 10),
+                          child: buildForm(dateFormat, context),
                         ),
-                        Card(
-                          child: Container(
-                            padding: EdgeInsets.all(5),
-                            width: double.infinity,
-                            height: 100,
-                            color: Colors.orange[800],
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  width: 200,
-                                  child: ListTile(
-                                    title: Text(
-                                      "DESCONTO",
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
+                        Container(
+                          padding: EdgeInsets.all(5),
+                          width: double.infinity,
+                          height: 100,
+                          color: Colors.orange[800],
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                width: 200,
+                                child: ListTile(
+                                  title: Text(
+                                    "DESCONTO",
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  subtitle: TextFormField(
+                                    controller: descontoController,
+                                    validator: validateDesconto,
+                                    style: TextStyle(
+                                        color: Colors.black, fontSize: 25),
+                                    decoration: InputDecoration(
+                                      filled: true,
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(0)),
+                                        borderSide: BorderSide(
+                                            color: Colors.transparent,
+                                            width: 2),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(0)),
+                                        borderSide: BorderSide(
+                                            color: Colors.transparent,
+                                            width: 2),
+                                      ),
+                                      hintStyle: TextStyle(color: Colors.white),
+                                      suffixIcon: IconButton(
+                                        onPressed: () =>
+                                            descontoController.clear(),
+                                        icon: Icon(Icons.clear),
                                       ),
                                     ),
-                                    subtitle: TextFormField(
-                                      controller: descontoController,
-                                      validator: validateDesconto,
-                                      style: TextStyle(
-                                          color: Colors.black, fontSize: 25),
-                                      decoration: InputDecoration(
-                                        filled: true,
-                                        enabledBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(0)),
-                                          borderSide: BorderSide(
-                                              color: Colors.transparent,
-                                              width: 2),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(0)),
-                                          borderSide: BorderSide(
-                                              color: Colors.transparent,
-                                              width: 2),
-                                        ),
-                                        hintStyle:
-                                            TextStyle(color: Colors.white),
-                                        suffixIcon: IconButton(
-                                          onPressed: () =>
-                                              descontoController.clear(),
-                                          icon: Icon(Icons.clear),
-                                        ),
-                                      ),
-                                      keyboardType: TextInputType.number,
-                                    ),
+                                    keyboardType: TextInputType.number,
                                   ),
                                 ),
-                                Container(
-                                  width: 200,
-                                  child: ListTile(
-                                    title: Text(
-                                      "VALOR TOTAL",
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    subtitle: TextFormField(
-                                      controller: valorPedidoController,
-                                      validator: validateValorTotal,
-                                      style: TextStyle(
-                                          color: Colors.black, fontSize: 25),
-                                      decoration: InputDecoration(
-                                        filled: true,
-                                        enabledBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(0)),
-                                          borderSide: BorderSide(
-                                              color: Colors.transparent,
-                                              width: 2),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(0)),
-                                          borderSide: BorderSide(
-                                              color: Colors.transparent,
-                                              width: 2),
-                                        ),
-                                        suffixIcon: IconButton(
-                                          onPressed: () =>
-                                              valorPedidoController.clear(),
-                                          icon: Icon(Icons.clear),
-                                        ),
-                                      ),
-                                      enabled: false,
-                                      keyboardType: TextInputType.number,
+                              ),
+                              Container(
+                                width: 200,
+                                child: ListTile(
+                                  title: Text(
+                                    "VALOR TOTAL",
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                )
-                              ],
-                            ),
+                                  subtitle: TextFormField(
+                                    controller: valorPedidoController,
+                                    validator: validateValorTotal,
+                                    style: TextStyle(
+                                        color: Colors.black, fontSize: 25),
+                                    decoration: InputDecoration(
+                                      filled: true,
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(0)),
+                                        borderSide: BorderSide(
+                                            color: Colors.transparent,
+                                            width: 2),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(0)),
+                                        borderSide: BorderSide(
+                                            color: Colors.transparent,
+                                            width: 2),
+                                      ),
+                                      suffixIcon: IconButton(
+                                        onPressed: () =>
+                                            valorPedidoController.clear(),
+                                        icon: Icon(Icons.clear),
+                                      ),
+                                    ),
+                                    enabled: false,
+                                    keyboardType: TextInputType.number,
+                                  ),
+                                ),
+                              )
+                            ],
                           ),
                         ),
                       ],
                     ),
                   ),
                   Expanded(
-                    child: Card(
-                      child: Container(
-                        width: double.infinity,
-                        height: 600,
-                        color: Colors.grey[100],
-                        child: Column(
-                          children: [
-                            Container(
-                              width: double.infinity,
-                              height: 490,
-                              color: Colors.grey[100],
-                              child: builderConteudoList(),
-                            ),
-                            Container(
-                              width: double.infinity,
-                              height: 100,
-                              color: Colors.blue,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  FlatButton.icon(
-                                      label: Text(
-                                        "CANCELAR COMPRAR",
-                                        style: TextStyle(fontSize: 20),
-                                      ),
-                                      icon: Icon(Icons.cancel_outlined),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(35),
-                                        side: BorderSide(color: Colors.red),
-                                      ),
-                                      color: Colors.white,
-                                      textColor: Colors.red,
-                                      padding: EdgeInsets.only(
-                                          left: 40,
-                                          right: 40,
-                                          top: 25,
-                                          bottom: 25),
-                                      onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => PedidoPage(),
-                                          ),
-                                        );
-                                      }),
-                                  FlatButton.icon(
+                    child: Container(
+                      width: double.infinity,
+                      height: 600,
+                      color: Colors.grey[100],
+                      child: Column(
+                        children: [
+                          Container(
+                            width: double.infinity,
+                            height: 500,
+                            color: Colors.grey[100],
+                            child: builderConteudoList(),
+                          ),
+                          Container(
+                            width: double.infinity,
+                            height: 100,
+                            color: Colors.blueGrey[200],
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                FlatButton.icon(
                                     label: Text(
-                                      "FECHAR VENDA",
+                                      "CANCELAR COMPRAR",
                                       style: TextStyle(fontSize: 20),
                                     ),
-                                    icon: Icon(Icons.shopping_basket_outlined),
+                                    icon: Icon(Icons.cancel_outlined),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(35),
-                                      side: BorderSide(color: Colors.green),
+                                      side: BorderSide(color: Colors.red),
                                     ),
                                     color: Colors.white,
-                                    textColor: Colors.green,
+                                    textColor: Colors.red,
                                     padding: EdgeInsets.only(
                                         left: 40,
                                         right: 40,
                                         top: 25,
                                         bottom: 25),
                                     onPressed: () {
-                                      if (controller.validate()) {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                PedidoCreatePage(
-                                              pedidoItem: pedidoItem,
-                                            ),
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => PedidoPage(),
+                                        ),
+                                      );
+                                    }),
+                                FlatButton.icon(
+                                  label: Text(
+                                    "FECHAR VENDA",
+                                    style: TextStyle(fontSize: 20),
+                                  ),
+                                  icon: Icon(Icons.shopping_basket_outlined),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(35),
+                                    side: BorderSide(color: Colors.green),
+                                  ),
+                                  color: Colors.white,
+                                  textColor: Colors.green,
+                                  padding: EdgeInsets.only(
+                                      left: 40, right: 40, top: 25, bottom: 25),
+                                  onPressed: () {
+                                    if (controller.validate()) {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              PedidoCreatePage(
+                                            pedidoItem: pedidoItem,
                                           ),
-                                        );
-                                      }
-                                    },
-                                  )
-                                ],
-                              ),
+                                        ),
+                                      );
+                                    }
+                                  },
+                                )
+                              ],
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -526,6 +515,7 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
   }
 
   buildForm(DateFormat dateFormat, BuildContext context) {
+    // var focus = FocusScope.of(context);
     return Form(
       key: controller.formKey,
       child: ListView(
@@ -543,14 +533,14 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
               subtitle: TextFormField(
                 controller: codigoBarraController,
                 validator: validateCodigoBarra,
-                onFieldSubmitted: (valor) {
-                  if (controller.validate()) {
-                    setState(() {
-                      codigoBarraController.text = valor;
-                      buscarByCodigoDeBarra(codigoBarraController.text);
-                    });
-                  }
-                },
+                // onFieldSubmitted: (valor) {
+                //   if (controller.validate()) {
+                //     setState(() {
+                //       codigoBarraController.text = valor;
+                //       buscarByCodigoDeBarra(codigoBarraController.text);
+                //     });
+                //   }
+                // },
                 onChanged: (valor) {
                   setState(() {
                     buscarByCodigoDeBarra(codigoBarraController.text);
@@ -572,6 +562,7 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
                     icon: Icon(Icons.clear),
                   ),
                 ),
+                // onEditingComplete: () => focus.nextFocus(),
                 keyboardType: TextInputType.number,
                 maxLength: 20,
               ),
@@ -605,6 +596,7 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
                     icon: Icon(Icons.clear),
                   ),
                 ),
+                // onEditingComplete: () => focus.nextFocus(),
                 keyboardType: TextInputType.number,
                 maxLength: 20,
               ),
@@ -638,6 +630,7 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
                     icon: Icon(Icons.clear),
                   ),
                 ),
+                // onEditingComplete: () => focus.nextFocus(),
                 keyboardType: TextInputType.number,
                 maxLength: 20,
               ),
@@ -671,6 +664,7 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
                     icon: Icon(Icons.clear),
                   ),
                 ),
+                // onEditingComplete: () => focus.nextFocus(),
                 keyboardType: TextInputType.number,
                 maxLength: 20,
               ),
@@ -756,6 +750,7 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
     return DataTable(
       columnSpacing: 6,
       showCheckboxColumn: false,
+      sortAscending: true,
       dataTextStyle: TextStyle(color: Colors.grey[700]),
       columns: [
         DataColumn(label: Text("Cód")),

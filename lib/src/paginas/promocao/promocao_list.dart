@@ -33,19 +33,19 @@ class _PromocaoListState extends State<PromocaoList>
 
   @override
   void initState() {
-    promocaoController.getAllByStatus(true);
+    promocaoController.getAll();
     super.initState();
   }
 
   Future<void> onRefresh() {
-    return promocaoController.getAllByStatus(true);
+    return promocaoController.getAll();
   }
 
   bool isLoading = true;
 
   filterByNome(String nome) {
     if (nome.trim().isEmpty) {
-      promocaoController.getAllByStatus(true);
+      promocaoController.getAll();
     } else {
       nome = nomeController.text;
       promocaoController.getAllByNome(nome);

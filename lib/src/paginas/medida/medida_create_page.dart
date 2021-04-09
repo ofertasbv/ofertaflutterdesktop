@@ -7,6 +7,7 @@ import 'package:get_it/get_it.dart';
 import 'package:nosso/src/core/controller/medida_controller.dart';
 import 'package:nosso/src/core/model/medida.dart';
 import 'package:nosso/src/paginas/marca/marca_page.dart';
+import 'package:nosso/src/paginas/medida/medida_table.dart';
 import 'package:nosso/src/util/dialogs/dialogs.dart';
 
 class MedidaCreatePage extends StatefulWidget {
@@ -184,7 +185,7 @@ class _MedidaCreatePageState extends State<MedidaCreatePage> {
     return Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => MarcaPage(),
+        builder: (context) => MedidaTable(),
       ),
     );
   }

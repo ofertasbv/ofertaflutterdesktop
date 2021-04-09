@@ -67,12 +67,12 @@ abstract class PromoCaoControllerBase with Store {
 
   @action
   Future<List<Promocao>> getFilter(PromocaoFilter filter) async {
-    // try {
+    try {
     promocoes = await promocaoRepository.getFilter(filter);
     return promocoes;
-    // } catch (e) {
-    //   error = e;
-    // }
+    } catch (e) {
+      error = e;
+    }
   }
 
   @action

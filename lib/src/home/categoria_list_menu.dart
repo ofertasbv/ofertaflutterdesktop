@@ -100,13 +100,13 @@ class _CategoriaListMenuState extends State<CategoriaListMenu>
             padding: EdgeInsets.only(right: 14),
             child: Chip(
               padding: EdgeInsets.all(10),
-              backgroundColor: Colors.deepOrange[400],
+              backgroundColor: Colors.grey[200],
               elevation: 1,
               label: Text(
                 c.nome.toLowerCase(),
                 style: TextStyle(
                   fontSize: 14,
-                  color: Colors.grey[300],
+                  color: Colors.deepOrange[300],
                   fontWeight: FontWeight.w600,
                 ),
               ),

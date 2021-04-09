@@ -36,18 +36,12 @@ class ValidadorPromocao {
     if (dataInicio == null) {
       return "Preencha a data início da promoção";
     }
-    if (dataInicio.isBefore(new DateTime.now())) {
-      return "Data deve ser acima de hoje";
-    }
     return null;
   }
 
   String validateDateFinal(DateTime dataFinal) {
     if (dataFinal == null) {
       return "Preencha a data final da promoção";
-    }
-    if (dataFinal.isBefore(new DateTime.now())) {
-      return "Data deve ser acima de hoje";
     }
     return null;
   }

@@ -36,10 +36,7 @@ class ValidadorProduto {
 
   String validateValorUnitario(String text) {
     double price = double.tryParse(text);
-    if (price != null) {
-      if (!text.contains(".") || text.split(".")[1].length != 2)
-        return "Utilize 2 casas decimais";
-    } else {
+    if (price == null) {
       return "Preencha o valor unitário";
     }
     return null;

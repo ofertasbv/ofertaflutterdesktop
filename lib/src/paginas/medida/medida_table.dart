@@ -45,6 +45,35 @@ class _MedidaTableState extends State<MedidaTable>
 
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        titleSpacing: 0,
+        elevation: 0,
+        title: Text("Medidas"),
+      ),
+      body: Container(
+        padding: EdgeInsets.only(left: 50, right: 50, top: 10),
+        child: Card(child: buildContainer()),
+      ),
+      floatingActionButton: FloatingActionButton(
+        elevation: 10,
+        child: Icon(Icons.add),
+        onPressed: () {
+          Navigator.pop(context);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return MedidaCreatePage();
+              },
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Container buildContainer() {
     return Container(
       width: double.infinity,
       height: double.infinity,

@@ -59,11 +59,11 @@ class _ProdutoPageState extends State<ProdutoPage> {
         children: [
           Container(
             height: 80,
-            color: Colors.blue[800],
+            color: Theme.of(context).primaryColor,
             child: Container(
               color: Colors.transparent,
               width: double.infinity,
-              padding: EdgeInsets.only(top: 0, left: 50, right: 50),
+              padding: EdgeInsets.only(top: 0, left: 10, right: 10),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -201,7 +201,7 @@ class _ProdutoPageState extends State<ProdutoPage> {
           ),
           Container(
             height: 1000,
-            padding: EdgeInsets.only(left: 50, right: 50, top: 10),
+            padding: EdgeInsets.only(left: 10, right: 10, top: 10),
             child: pagina == "list"
                 ? ProdutoList(filter: filter)
                 : ProdutoGrid(filter: filter),

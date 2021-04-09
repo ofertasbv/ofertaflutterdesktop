@@ -35,12 +35,12 @@ class _PromocaoListHomeState extends State<PromocaoListHome>
 
   @override
   void initState() {
-    promocaoController.getAllByStatus(true);
+    promocaoController.getAll();
     super.initState();
   }
 
   Future<void> onRefresh() {
-    return promocaoController.getAllByStatus(true);
+    return promocaoController.getAll();
   }
 
   bool isLoading = true;
@@ -101,7 +101,7 @@ class _PromocaoListHomeState extends State<PromocaoListHome>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Container(
-                      height: 300,
+                      height: 350,
                       decoration: BoxDecoration(
                         color: Colors.grey[200],
                         borderRadius: BorderRadius.circular(0),
@@ -118,7 +118,7 @@ class _PromocaoListHomeState extends State<PromocaoListHome>
                                 promocaoController.arquivo + p.foto,
                                 fit: BoxFit.cover,
                                 width: containerWidth,
-                                height: 300,
+                                height: 350,
                               ),
                             )
                           : ClipRRect(
@@ -132,7 +132,7 @@ class _PromocaoListHomeState extends State<PromocaoListHome>
                                 ConstantApi.urlLogo,
                                 fit: BoxFit.cover,
                                 width: containerWidth,
-                                height: 300,
+                                height: 350,
                               ),
                             ),
                     ),
@@ -144,7 +144,7 @@ class _PromocaoListHomeState extends State<PromocaoListHome>
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(0),
                       ),
-                      padding: EdgeInsets.all(10),
+                      padding: EdgeInsets.all(20),
                       alignment: Alignment.center,
                       child: Text(
                         p.nome.toUpperCase(),

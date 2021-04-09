@@ -20,6 +20,7 @@ import 'package:nosso/src/core/model/promocao.dart';
 import 'package:nosso/src/core/model/promocaotipo.dart';
 import 'package:nosso/src/core/model/uploadFileResponse.dart';
 import 'package:nosso/src/paginas/promocao/promocao_page.dart';
+import 'package:nosso/src/paginas/promocao/promocao_table.dart';
 import 'package:nosso/src/util/componentes/image_source_sheet.dart';
 import 'package:nosso/src/util/dialogs/dialogs.dart';
 import 'package:nosso/src/util/load/circular_progresso.dart';
@@ -527,7 +528,9 @@ class _PromocaoCreatePageState extends State<PromocaoCreatePage>
                       Container(
                         width: 500,
                         child: DateTimeField(
-                          initialValue: p.dataRegistro,
+                          initialValue: p.dataRegistro != null
+                              ? p.dataRegistro
+                              : DateTime.now(),
                           format: dateFormat,
                           validator: validateDateRegsitro,
                           onSaved: (value) => p.dataRegistro = value,
@@ -567,7 +570,9 @@ class _PromocaoCreatePageState extends State<PromocaoCreatePage>
                       Container(
                         width: 500,
                         child: DateTimeField(
-                          initialValue: p.dataInicio,
+                          initialValue: p.dataInicio != null
+                              ? p.dataInicio
+                              : DateTime.now(),
                           format: dateFormat,
                           validator: validateDateInicio,
                           onSaved: (value) => p.dataInicio = value,
@@ -596,7 +601,9 @@ class _PromocaoCreatePageState extends State<PromocaoCreatePage>
                       Container(
                         width: 500,
                         child: DateTimeField(
-                          initialValue: p.dataFinal,
+                          initialValue: p.dataFinal != null
+                              ? p.dataFinal
+                              : DateTime.now(),
                           format: dateFormat,
                           validator: validateDateFinal,
                           onSaved: (value) => p.dataFinal = value,
@@ -725,7 +732,7 @@ class _PromocaoCreatePageState extends State<PromocaoCreatePage>
     return Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => PromocaoPage(),
+        builder: (context) => PromocaoTable(),
       ),
     );
   }

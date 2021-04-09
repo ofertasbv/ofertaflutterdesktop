@@ -58,29 +58,20 @@ class TamanhoPage extends StatelessWidget {
         padding: EdgeInsets.only(left: 50, right: 50, top: 10),
         child: Card(child: TamanhoTable()),
       ),
-      floatingActionButton: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: <Widget>[
-          SizedBox(
-            width: 8,
-            height: 8,
-          ),
-          FloatingActionButton(
-            elevation: 10,
-            child: Icon(Icons.add),
-            onPressed: () {
-              Navigator.pop(context);
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return TamanhoCreatePage();
-                  },
-                ),
-              );
-            },
-          )
-        ],
+      floatingActionButton: FloatingActionButton(
+        elevation: 10,
+        child: Icon(Icons.add),
+        onPressed: () {
+          Navigator.pop(context);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return TamanhoCreatePage();
+              },
+            ),
+          );
+        },
       ),
     );
   }

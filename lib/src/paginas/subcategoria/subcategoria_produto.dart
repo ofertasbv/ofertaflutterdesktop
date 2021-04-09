@@ -64,11 +64,11 @@ class _SubCategoriaProdutoState extends State<SubCategoriaProduto>
         children: [
           Container(
             height: 80,
-            color: Colors.blue[800],
+            color: Theme.of(context).primaryColor,
             child: Container(
               color: Colors.transparent,
               width: double.infinity,
-              padding: EdgeInsets.only(top: 0, left: 50, right: 50),
+              padding: EdgeInsets.only(top: 0, left: 10, right: 10),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

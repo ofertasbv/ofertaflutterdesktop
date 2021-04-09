@@ -69,12 +69,12 @@ abstract class ProdutoControllerBase with Store {
 
   @action
   Future<List<Produto>> getAll() async {
-    // try {
-    produtos = await produtoRepository.getAll();
-    return produtos;
-    // } catch (e) {
-    //   error = e;
-    // }
+    try {
+      produtos = await produtoRepository.getAll();
+      return produtos;
+    } catch (e) {
+      error = e;
+    }
   }
 
   @action
@@ -129,29 +129,24 @@ abstract class ProdutoControllerBase with Store {
 
   @action
   Future<int> create(Produto p) async {
-    // try {
-    produto = await produtoRepository.create(p.toJson());
-    return produto;
-    // if (produto == null) {
-    //   mensagem = "sem dados";
-    // } else {
-    //   return produto;
-    // }
-    // } on DioError catch (e) {
-    //   mensagem = e.message;
-    //   dioError = e;
-    // }
+    try {
+      produto = await produtoRepository.create(p.toJson());
+      return produto;
+    } on DioError catch (e) {
+      mensagem = e.message;
+      dioError = e;
+    }
   }
 
   @action
   Future<int> update(int id, Produto p) async {
-    // try {
-    produto = await produtoRepository.update(id, p.toJson());
-    return produto;
-    // } on DioError catch (e) {
-    //   mensagem = e.message;
-    //   dioError = e;
-    // }
+    try {
+      produto = await produtoRepository.update(id, p.toJson());
+      return produto;
+    } on DioError catch (e) {
+      mensagem = e.message;
+      dioError = e;
+    }
   }
 
   @action

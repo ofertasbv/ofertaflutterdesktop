@@ -2,21 +2,26 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 class CurrencyInputFormatter extends TextInputFormatter {
+  CurrencyInputFormatter({this.maxDigits});
+
+  final int maxDigits;
+
   TextEditingValue formatEditUpdate(
       TextEditingValue oldValue, TextEditingValue newValue) {
     if (newValue.selection.baseOffset == 0) {
-      print(true);
       return newValue;
     }
 
-    double value = double.parse(newValue.text);
+    if (maxDigits != null && newValue.selection.baseOffset > maxDigits) {
+      return oldValue;
+    }
 
-    final formatter = NumberFormat.simpleCurrency(locale: "pt_Br");
-
-    String newText = formatter.format(value / 100);
-
+    double value = double.tryParse(newValue.text);
+    final formatter = new NumberFormat("#,##0.00", "pt_BR");
+    String newText = formatter.format(value);
     return newValue.copyWith(
-        text: newText,
-        selection: new TextSelection.collapsed(offset: newText.length));
+      text: newText,
+      selection: new TextSelection.collapsed(offset: newText.length),
+    );
   }
 }

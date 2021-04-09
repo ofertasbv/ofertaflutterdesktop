@@ -11,6 +11,7 @@ import 'package:nosso/src/core/controller/promocaotipo_controller.dart';
 import 'package:nosso/src/core/model/cor.dart';
 import 'package:nosso/src/core/model/promocaotipo.dart';
 import 'package:nosso/src/paginas/cor/cor_page.dart';
+import 'package:nosso/src/paginas/promocaotipo/promocaotipo_page.dart';
 import 'package:nosso/src/util/dialogs/dialogs.dart';
 import 'package:nosso/src/util/format/uppercasetext.dart';
 
@@ -70,9 +71,9 @@ class _PromocaoTipoCreatePageState extends State<PromocaoTipoCreatePage> {
       appBar: AppBar(
         titleSpacing: 50,
         elevation: 0,
-        title: promocaoTipoController.promocaoTipo == null
-            ? Text("Cadastro de tipo de promoção")
-            : Text(promocaoTipo.descricao),
+        title: promocaoTipo.descricao != null
+            ? Text(promocaoTipo.descricao)
+            : Text("Cadastro de tipo de promoção"),
       ),
       body: Container(
         padding: EdgeInsets.only(left: 100, right: 100, top: 10),
@@ -189,7 +190,7 @@ class _PromocaoTipoCreatePageState extends State<PromocaoTipoCreatePage> {
     return Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => CorPage(),
+        builder: (context) => PromocaoTipoPage(),
       ),
     );
   }
