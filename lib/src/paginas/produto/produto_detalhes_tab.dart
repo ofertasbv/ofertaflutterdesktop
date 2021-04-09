@@ -84,7 +84,7 @@ class _ProdutoDetalhesTabState extends State<ProdutoDetalhesTab>
           title: p.nome == null ? Text("Detalhes do produto") : Text(p.nome),
           actions: <Widget>[
             CircleAvatar(
-              backgroundColor: Theme.of(context).accentColor.withOpacity(0.4),
+              backgroundColor: Theme.of(context).accentColor,
               foregroundColor: Colors.white,
               child: IconButton(
                 icon: Icon(Icons.search_outlined),
@@ -99,7 +99,7 @@ class _ProdutoDetalhesTabState extends State<ProdutoDetalhesTab>
             SizedBox(width: 10),
             GestureDetector(
               child: CircleAvatar(
-                backgroundColor: Theme.of(context).accentColor.withOpacity(0.4),
+                backgroundColor: Theme.of(context).accentColor,
                 foregroundColor: Colors.white,
                 child: Stack(
                   alignment: Alignment.topRight,
@@ -148,26 +148,68 @@ class _ProdutoDetalhesTabState extends State<ProdutoDetalhesTab>
             ),
             SizedBox(width: 100),
           ],
-          bottom: TabBar(
-            indicatorPadding: EdgeInsets.only(right: 6, left: 6),
-            labelPadding: EdgeInsets.only(right: 6, left: 6),
-            tabs: <Widget>[
-              Tab(
-                child: Text("VISÃO GERAL"),
-              ),
-              Tab(
-                child: Text("INFORMAÇÕES"),
-              ),
-            ],
-          ),
+          // bottom: TabBar(
+          //   indicatorColor: Colors.grey,
+          //   tabs: <Widget>[
+          //     Tab(
+          //       child: Text("VISÃO GERAL"),
+          //     ),
+          //     Tab(
+          //       child: Text("INFORMAÇÕES"),
+          //     ),
+          //   ],
+          // ),
         ),
-        body: Container(
-          padding: EdgeInsets.only(left: 100, right: 100, top: 10),
-          child: TabBarView(
-            physics: NeverScrollableScrollPhysics(),
+        body: DefaultTabController(
+          length: 3,
+          child: Column(
             children: <Widget>[
-              ProdutoDetalhesView(p),
-              ProdutoDetalhesInfo(p),
+              Container(
+                color: Colors.grey[400],
+                constraints: BoxConstraints.expand(height: 50),
+                child: TabBar(tabs: [
+                  Tab(
+                    child: Text(
+                      "VISÃO GERAL",
+                      style: TextStyle(
+                        color: Theme.of(context).primaryColor,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  Tab(
+                    child: Text(
+                      "INFORMAÇÃO DO PRODUTO",
+                      style: TextStyle(
+                        color: Theme.of(context).primaryColor,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  Tab(
+                    child: Text(
+                      "ESPÉCIFICAÇÃO TÉCNICAS",
+                      style: TextStyle(
+                        color: Theme.of(context).primaryColor,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ]),
+              ),
+              Expanded(
+                child: Container(
+                  padding: EdgeInsets.only(left: 100, right: 100, top: 10),
+                  child: TabBarView(
+                    physics: NeverScrollableScrollPhysics(),
+                    children: <Widget>[
+                      ProdutoDetalhesView(p),
+                      ProdutoDetalhesInfo(p),
+                      ProdutoDetalhesView(p),
+                    ],
+                  ),
+                ),
+              )
             ],
           ),
         ),
@@ -238,7 +280,8 @@ class _ProdutoDetalhesTabState extends State<ProdutoDetalhesTab>
                   } else {
                     showSnackbar(context, "${p.nome} adicionado");
                     setState(() {
-                      pedidoItemController.adicionar(new PedidoItem(produto: p));
+                      pedidoItemController
+                          .adicionar(new PedidoItem(produto: p));
                       animationController.forward();
                     });
                   }

@@ -26,7 +26,6 @@ class ProdutoList extends StatefulWidget {
 
 class _ProdutoListState extends State<ProdutoList>
     with AutomaticKeepAliveClientMixin<ProdutoList> {
-
   _ProdutoListState({this.filter});
 
   var produtoController = GetIt.I.get<ProdutoController>();
@@ -85,6 +84,27 @@ class _ProdutoListState extends State<ProdutoList>
             return CircularProgressorMini();
           }
 
+          if (produtos.length == 0) {
+            return Center(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Center(
+                    child: Icon(
+                      Icons.mood_outlined,
+                      size: 100,
+                      color: Theme.of(context).accentColor,
+                    ),
+                  ),
+                  Text(
+                    "Ops! sem produtos",
+                  ),
+                ],
+              ),
+            );
+          }
+
           return RefreshIndicator(
             onRefresh: onRefresh,
             child: builderListProduto(produtos),
@@ -113,7 +133,7 @@ class _ProdutoListState extends State<ProdutoList>
             padding: EdgeInsets.symmetric(vertical: 0),
             child: Container(
               color: Colors.grey[200],
-              height: 150,
+              height: 200,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -150,12 +170,13 @@ class _ProdutoListState extends State<ProdutoList>
                     width: 500,
                     height: 150,
                     color: Colors.grey[200],
-                    padding: EdgeInsets.all(20),
+                    padding: EdgeInsets.all(0),
+                    alignment: Alignment.center,
                     child: ListTile(
                       title: Text(
                         p.nome,
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 25,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -166,17 +187,14 @@ class _ProdutoListState extends State<ProdutoList>
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      trailing: Chip(
-                        backgroundColor: Theme.of(context).accentColor,
-                        label: Text("${p.id}"),
-                      ),
                     ),
                   ),
                   Container(
-                    width: 300,
+                    width: 400,
                     height: 150,
                     color: Colors.grey[300],
                     padding: EdgeInsets.all(20),
+                    alignment: Alignment.center,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -203,10 +221,10 @@ class _ProdutoListState extends State<ProdutoList>
                           ),
                         ),
                         Text(
-                          "Valor a vista ou no boleto",
+                          "${p.promocao.nome}",
                           style: TextStyle(
                             color: Colors.grey,
-                            fontSize: 20,
+                            fontSize: 16,
                             fontWeight: FontWeight.bold,
                           ),
                         ),

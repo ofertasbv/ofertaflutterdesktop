@@ -114,77 +114,148 @@ class _ProdutoDetalhesViewState extends State<ProdutoDetalhesView>
   buildContainer(Produto p) {
     return ListView(
       children: <Widget>[
+        // Container(
+        //   height: 350,
+        //   width: double.infinity,
+        //   child: p.arquivos.isNotEmpty
+        //       ? Carousel(
+        //           autoplay: false,
+        //           dotBgColor: Colors.transparent,
+        //           images: p.arquivos.map((a) {
+        //             return NetworkImage(produtoController.arquivo + a.foto);
+        //           }).toList())
+        //       : p.foto != null
+        //           ? Image.network(
+        //               produtoController.arquivo + p.foto,
+        //               fit: BoxFit.cover,
+        //             )
+        //           : Image.asset(ConstantApi.urlLogo),
+        // ),
         Container(
-          height: 350,
-          width: double.infinity,
-          child: p.arquivos.isNotEmpty
-              ? Carousel(
-                  autoplay: false,
-                  dotBgColor: Colors.transparent,
-                  images: p.arquivos.map((a) {
-                    return NetworkImage(produtoController.arquivo + a.foto);
-                  }).toList())
-              : p.foto != null
-                  ? Image.network(
-                      produtoController.arquivo + p.foto,
-                      fit: BoxFit.cover,
-                    )
-                  : Image.asset(ConstantApi.urlLogo),
-        ),
-        Container(
-          child: ListTile(
-            title: Text(p.nome),
-            subtitle: Text("Código. ${p.id}"),
-            trailing: CircleAvatar(
-              backgroundColor: Colors.grey[300],
-              foregroundColor: Colors.redAccent,
-              radius: 15,
-              child: IconButton(
-                splashColor: Colors.black,
-                icon: (this.isFavorito == false
-                    ? Icon(
-                        Icons.favorite_border,
-                        color: Colors.redAccent,
-                        size: 15,
+          color: Colors.grey[200],
+          height: 400,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                width: 400,
+                height: 150,
+                color: Colors.grey,
+                padding: EdgeInsets.all(0),
+                child: p.foto != null
+                    ? Container(
+                        width: 400,
+                        height: 150,
+                        color: Colors.grey[400],
+                        child: Image.network(
+                          "${produtoController.arquivo + p.foto}",
+                          width: 400,
+                          height: 150,
+                          fit: BoxFit.cover,
+                        ),
                       )
-                    : Icon(
-                        Icons.favorite_outlined,
-                        color: Colors.redAccent,
-                        size: 15,
-                      )),
-                onPressed: () {
-                  setState(() {
-                    favoritar(favorito);
-                    print("Favoritar: ${p.nome}");
-                  });
-
-                  if (usuarioController.usuarioSelecionado.pessoa == null) {
-                    showToast("faça login para favoritar");
-                  } else {
-                    if (favorito.id == null) {
-                      favorito.produto = p;
-                      favorito.status = isFavorito;
-                      // favorito.cliente =
-                      //     usuarioController.usuarioSelecionado.pessoa;
-                      print(
-                          "Cliente: ${usuarioController.usuarioSelecionado.pessoa.nome}");
-                      // favoritoController.create(favorito);
-                      print("Adicionar: ${p.nome}");
-                    } else {
-                      favorito.produto = p;
-                      favorito.status = isFavorito;
-                      // favorito.cliente =
-                      //     usuarioController.usuarioSelecionado.pessoa;
-                      print(
-                          "Cliente: ${usuarioController.usuarioSelecionado.pessoa.id}");
-                      // favoritoController.update(favorito.id, favorito);
-                      print("Adicionar: ${p.nome}");
-                      showToast("alterando favoritos");
-                    }
-                  }
-                },
+                    : Container(
+                        width: 400,
+                        height: 150,
+                        color: Colors.grey[600],
+                        child: Image.asset(
+                          ConstantApi.urlLogo,
+                          width: 200,
+                          height: 150,
+                        ),
+                      ),
               ),
-            ),
+              Container(
+                width: 500,
+                height: 150,
+                color: Colors.grey[200],
+                padding: EdgeInsets.all(0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      child: ListTile(
+                        title: Text(
+                          p.nome,
+                          style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        subtitle: Text(
+                          "${p.loja.nome}",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      child: ListTile(
+                        title: Text(
+                          p.nome,
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        subtitle: Text(
+                          "${p.loja.nome}",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              Container(
+                width: 400,
+                height: 150,
+                color: Colors.grey[300],
+                padding: EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Chip(
+                      backgroundColor: Theme.of(context).accentColor,
+                      label: Text(
+                        "R\$ ${formatMoeda.format(p.estoque.valorUnitario)}",
+                        style: TextStyle(
+                          color: Colors.grey[100],
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          decoration: TextDecoration.lineThrough,
+                          decorationStyle: TextDecorationStyle.dashed,
+                        ),
+                      ),
+                    ),
+                    Text(
+                      "R\$ ${formatMoeda.format(p.estoque.valorVenda)}",
+                      style: TextStyle(
+                        color: Theme.of(context).primaryColor,
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      "${p.promocao.nome}",
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
         ),
         Divider(),
@@ -193,8 +264,22 @@ class _ProdutoDetalhesViewState extends State<ProdutoDetalhesView>
             children: [
               Container(
                 child: ListTile(
-                  title: Text("Departamento"),
-                  subtitle: Text("${p.subCategoria.nome}"),
+                  title: Text(
+                    "Departamento",
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Theme.of(context).accentColor,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  subtitle: Text(
+                    "${p.subCategoria.nome}",
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Theme.of(context).primaryColor,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                   trailing: p.status == true
                       ? Text(
                           "produto disponivel",

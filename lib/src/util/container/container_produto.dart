@@ -24,60 +24,81 @@ class ContainerProduto extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Container(
-            width: 600,
+            width: 200,
             height: 150,
-            color: Colors.white,
-            padding: EdgeInsets.all(20),
-            child: ListTile(
-              isThreeLine: true,
-              leading: p.foto != null
-                  ? CircleAvatar(
-                      backgroundColor: Colors.grey[100],
-                      foregroundColor: Colors.green,
-                      radius: 50,
-                      backgroundImage: NetworkImage(
-                        "${produtoController.arquivo + p.foto}",
-                      ),
-                    )
-                  : CircleAvatar(
-                      backgroundColor: Colors.grey[100],
-                      radius: 50,
+            color: Colors.grey,
+            padding: EdgeInsets.all(0),
+            child: p.foto != null
+                ? Container(
+                    width: 200,
+                    height: 150,
+                    color: Colors.grey[400],
+                    child: Image.network(
+                      "${produtoController.arquivo + p.foto}",
+                      width: 200,
+                      height: 150,
+                      fit: BoxFit.cover,
                     ),
-              title: Text(
-                p.nome,
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              subtitle: Text("${p.descricao}"),
-            ),
+                  )
+                : Container(
+                    width: 200,
+                    height: 150,
+                    color: Colors.grey[600],
+                    child: Image.asset(
+                      ConstantApi.urlLogo,
+                      width: 200,
+                      height: 150,
+                    ),
+                  ),
           ),
           Container(
-            width: 500,
+            width: 300,
             height: 150,
             color: Colors.white,
             padding: EdgeInsets.all(20),
-            child: ListTile(
-              isThreeLine: false,
-              title: Text(
-                p.descricao,
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
+            child: Column(
+              children: [
+                Container(
+                  child: ListTile(
+                    isThreeLine: false,
+                    title: Text(
+                      p.nome,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    subtitle: Text(
+                      "${p.loja.nome}",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-              subtitle: Text(
-                "${p.loja.nome}",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              trailing: Chip(
-                backgroundColor: Theme.of(context).accentColor,
-                label: Text("${p.id}"),
-              ),
+                Container(
+                  child: ListTile(
+                    isThreeLine: false,
+                    title: Text(
+                      p.promocao.nome,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).accentColor,
+                      ),
+                    ),
+                    subtitle: Text(
+                      "R\$ ${formatMoeda.format(p.estoque.valorVenda)}",
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Theme.of(context).primaryColor,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                )
+              ],
             ),
           ),
         ],

@@ -146,13 +146,24 @@ class _PromocaoListHomeState extends State<PromocaoListHome>
                       ),
                       padding: EdgeInsets.all(20),
                       alignment: Alignment.center,
-                      child: Text(
-                        p.nome.toUpperCase(),
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.grey[600],
+                      child: ListTile(
+                        title: Text(
+                          p.nome.toUpperCase(),
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey[800],
+                          ),
                         ),
-                      ),
+                        subtitle: Text(
+                          p.loja.nome.toUpperCase(),
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.grey[800],
+                          ),
+                        ),
+                      )
                     ),
                   ],
                 ),

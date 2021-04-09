@@ -77,7 +77,7 @@ class _ConfigPageState extends State<ConfigPage> {
                                     EdgeInsets.only(left: 0, right: 0, top: 40),
                                 child: ListTile(
                                   leading: CircleAvatar(
-                                    child: Icon(FeatherIcons.home),
+                                    child: Icon(Icons.shopping_basket_outlined),
                                     radius: 40,
                                   ),
                                   title: Text(

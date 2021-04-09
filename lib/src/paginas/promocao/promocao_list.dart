@@ -86,6 +86,27 @@ class _PromocaoListState extends State<PromocaoList>
             return CircularProgressor();
           }
 
+          if (promocoes.length == 0) {
+            return Center(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Center(
+                    child: Icon(
+                      Icons.mood_outlined,
+                      size: 100,
+                      color: Theme.of(context).accentColor,
+                    ),
+                  ),
+                  Text(
+                    "Ops! sem promoções",
+                  ),
+                ],
+              ),
+            );
+          }
+
           return RefreshIndicator(
             onRefresh: onRefresh,
             child: builderList(promocoes),

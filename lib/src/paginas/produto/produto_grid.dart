@@ -110,6 +110,27 @@ class _ProdutoGridState extends State<ProdutoGrid>
             return CircularProgressor();
           }
 
+          if (produtos.length == 0) {
+            return Center(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Center(
+                    child: Icon(
+                      Icons.mood_outlined,
+                      size: 100,
+                      color: Theme.of(context).accentColor,
+                    ),
+                  ),
+                  Text(
+                    "Ops! sem produtos",
+                  ),
+                ],
+              ),
+            );
+          }
+
           return RefreshIndicator(
             onRefresh: onRefresh,
             child: builderGrid(produtos),
@@ -124,12 +145,12 @@ class _ProdutoGridState extends State<ProdutoGrid>
       padding: EdgeInsets.only(top: 0, bottom: 0),
       child: Container(
         child: GridView.builder(
-          padding: EdgeInsets.only(top: 10, bottom: 10),
+          padding: EdgeInsets.only(top: 10, bottom: 10, left: 0, right: 0),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 4,
+            crossAxisCount: 5,
             crossAxisSpacing: 10,
             mainAxisSpacing: 10,
-            childAspectRatio: MediaQuery.of(context).size.aspectRatio * 0.38,
+            childAspectRatio: MediaQuery.of(context).size.aspectRatio * 0.30,
           ),
           itemCount: produtos.length,
           itemBuilder: (context, index) {
@@ -154,7 +175,7 @@ class _ProdutoGridState extends State<ProdutoGrid>
                                   produtoController.arquivo + p.foto,
                                   fit: BoxFit.cover,
                                   width: double.infinity,
-                                  height: 300,
+                                  height: 350,
                                 ),
                               )
                             : ClipRRect(
@@ -163,7 +184,7 @@ class _ProdutoGridState extends State<ProdutoGrid>
                                   ConstantApi.urlLogo,
                                   fit: BoxFit.cover,
                                   width: double.infinity,
-                                  height: 300,
+                                  height: 350,
                                 ),
                               ),
                         Padding(

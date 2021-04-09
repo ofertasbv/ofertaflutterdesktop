@@ -63,7 +63,8 @@ class ContainerPromocao extends StatelessWidget {
                 width: 500,
                 height: 150,
                 color: Colors.grey[200],
-                padding: EdgeInsets.all(20),
+                padding: EdgeInsets.all(0),
+                alignment: Alignment.center,
                 child: ListTile(
                   title: Text(
                     p.nome,
@@ -86,7 +87,7 @@ class ContainerPromocao extends StatelessWidget {
                 ),
               ),
               Container(
-                width: 300,
+                width: 400,
                 height: 150,
                 color: Colors.grey[300],
                 padding: EdgeInsets.all(20),

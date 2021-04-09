@@ -137,10 +137,11 @@ class _CategoriaListHomeState extends State<CategoriaListHome>
                     color: Colors.white,
                     alignment: Alignment.center,
                     child: Text(
-                      c.nome.toLowerCase(),
+                      c.nome.toUpperCase(),
                       style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.grey[600],
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.grey[800],
                       ),
                     ),
                   )

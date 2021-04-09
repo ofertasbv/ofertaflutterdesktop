@@ -50,121 +50,20 @@ class _PromocaoPageListState extends State<PromocaoPageList> {
 
   @override
   Widget build(BuildContext context) {
+    Size _size = MediaQuery.of(context).size;
     return Scaffold(
-      body: ListView(
+      appBar: AppBar(
+        titleSpacing: 0,
+        title: buildContainerHeader(context),
+      ),
+      body: buildScrollbar(context),
+    );
+  }
+
+  Scrollbar buildScrollbar(BuildContext context) {
+    return Scrollbar(
+      child: ListView(
         children: [
-          Container(
-            height: 80,
-            color: Theme.of(context).primaryColor,
-            child: Container(
-              color: Colors.transparent,
-              width: double.infinity,
-              padding: EdgeInsets.only(top: 0, left: 10, right: 10),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    height: 70,
-                    width: 200,
-                    color: Colors.transparent,
-                    child: ListTile(
-                      leading: Icon(
-                        Icons.shopping_basket,
-                        size: 55,
-                        color: Colors.grey[200],
-                      ),
-                      title: GestureDetector(
-                        child: Text(
-                          "BOOK OFERTAS",
-                          style: TextStyle(
-                            color: Colors.deepOrange[300],
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        onTap: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (BuildContext context) {
-                                return HomePage();
-                              },
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                    alignment: Alignment.centerLeft,
-                  ),
-                  Container(
-                    height: 80,
-                    width: 500,
-                    color: Colors.transparent,
-                    alignment: Alignment.center,
-                    child: TextFormField(
-                      controller: nomeController,
-                      decoration: InputDecoration(
-                        hintText: "busca por promoções",
-                        suffixIcon: IconButton(
-                          onPressed: () => nomeController.clear(),
-                          icon: Icon(Icons.clear),
-                        ),
-                      ),
-                      onChanged: filterByNome,
-                    ),
-                  ),
-                  Container(
-                    height: 70,
-                    width: 200,
-                    color: Colors.transparent,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Observer(
-                          builder: (context) {
-                            if (promocaoController.error != null) {
-                              return Text("Não foi possível carregar");
-                            }
-
-                            if (promocaoController.promocoes == null) {
-                              return Center(
-                                child: Icon(
-                                  Icons.warning_amber_outlined,
-                                  color: Colors.grey[200],
-                                ),
-                              );
-                            }
-
-                            return CircleAvatar(
-                              child: Text(
-                                (promocaoController.promocoes.length ?? 0)
-                                    .toString(),
-                              ),
-                            );
-                          },
-                        ),
-                        SizedBox(width: 10),
-                        CircleAvatar(
-                          backgroundColor:
-                              Theme.of(context).accentColor.withOpacity(1),
-                          foregroundColor: Colors.black,
-                          child: IconButton(
-                            icon: Icon(
-                              Icons.refresh,
-                              color: Colors.grey[200],
-                            ),
-                            onPressed: () {
-                              promocaoController.getAll();
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
           Container(
             height: 1000,
             padding: EdgeInsets.only(left: 50, right: 50, top: 10),
@@ -172,18 +71,111 @@ class _PromocaoPageListState extends State<PromocaoPageList> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        elevation: 10,
-        child: Icon(Icons.add),
-        onPressed: () {
-          Navigator.of(context).pop();
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) {
-              return PromocaoCreatePage();
-            }),
-          );
-        },
+    );
+  }
+
+  Container buildContainerHeader(BuildContext context) {
+    return Container(
+      height: 80,
+      color: Theme.of(context).primaryColor,
+      child: Container(
+        color: Colors.transparent,
+        width: double.infinity,
+        padding: EdgeInsets.only(top: 0, left: 0, right: 50),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              height: 70,
+              width: 300,
+              color: Colors.transparent,
+              child: ListTile(
+                leading: CircleAvatar(
+                  backgroundColor: Theme.of(context).accentColor,
+                  child: Icon(
+                    Icons.shopping_basket,
+                    size: 25,
+                    color: Colors.grey[100],
+                  ),
+                ),
+                title: Text(
+                  "BOOK OFERTAS",
+                  style: TextStyle(
+                    color: Theme.of(context).accentColor.withOpacity(1),
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              alignment: Alignment.centerLeft,
+            ),
+            Container(
+              height: 80,
+              width: 500,
+              color: Colors.transparent,
+              alignment: Alignment.center,
+              child: TextFormField(
+                controller: nomeController,
+                decoration: InputDecoration(
+                  hintText: "busca por promoções",
+                  suffixIcon: IconButton(
+                    onPressed: () => nomeController.clear(),
+                    icon: Icon(Icons.clear),
+                  ),
+                ),
+                onChanged: filterByNome,
+              ),
+            ),
+            Container(
+              height: 70,
+              width: 200,
+              color: Colors.transparent,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Observer(
+                    builder: (context) {
+                      if (promocaoController.error != null) {
+                        return Text("Não foi possível carregar");
+                      }
+
+                      if (promocaoController.promocoes == null) {
+                        return Center(
+                          child: Icon(
+                            Icons.warning_amber_outlined,
+                            color: Colors.grey[200],
+                          ),
+                        );
+                      }
+
+                      return CircleAvatar(
+                        child: Text(
+                          (promocaoController.promocoes.length ?? 0).toString(),
+                        ),
+                      );
+                    },
+                  ),
+                  SizedBox(width: 10),
+                  CircleAvatar(
+                    backgroundColor:
+                        Theme.of(context).accentColor.withOpacity(1),
+                    foregroundColor: Colors.black,
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.refresh,
+                        color: Colors.grey[200],
+                      ),
+                      onPressed: () {
+                        promocaoController.getAll();
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
