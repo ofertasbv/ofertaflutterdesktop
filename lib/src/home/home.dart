@@ -6,6 +6,7 @@ import 'package:nosso/src/home/categoria_list_home.dart';
 import 'package:nosso/src/home/produto_list_home.dart';
 import 'package:nosso/src/home/promocao_list_home.dart';
 import 'package:nosso/src/paginas/categoria/categoria_page_list.dart';
+import 'package:nosso/src/paginas/produto/produto_search.dart';
 import 'package:nosso/src/paginas/promocao/promocao_page_list.dart';
 import 'package:nosso/src/util/config/config_page.dart';
 // import 'package:gscarousel/gscarousel.dart';
@@ -74,27 +75,55 @@ class HomePage extends StatelessWidget {
               alignment: Alignment.centerLeft,
             ),
             Container(
-              height: 70,
-              width: 200,
-              color: Colors.transparent,
-              child: CircleAvatar(
-                child: IconButton(
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (BuildContext context) {
-                          return ConfigPage();
-                        },
+              width: 150,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  CircleAvatar(
+                    backgroundColor: Theme.of(context).accentColor,
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.tune,
+                        color: Colors.grey[200],
                       ),
-                    );
-                  },
-                  icon: Icon(
-                    Icons.dashboard,
-                    color: Colors.grey[200],
+                      onPressed: () {},
+                    ),
                   ),
-                ),
+                  CircleAvatar(
+                    backgroundColor: Theme.of(context).accentColor,
+                    child: IconButton(
+                      icon: Icon(
+                        CupertinoIcons.search,
+                        color: Colors.grey[200],
+                      ),
+                      onPressed: () {
+                        showSearch(
+                          context: context,
+                          delegate: ProdutoSearchDelegate(),
+                        );
+                      },
+                    ),
+                  ),
+                  CircleAvatar(
+                    child: IconButton(
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (BuildContext context) {
+                              return ConfigPage();
+                            },
+                          ),
+                        );
+                      },
+                      icon: Icon(
+                        Icons.dashboard,
+                        color: Colors.grey[200],
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              alignment: Alignment.centerRight,
             ),
           ],
         ),

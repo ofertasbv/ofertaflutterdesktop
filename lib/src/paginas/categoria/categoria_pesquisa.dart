@@ -85,7 +85,7 @@ class _CategoriaPesquisaState extends State<CategoriaPesquisa> {
                 ),
               ),
               title: Text(c.nome),
-              subtitle: Text("cod: ${c.id}"),
+            subtitle: Text("Quantidade: ${c.subCategorias.length}"),
               trailing: Icon(Icons.arrow_right)),
           onTap: () {
             Navigator.of(context).push(

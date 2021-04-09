@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
+import 'package:nosso/src/api/constants/constant_api.dart';
 import 'package:nosso/src/core/controller/categoria_controller.dart';
 import 'package:nosso/src/core/controller/produto_controller.dart';
 import 'package:nosso/src/core/model/produto.dart';
@@ -52,7 +54,6 @@ class ProdutoSearchDelegate extends SearchDelegate<Produto> {
       builder: (context) {
         List<Produto> produtos = produtoController.produtos;
 
-
         if (produtoController.error != null) {
           return Text("Não foi possível buscar produtos");
         }
@@ -77,12 +78,17 @@ class ProdutoSearchDelegate extends SearchDelegate<Produto> {
             Produto p = resultados[index];
             return ListTile(
               isThreeLine: false,
-              leading: CircleAvatar(
-                radius: 20,
-                backgroundImage: NetworkImage(
-                  "${produtoController.arquivo + p.foto}",
-                ),
-              ),
+              leading: p.foto != null
+                  ? CircleAvatar(
+                      radius: 20,
+                      backgroundImage: NetworkImage(
+                        "${produtoController.arquivo + p.foto}",
+                      ),
+                    )
+                  : CircleAvatar(
+                      radius: 20,
+                      child: Image.asset(ConstantApi.urlLogo),
+                    ),
               title: RichText(
                 text: TextSpan(
                     text: p.nome.substring(0, query.length),
