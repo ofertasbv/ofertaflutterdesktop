@@ -26,7 +26,7 @@ class ContainerPromocao extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: 0),
         child: Container(
           color: Colors.grey[200],
-          height: 150,
+          height: 200,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

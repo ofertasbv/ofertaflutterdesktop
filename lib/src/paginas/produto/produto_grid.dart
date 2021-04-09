@@ -145,12 +145,12 @@ class _ProdutoGridState extends State<ProdutoGrid>
       padding: EdgeInsets.only(top: 0, bottom: 0),
       child: Container(
         child: GridView.builder(
-          padding: EdgeInsets.only(top: 10, bottom: 10, left: 0, right: 0),
+          padding: EdgeInsets.only(top: 10, bottom: 20, left: 0, right: 0),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 5,
             crossAxisSpacing: 10,
             mainAxisSpacing: 10,
-            childAspectRatio: MediaQuery.of(context).size.aspectRatio * 0.30,
+            childAspectRatio: MediaQuery.of(context).size.aspectRatio * 0.28,
           ),
           itemCount: produtos.length,
           itemBuilder: (context, index) {
@@ -239,7 +239,7 @@ class _ProdutoGridState extends State<ProdutoGrid>
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Container(
-                          height: 50,
+                          height: 60,
                           child: ListTile(
                             title: Text("${p.nome}",
                                 style: TextStyle(
@@ -250,7 +250,7 @@ class _ProdutoGridState extends State<ProdutoGrid>
                           ),
                         ),
                         Container(
-                          height: 60,
+                          height: 70,
                           child: ListTile(
                             title: Text(
                               "R\$ ${formatMoeda.format(p.estoque.valorUnitario)}",
