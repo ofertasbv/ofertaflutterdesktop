@@ -136,13 +136,14 @@ class _CategoriaListHomeState extends State<CategoriaListHome>
                     width: containerWidth,
                     color: Colors.white,
                     alignment: Alignment.center,
-                    child: Text(
-                      c.nome.toUpperCase(),
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.grey[800],
-                      ),
+                    child: ListTile(
+                      title: Text("${c.nome}",
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.grey[800],
+                          ),
+                          overflow: TextOverflow.ellipsis),
                     ),
                   )
                 ],

@@ -21,7 +21,19 @@ class HomePage extends StatelessWidget {
         titleSpacing: 0,
         title: buildContainerHeader(context),
       ),
-      body: buildScrollbar(context),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Colors.grey[200].withOpacity(1),
+              Colors.grey[300].withOpacity(1),
+            ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        child: buildScrollbar(context),
+      ),
     );
   }
 
@@ -192,7 +204,7 @@ class HomePage extends StatelessWidget {
                 ),
               ),
               title: Text(
-                "todos os dias",
+                "veja todas as promoções",
                 style: TextStyle(
                   color: Theme.of(context).primaryColor,
                   fontSize: 25,
@@ -202,7 +214,10 @@ class HomePage extends StatelessWidget {
               trailing: RaisedButton(
                 padding: EdgeInsets.only(left: 50, right: 50),
                 color: Theme.of(context).accentColor,
-                child: Text("VER MAIS", style: TextStyle(fontWeight: FontWeight.bold),),
+                child: Text(
+                  "VER MAIS",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
                 onPressed: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
@@ -235,7 +250,7 @@ class HomePage extends StatelessWidget {
                 ),
               ),
               title: Text(
-                "todos os dias",
+                "veja todos produtos",
                 style: TextStyle(
                   color: Theme.of(context).primaryColor,
                   fontSize: 25,
@@ -245,7 +260,10 @@ class HomePage extends StatelessWidget {
               trailing: RaisedButton(
                 padding: EdgeInsets.only(left: 50, right: 50),
                 color: Theme.of(context).accentColor,
-                child: Text("VER MAIS", style: TextStyle(fontWeight: FontWeight.bold),),
+                child: Text(
+                  "VER MAIS",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
                 onPressed: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
