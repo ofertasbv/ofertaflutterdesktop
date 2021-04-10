@@ -8,8 +8,8 @@ import 'package:nosso/src/core/model/produto.dart';
 import 'package:nosso/src/paginas/pedidoitem/itens_page.dart';
 import 'package:nosso/src/paginas/produto/produto_detalhes_info.dart';
 import 'package:nosso/src/paginas/produto/produto_detalhes_view.dart';
+import 'package:nosso/src/paginas/produto/produto_page.dart';
 import 'package:nosso/src/paginas/produto/produto_search.dart';
-import 'package:nosso/src/paginas/produto/produto_tab.dart';
 import 'package:nosso/src/util/snackbar/snackbar_global.dart';
 
 class ProdutoDetalhesTab extends StatefulWidget {
@@ -247,7 +247,7 @@ class _ProdutoDetalhesTabState extends State<ProdutoDetalhesTab>
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (BuildContext context) {
-                        return ProdutoTab();
+                        return ProdutoPage();
                       },
                     ),
                   );

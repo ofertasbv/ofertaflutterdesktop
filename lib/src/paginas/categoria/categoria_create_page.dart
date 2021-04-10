@@ -33,6 +33,7 @@ class CategoriaCreatePage extends StatefulWidget {
 class _CategoriaCreatePageState extends State<CategoriaCreatePage> {
   var categoriaController = GetIt.I.get<CategoriaController>();
   var seguimentoController = GetIt.I.get<SeguimentoController>();
+  var controllerNome = TextEditingController();
   Dialogs dialogs = Dialogs();
 
   Categoria c;
@@ -46,8 +47,6 @@ class _CategoriaCreatePageState extends State<CategoriaCreatePage> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   _CategoriaCreatePageState({this.c});
-
-  var controllerNome = TextEditingController();
 
   // create some values
   Color pickerColor = Color(0xff443a49);
@@ -66,12 +65,10 @@ class _CategoriaCreatePageState extends State<CategoriaCreatePage> {
   void initState() {
     if (c == null) {
       c = Categoria();
-      seguimento = Seguimento();
     } else {
       seguimento = c.seguimento;
     }
     seguimentoController.getAll();
-    categoriaController.getAll();
     super.initState();
   }
 
@@ -145,7 +142,7 @@ class _CategoriaCreatePageState extends State<CategoriaCreatePage> {
             return Text("Não foi possível carregados dados");
           }
 
-          if (seguimentoController == null) {
+          if (seguimentos == null) {
             return CircularProgressorMini();
           }
 
@@ -155,8 +152,7 @@ class _CategoriaCreatePageState extends State<CategoriaCreatePage> {
             items: seguimentos,
             showSearchBox: true,
             itemAsString: (Seguimento s) => s.nome,
-            validator: (categoria) =>
-                categoria == null ? "campo obrigatório" : null,
+            validator: (s) => s == null ? "campo obrigatório" : null,
             isFilteredOnline: true,
             showClearButton: true,
             selectedItem: seguimento,
@@ -169,7 +165,7 @@ class _CategoriaCreatePageState extends State<CategoriaCreatePage> {
             searchBoxDecoration: InputDecoration(
               border: OutlineInputBorder(),
               contentPadding: EdgeInsets.fromLTRB(20, 20, 20, 0),
-              labelText: "Pesquisar por seguimentos",
+              labelText: "Pesquisar por seguimento",
             ),
           );
         },
@@ -403,10 +399,10 @@ class _CategoriaCreatePageState extends State<CategoriaCreatePage> {
                     ],
                   ),
                 ),
-                // Container(
-                //   padding: EdgeInsets.all(15),
-                //   child: builderConteudoListSeguimentos(),
-                // ),
+                Container(
+                  padding: EdgeInsets.all(15),
+                  child: builderConteudoListSeguimentos(),
+                ),
                 Container(
                   padding: EdgeInsets.all(15),
                   child: ColorPicker(

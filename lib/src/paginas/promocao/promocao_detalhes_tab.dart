@@ -3,11 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:nosso/src/core/controller/promocao_controller.dart';
 import 'package:nosso/src/core/model/promocao.dart';
+import 'package:nosso/src/paginas/produto/produto_page.dart';
 import 'package:nosso/src/paginas/produto/produto_search.dart';
-import 'package:nosso/src/paginas/produto/produto_tab.dart';
 import 'package:nosso/src/paginas/promocao/promocao_detalhes-view.dart';
 import 'package:nosso/src/paginas/promocao/promocao_detalhes_info.dart';
-import 'package:nosso/src/paginas/promocao/promocao_page.dart';
 
 class PromocaoDetalhesTab extends StatefulWidget {
   Promocao p;
@@ -129,7 +128,7 @@ class _PromocaoDetalhesTabState extends State<PromocaoDetalhesTab>
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (BuildContext context) {
-                        return ProdutoTab();
+                        return ProdutoPage();
                       },
                     ),
                   );

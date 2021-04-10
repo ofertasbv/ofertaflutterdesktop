@@ -4,15 +4,11 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nosso/src/home/categoria_list_home.dart';
-import 'package:nosso/src/home/produto_list_home.dart';
 import 'package:nosso/src/home/promocao_list_home.dart';
 import 'package:nosso/src/paginas/produto/produto_page.dart';
-import 'package:nosso/src/paginas/produto/produto_tab.dart';
-import 'package:nosso/src/paginas/promocao/promocao_page.dart';
 import 'package:nosso/src/paginas/promocao/promocao_page_list.dart';
 import 'package:nosso/src/paginas/subcategoria/subcategoria_produto.dart';
 import 'package:nosso/src/util/load/shimmerListCategoriaHome.dart';
-import 'package:nosso/src/util/load/shimmerListProdutoHome.dart';
 import 'package:nosso/src/util/load/shimmerListPromocaoHome.dart';
 
 class CatalogoHome extends StatefulWidget {

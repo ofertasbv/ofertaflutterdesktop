@@ -4,7 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:nosso/src/core/controller/promocao_controller.dart';
 import 'package:nosso/src/core/model/promocao.dart';
-import 'package:nosso/src/paginas/produto/produto_tab.dart';
+import 'package:nosso/src/paginas/produto/produto_page.dart';
 import 'package:nosso/src/paginas/promocao/promocao_create_page.dart';
 import 'package:nosso/src/paginas/promocao/promocao_detalhes_tab.dart';
 import 'package:nosso/src/util/container/container_promocao.dart';
@@ -151,7 +151,7 @@ class _LojaPromocaoPageState extends State<LojaPromocaoPage> {
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (BuildContext context) {
-                return ProdutoTab();
+                return ProdutoPage();
               },
             ),
           );

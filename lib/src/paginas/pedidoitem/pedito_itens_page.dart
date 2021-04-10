@@ -9,7 +9,7 @@ import 'package:intl/intl.dart';
 import 'package:nosso/src/api/constants/constant_api.dart';
 import 'package:nosso/src/core/controller/pedidoItem_controller.dart';
 import 'package:nosso/src/core/model/pedidoitem.dart';
-import 'package:nosso/src/paginas/produto/produto_tab.dart';
+import 'package:nosso/src/paginas/produto/produto_page.dart';
 import 'package:nosso/src/util/load/circular_progresso.dart';
 import 'package:nosso/src/util/snackbar/snackbar_global.dart';
 
@@ -72,7 +72,7 @@ class _PedidoItensListState extends State<PedidoItensList> {
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (BuildContext context) {
-                            return ProdutoTab();
+                            return ProdutoPage();
                           },
                         ),
                       );

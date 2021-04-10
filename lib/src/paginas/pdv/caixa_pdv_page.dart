@@ -2,6 +2,7 @@ import 'dart:ui';
 
 // import 'package:audioplayers/audio_cache.dart';
 import 'package:barcode_scan/barcode_scan.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -13,7 +14,6 @@ import 'package:nosso/src/api/constants/constant_api.dart';
 import 'package:nosso/src/core/controller/pedidoItem_controller.dart';
 import 'package:nosso/src/core/controller/pedido_controller.dart';
 import 'package:nosso/src/core/controller/produto_controller.dart';
-import 'package:nosso/src/core/model/caixa.dart';
 import 'package:nosso/src/core/model/caixafluxo.dart';
 import 'package:nosso/src/core/model/pedido.dart';
 import 'package:nosso/src/core/model/pedidoitem.dart';
@@ -22,6 +22,7 @@ import 'package:nosso/src/paginas/pedido/pedido_create_page.dart';
 import 'package:nosso/src/paginas/pedido/pedido_page.dart';
 import 'package:nosso/src/paginas/pedidoitem/itens_page.dart';
 import 'package:nosso/src/util/load/circular_progresso.dart';
+import 'package:nosso/src/util/load/circular_progresso_mini.dart';
 import 'package:nosso/src/util/snackbar/snackbar_global.dart';
 import 'package:nosso/src/util/validador/validador_pdv.dart';
 
@@ -48,7 +49,8 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
 
   PedidoItem pedidoItem;
   Pedido pedido;
-  Produto p;
+  Produto produto;
+  Produto produtoSelecionado;
   var codigoBarraController = TextEditingController();
   var quantidadeController = TextEditingController();
   var valorUnitarioController = TextEditingController();
@@ -65,13 +67,14 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
   void initState() {
     // audioCache.loadAll(["beep-07.mp3"]);
     pedidoItemController.pedidosItens();
-    if (p == null) {
-      p = Produto();
+    if (produto == null) {
+      produto = Produto();
       pedido = Pedido();
       pedidoItem = PedidoItem();
       quantidadeController.text = 1.toString();
       descontoController.text = 0.00.toString();
     }
+    produtoController.getAll();
     super.initState();
   }
 
@@ -91,12 +94,12 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
   }
 
   buscarByCodigoDeBarraTeste(String codBarra) async {
-    p = await produtoController.getCodigoBarra(codBarra).then((value) {
-      p = value;
-      if (p == null) {
+    produto = await produtoController.getCodigoBarra(codBarra).then((value) {
+      produto = value;
+      if (produto == null) {
         showSnackbar(context, "Nenhum produto encontrado!");
       }
-      return p;
+      return produto;
     });
   }
 
@@ -131,11 +134,11 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
 
   buscarByCodigoDeBarra(String codigoBarra) async {
     pedidoItem = PedidoItem();
-    p = await produtoController.getCodigoBarra(codigoBarra);
+    produto = await produtoController.getCodigoBarra(codigoBarra);
 
-    if (p != null) {
+    if (produto != null) {
       setState(() {
-        pedidoItem.valorUnitario = p.estoque.valorUnitario;
+        pedidoItem.valorUnitario = produto.estoque.valorUnitario;
         pedidoItem.quantidade = int.tryParse(quantidadeController.text);
         pedidoItem.valorTotal =
             (pedidoItem.quantidade * pedidoItem.valorUnitario);
@@ -152,13 +155,32 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
         print("Valor unitário: ${pedidoItem.valorUnitario}");
         print("Valor total: ${pedidoItem.valorTotal}");
         print("Valor total: ${valorTotalController.text}");
-        print("Descrição: ${p.descricao}");
+        print("Descrição: ${produto.descricao}");
         adicionaItem(pedidoItem);
       });
     }
   }
 
   adicionaItem(PedidoItem pedidoItem) {
+    setState(() {
+      if (pedidoItemController.isExisteItem(new PedidoItem(produto: produto))) {
+        pedidoItemController.remove(pedidoItem);
+        pedidoItemController.itens;
+        // pedidoItemController.adicionar(new PedidoItem(produto: p));
+
+        showSnackbar(context, " removido");
+        pedidoItemController.calculateTotal();
+      } else {
+        pedidoItemController.adicionar(new PedidoItem(produto: produto));
+        showSnackbar(context, "${produto.nome} adicionado");
+        double total = pedidoItemController.total;
+        valorPedidoController.text = total.toStringAsFixed(2);
+        pedidoItemController.calculateTotal();
+      }
+    });
+  }
+
+  adicionaItemTeste(Produto p) {
     setState(() {
       if (pedidoItemController.isExisteItem(new PedidoItem(produto: p))) {
         pedidoItemController.remove(pedidoItem);
@@ -169,7 +191,7 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
         pedidoItemController.calculateTotal();
       } else {
         pedidoItemController.adicionar(new PedidoItem(produto: p));
-        showSnackbar(context, "${p.nome} adicionado");
+        showSnackbar(context, "${produto.nome} adicionado");
         double total = pedidoItemController.total;
         valorPedidoController.text = total.toStringAsFixed(2);
         pedidoItemController.calculateTotal();
@@ -220,15 +242,43 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
             width: 250,
             padding: EdgeInsets.only(top: 0),
             child: Chip(
-                label: Text("HORÁRIO: ${dateFormat.format(DateTime.now())}")),
+              backgroundColor: Theme.of(context).primaryColor.withOpacity(1),
+              shadowColor: Colors.grey[200],
+              label: Text(
+                "HORÁRIO: ${dateFormat.format(DateTime.now())}",
+                style: TextStyle(
+                  color: Colors.grey[100],
+                ),
+              ),
+            ),
           ),
           Container(
             height: 80,
             width: 200,
             padding: EdgeInsets.only(top: 0),
             child: caixa == null
-                ? Chip(label: Text("CAIXA SEM STATUS"))
-                : Chip(label: Text("CAIXA ESTÁ ${caixa.caixaStatus}")),
+                ? Chip(
+                    backgroundColor:
+                        Theme.of(context).primaryColor.withOpacity(1),
+                    shadowColor: Colors.grey[200],
+                    label: Text(
+                      "CAIXA SEM STATUS",
+                      style: TextStyle(
+                        color: Colors.grey[100],
+                      ),
+                    ),
+                  )
+                : Chip(
+                    backgroundColor:
+                        Theme.of(context).primaryColor.withOpacity(1),
+                    shadowColor: Colors.grey[200],
+                    label: Text(
+                      "CAIXA ESTÁ ${caixa.caixaStatus}",
+                      style: TextStyle(
+                        color: Colors.grey[100],
+                      ),
+                    ),
+                  ),
           ),
           Container(
             height: 80,
@@ -236,9 +286,27 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
             padding: EdgeInsets.only(top: 0),
             child: caixa != null
                 ? Chip(
-                    label:
-                        Text("${caixa.caixa.referencia} - ${caixa.descricao}"))
-                : Chip(label: Text("CAIXA SEM REFERENCIA")),
+                    backgroundColor:
+                        Theme.of(context).primaryColor.withOpacity(1),
+                    shadowColor: Colors.grey[100],
+                    label: Text(
+                      "${caixa.caixa.referencia} - ${caixa.descricao}",
+                      style: TextStyle(
+                        color: Colors.grey[100],
+                      ),
+                    ),
+                  )
+                : Chip(
+                    backgroundColor:
+                        Theme.of(context).primaryColor.withOpacity(1),
+                    shadowColor: Colors.grey[200],
+                    label: Text(
+                      "CAIXA SEM REFERENCIA",
+                      style: TextStyle(
+                        color: Colors.grey[100],
+                      ),
+                    ),
+                  ),
           ),
           Observer(
             builder: (context) {
@@ -247,47 +315,63 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
               }
 
               if (pedidoItemController.itens == null) {
-                return Center(
+                return CircleAvatar(
+                  backgroundColor: Theme.of(context).accentColor,
+                  foregroundColor: Colors.grey[200],
                   child: Icon(Icons.warning_amber_outlined),
                 );
               }
 
-              return Chip(
-                label: Text(
+              return CircleAvatar(
+                backgroundColor: Theme.of(context).accentColor,
+                foregroundColor: Colors.grey[200],
+                child: Text(
                   (pedidoItemController.itens.length ?? 0).toString(),
                 ),
               );
             },
           ),
-          SizedBox(width: 2),
-          IconButton(
-            icon: Icon(Icons.refresh_rounded),
-            onPressed: () {
-              setState(() {
-                print("itens: ${pedidoItemController.itens.length}");
-                pedidoItemController.pedidosItens();
-              });
-            },
+          SizedBox(width: 10),
+          CircleAvatar(
+            backgroundColor: Theme.of(context).accentColor,
+            foregroundColor: Colors.grey[200],
+            child: IconButton(
+              icon: Icon(Icons.refresh_rounded),
+              onPressed: () {
+                setState(() {
+                  print("itens: ${pedidoItemController.itens.length}");
+                  pedidoItemController.pedidosItens();
+                });
+              },
+            ),
           ),
-          SizedBox(width: 2),
-          IconButton(
-            icon: Icon(Icons.shopping_cart_outlined),
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (BuildContext context) {
-                    return ItemPage();
-                  },
-                ),
-              );
-            },
+          SizedBox(width: 10),
+          CircleAvatar(
+            backgroundColor: Theme.of(context).accentColor,
+            foregroundColor: Colors.grey[200],
+            child: IconButton(
+              icon: Icon(Icons.shopping_cart_outlined),
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (BuildContext context) {
+                      return ItemPage();
+                    },
+                  ),
+                );
+              },
+            ),
           ),
-          SizedBox(width: 2),
-          IconButton(
-            icon: Icon(Icons.camera_alt_outlined),
-            onPressed: () {
-              barcodeScanning();
-            },
+          SizedBox(width: 10),
+          CircleAvatar(
+            backgroundColor: Theme.of(context).accentColor,
+            foregroundColor: Colors.grey[200],
+            child: IconButton(
+              icon: Icon(Icons.shopping_basket_outlined),
+              onPressed: () {
+                buildShowDialogProduto(context);
+              },
+            ),
           ),
           SizedBox(width: 100),
         ],
@@ -322,7 +406,7 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
                           padding: EdgeInsets.all(5),
                           width: double.infinity,
                           height: 100,
-                          color: Colors.orange[800],
+                          color: Theme.of(context).accentColor.withOpacity(1),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -434,7 +518,7 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
                           Container(
                             width: double.infinity,
                             height: 100,
-                            color: Colors.blueGrey[200],
+                            color: Theme.of(context).primaryColor.withOpacity(1),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -511,6 +595,42 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
           ],
         ),
       ),
+    );
+  }
+
+  Future<dynamic> buildShowDialogProduto(BuildContext context) {
+    return showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Produtos"),
+          content: Container(
+            height: 100,
+            width: 300,
+            child: builderConteudoListProdutos(),
+          ),
+          actions: [
+            FlatButton(
+              color: Theme.of(context).accentColor,
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text("CANCELAR"),
+            ),
+            FlatButton(
+              color: Theme.of(context).primaryColor,
+              onPressed: () {
+                setState(() {
+                  adicionaItemTeste(produtoSelecionado);
+                });
+                Navigator.of(context).pop();
+              },
+              child: Text("CONFIRMAR"),
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -715,7 +835,6 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
               ),
             );
           }
-
           return builderTable(itens);
         },
       ),
@@ -800,6 +919,47 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
     );
   }
 
+  builderConteudoListProdutos() {
+    return Container(
+      padding: EdgeInsets.only(top: 0),
+      child: Observer(
+        builder: (context) {
+          List<Produto> produtos = produtoController.produtos;
+          if (produtoController.error != null) {
+            return Text("Não foi possível buscar produtos");
+          }
+
+          if (produtos == null) {
+            return CircularProgressorMini();
+          }
+
+          return DropdownSearch<Produto>(
+            label: "Selecione produtos",
+            popupTitle: Center(child: Text("Produtos")),
+            items: produtos,
+            showSearchBox: true,
+            itemAsString: (Produto s) => s.nome,
+            validator: (s) => s == null ? "campo obrigatório" : null,
+            isFilteredOnline: true,
+            showClearButton: true,
+            selectedItem: produtoSelecionado,
+            onChanged: (Produto s) {
+              setState(() {
+                produtoSelecionado = s;
+                print("Produto: ${produtoSelecionado.nome}");
+              });
+            },
+            searchBoxDecoration: InputDecoration(
+              border: OutlineInputBorder(),
+              contentPadding: EdgeInsets.fromLTRB(20, 20, 20, 0),
+              labelText: "Pesquisar por seguimento",
+            ),
+          );
+        },
+      ),
+    );
+  }
+
   showDialogAlertExcluir(BuildContext context, PedidoItem p) async {
     return showDialog(
       context: context,
@@ -821,15 +981,25 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
                   height: 20,
                 ),
                 Center(
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: Image.network(
-                      ConstantApi.urlArquivoProduto + p.produto.foto,
-                      fit: BoxFit.cover,
-                      width: 100,
-                      height: 100,
-                    ),
-                  ),
+                  child: p.produto.foto != null
+                      ? ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image.network(
+                            produtoController.arquivo + p.produto.foto,
+                            fit: BoxFit.cover,
+                            width: 100,
+                            height: 100,
+                          ),
+                        )
+                      : ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image.asset(
+                            ConstantApi.urlLogo,
+                            fit: BoxFit.cover,
+                            width: 100,
+                            height: 100,
+                          ),
+                        ),
                 ),
               ],
             ),

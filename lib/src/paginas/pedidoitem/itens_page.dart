@@ -10,7 +10,7 @@ import 'package:nosso/src/core/controller/pedidoItem_controller.dart';
 import 'package:nosso/src/paginas/pedido/pedido_create_page.dart';
 import 'package:nosso/src/paginas/pedidoitem/pedidoitem_list.dart';
 import 'package:nosso/src/paginas/pedidoitem/pedito_itens_page.dart';
-import 'package:nosso/src/paginas/produto/produto_tab.dart';
+import 'package:nosso/src/paginas/produto/produto_page.dart';
 
 class ItemPage extends StatefulWidget {
   @override
@@ -62,6 +62,8 @@ class _ItemPageState extends State<ItemPage> {
               }
 
               return CircleAvatar(
+                backgroundColor: Theme.of(context).accentColor,
+                foregroundColor: Colors.white,
                 child: Text(
                   (pedidoItemController.itens.length ?? 0).toString(),
                 ),
@@ -70,8 +72,8 @@ class _ItemPageState extends State<ItemPage> {
           ),
           SizedBox(width: 10),
           CircleAvatar(
-            backgroundColor: Theme.of(context).accentColor.withOpacity(0.4),
-            foregroundColor: Colors.black,
+            backgroundColor: Theme.of(context).accentColor,
+            foregroundColor: Colors.white,
             child: IconButton(
               icon: Icon(
                 Icons.refresh,
@@ -157,7 +159,7 @@ class _ItemPageState extends State<ItemPage> {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (BuildContext context) {
-                              return ProdutoTab();
+                              return ProdutoPage();
                             },
                           ),
                         );

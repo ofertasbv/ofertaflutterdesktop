@@ -6,7 +6,6 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
 import 'package:nosso/src/core/controller/categoria_controller.dart';
 import 'package:nosso/src/core/controller/subcategoria_controller.dart';
@@ -14,7 +13,6 @@ import 'package:nosso/src/core/model/categoria.dart';
 import 'package:nosso/src/core/model/subcategoria.dart';
 import 'package:nosso/src/paginas/subcategoria/subcategoria_page.dart';
 import 'package:nosso/src/util/dialogs/dialogs.dart';
-import 'package:nosso/src/util/load/circular_progresso.dart';
 import 'package:nosso/src/util/load/circular_progresso_mini.dart';
 
 class SubCategoriaCreatePage extends StatefulWidget {
@@ -51,7 +49,6 @@ class _SubCategoriaCreatePageState extends State<SubCategoriaCreatePage> {
       categoriaSelecionada = s.categoria;
     }
     categoriaController.getAll();
-    subCategoriaController.getAll();
     super.initState();
   }
 

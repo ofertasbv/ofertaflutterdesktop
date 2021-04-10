@@ -25,6 +25,7 @@ class _PedidoItemTableState extends State<PedidoItemTable>
     with AutomaticKeepAliveClientMixin<PedidoItemTable> {
   var pedidoItemController = GetIt.I.get<PedidoItemController>();
   var produtoController = GetIt.I.get<ProdutoController>();
+  var nomeController = TextEditingController();
 
   _PedidoItemTableState({this.filter});
 
@@ -122,6 +123,68 @@ class _PedidoItemTableState extends State<PedidoItemTable>
 
   builderConteudoList() {
     return Container(
+      child: Column(
+        children: [
+          Container(
+            height: 50,
+            width: double.infinity,
+            color: Colors.grey[100],
+            padding: EdgeInsets.all(0),
+            child: TextFormField(
+              controller: nomeController,
+              decoration: InputDecoration(
+                labelText: "busca por nome",
+                prefixIcon: Icon(Icons.search_outlined),
+                suffixIcon: IconButton(
+                  onPressed: () => nomeController.clear(),
+                  icon: Icon(Icons.clear),
+                ),
+              ),
+              onChanged: (nome) {
+                filter.nome = nomeController.text;
+                print("produto nome: ${nome}");
+                print("produto filter: ${filter.nome}");
+              },
+            ),
+          ),
+          SizedBox(height: 10),
+          Container(
+            width: double.infinity,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                RaisedButton.icon(
+                  onPressed: () {
+                    pesquisarFilter();
+                  },
+                  icon: Icon(Icons.search),
+                  label: Text("Realizar pesquisa"),
+                ),
+                RaisedButton.icon(
+                  onPressed: () {
+                    produtoController.getAll();
+                    filter = PedidoItemFilter();
+                  },
+                  icon: Icon(Icons.refresh),
+                  label: Text("Atualizar pesquisa"),
+                )
+              ],
+            ),
+          ),
+          SizedBox(height: 10),
+          Expanded(
+            child: Container(
+              color: Colors.transparent,
+              child: buildContainer(),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Container buildContainer() {
+    return Container(
       padding: EdgeInsets.only(top: 0),
       child: Observer(
         builder: (context) {
@@ -156,7 +219,8 @@ class _PedidoItemTableState extends State<PedidoItemTable>
           showFirstLastButtons: true,
           columnSpacing: 10,
           columns: [
-            DataColumn(label: Text("Código")),
+            DataColumn(label: Text("Cód")),
+            DataColumn(label: Text("Cód de barra")),
             DataColumn(label: Text("Foto")),
             DataColumn(label: Text("Produto")),
             DataColumn(label: Text("Pedido")),
@@ -194,6 +258,7 @@ class DataSource extends DataTableSource {
       index: index,
       cells: [
         DataCell(Text("${p.id}")),
+        DataCell(Text("${p.produto.codigoBarra}")),
         DataCell(p.produto.foto != null
             ? CircleAvatar(
                 backgroundColor: Colors.grey[100],
