@@ -6,6 +6,7 @@ import 'package:nosso/src/home/categoria_list_home.dart';
 import 'package:nosso/src/home/produto_list_home.dart';
 import 'package:nosso/src/home/promocao_list_home.dart';
 import 'package:nosso/src/paginas/categoria/categoria_page_list.dart';
+import 'package:nosso/src/paginas/produto/produto_page.dart';
 import 'package:nosso/src/paginas/produto/produto_search.dart';
 import 'package:nosso/src/paginas/promocao/promocao_page_list.dart';
 import 'package:nosso/src/util/config/config_page.dart';
@@ -177,41 +178,42 @@ class HomePage extends StatelessWidget {
             padding: EdgeInsets.only(top: 0, left: 50, right: 50),
             child: CategoriaListHome(),
           ),
+          SizedBox(height: 20),
           Container(
-            height: 100,
-            color: Colors.transparent,
-            padding: EdgeInsets.only(top: 0, left: 50, right: 50),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "DESTAQUES DA SEMANA",
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                  ),
+            height: 70,
+            padding: EdgeInsets.only(top: 0, left: 40, right: 40),
+            child: ListTile(
+              leading: Text(
+                "Promoções em destaque",
+                style: TextStyle(
+                  color: Theme.of(context).accentColor,
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
                 ),
-                GestureDetector(
-                  child: Text(
-                    "VER MAIS",
-                    style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
+              ),
+              title: Text(
+                "todos os dias",
+                style: TextStyle(
+                  color: Theme.of(context).primaryColor,
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              trailing: RaisedButton(
+                padding: EdgeInsets.only(left: 50, right: 50),
+                color: Theme.of(context).accentColor,
+                child: Text("VER MAIS", style: TextStyle(fontWeight: FontWeight.bold),),
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (BuildContext context) {
+                        return PromocaoPageList();
+                      },
                     ),
-                  ),
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (BuildContext context) {
-                          return PromocaoPageList();
-                        },
-                      ),
-                    );
-                  },
-                ),
-              ],
+                  );
+                },
+              ),
             ),
-            alignment: Alignment.center,
           ),
           Container(
             height: 500,
@@ -219,41 +221,42 @@ class HomePage extends StatelessWidget {
             padding: EdgeInsets.only(top: 0, left: 50, right: 50),
             child: PromocaoListHome(),
           ),
+          SizedBox(height: 20),
           Container(
-            height: 100,
-            color: Colors.transparent,
-            padding: EdgeInsets.only(top: 0, left: 50, right: 50),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "PRODUTOS EM DESTAQUES",
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                  ),
+            height: 70,
+            padding: EdgeInsets.only(top: 0, left: 40, right: 40),
+            child: ListTile(
+              leading: Text(
+                "Produtos em destaque",
+                style: TextStyle(
+                  color: Theme.of(context).accentColor,
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
                 ),
-                GestureDetector(
-                  child: Text(
-                    "VER MAIS",
-                    style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
+              ),
+              title: Text(
+                "todos os dias",
+                style: TextStyle(
+                  color: Theme.of(context).primaryColor,
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              trailing: RaisedButton(
+                padding: EdgeInsets.only(left: 50, right: 50),
+                color: Theme.of(context).accentColor,
+                child: Text("VER MAIS", style: TextStyle(fontWeight: FontWeight.bold),),
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (BuildContext context) {
+                        return ProdutoPage();
+                      },
                     ),
-                  ),
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (BuildContext context) {
-                          return PromocaoPageList();
-                        },
-                      ),
-                    );
-                  },
-                ),
-              ],
+                  );
+                },
+              ),
             ),
-            alignment: Alignment.center,
           ),
           Container(
             height: 200,

@@ -229,8 +229,8 @@ class _CategoriaCreatePageState extends State<CategoriaCreatePage> {
                             setState(() {
                               Navigator.of(context).pop();
                               file = image;
-                              String arquivo = file.path.split('/').last;
-                              print("Image: ${arquivo}");
+                              // String arquivo = file.path.split('/').last;
+                              print("Image: ${file}");
                               enableButton();
                             });
                           },
@@ -353,9 +353,8 @@ class _CategoriaCreatePageState extends State<CategoriaCreatePage> {
                                         setState(() {
                                           Navigator.of(context).pop();
                                           file = image;
-                                          String arquivo =
-                                              file.path.split('/').last;
-                                          print("Image: ${arquivo}");
+                                          // String arquivo = file.path.split('/').last;
+                                          print("Image: ${file}");
                                           enableButton();
                                         });
                                       },
@@ -404,10 +403,10 @@ class _CategoriaCreatePageState extends State<CategoriaCreatePage> {
                     ],
                   ),
                 ),
-                Container(
-                  padding: EdgeInsets.all(15),
-                  child: builderConteudoListSeguimentos(),
-                ),
+                // Container(
+                //   padding: EdgeInsets.all(15),
+                //   child: builderConteudoListSeguimentos(),
+                // ),
                 Container(
                   padding: EdgeInsets.all(15),
                   child: ColorPicker(

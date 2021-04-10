@@ -57,7 +57,7 @@ ThemeData getTheme(BuildContext context) {
       padding: EdgeInsets.all(10),
       alignedDropdown: true,
       shape: RoundedRectangleBorder(
-        borderRadius: new BorderRadius.circular(35),
+        borderRadius: new BorderRadius.circular(0),
         side: BorderSide(color: Colors.transparent),
       ),
     ),
