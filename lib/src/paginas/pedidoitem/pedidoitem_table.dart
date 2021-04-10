@@ -8,11 +8,17 @@ import 'package:nosso/src/core/controller/pedidoItem_controller.dart';
 import 'package:nosso/src/core/controller/produto_controller.dart';
 import 'package:nosso/src/core/model/pedidoitem.dart';
 import 'package:nosso/src/paginas/pedidoitem/pedidoitem_create_page.dart';
+import 'package:nosso/src/util/filter/pedidoitem_filter.dart';
 import 'package:nosso/src/util/load/circular_progresso.dart';
 
 class PedidoItemTable extends StatefulWidget {
+  PedidoItemFilter pedidoItemFilter;
+
+  PedidoItemTable({Key key, this.pedidoItemFilter}) : super(key: key);
+
   @override
-  _PedidoItemTableState createState() => _PedidoItemTableState();
+  _PedidoItemTableState createState() =>
+      _PedidoItemTableState(filter: this.pedidoItemFilter);
 }
 
 class _PedidoItemTableState extends State<PedidoItemTable>
@@ -20,9 +26,18 @@ class _PedidoItemTableState extends State<PedidoItemTable>
   var pedidoItemController = GetIt.I.get<PedidoItemController>();
   var produtoController = GetIt.I.get<ProdutoController>();
 
+  _PedidoItemTableState({this.filter});
+
+  PedidoItemFilter filter;
+
   @override
   void initState() {
-    pedidoItemController.getAll();
+    if (filter == null) {
+      filter = PedidoItemFilter();
+      pedidoItemController.getAll();
+    } else {
+      pedidoItemController.getFilter(filter);
+    }
     super.initState();
   }
 
@@ -32,9 +47,77 @@ class _PedidoItemTableState extends State<PedidoItemTable>
 
   bool isLoading = true;
 
+  pesquisarFilter() {
+    print("pesquisa produto: ${filter.nome}");
+    print("pesquisa pedido: ${filter.pedido}");
+    print("pesquisa...");
+    pedidoItemController.getFilter(filter);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return builderConteudoList();
+    return Scaffold(
+      appBar: AppBar(
+        titleSpacing: 0,
+        elevation: 0,
+        title: Text("Itens de pedido"),
+        actions: <Widget>[
+          Observer(
+            builder: (context) {
+              if (pedidoItemController.error != null) {
+                return Text("Não foi possível carregar");
+              }
+
+              if (pedidoItemController.pedidoItens == null) {
+                return Center(
+                  child: Icon(Icons.warning_amber_outlined),
+                );
+              }
+
+              return CircleAvatar(
+                backgroundColor: Theme.of(context).accentColor,
+                foregroundColor: Colors.white,
+                child: Text(
+                  (pedidoItemController.pedidoItens.length ?? 0).toString(),
+                ),
+              );
+            },
+          ),
+          SizedBox(width: 10),
+          CircleAvatar(
+            backgroundColor: Theme.of(context).accentColor,
+            foregroundColor: Colors.white,
+            child: IconButton(
+              icon: Icon(
+                Icons.refresh,
+              ),
+              onPressed: () {
+                pedidoItemController.getAll();
+                filter = PedidoItemFilter();
+              },
+            ),
+          ),
+          SizedBox(width: 50),
+        ],
+      ),
+      body: Container(
+        padding: EdgeInsets.only(left: 50, right: 50, top: 10),
+        child: builderConteudoList(),
+      ),
+      floatingActionButton: FloatingActionButton(
+        elevation: 10,
+        child: Icon(Icons.add),
+        onPressed: () {
+          Navigator.of(context).pop();
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) {
+              return PedidoItemCreatePage();
+            }),
+          );
+        },
+      ),
+    );
   }
 
   builderConteudoList() {
@@ -76,6 +159,7 @@ class _PedidoItemTableState extends State<PedidoItemTable>
             DataColumn(label: Text("Código")),
             DataColumn(label: Text("Foto")),
             DataColumn(label: Text("Produto")),
+            DataColumn(label: Text("Pedido")),
             DataColumn(label: Text("Quant.")),
             DataColumn(label: Text("Valor unit.")),
             DataColumn(label: Text("Valor total.")),
@@ -110,12 +194,18 @@ class DataSource extends DataTableSource {
       index: index,
       cells: [
         DataCell(Text("${p.id}")),
-        DataCell(p.produto.foto != null ? CircleAvatar(
-          backgroundColor: Colors.grey[100],
-          radius: 20,
-          backgroundImage: NetworkImage("${produtoController.arquivo + p.produto.foto}"),
-        ) : CircleAvatar(radius: 20,)),
+        DataCell(p.produto.foto != null
+            ? CircleAvatar(
+                backgroundColor: Colors.grey[100],
+                radius: 20,
+                backgroundImage: NetworkImage(
+                    "${produtoController.arquivo + p.produto.foto}"),
+              )
+            : CircleAvatar(
+                radius: 20,
+              )),
         DataCell(Text("${p.produto.nome}")),
+        DataCell(Text("${p.pedido.descricao}")),
         DataCell(Text(
           "${p.quantidade}",
           style: TextStyle(color: Colors.black),

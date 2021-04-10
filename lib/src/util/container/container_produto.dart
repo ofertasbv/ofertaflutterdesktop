@@ -63,6 +63,7 @@ class ContainerProduto extends StatelessWidget {
                     isThreeLine: false,
                     title: Text(
                       p.nome,
+                      overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -70,6 +71,7 @@ class ContainerProduto extends StatelessWidget {
                     ),
                     subtitle: Text(
                       "${p.loja.nome}",
+                      overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -82,6 +84,7 @@ class ContainerProduto extends StatelessWidget {
                     isThreeLine: false,
                     title: Text(
                       p.promocao.nome,
+                      overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,

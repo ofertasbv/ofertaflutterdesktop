@@ -16,7 +16,10 @@ import 'package:nosso/src/core/model/loja.dart';
 import 'package:nosso/src/core/model/pedido.dart';
 import 'package:nosso/src/paginas/pagamento/pagamento_create_page.dart';
 import 'package:nosso/src/paginas/pedido/pedido_create_page.dart';
+import 'package:nosso/src/paginas/pedidoitem/pedidoitem_page.dart';
+import 'package:nosso/src/paginas/pedidoitem/pedidoitem_table.dart';
 import 'package:nosso/src/util/filter/pedido_filter.dart';
+import 'package:nosso/src/util/filter/pedidoitem_filter.dart';
 import 'package:nosso/src/util/load/circular_progresso.dart';
 import 'package:nosso/src/util/load/circular_progresso_mini.dart';
 
@@ -362,6 +365,7 @@ class DataSource extends DataTableSource {
   BuildContext context;
   List<Pedido> pedidos;
   int selectedCount = 0;
+  PedidoItemFilter pedidoItemFilter = PedidoItemFilter();
 
   DataSource(this.pedidos, this.context);
 
@@ -411,14 +415,13 @@ class DataSource extends DataTableSource {
           },
         )),
         DataCell(IconButton(
-          icon: Icon(Icons.shopping_basket_outlined),
+          icon: Icon(Icons.list),
           onPressed: () {
+            pedidoItemFilter.pedido = p.id;
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (BuildContext context) {
-                  return PedidoCreatePage(
-                    pedido: p,
-                  );
+                  return PedidoItemTable(pedidoItemFilter: pedidoItemFilter);
                 },
               ),
             );

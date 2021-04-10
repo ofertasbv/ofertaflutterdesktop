@@ -3,6 +3,7 @@ import 'package:mobx/mobx.dart';
 import 'package:nosso/src/core/model/pedidoitem.dart';
 import 'package:nosso/src/core/repository/pedidoItem_repository.dart';
 import 'package:nosso/src/paginas/pedidoitem/carrinho_item.dart';
+import 'package:nosso/src/util/filter/pedidoitem_filter.dart';
 
 part 'pedidoItem_controller.g.dart';
 
@@ -10,12 +11,12 @@ class PedidoItemController = PedidoItemControllerBase
     with _$PedidoItemController;
 
 abstract class PedidoItemControllerBase with Store {
-  PedidoItemRepository _pedidoItemRepository;
+  PedidoItemRepository pedidoItemRepository;
   CarrinhoItem carrinhoItem;
 
   PedidoItemControllerBase() {
     carrinhoItem = CarrinhoItem();
-    _pedidoItemRepository = PedidoItemRepository();
+    pedidoItemRepository = PedidoItemRepository();
   }
 
   @observable
@@ -57,7 +58,17 @@ abstract class PedidoItemControllerBase with Store {
   @action
   Future<List<PedidoItem>> getAll() async {
     try {
-      pedidoItens = await _pedidoItemRepository.getAll();
+      pedidoItens = await pedidoItemRepository.getAll();
+      return pedidoItens;
+    } catch (e) {
+      error = e;
+    }
+  }
+
+  @action
+  Future<List<PedidoItem>> getFilter(PedidoItemFilter filter) async {
+    try {
+      pedidoItens = await pedidoItemRepository.getFilter(filter);
       return pedidoItens;
     } catch (e) {
       error = e;
@@ -67,7 +78,7 @@ abstract class PedidoItemControllerBase with Store {
   @action
   Future<int> create(PedidoItem p) async {
     try {
-      pedidoitem = await _pedidoItemRepository.create(p.toJson());
+      pedidoitem = await pedidoItemRepository.create(p.toJson());
       if (pedidoitem == null) {
         mensagem = "sem dados";
       } else {
@@ -82,7 +93,7 @@ abstract class PedidoItemControllerBase with Store {
   @action
   Future<int> update(int id, PedidoItem p) async {
     try {
-      pedidoitem = await _pedidoItemRepository.update(id, p.toJson());
+      pedidoitem = await pedidoItemRepository.update(id, p.toJson());
       return pedidoitem;
     } on DioError catch (e) {
       mensagem = e.message;

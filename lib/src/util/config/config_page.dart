@@ -22,7 +22,9 @@ import 'package:nosso/src/paginas/marca/marca_page.dart';
 import 'package:nosso/src/paginas/medida/medida_table.dart';
 import 'package:nosso/src/paginas/pagamento/pagamento_page.dart';
 import 'package:nosso/src/paginas/pedido/pedido_page.dart';
+import 'package:nosso/src/paginas/pedido/pedido_table.dart';
 import 'package:nosso/src/paginas/pedidoitem/pedidoitem_page.dart';
+import 'package:nosso/src/paginas/pedidoitem/pedidoitem_table.dart';
 import 'package:nosso/src/paginas/permissao/permissao_page.dart';
 import 'package:nosso/src/paginas/produto/produto_table.dart';
 import 'package:nosso/src/paginas/promocao/promocao_table.dart';
@@ -584,7 +586,7 @@ class _ConfigPageState extends State<ConfigPage> {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (BuildContext context) {
-                  return PedidoItemPage();
+                  return PedidoItemTable();
                 },
               ),
             );
