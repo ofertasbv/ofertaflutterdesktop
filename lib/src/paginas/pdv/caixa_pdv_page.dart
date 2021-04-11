@@ -384,8 +384,12 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Container(
-              height: 600,
-              color: Colors.transparent,
+              height: 50,
+              width: double.infinity,
+              color: Theme.of(context).primaryColor.withOpacity(0.5),
+              padding: EdgeInsets.all(0),
+            ),
+            Expanded(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -398,7 +402,7 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
                         Container(
                           width: double.infinity,
                           height: 500,
-                          color: Colors.blueGrey[200],
+                          color: Theme.of(context).primaryColor.withOpacity(1),
                           // padding: EdgeInsets.only(top: 10),
                           child: buildForm(dateFormat, context),
                         ),
@@ -425,7 +429,9 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
                                     controller: descontoController,
                                     validator: validateDesconto,
                                     style: TextStyle(
-                                        color: Colors.black, fontSize: 25),
+                                      color: Colors.black,
+                                      fontSize: 25,
+                                    ),
                                     decoration: InputDecoration(
                                       filled: true,
                                       enabledBorder: OutlineInputBorder(
@@ -518,7 +524,8 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
                           Container(
                             width: double.infinity,
                             height: 100,
-                            color: Theme.of(context).primaryColor.withOpacity(1),
+                            color:
+                                Theme.of(context).primaryColor.withOpacity(1),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -526,15 +533,20 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
                                 FlatButton.icon(
                                     label: Text(
                                       "CANCELAR COMPRAR",
-                                      style: TextStyle(fontSize: 20),
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        color: Theme.of(context).accentColor,
+                                      ),
                                     ),
                                     icon: Icon(Icons.cancel_outlined),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(0),
-                                      side: BorderSide(color: Colors.red),
+                                      side: BorderSide(
+                                        color: Theme.of(context).accentColor,
+                                      ),
                                     ),
                                     color: Colors.white,
-                                    textColor: Colors.red,
+                                    textColor: Theme.of(context).accentColor,
                                     padding: EdgeInsets.only(
                                         left: 40,
                                         right: 40,
@@ -551,12 +563,20 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
                                 FlatButton.icon(
                                   label: Text(
                                     "FECHAR VENDA",
-                                    style: TextStyle(fontSize: 20),
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      color: Theme.of(context).primaryColor,
+                                    ),
                                   ),
-                                  icon: Icon(Icons.shopping_basket_outlined),
+                                  icon: Icon(
+                                    Icons.shopping_basket_outlined,
+                                    color: Theme.of(context).primaryColor,
+                                  ),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(0),
-                                    side: BorderSide(color: Colors.green),
+                                    side: BorderSide(
+                                      color: Theme.of(context).primaryColor,
+                                    ),
                                   ),
                                   color: Colors.white,
                                   textColor: Colors.green,
@@ -589,7 +609,7 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
             Container(
               height: 50,
               width: double.infinity,
-              color: Theme.of(context).primaryColor.withOpacity(0.1),
+              color: Theme.of(context).primaryColor.withOpacity(0.5),
               padding: EdgeInsets.all(0),
             ),
           ],
@@ -647,20 +667,13 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
                 "CÓDIGO DE BARRA",
                 style: TextStyle(
                   fontSize: 14,
+                  color: Colors.white,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               subtitle: TextFormField(
                 controller: codigoBarraController,
                 validator: validateCodigoBarra,
-                // onFieldSubmitted: (valor) {
-                //   if (controller.validate()) {
-                //     setState(() {
-                //       codigoBarraController.text = valor;
-                //       buscarByCodigoDeBarra(codigoBarraController.text);
-                //     });
-                //   }
-                // },
                 onChanged: (valor) {
                   setState(() {
                     buscarByCodigoDeBarra(codigoBarraController.text);
@@ -694,6 +707,7 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
                 "QUANTIDADE",
                 style: TextStyle(
                   fontSize: 14,
+                  color: Colors.white,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -728,6 +742,7 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
                 "VALOR UNITÁRIO",
                 style: TextStyle(
                   fontSize: 14,
+                  color: Colors.white,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -762,6 +777,7 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
                 "SUBTOTAL",
                 style: TextStyle(
                   fontSize: 14,
+                  color: Colors.white,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -853,6 +869,7 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
           columnSpacing: 10,
           columns: [
             DataColumn(label: Text("Cód")),
+            DataColumn(label: Text("Foto")),
             DataColumn(label: Text("Quant.")),
             DataColumn(label: Text("Unit.")),
             DataColumn(label: Text("Descrição")),
@@ -873,6 +890,7 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
       dataTextStyle: TextStyle(color: Colors.grey[700]),
       columns: [
         DataColumn(label: Text("Cód")),
+        DataColumn(label: Text("Foto")),
         DataColumn(label: Text("Quant.")),
         DataColumn(label: Text("Unit.")),
         DataColumn(label: Text("Descrição")),
@@ -890,6 +908,19 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
               },
               cells: [
                 DataCell(Text("${p.produto.id}")),
+                DataCell(
+                  p.produto.foto != null
+                      ? CircleAvatar(
+                          backgroundColor: Colors.grey[100],
+                          radius: 20,
+                          backgroundImage: NetworkImage(
+                              "${produtoController.arquivo + p.produto.foto}"),
+                        )
+                      : CircleAvatar(
+                          child: Image.asset(ConstantApi.urlLogo),
+                          radius: 20,
+                        ),
+                ),
                 DataCell(Text("${p.quantidade}")),
                 DataCell(
                   Text(
@@ -905,11 +936,15 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
                   ),
                 ),
                 DataCell(
-                  IconButton(
-                    icon: Icon(Icons.delete_outline),
-                    onPressed: () {
-                      showDialogAlertExcluir(context, p);
-                    },
+                  CircleAvatar(
+                    backgroundColor:
+                        Theme.of(context).primaryColor.withOpacity(0.4),
+                    child: IconButton(
+                      icon: Icon(Icons.delete_outline),
+                      onPressed: () {
+                        showDialogAlertExcluir(context, p);
+                      },
+                    ),
                   ),
                 )
               ],
@@ -971,7 +1006,7 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           content: Container(
-            height: 200,
+            height: 300,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -987,8 +1022,8 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
                           child: Image.network(
                             produtoController.arquivo + p.produto.foto,
                             fit: BoxFit.cover,
-                            width: 100,
-                            height: 100,
+                            width: 200,
+                            height: 200,
                           ),
                         )
                       : ClipRRect(
@@ -996,8 +1031,8 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
                           child: Image.asset(
                             ConstantApi.urlLogo,
                             fit: BoxFit.cover,
-                            width: 100,
-                            height: 100,
+                            width: 200,
+                            height: 200,
                           ),
                         ),
                 ),
@@ -1145,6 +1180,8 @@ class Controller {
 
 class DataSource extends DataTableSource {
   var pedidoController = GetIt.I.get<PedidoController>();
+  var produtoController = GetIt.I.get<ProdutoController>();
+
   BuildContext context;
   List<PedidoItem> itens;
   int selectedCount = 0;
@@ -1161,6 +1198,18 @@ class DataSource extends DataTableSource {
       index: index,
       cells: [
         DataCell(Text("${p.produto.id}")),
+        DataCell(
+          p.produto.foto != null
+              ? CircleAvatar(
+                  backgroundColor: Colors.grey[100],
+                  radius: 20,
+                  backgroundImage: NetworkImage(
+                      "${produtoController.arquivo + p.produto.foto}"),
+                )
+              : CircleAvatar(
+                  radius: 20,
+                ),
+        ),
         DataCell(Text("${p.quantidade}")),
         DataCell(
           Text(

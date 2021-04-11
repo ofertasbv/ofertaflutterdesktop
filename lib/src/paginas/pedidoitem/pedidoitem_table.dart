@@ -259,16 +259,18 @@ class DataSource extends DataTableSource {
       cells: [
         DataCell(Text("${p.id}")),
         DataCell(Text("${p.produto.codigoBarra}")),
-        DataCell(p.produto.foto != null
-            ? CircleAvatar(
-                backgroundColor: Colors.grey[100],
-                radius: 20,
-                backgroundImage: NetworkImage(
-                    "${produtoController.arquivo + p.produto.foto}"),
-              )
-            : CircleAvatar(
-                radius: 20,
-              )),
+        DataCell(
+          p.produto.foto != null
+              ? CircleAvatar(
+                  backgroundColor: Colors.grey[100],
+                  radius: 20,
+                  backgroundImage: NetworkImage(
+                      "${produtoController.arquivo + p.produto.foto}"),
+                )
+              : CircleAvatar(
+                  radius: 20,
+                ),
+        ),
         DataCell(Text("${p.produto.nome}")),
         DataCell(Text("${p.pedido.descricao}")),
         DataCell(Text(

@@ -5,8 +5,8 @@ ThemeData getTheme(BuildContext context) {
   return ThemeData(
     tabBarTheme: TabBarTheme(),
     brightness: Brightness.light,
-    primaryColor: Colors.deepPurple[600],
-    accentColor: Colors.deepOrangeAccent[400],
+    primaryColor: Colors.deepPurple[800],
+    accentColor: Colors.deepOrangeAccent[600],
     primarySwatch: Colors.deepOrange,
     textTheme: GoogleFonts.sourceSansProTextTheme().copyWith(
       subtitle2: TextStyle(
@@ -87,8 +87,8 @@ ThemeData getTheme(BuildContext context) {
       color: Colors.indigo[900],
     ),
     snackBarTheme: SnackBarThemeData(
-      actionTextColor: Colors.black,
-      backgroundColor: Colors.yellow[900],
+      actionTextColor: Colors.deepPurple[600],
+      backgroundColor: Colors.deepOrangeAccent[600],
     ),
     // scaffoldBackgroundColor: Colors.grey[100],
     bottomSheetTheme: BottomSheetThemeData(

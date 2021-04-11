@@ -133,22 +133,22 @@ class _PedidoItensListState extends State<PedidoItensList> {
                       children: <Widget>[
                         p.produto.foto != null
                             ? ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
+                                borderRadius: BorderRadius.circular(0),
                                 child: Image.network(
                                   ConstantApi.urlArquivoProduto +
                                       p.produto.foto,
                                   fit: BoxFit.cover,
-                                  width: 100,
-                                  height: 130,
+                                  width: 150,
+                                  height: 150,
                                 ),
                               )
                             : ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
+                                borderRadius: BorderRadius.circular(0),
                                 child: Image.asset(
                                   ConstantApi.urlLogo,
                                   fit: BoxFit.cover,
-                                  width: 100,
-                                  height: 130,
+                                  width: 150,
+                                  height: 150,
                                 ),
                               ),
                         Column(

@@ -150,40 +150,53 @@ class HomePage extends StatelessWidget {
       child: ListView(
         children: [
           Container(
-            height: 100,
+            height: 300,
             color: Colors.transparent,
             padding: EdgeInsets.only(top: 0, left: 50, right: 50),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "CATEGORIAS EM DESTAQUES",
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                GestureDetector(
-                  child: Text(
-                    "VER MAIS",
-                    style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (BuildContext context) {
-                          return CategoriaPageList();
-                        },
-                      ),
-                    );
-                  },
-                ),
-              ],
+            child: Container(
+              height: 300,
+              color: Colors.grey[400],
             ),
-            alignment: Alignment.center,
+          ),
+          SizedBox(height: 20),
+          Container(
+            height: 70,
+            padding: EdgeInsets.only(top: 0, left: 40, right: 40),
+            child: ListTile(
+              leading: Text(
+                "Departamentos em destaque",
+                style: TextStyle(
+                  color: Theme.of(context).accentColor,
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              title: Text(
+                "veja todos departarmentos",
+                style: TextStyle(
+                  color: Theme.of(context).primaryColor,
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              trailing: RaisedButton(
+                padding: EdgeInsets.only(left: 50, right: 50),
+                color: Theme.of(context).accentColor,
+                child: Text(
+                  "VER MAIS",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (BuildContext context) {
+                        return CategoriaPageList();
+                      },
+                    ),
+                  );
+                },
+              ),
+            ),
           ),
           Container(
             height: 300,
