@@ -34,13 +34,13 @@ class ContainerPromocao extends StatelessWidget {
               Container(
                 width: 200,
                 height: 150,
-                color: Colors.grey,
+                color: Colors.grey[600],
                 padding: EdgeInsets.all(0),
                 child: p.foto != null
                     ? Container(
                         width: 200,
                         height: 150,
-                        color: Colors.grey[400],
+                        color: Colors.grey[600],
                         child: Image.network(
                           "${promoCaoController.arquivo + p.foto}",
                           width: 200,

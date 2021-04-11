@@ -103,7 +103,7 @@ class _PromocaoListHomeState extends State<PromocaoListHome>
                     Container(
                       height: 350,
                       decoration: BoxDecoration(
-                        color: Colors.grey[200],
+                        color: Colors.grey[600].withOpacity(1),
                         borderRadius: BorderRadius.circular(0),
                       ),
                       child: p.foto != null

@@ -25,8 +25,8 @@ class HomePage extends StatelessWidget {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Colors.grey[200].withOpacity(1),
-              Colors.grey[300].withOpacity(1),
+              Colors.grey[100].withOpacity(1),
+              Colors.grey[100].withOpacity(1),
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -66,7 +66,7 @@ class HomePage extends StatelessWidget {
                 title: Text(
                   "BOOK OFERTAS",
                   style: TextStyle(
-                    color: Theme.of(context).accentColor.withOpacity(1),
+                    color: Colors.grey[100],
                     fontSize: 25,
                     fontWeight: FontWeight.bold,
                   ),
@@ -83,6 +83,7 @@ class HomePage extends StatelessWidget {
                 style: TextStyle(
                   color: Colors.grey[200],
                   fontSize: 24,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
               alignment: Alignment.centerLeft,

@@ -15,6 +15,7 @@ import 'package:nosso/src/core/model/cliente.dart';
 import 'package:nosso/src/core/model/loja.dart';
 import 'package:nosso/src/core/model/pedido.dart';
 import 'package:nosso/src/paginas/pagamento/pagamento_create_page.dart';
+import 'package:nosso/src/paginas/pagamento/pagamento_page.dart';
 import 'package:nosso/src/paginas/pedido/pedido_create_page.dart';
 import 'package:nosso/src/paginas/pedidoitem/pedidoitem_page.dart';
 import 'package:nosso/src/paginas/pedidoitem/pedidoitem_table.dart';
@@ -433,7 +434,7 @@ class DataSource extends DataTableSource {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (BuildContext context) {
-                  return PagamentoCreatePage();
+                  return PagamentoPage();
                 },
               ),
             );

@@ -102,7 +102,7 @@ class _PromocaoPageListState extends State<PromocaoPageList> {
                 title: Text(
                   "BOOK OFERTAS",
                   style: TextStyle(
-                    color: Theme.of(context).accentColor.withOpacity(1),
+                    color: Colors.grey[100],
                     fontSize: 25,
                     fontWeight: FontWeight.bold,
                   ),

@@ -530,7 +530,7 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
                                     ),
                                     icon: Icon(Icons.cancel_outlined),
                                     shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(35),
+                                      borderRadius: BorderRadius.circular(0),
                                       side: BorderSide(color: Colors.red),
                                     ),
                                     color: Colors.white,
@@ -555,7 +555,7 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
                                   ),
                                   icon: Icon(Icons.shopping_basket_outlined),
                                   shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(35),
+                                    borderRadius: BorderRadius.circular(0),
                                     side: BorderSide(color: Colors.green),
                                   ),
                                   color: Colors.white,
@@ -1011,7 +1011,7 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
                 color: Colors.grey,
               ),
               shape: RoundedRectangleBorder(
-                side: BorderSide(color: Colors.grey),
+                side: BorderSide(color: Theme.of(context).accentColor),
                 borderRadius: BorderRadius.all(
                   Radius.circular(0),
                 ),
@@ -1029,7 +1029,7 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
                 color: Colors.green,
               ),
               shape: RoundedRectangleBorder(
-                side: BorderSide(color: Colors.green),
+                side: BorderSide(color: Theme.of(context).primaryColor),
                 borderRadius: BorderRadius.all(
                   Radius.circular(0),
                 ),
