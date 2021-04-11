@@ -5,6 +5,7 @@ class CaixaFluxoEntrada {
   int id;
   String descricao;
   double valorEntrada;
+  DateTime dataRegistro;
   CaixaFluxo caixaFluxo;
   Pedido pedido;
 
@@ -12,6 +13,7 @@ class CaixaFluxoEntrada {
     this.id,
     this.descricao,
     this.valorEntrada,
+    this.dataRegistro,
     this.caixaFluxo,
     this.pedido,
   });
@@ -20,6 +22,7 @@ class CaixaFluxoEntrada {
     id = json['id'];
     descricao = json['descricao'];
     valorEntrada = json['valorEntrada'];
+    dataRegistro = DateTime.tryParse(json['dataRegistro'].toString());
     caixaFluxo = json['caixaFluxo'] != null ? new CaixaFluxo.fromJson(json['caixaFluxo']) : null;
 
     pedido =
@@ -31,6 +34,7 @@ class CaixaFluxoEntrada {
     data['id'] = this.id;
     data['descricao'] = this.descricao;
     data['valorEntrada'] = this.valorEntrada;
+    data['dataRegistro'] = this.dataRegistro.toIso8601String();
 
     if (this.caixaFluxo != null) {
       data['caixaFluxo'] = this.caixaFluxo.toJson();

@@ -279,7 +279,6 @@ class _CaixaFluxoCreatePageState extends State<CaixaFluxoCreatePage>
                     ],
                   ),
                 ),
-
                 Container(
                   height: 100,
                   padding: EdgeInsets.all(15),
@@ -308,7 +307,7 @@ class _CaixaFluxoCreatePageState extends State<CaixaFluxoCreatePage>
                               icon: Icon(Icons.clear),
                             ),
                             contentPadding:
-                            EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
+                                EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(5.0)),
                             focusedBorder: OutlineInputBorder(
@@ -343,7 +342,7 @@ class _CaixaFluxoCreatePageState extends State<CaixaFluxoCreatePage>
                               icon: Icon(Icons.clear),
                             ),
                             contentPadding:
-                            EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
+                                EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(5.0)),
                             focusedBorder: OutlineInputBorder(
@@ -354,14 +353,13 @@ class _CaixaFluxoCreatePageState extends State<CaixaFluxoCreatePage>
                           ),
                           onEditingComplete: () => focus.nextFocus(),
                           keyboardType:
-                          TextInputType.numberWithOptions(decimal: false),
+                              TextInputType.numberWithOptions(decimal: false),
                           maxLength: 6,
                         ),
                       )
                     ],
                   ),
                 ),
-
                 Container(
                   height: 100,
                   padding: EdgeInsets.all(15),
@@ -390,7 +388,7 @@ class _CaixaFluxoCreatePageState extends State<CaixaFluxoCreatePage>
                               icon: Icon(Icons.clear),
                             ),
                             contentPadding:
-                            EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
+                                EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(5.0)),
                             focusedBorder: OutlineInputBorder(
@@ -401,7 +399,7 @@ class _CaixaFluxoCreatePageState extends State<CaixaFluxoCreatePage>
                           ),
                           onEditingComplete: () => focus.nextFocus(),
                           keyboardType:
-                          TextInputType.numberWithOptions(decimal: false),
+                              TextInputType.numberWithOptions(decimal: false),
                           maxLength: 6,
                         ),
                       ),
@@ -426,7 +424,7 @@ class _CaixaFluxoCreatePageState extends State<CaixaFluxoCreatePage>
                               icon: Icon(Icons.clear),
                             ),
                             contentPadding:
-                            EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
+                                EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(5.0)),
                             focusedBorder: OutlineInputBorder(
@@ -437,14 +435,13 @@ class _CaixaFluxoCreatePageState extends State<CaixaFluxoCreatePage>
                           ),
                           onEditingComplete: () => focus.nextFocus(),
                           keyboardType:
-                          TextInputType.numberWithOptions(decimal: false),
+                              TextInputType.numberWithOptions(decimal: false),
                           maxLength: 6,
                         ),
                       )
                     ],
                   ),
                 ),
-
                 SizedBox(height: 0),
                 Container(
                   padding: EdgeInsets.all(15),
@@ -472,26 +469,20 @@ class _CaixaFluxoCreatePageState extends State<CaixaFluxoCreatePage>
                       ),
                       SizedBox(height: 10),
                       DateTimeField(
-                        initialValue: c.dataRegistro,
-                        onSaved: (value) => c.dataRegistro = value,
-                        validator: validateDataAbertura,
+                        initialValue: c.dataRegistro != null
+                            ? c.dataRegistro
+                            : DateTime.now(),
                         format: dateFormat,
+                        validator: validateDateRegsitro,
+                        onSaved: (value) => c.dataRegistro = value,
                         decoration: InputDecoration(
-                          labelText: "Data de registro",
+                          labelText: "data registro",
+                          hintText: "99-09-9999",
                           prefixIcon: Icon(
                             Icons.calendar_today,
                             color: Colors.grey,
                           ),
                           suffixIcon: Icon(Icons.close),
-                          contentPadding:
-                              EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.purple[900]),
-                            gapPadding: 1,
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
                         ),
                         onEditingComplete: () => focus.nextFocus(),
                         onShowPicker: (context, currentValue) {
@@ -503,7 +494,7 @@ class _CaixaFluxoCreatePageState extends State<CaixaFluxoCreatePage>
                             lastDate: DateTime(2030),
                           );
                         },
-                        keyboardType: TextInputType.datetime,
+                        maxLength: 10,
                       ),
                     ],
                   ),
@@ -523,7 +514,6 @@ class _CaixaFluxoCreatePageState extends State<CaixaFluxoCreatePage>
                 if (c.id == null) {
                   dialogs.information(context, "prepando para o cadastro...");
                   Timer(Duration(seconds: 3), () {
-
                     print("Descrição: ${c.descricao}");
                     print("Saldo anterior: ${c.saldoAnterior}");
                     print("Valor de entrada: ${c.valorEntrada}");
@@ -535,12 +525,11 @@ class _CaixaFluxoCreatePageState extends State<CaixaFluxoCreatePage>
                     print("Caixa: ${c.caixa.descricao}");
                     print("Operador: ${c.vendedor.nome}");
 
+                    verificaCaixaStatus(c.status);
+
                     caixafluxoController.create(c).then((value) {
                       print("cadastro : ${value}");
                     });
-
-                    verificaCaixaStatus(c.status);
-                    caixaController.update(caixa.id, caixa);
 
                     Navigator.of(context).pop();
                     buildPush(context);
@@ -561,10 +550,8 @@ class _CaixaFluxoCreatePageState extends State<CaixaFluxoCreatePage>
                     print("Caixa: ${c.caixa.descricao}");
                     print("Operador: ${c.vendedor.nome}");
 
-                    caixafluxoController.update(c.id, c);
-
                     verificaCaixaStatus(c.status);
-                    caixaController.update(caixa.id, caixa);
+                    caixafluxoController.update(c.id, c);
 
                     Navigator.of(context).pop();
                     buildPush(context);

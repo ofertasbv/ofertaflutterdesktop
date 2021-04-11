@@ -54,7 +54,7 @@ class _CaixaFluxoSaidaCreatePageState extends State<CaixaFluxoSaidaCreatePage>
   void initState() {
     if (c == null) {
       c = CaixaFluxoSaida();
-    }else{
+    } else {
       caixaFluxoSelecionado = c.caixaFluxo;
       valorSaidaController.text = c.valorSaida.toStringAsFixed(2);
     }
@@ -108,7 +108,7 @@ class _CaixaFluxoSaidaCreatePageState extends State<CaixaFluxoSaidaCreatePage>
       ),
     );
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -148,7 +148,7 @@ class _CaixaFluxoSaidaCreatePageState extends State<CaixaFluxoSaidaCreatePage>
   }
 
   buildListViewForm(BuildContext context) {
-    var dateFormat = DateFormat('dd/MM/yyyy HH:mm');
+    var dateFormat = DateFormat('dd/MM/yyyy');
     var maskFormatterNumero = new MaskTextInputFormatter(
         mask: '####-####-####-####', filter: {"#": RegExp(r'[0-9]')});
     var focus = FocusScope.of(context);
@@ -261,12 +261,11 @@ class _CaixaFluxoSaidaCreatePageState extends State<CaixaFluxoSaidaCreatePage>
                           prefixIcon: Icon(Icons.credit_card),
                         ),
                         onEditingComplete: () => focus.nextFocus(),
-                        keyboardType: TextInputType.number,
-                        inputFormatters: [maskFormatterNumero],
+                        keyboardType: TextInputType.text,
                         maxLength: 23,
                       ),
                       SizedBox(height: 10),
-                      SizedBox(height: 10),
+
                       TextFormField(
                         controller: valorSaidaController,
                         validator: validateValorSaida,
@@ -298,6 +297,35 @@ class _CaixaFluxoSaidaCreatePageState extends State<CaixaFluxoSaidaCreatePage>
                         keyboardType:
                             TextInputType.numberWithOptions(decimal: false),
                         maxLength: 6,
+                      ),
+                      SizedBox(height: 10),
+                      DateTimeField(
+                        initialValue: c.dataRegistro != null
+                            ? c.dataRegistro
+                            : DateTime.now(),
+                        format: dateFormat,
+                        validator: validateDateRegsitro,
+                        onSaved: (value) => c.dataRegistro = value,
+                        decoration: InputDecoration(
+                          labelText: "data registro",
+                          hintText: "99-09-9999",
+                          prefixIcon: Icon(
+                            Icons.calendar_today,
+                            color: Colors.grey,
+                          ),
+                          suffixIcon: Icon(Icons.close),
+                        ),
+                        onEditingComplete: () => focus.nextFocus(),
+                        onShowPicker: (context, currentValue) {
+                          return showDatePicker(
+                            context: context,
+                            firstDate: DateTime(2000),
+                            initialDate: currentValue ?? DateTime.now(),
+                            locale: Locale('pt', 'BR'),
+                            lastDate: DateTime(2030),
+                          );
+                        },
+                        maxLength: 10,
                       ),
                     ],
                   ),

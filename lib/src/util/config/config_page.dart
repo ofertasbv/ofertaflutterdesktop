@@ -201,6 +201,134 @@ class _ConfigPageState extends State<ConfigPage> {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (BuildContext context) {
+                  return CaixaFluxoPage();
+                },
+              ),
+            );
+          },
+          child: Container(
+            width: 150,
+            height: 150,
+            color: Colors.grey[700],
+            alignment: Alignment.center,
+            child: ListTile(
+              title: Icon(
+                Icons.recent_actors_outlined,
+                size: 40,
+                color: Theme.of(context).accentColor.withOpacity(1),
+              ),
+              subtitle: Text(
+                "lista de fluxos de caixas",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey[200],
+                ),
+              ),
+            ),
+          ),
+        ),
+        GestureDetector(
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return CaixaPage();
+                },
+              ),
+            );
+          },
+          child: Container(
+            width: 150,
+            height: 150,
+            color: Colors.grey[700],
+            alignment: Alignment.center,
+            child: ListTile(
+              title: Icon(
+                Icons.recent_actors,
+                size: 40,
+                color: Theme.of(context).accentColor.withOpacity(1),
+              ),
+              subtitle: Text(
+                "lista de caixas",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey[200],
+                ),
+              ),
+            ),
+          ),
+        ),
+        GestureDetector(
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return CaixaFluxoEntradaPage();
+                },
+              ),
+            );
+          },
+          child: Container(
+            width: 150,
+            height: 150,
+            color: Colors.grey[700],
+            alignment: Alignment.center,
+            child: ListTile(
+              title: Icon(
+                Icons.recent_actors,
+                size: 40,
+                color: Theme.of(context).accentColor.withOpacity(1),
+              ),
+              subtitle: Text(
+                "lista de caixas entradas",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey[200],
+                ),
+              ),
+            ),
+          ),
+        ),
+        GestureDetector(
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return CaixaFluxoSaidaPage();
+                },
+              ),
+            );
+          },
+          child: Container(
+            width: 150,
+            height: 150,
+            color: Colors.grey[700],
+            alignment: Alignment.center,
+            child: ListTile(
+              title: Icon(
+                Icons.recent_actors,
+                size: 40,
+                color: Theme.of(context).accentColor.withOpacity(1),
+              ),
+              subtitle: Text(
+                "lista de caixas saídas",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey[200],
+                ),
+              ),
+            ),
+          ),
+        ),
+        GestureDetector(
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
                   return CategoriaPage();
                 },
               ),
@@ -859,134 +987,6 @@ class _ConfigPageState extends State<ConfigPage> {
               ),
               subtitle: Text(
                 "lista de pagamentos",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.grey[200],
-                ),
-              ),
-            ),
-          ),
-        ),
-        GestureDetector(
-          onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return CaixaFluxoPage();
-                },
-              ),
-            );
-          },
-          child: Container(
-            width: 150,
-            height: 150,
-            color: Colors.grey[700],
-            alignment: Alignment.center,
-            child: ListTile(
-              title: Icon(
-                Icons.recent_actors_outlined,
-                size: 40,
-                color: Theme.of(context).accentColor.withOpacity(1),
-              ),
-              subtitle: Text(
-                "lista de fluxos de caixas",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.grey[200],
-                ),
-              ),
-            ),
-          ),
-        ),
-        GestureDetector(
-          onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return CaixaPage();
-                },
-              ),
-            );
-          },
-          child: Container(
-            width: 150,
-            height: 150,
-            color: Colors.grey[700],
-            alignment: Alignment.center,
-            child: ListTile(
-              title: Icon(
-                Icons.recent_actors,
-                size: 40,
-                color: Theme.of(context).accentColor.withOpacity(1),
-              ),
-              subtitle: Text(
-                "lista de caixas",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.grey[200],
-                ),
-              ),
-            ),
-          ),
-        ),
-        GestureDetector(
-          onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return CaixaFluxoEntradaPage();
-                },
-              ),
-            );
-          },
-          child: Container(
-            width: 150,
-            height: 150,
-            color: Colors.grey[700],
-            alignment: Alignment.center,
-            child: ListTile(
-              title: Icon(
-                Icons.recent_actors,
-                size: 40,
-                color: Theme.of(context).accentColor.withOpacity(1),
-              ),
-              subtitle: Text(
-                "lista de caixas entradas",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.grey[200],
-                ),
-              ),
-            ),
-          ),
-        ),
-        GestureDetector(
-          onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return CaixaFluxoSaidaPage();
-                },
-              ),
-            );
-          },
-          child: Container(
-            width: 150,
-            height: 150,
-            color: Colors.grey[700],
-            alignment: Alignment.center,
-            child: ListTile(
-              title: Icon(
-                Icons.recent_actors,
-                size: 40,
-                color: Theme.of(context).accentColor.withOpacity(1),
-              ),
-              subtitle: Text(
-                "lista de caixas saídas",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,

@@ -54,4 +54,11 @@ class ValidadorCaixaFluxo {
     }
     return null;
   }
+
+  String validateDateRegsitro(DateTime dataRegistro) {
+    if (dataRegistro == null) {
+      return "Preencha a data registro";
+    }
+    return null;
+  }
 }

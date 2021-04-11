@@ -45,8 +45,7 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
 
   // var audioCache = AudioCache(prefix: "audios/");
 
-  String barcode = "";
-
+  CaixaFluxo caixa;
   PedidoItem pedidoItem;
   Pedido pedido;
   Produto produto;
@@ -59,8 +58,8 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
   var valorPedidoController = TextEditingController();
   var totalVolumesController = TextEditingController();
   var foto;
+  String barcode = "";
 
-  CaixaFluxo caixa;
   Controller controller;
 
   @override
@@ -103,7 +102,7 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
     });
   }
 
-  Future barcodeScanning() async {
+  barcodeScanning() async {
     try {
       String barcode = await BarcodeScanner.scan();
       setState(() {
@@ -128,7 +127,9 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
   }
 
   showSnackbar(BuildContext context, String texto) {
-    final snackbar = SnackBar(content: Text(texto));
+    final snackbar = SnackBar(
+      content: Text(texto),
+    );
     GlobalScaffold.instance.showSnackbar(snackbar);
   }
 
@@ -166,10 +167,8 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
       if (pedidoItemController.isExisteItem(new PedidoItem(produto: produto))) {
         pedidoItemController.remove(pedidoItem);
         pedidoItemController.itens;
-        // pedidoItemController.adicionar(new PedidoItem(produto: p));
-
-        showSnackbar(context, " removido");
         pedidoItemController.calculateTotal();
+        showSnackbar(context, " removido");
       } else {
         pedidoItemController.adicionar(new PedidoItem(produto: produto));
         showSnackbar(context, "${produto.nome} adicionado");
@@ -185,7 +184,7 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
       if (pedidoItemController.isExisteItem(new PedidoItem(produto: p))) {
         pedidoItemController.remove(pedidoItem);
         pedidoItemController.itens;
-        // pedidoItemController.adicionar(new PedidoItem(produto: p));
+        pedidoItemController.calculateTotal();
 
         showSnackbar(context, " removido");
         pedidoItemController.calculateTotal();
@@ -221,6 +220,13 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
     print("Valor total: ${p.valorTotal}");
 
     print("Foto: ${p.produto.foto}");
+  }
+
+  limparEditorController() {
+    codigoBarraController.clear();
+    quantidadeController.clear();
+    valorUnitarioController.clear();
+    valorTotalController.clear();
   }
 
   @override
@@ -1075,10 +1081,12 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
               onPressed: () {
                 setState(() {
                   pedidoItemController.remove(p);
+                  pedidoItemController.calculateTotal();
                   pedidoItemController.itens;
+                  limparEditorController();
                 });
 
-                // showSnackbar(context, "Produto ${p.produto.nome} removido");
+                showSnackbar(context, "Produto ${p.produto.nome} removido");
                 Navigator.of(context).pop();
               },
             ),
@@ -1153,8 +1161,6 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
                   valorPedidoController.clear();
                   pedidoItem = new PedidoItem(produto: new Produto());
                 });
-
-                // showSnackbar(context, "Produto ${p.produto.nome} removido");
                 Navigator.of(context).pop();
               },
             ),

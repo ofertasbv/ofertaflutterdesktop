@@ -10,7 +10,9 @@ import 'package:nosso/src/core/model/caixaentrada.dart';
 import 'package:nosso/src/core/model/caixafluxo.dart';
 import 'package:nosso/src/paginas/caixafluxo/caixafluxo_create_page.dart';
 import 'package:nosso/src/paginas/caixafluxoentrada/caixafluxoentrada_create_page.dart';
+import 'package:nosso/src/paginas/caixafluxoentrada/caixafluxoentrada_page.dart';
 import 'package:nosso/src/paginas/caixafluxosaida/caixafluxosaida_create_page.dart';
+import 'package:nosso/src/paginas/caixafluxosaida/caixafluxosaida_page.dart';
 import 'package:nosso/src/paginas/pdv/caixa_pdv_page.dart';
 import 'package:nosso/src/util/load/circular_progresso.dart';
 
@@ -177,7 +179,7 @@ class DataSource extends DataTableSource {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (BuildContext context) {
-                  return CaixaFluxoEntradaCreatePage();
+                  return CaixaFluxoEntradaPage();
                 },
               ),
             );
@@ -190,7 +192,7 @@ class DataSource extends DataTableSource {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (BuildContext context) {
-                  return CaixaFluxoSaidaCreatePage();
+                  return CaixaFluxoSaidaPage();
                 },
               ),
             );

@@ -42,6 +42,19 @@ class CaixaFluxoSaidaPage extends StatelessWidget {
               );
             },
           ),
+          SizedBox(width: 10),
+          CircleAvatar(
+            backgroundColor: Theme.of(context).accentColor,
+            foregroundColor: Colors.white,
+            child: IconButton(
+              icon: Icon(
+                Icons.refresh,
+              ),
+              onPressed: () {
+                caixafluxosaidaController.getAll();
+              },
+            ),
+          ),
           SizedBox(width: 50),
         ],
       ),

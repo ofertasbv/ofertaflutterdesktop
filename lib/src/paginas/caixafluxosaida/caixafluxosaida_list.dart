@@ -107,7 +107,10 @@ class DataSource extends DataTableSource {
         DataCell(Text("${p.id}")),
         DataCell(Text("${p.descricao}")),
         DataCell(Text("${p.caixaFluxo.descricao}")),
-        DataCell(Text("${formatMoeda.format(p.valorSaida)}")),
+        DataCell(Text(
+          "R\$ ${formatMoeda.format(p.valorSaida)}",
+          style: TextStyle(color: Colors.red),
+        )),
         DataCell(IconButton(
           icon: Icon(Icons.search),
           onPressed: () {
