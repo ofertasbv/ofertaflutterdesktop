@@ -66,15 +66,13 @@ class _ConfigPageState extends State<ConfigPage> {
                           alignment: Alignment.center,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              SizedBox(
-                                height: 10,
-                              ),
+                              SizedBox(height: 30),
                               Container(
-                                height: 188,
+                                height: 170,
                                 width: double.infinity,
-                                color: Colors.grey[800],
+                                color: Colors.transparent,
                                 padding:
                                     EdgeInsets.only(left: 0, right: 0, top: 40),
                                 child: ListTile(
@@ -100,6 +98,7 @@ class _ConfigPageState extends State<ConfigPage> {
                                   ),
                                 ),
                               ),
+                              SizedBox(height: 20),
                               Container(
                                 child: ListTile(
                                   title: Text(
@@ -112,7 +111,7 @@ class _ConfigPageState extends State<ConfigPage> {
                                   ),
                                 ),
                               ),
-                              SizedBox(height: 20),
+                              SizedBox(height: 30),
                               Container(
                                 child: ListTile(
                                   title: Text(
@@ -133,7 +132,7 @@ class _ConfigPageState extends State<ConfigPage> {
                                   ),
                                 ),
                               ),
-                              SizedBox(height: 20),
+                              SizedBox(height: 30),
                               Container(
                                 padding: EdgeInsets.all(20),
                                 child: FlatButton.icon(
