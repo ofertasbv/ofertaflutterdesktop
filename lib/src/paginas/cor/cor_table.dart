@@ -123,33 +123,37 @@ class DataSource extends DataTableSource {
           radius: 20,
         )),
         DataCell(Text("${p.descricao}")),
-        DataCell(IconButton(
-          icon: Icon(Icons.search),
-          onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return CorCreatePage(
-                    cor: p,
-                  );
-                },
-              ),
-            );
-          },
+        DataCell(CircleAvatar(
+          child: IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return CorCreatePage(
+                      cor: p,
+                    );
+                  },
+                ),
+              );
+            },
+          ),
         )),
-        DataCell(IconButton(
-          icon: Icon(Icons.edit),
-          onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return CorCreatePage(
-                    cor: p,
-                  );
-                },
-              ),
-            );
-          },
+        DataCell(CircleAvatar(
+          child: IconButton(
+            icon: Icon(Icons.edit),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return CorCreatePage(
+                      cor: p,
+                    );
+                  },
+                ),
+              );
+            },
+          ),
         )),
       ],
     );

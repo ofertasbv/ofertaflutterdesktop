@@ -160,62 +160,71 @@ class DataSource extends DataTableSource {
       cells: [
         DataCell(Text("${p.id}")),
         DataCell(CircleAvatar(
+          child: Icon(Icons.person),
           backgroundColor: Colors.grey[200],
           radius: 20,
         )),
         DataCell(Text("${p.nome}")),
         DataCell(Text(p.cnpj)),
-        DataCell(IconButton(
-          icon: Icon(Icons.edit),
-          onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return LojaCreatePage(
-                    loja: p,
-                  );
-                },
-              ),
-            );
-          },
+        DataCell(CircleAvatar(
+          child: IconButton(
+            icon: Icon(Icons.edit),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return LojaCreatePage(
+                      loja: p,
+                    );
+                  },
+                ),
+              );
+            },
+          ),
         )),
-        DataCell(IconButton(
-          icon: Icon(Icons.search),
-          onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return LojaDetalhesTab(p);
-                },
-              ),
-            );
-          },
+        DataCell(CircleAvatar(
+          child: IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return LojaDetalhesTab(p);
+                  },
+                ),
+              );
+            },
+          ),
         )),
-        DataCell(IconButton(
-          icon: Icon(Icons.list),
-          onPressed: () {
-            produtoFilter.loja = p.id;
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return ProdutoTable(filter: this.produtoFilter);
-                },
-              ),
-            );
-          },
+        DataCell(CircleAvatar(
+          child: IconButton(
+            icon: Icon(Icons.list),
+            onPressed: () {
+              produtoFilter.loja = p.id;
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return ProdutoTable(filter: this.produtoFilter);
+                  },
+                ),
+              );
+            },
+          ),
         )),
-        DataCell(IconButton(
-          icon: Icon(Icons.list),
-          onPressed: () {
-            promocaoFilter.loja = p.id;
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return PromocaoTable(promocaoFilter: this.promocaoFilter);
-                },
-              ),
-            );
-          },
+        DataCell(CircleAvatar(
+          child: IconButton(
+            icon: Icon(Icons.list),
+            onPressed: () {
+              promocaoFilter.loja = p.id;
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return PromocaoTable(promocaoFilter: this.promocaoFilter);
+                  },
+                ),
+              );
+            },
+          ),
         )),
       ],
     );

@@ -154,6 +154,7 @@ class DataSource extends DataTableSource {
       cells: [
         DataCell(Text("${p.id}")),
         DataCell(CircleAvatar(
+          child: Icon(Icons.person),
           backgroundColor: Colors.grey[200],
           radius: 20,
         )),
@@ -161,61 +162,69 @@ class DataSource extends DataTableSource {
         DataCell(Text("${p.telefone}")),
         DataCell(Text("${p.usuario.email}")),
         DataCell(Text(p.cpf)),
-        DataCell(IconButton(
-          icon: Icon(Icons.edit),
-          onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return ClienteCreatePage(
-                    cliente: p,
-                  );
-                },
-              ),
-            );
-          },
+        DataCell(CircleAvatar(
+          child: IconButton(
+            icon: Icon(Icons.edit),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return ClienteCreatePage(
+                      cliente: p,
+                    );
+                  },
+                ),
+              );
+            },
+          ),
         )),
-        DataCell(IconButton(
-          icon: Icon(Icons.search),
-          onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return ClienteCreatePage(
-                    cliente: p,
-                  );
-                },
-              ),
-            );
-          },
+        DataCell(CircleAvatar(
+          child: IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return ClienteCreatePage(
+                      cliente: p,
+                    );
+                  },
+                ),
+              );
+            },
+          ),
         )),
-        DataCell(IconButton(
-          icon: Icon(Icons.shopping_basket_outlined),
-          onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return ClienteCreatePage(
-                    cliente: p,
-                  );
-                },
-              ),
-            );
-          },
+        DataCell(CircleAvatar(
+          child: IconButton(
+            icon: Icon(Icons.shopping_basket_outlined),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return ClienteCreatePage(
+                      cliente: p,
+                    );
+                  },
+                ),
+              );
+            },
+          ),
         )),
-        DataCell(IconButton(
-          icon: Icon(Icons.location_on_outlined),
-          onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return ClienteCreatePage(
-                    cliente: p,
-                  );
-                },
-              ),
-            );
-          },
+        DataCell(CircleAvatar(
+          child: IconButton(
+            icon: Icon(Icons.location_on_outlined),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return ClienteCreatePage(
+                      cliente: p,
+                    );
+                  },
+                ),
+              );
+            },
+          ),
         )),
       ],
     );

@@ -111,33 +111,37 @@ class DataSource extends DataTableSource {
           "R\$ ${formatMoeda.format(p.valorSaida)}",
           style: TextStyle(color: Colors.red),
         )),
-        DataCell(IconButton(
-          icon: Icon(Icons.search),
-          onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return CaixaFluxoSaidaCreatePage(
-                    saida: p,
-                  );
-                },
-              ),
-            );
-          },
+        DataCell(CircleAvatar(
+          child: IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return CaixaFluxoSaidaCreatePage(
+                      saida: p,
+                    );
+                  },
+                ),
+              );
+            },
+          ),
         )),
-        DataCell(IconButton(
-          icon: Icon(Icons.edit),
-          onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return CaixaFluxoSaidaCreatePage(
-                    saida: p,
-                  );
-                },
-              ),
-            );
-          },
+        DataCell(CircleAvatar(
+          child: IconButton(
+            icon: Icon(Icons.edit),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return CaixaFluxoSaidaCreatePage(
+                      saida: p,
+                    );
+                  },
+                ),
+              );
+            },
+          ),
         )),
       ],
     );

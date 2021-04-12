@@ -140,33 +140,37 @@ class DataSource extends DataTableSource {
       cells: [
         DataCell(Text("${p.id}")),
         DataCell(Text("${p.descricao}")),
-        DataCell(IconButton(
-          icon: Icon(Icons.search),
-          onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return PermissaoCreatePage(
-                    permissao: p,
-                  );
-                },
-              ),
-            );
-          },
+        DataCell(CircleAvatar(
+          child: IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return PermissaoCreatePage(
+                      permissao: p,
+                    );
+                  },
+                ),
+              );
+            },
+          ),
         )),
-        DataCell(IconButton(
-          icon: Icon(Icons.edit),
-          onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return PermissaoCreatePage(
-                    permissao: p,
-                  );
-                },
-              ),
-            );
-          },
+        DataCell(CircleAvatar(
+          child: IconButton(
+            icon: Icon(Icons.edit),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return PermissaoCreatePage(
+                      permissao: p,
+                    );
+                  },
+                ),
+              );
+            },
+          ),
         )),
       ],
     );

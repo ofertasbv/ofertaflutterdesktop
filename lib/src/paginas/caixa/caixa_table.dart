@@ -45,7 +45,7 @@ class _CaixaTableState extends State<CaixaTable>
             height: 60,
             width: double.infinity,
             color: Colors.grey[200],
-            padding: EdgeInsets.all(5),
+            padding: EdgeInsets.all(0),
             child: ListTile(
               subtitle: TextFormField(
                 controller: nomeController,
@@ -110,8 +110,8 @@ class _CaixaTableState extends State<CaixaTable>
             DataColumn(label: Text("Caixa")),
             DataColumn(label: Text("Status")),
             DataColumn(label: Text("Editar")),
-            DataColumn(label: Text("Abrir")),
-            DataColumn(label: Text("Fechar")),
+            DataColumn(label: Text("Abertura")),
+            DataColumn(label: Text("Fechamento")),
           ],
           source: DataSource(caixas, context),
         ),
@@ -147,19 +147,21 @@ class DataSource extends DataTableSource {
               p.caixaStatus == "ABERTO" ? Colors.green[600] : Colors.red[600],
           child: Text("${p.caixaStatus.substring(0, 1)}"),
         )),
-        DataCell(IconButton(
-          icon: Icon(Icons.edit),
-          onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return CaixaCreatePage(
-                    caixa: p,
-                  );
-                },
-              ),
-            );
-          },
+        DataCell(CircleAvatar(
+          child: IconButton(
+            icon: Icon(Icons.edit),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return CaixaCreatePage(
+                      caixa: p,
+                    );
+                  },
+                ),
+              );
+            },
+          ),
         )),
         DataCell(RaisedButton.icon(
           label: Text("Abrir caixa"),

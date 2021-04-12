@@ -581,31 +581,35 @@ class DataSource extends DataTableSource {
         DataCell(Text(p.promocao.nome)),
         DataCell(Text(p.subCategoria.nome)),
         DataCell(Text(p.loja.nome)),
-        DataCell(IconButton(
-          icon: Icon(Icons.search),
-          onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return ProdutoDetalhesTab(p);
-                },
-              ),
-            );
-          },
+        DataCell(CircleAvatar(
+          child: IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return ProdutoDetalhesTab(p);
+                  },
+                ),
+              );
+            },
+          ),
         )),
-        DataCell(IconButton(
-          icon: Icon(Icons.edit),
-          onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return ProdutoCreatePage(
-                    produto: p,
-                  );
-                },
-              ),
-            );
-          },
+        DataCell(CircleAvatar(
+          child: IconButton(
+            icon: Icon(Icons.edit),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return ProdutoCreatePage(
+                      produto: p,
+                    );
+                  },
+                ),
+              );
+            },
+          ),
         )),
       ],
     );

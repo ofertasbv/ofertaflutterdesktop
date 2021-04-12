@@ -163,33 +163,37 @@ class DataSource extends DataTableSource {
         DataCell(Text("${p.nome}")),
         DataCell(Text("${p.seguimento.nome}")),
         DataCell(Text(p.color.toString())),
-        DataCell(IconButton(
-          icon: Icon(Icons.search),
-          onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return CategoriaCreatePage(
-                    categoria: p,
-                  );
-                },
-              ),
-            );
-          },
+        DataCell(CircleAvatar(
+          child: IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return CategoriaCreatePage(
+                      categoria: p,
+                    );
+                  },
+                ),
+              );
+            },
+          ),
         )),
-        DataCell(IconButton(
-          icon: Icon(Icons.edit),
-          onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return CategoriaCreatePage(
-                    categoria: p,
-                  );
-                },
-              ),
-            );
-          },
+        DataCell(CircleAvatar(
+          child: IconButton(
+            icon: Icon(Icons.edit),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return CategoriaCreatePage(
+                      categoria: p,
+                    );
+                  },
+                ),
+              );
+            },
+          ),
         )),
       ],
     );

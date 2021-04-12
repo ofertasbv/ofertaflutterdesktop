@@ -152,13 +152,17 @@ class DataSource extends DataTableSource {
         DataCell(Text("${p.produto.nome}")),
         DataCell(Text(p.cliente.nome)),
         DataCell(Text("${p.status}")),
-        DataCell(IconButton(
-          icon: Icon(Icons.search),
-          onPressed: () {},
+        DataCell(CircleAvatar(
+          child: IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {},
+          ),
         )),
-        DataCell(IconButton(
-          icon: Icon(Icons.edit),
-          onPressed: () {},
+        DataCell(CircleAvatar(
+          child: IconButton(
+            icon: Icon(Icons.edit),
+            onPressed: () {},
+          ),
         )),
       ],
     );

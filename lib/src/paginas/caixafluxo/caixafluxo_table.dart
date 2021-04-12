@@ -114,8 +114,10 @@ class _CaixaFluxoTableState extends State<CaixaFluxoTable>
             DataColumn(label: Text("Cód")),
             DataColumn(label: Text("Descrição")),
             DataColumn(label: Text("Caixa")),
-            DataColumn(label: Text("Status")),
+            DataColumn(label: Text("Entradas")),
+            DataColumn(label: Text("Saídas")),
             DataColumn(label: Text("Total")),
+            DataColumn(label: Text("Status")),
             DataColumn(label: Text("Editar")),
             DataColumn(label: Text("Entrada")),
             DataColumn(label: Text("Saída")),
@@ -151,26 +153,39 @@ class DataSource extends DataTableSource {
         DataCell(Text("${p.id}")),
         DataCell(Text("${p.descricao}")),
         DataCell(Text("${p.caixa.descricao}")),
+        DataCell(Text(
+          "R\$ ${formatMoeda.format(p.valorEntrada)}",
+          style: TextStyle(color: Colors.red),
+        )),
+        DataCell(Text(
+          "R\$ ${formatMoeda.format(p.valorSaida)}",
+          style: TextStyle(color: Colors.red),
+        )),
+        DataCell(Text(
+          "R\$ ${formatMoeda.format(p.valorTotal)}",
+          style: TextStyle(color: Colors.red),
+        )),
         DataCell(CircleAvatar(
           backgroundColor: p.caixa.caixaStatus == "ABERTO"
               ? Colors.green[600]
               : Colors.red[600],
           child: Text("${p.caixa.caixaStatus.substring(0, 1)}"),
         )),
-        DataCell(Text("${p.valorTotal}")),
-        DataCell(IconButton(
-          icon: Icon(Icons.edit),
-          onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return CaixaFluxoCreatePage(
-                    caixaFluxo: p,
-                  );
-                },
-              ),
-            );
-          },
+        DataCell(CircleAvatar(
+          child: IconButton(
+            icon: Icon(Icons.edit),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return CaixaFluxoCreatePage(
+                      caixaFluxo: p,
+                    );
+                  },
+                ),
+              );
+            },
+          ),
         )),
         DataCell(RaisedButton(
           color: Colors.green,

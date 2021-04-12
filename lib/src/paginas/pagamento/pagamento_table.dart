@@ -151,33 +151,37 @@ class DataSource extends DataTableSource {
         DataCell(Text("${numberFormat.format(p.valor)}")),
         DataCell(Text("${dateFormat.format(p.dataPagamento)}")),
         DataCell(Text("${p.pedido.descricao}")),
-        DataCell(IconButton(
-          icon: Icon(Icons.search),
-          onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return PagamentoCreatePage(
-                    pagamento: p,
-                  );
-                },
-              ),
-            );
-          },
+        DataCell(CircleAvatar(
+          child: IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return PagamentoCreatePage(
+                      pagamento: p,
+                    );
+                  },
+                ),
+              );
+            },
+          ),
         )),
-        DataCell(IconButton(
-          icon: Icon(Icons.edit),
-          onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return PagamentoCreatePage(
-                    pagamento: p,
-                  );
-                },
-              ),
-            );
-          },
+        DataCell(CircleAvatar(
+          child: IconButton(
+            icon: Icon(Icons.edit),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return PagamentoCreatePage(
+                      pagamento: p,
+                    );
+                  },
+                ),
+              );
+            },
+          ),
         )),
         DataCell(IconButton(
           icon: Icon(Icons.monetization_on_outlined),

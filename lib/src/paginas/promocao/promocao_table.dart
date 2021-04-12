@@ -422,7 +422,6 @@ class _PromocaoTableState extends State<PromocaoTable> {
     );
   }
 
-
   builderConteudoList() {
     return Container(
       padding: EdgeInsets.only(top: 0),
@@ -458,9 +457,9 @@ class _PromocaoTableState extends State<PromocaoTable> {
             DataColumn(label: Text("Foto")),
             DataColumn(label: Text("Nome")),
             DataColumn(label: Text("Loja")),
-            DataColumn(label: Text("Status")),
             DataColumn(label: Text("Início")),
             DataColumn(label: Text("Encerramento")),
+            DataColumn(label: Text("Status")),
             DataColumn(label: Text("Visualizar")),
             DataColumn(label: Text("Editar")),
             DataColumn(label: Text("Produtos")),
@@ -505,51 +504,57 @@ class DataSource extends DataTableSource {
         ),
         DataCell(Text(p.nome)),
         DataCell(Text(p.loja.nome)),
+        DataCell(Text("${dateFormat.format(p.dataInicio)}")),
+        DataCell(Text("${dateFormat.format(p.dataFinal)}")),
         DataCell(CircleAvatar(
           backgroundColor:
               p.status == true ? Colors.green[600] : Colors.red[600],
           child: Text("${p.status.toString().substring(0, 1).toUpperCase()}"),
         )),
-        DataCell(Text("${dateFormat.format(p.dataInicio)}")),
-        DataCell(Text("${dateFormat.format(p.dataFinal)}")),
-        DataCell(IconButton(
-          icon: Icon(Icons.search),
-          onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return PromocaoDetalhesTab(p);
-                },
-              ),
-            );
-          },
+        DataCell(CircleAvatar(
+          child: IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return PromocaoDetalhesTab(p);
+                  },
+                ),
+              );
+            },
+          ),
         )),
-        DataCell(IconButton(
-          icon: Icon(Icons.edit),
-          onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return PromocaoCreatePage(
-                    promocao: p,
-                  );
-                },
-              ),
-            );
-          },
+        DataCell(CircleAvatar(
+          child: IconButton(
+            icon: Icon(Icons.edit),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return PromocaoCreatePage(
+                      promocao: p,
+                    );
+                  },
+                ),
+              );
+            },
+          ),
         )),
-        DataCell(IconButton(
-          icon: Icon(Icons.shopping_basket_outlined),
-          onPressed: () {
-            filter.promocao = p.id;
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return ProdutoTable(filter: this.filter);
-                },
-              ),
-            );
-          },
+        DataCell(CircleAvatar(
+          child: IconButton(
+            icon: Icon(Icons.shopping_basket_outlined),
+            onPressed: () {
+              filter.promocao = p.id;
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return ProdutoTable(filter: this.filter);
+                  },
+                ),
+              );
+            },
+          ),
         )),
       ],
     );

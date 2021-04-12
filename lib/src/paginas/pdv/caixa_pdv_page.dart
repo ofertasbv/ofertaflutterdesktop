@@ -1028,8 +1028,8 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
                           child: Image.network(
                             produtoController.arquivo + p.produto.foto,
                             fit: BoxFit.cover,
-                            width: 200,
-                            height: 200,
+                            width: 250,
+                            height: 230,
                           ),
                         )
                       : ClipRRect(
@@ -1037,8 +1037,8 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
                           child: Image.asset(
                             ConstantApi.urlLogo,
                             fit: BoxFit.cover,
-                            width: 200,
-                            height: 200,
+                            width: 250,
+                            height: 230,
                           ),
                         ),
                 ),
@@ -1067,7 +1067,7 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
             RaisedButton.icon(
               icon: Icon(
                 Icons.restore_from_trash,
-                color: Colors.green,
+                color: Theme.of(context).primaryColor,
               ),
               shape: RoundedRectangleBorder(
                 side: BorderSide(color: Theme.of(context).primaryColor),
@@ -1128,7 +1128,7 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
                 color: Colors.grey,
               ),
               shape: RoundedRectangleBorder(
-                side: BorderSide(color: Colors.grey),
+                side: BorderSide(color: Theme.of(context).primaryColor),
                 borderRadius: BorderRadius.all(
                   Radius.circular(0),
                 ),
@@ -1143,13 +1143,11 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
             RaisedButton.icon(
               icon: Icon(
                 Icons.restore_from_trash,
-                color: Colors.green,
+                color: Theme.of(context).primaryColor,
               ),
               shape: RoundedRectangleBorder(
-                side: BorderSide(color: Colors.green),
-                borderRadius: BorderRadius.all(
-                  Radius.circular(0),
-                ),
+                side: BorderSide(color: Theme.of(context).primaryColor),
+                borderRadius: BorderRadius.all(Radius.circular(0)),
               ),
               label: Text('SIM'),
               color: Colors.white,
