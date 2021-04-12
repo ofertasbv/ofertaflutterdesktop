@@ -11,6 +11,7 @@ import 'package:nosso/src/paginas/produto/produto_detalhes_tab.dart';
 import 'package:nosso/src/util/container/container_produto.dart';
 import 'package:nosso/src/util/filter/produto_filter.dart';
 import 'package:nosso/src/util/load/circular_progresso_mini.dart';
+import 'package:nosso/src/util/load/shimmerListProdutoHome.dart';
 
 class ProdutoListHome extends StatefulWidget {
   @override
@@ -54,7 +55,7 @@ class _ProdutoListHomeState extends State<ProdutoListHome>
           }
 
           if (produtos == null) {
-            return CircularProgressorMini();
+            return ShimmerListProdutoHome();
           }
           return RefreshIndicator(
             onRefresh: onRefresh,

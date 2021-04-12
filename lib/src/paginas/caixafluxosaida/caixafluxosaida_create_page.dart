@@ -4,8 +4,8 @@ import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -40,10 +40,12 @@ class _CaixaFluxoSaidaCreatePageState extends State<CaixaFluxoSaidaCreatePage>
   var vendedorController = GetIt.I.get<VendedorController>();
   var dialogs = Dialogs();
 
-  var saldoAnteriorController = TextEditingController();
-  var valorEntradaController = TextEditingController();
-  var valorSaidaController = TextEditingController();
-  var valorTotalController = TextEditingController();
+  var valorSaidaController = MoneyMaskedTextController(
+    decimalSeparator: ",",
+    thousandSeparator: ".",
+    initialValue: 0.00,
+    precision: 2,
+  );
 
   CaixaFluxoSaida c;
   CaixaFluxo caixaFluxoSelecionado;
@@ -56,7 +58,6 @@ class _CaixaFluxoSaidaCreatePageState extends State<CaixaFluxoSaidaCreatePage>
       c = CaixaFluxoSaida();
     } else {
       caixaFluxoSelecionado = c.caixaFluxo;
-      valorSaidaController.text = c.valorSaida.toStringAsFixed(2);
     }
     caixafluxoController.getAll();
     super.initState();
@@ -265,38 +266,16 @@ class _CaixaFluxoSaidaCreatePageState extends State<CaixaFluxoSaidaCreatePage>
                         maxLength: 23,
                       ),
                       SizedBox(height: 10),
-
                       TextFormField(
                         controller: valorSaidaController,
-                        validator: validateValorSaida,
-                        onSaved: (value) {
-                          c.valorSaida = double.tryParse(value);
+                        decoration: InputDecoration(labelText: 'Valor entrada'),
+                        onChanged: (value) {
+                          value = valorSaidaController.text;
+                          print("Valor entrada: ${value}");
                         },
-                        decoration: InputDecoration(
-                          labelText: "Valor saída",
-                          hintText: "Valor saída",
-                          prefixIcon: Icon(
-                            Icons.monetization_on_outlined,
-                            color: Colors.grey,
-                          ),
-                          suffixIcon: IconButton(
-                            onPressed: () => valorSaidaController.clear(),
-                            icon: Icon(Icons.clear),
-                          ),
-                          contentPadding:
-                              EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.purple[900]),
-                            gapPadding: 1,
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
-                        ),
-                        onEditingComplete: () => focus.nextFocus(),
-                        keyboardType:
-                            TextInputType.numberWithOptions(decimal: false),
-                        maxLength: 6,
+                        onSaved: (value) {
+                          valorSaidaController.updateValue(0);
+                        },
                       ),
                       SizedBox(height: 10),
                       DateTimeField(

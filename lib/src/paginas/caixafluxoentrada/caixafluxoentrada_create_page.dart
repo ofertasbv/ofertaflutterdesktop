@@ -4,6 +4,7 @@ import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
@@ -44,10 +45,13 @@ class _CaixaFluxoEntradaCreatePageState
 
   var dialogs = Dialogs();
 
-  var saldoAnteriorController = TextEditingController();
-  var valorEntradaController = TextEditingController();
-  var valorSaidaController = TextEditingController();
-  var valorTotalController = TextEditingController();
+
+  var valorEntradaController = MoneyMaskedTextController(
+    decimalSeparator: ",",
+    thousandSeparator: ".",
+    initialValue: 0.00,
+    precision: 2,
+  );
 
   CaixaFluxoEntrada c;
   CaixaFluxo caixaFluxoSelecionado;
@@ -315,35 +319,15 @@ class _CaixaFluxoEntradaCreatePageState
                       SizedBox(height: 10),
                       TextFormField(
                         controller: valorEntradaController,
-                        validator: validateValorEntrada,
-                        onSaved: (value) {
-                          c.valorEntrada = double.tryParse(value);
-                        },
                         decoration: InputDecoration(
-                          labelText: "Valor entrada",
-                          hintText: "Valor entrada",
-                          prefixIcon: Icon(
-                            Icons.monetization_on_outlined,
-                            color: Colors.grey,
-                          ),
-                          suffixIcon: IconButton(
-                            onPressed: () => valorEntradaController.clear(),
-                            icon: Icon(Icons.clear),
-                          ),
-                          contentPadding:
-                              EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.purple[900]),
-                            gapPadding: 1,
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
-                        ),
-                        onEditingComplete: () => focus.nextFocus(),
-                        keyboardType:
-                            TextInputType.numberWithOptions(decimal: false),
-                        maxLength: 6,
+                            labelText: 'Valor entrada'),
+                        onChanged: (value) {
+                          value = valorEntradaController.text;
+                          print("Valor entrada: ${value}");
+                        },
+                        onSaved: (value) {
+                          valorEntradaController.updateValue(0);
+                        },
                       ),
                       SizedBox(height: 10),
                       DateTimeField(

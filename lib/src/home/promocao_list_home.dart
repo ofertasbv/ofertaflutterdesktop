@@ -13,6 +13,7 @@ import 'package:nosso/src/paginas/produto/produto_page.dart';
 import 'package:nosso/src/paginas/promocao/promocao_detalhes_tab.dart';
 import 'package:nosso/src/util/filter/produto_filter.dart';
 import 'package:nosso/src/util/load/circular_progresso_mini.dart';
+import 'package:nosso/src/util/load/shimmerListPromocaoHome.dart';
 
 class PromocaoListHome extends StatefulWidget {
   Loja p;
@@ -62,7 +63,7 @@ class _PromocaoListHomeState extends State<PromocaoListHome>
           }
 
           if (promocoes == null) {
-            return CircularProgressorMini();
+            return ShimmerListPromocaoHome();
           }
 
           return RefreshIndicator(

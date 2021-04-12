@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:nosso/src/core/controller/caixafluxoentrada_controller.dart';
 import 'package:nosso/src/core/model/caixaentrada.dart';
 import 'package:nosso/src/paginas/caixafluxoentrada/caixafluxoentrada_create_page.dart';
+import 'package:nosso/src/paginas/pdv/caixa_pdv_page.dart';
 import 'package:nosso/src/util/load/circular_progresso.dart';
 
 class CaixaFluxoEntradaList extends StatefulWidget {
@@ -75,6 +76,7 @@ class _CaixaFluxoEntradaListState extends State<CaixaFluxoEntradaList>
             DataColumn(label: Text("Descrição")),
             DataColumn(label: Text("Caixa fluxo")),
             DataColumn(label: Text("Total")),
+            DataColumn(label: Text("PDV")),
             DataColumn(label: Text("Visualizar")),
             DataColumn(label: Text("Editar")),
           ],
@@ -112,6 +114,19 @@ class DataSource extends DataTableSource {
           "R\$ ${formatMoeda.format(p.valorEntrada)}",
           style: TextStyle(color: Colors.red),
         )),
+        DataCell(RaisedButton(
+          color: Colors.blue,
+          child: Text("PDV"),
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return CaixaPDVPage();
+                },
+              ),
+            );
+          },
+        )),
         DataCell(CircleAvatar(
           child: IconButton(
             icon: Icon(Icons.search),
@@ -144,6 +159,7 @@ class DataSource extends DataTableSource {
             },
           ),
         )),
+
       ],
     );
   }

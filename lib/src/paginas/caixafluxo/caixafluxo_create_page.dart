@@ -45,12 +45,38 @@ class _CaixaFluxoCreatePageState extends State<CaixaFluxoCreatePage>
   var dialogs = Dialogs();
   var scaffoldKey = GlobalKey<ScaffoldState>();
 
-  var saldoAnteriorController = TextEditingController();
-  var valorEntradaController = TextEditingController();
-  var valorSaidaController = TextEditingController();
-  var valorTotalController = TextEditingController();
-  var saldoController = new MaskedTextController(mask: '000.000.000-00');
-  var saldoC = new MoneyMaskedTextController();
+
+  var saldoAnteriorController = MoneyMaskedTextController(
+    decimalSeparator: ",",
+    thousandSeparator: ".",
+    initialValue: 0.00,
+    precision: 2,
+  );
+  var valorEntradaController = MoneyMaskedTextController(
+    decimalSeparator: ",",
+    thousandSeparator: ".",
+    initialValue: 0.00,
+    precision: 2,
+  );
+  var valorSaidaController = MoneyMaskedTextController(
+    decimalSeparator: ",",
+    thousandSeparator: ".",
+    initialValue: 0.00,
+    precision: 2,
+  );
+  var valorTotalController = MoneyMaskedTextController(
+    decimalSeparator: ",",
+    thousandSeparator: ".",
+    initialValue: 0.00,
+    precision: 2,
+  );
+
+  var saldoController = MoneyMaskedTextController(
+    decimalSeparator: ",",
+    thousandSeparator: ".",
+    initialValue: 0.00,
+    precision: 2,
+  );
 
   CaixaFluxo c;
   Caixa caixa;
@@ -290,35 +316,16 @@ class _CaixaFluxoCreatePageState extends State<CaixaFluxoCreatePage>
                         width: 500,
                         color: Colors.grey[200],
                         child: TextFormField(
-                          controller: saldoAnteriorController,
-                          validator: validateSaldoAnterior,
-                          onSaved: (value) {
-                            c.saldoAnterior = double.tryParse(value);
-                          },
+                          controller: valorEntradaController,
                           decoration: InputDecoration(
-                            labelText: "Saldo anterior",
-                            hintText: "Saldo anterior",
-                            prefixIcon: Icon(
-                              Icons.monetization_on_outlined,
-                              color: Colors.grey,
-                            ),
-                            suffixIcon: IconButton(
-                              onPressed: () => saldoC.clear(),
-                              icon: Icon(Icons.clear),
-                            ),
-                            contentPadding:
-                                EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5.0)),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.purple[900]),
-                              gapPadding: 1,
-                              borderRadius: BorderRadius.circular(5.0),
-                            ),
-                          ),
-                          onEditingComplete: () => focus.nextFocus(),
-                          keyboardType: TextInputType.number,
-                          maxLength: 10,
+                              labelText: 'Valor entrada'),
+                          onChanged: (value) {
+                            value = valorEntradaController.text;
+                            print("Valor entrada: ${value}");
+                          },
+                          onSaved: (value) {
+                            valorEntradaController.updateValue(0);
+                          },
                         ),
                       ),
                       Container(
@@ -326,35 +333,15 @@ class _CaixaFluxoCreatePageState extends State<CaixaFluxoCreatePage>
                         color: Colors.grey[200],
                         child: TextFormField(
                           controller: valorEntradaController,
-                          validator: validateValorEntrada,
-                          onSaved: (value) {
-                            c.valorEntrada = double.tryParse(value);
-                          },
                           decoration: InputDecoration(
-                            labelText: "Valor entrada",
-                            hintText: "Valor entrada",
-                            prefixIcon: Icon(
-                              Icons.monetization_on_outlined,
-                              color: Colors.grey,
-                            ),
-                            suffixIcon: IconButton(
-                              onPressed: () => valorEntradaController.clear(),
-                              icon: Icon(Icons.clear),
-                            ),
-                            contentPadding:
-                                EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5.0)),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.purple[900]),
-                              gapPadding: 1,
-                              borderRadius: BorderRadius.circular(5.0),
-                            ),
-                          ),
-                          onEditingComplete: () => focus.nextFocus(),
-                          keyboardType:
-                              TextInputType.numberWithOptions(decimal: false),
-                          maxLength: 6,
+                              labelText: 'Valor entrada'),
+                          onChanged: (value) {
+                            value = valorEntradaController.text;
+                            print("Valor entrada: ${value}");
+                          },
+                          onSaved: (value) {
+                            valorEntradaController.updateValue(0);
+                          },
                         ),
                       )
                     ],
@@ -371,72 +358,32 @@ class _CaixaFluxoCreatePageState extends State<CaixaFluxoCreatePage>
                         width: 500,
                         color: Colors.grey[200],
                         child: TextFormField(
-                          controller: valorSaidaController,
-                          validator: validateValorSaida,
-                          onSaved: (value) {
-                            c.valorSaida = double.tryParse(value);
-                          },
+                          controller: valorEntradaController,
                           decoration: InputDecoration(
-                            labelText: "Valor saída",
-                            hintText: "Valor saída",
-                            prefixIcon: Icon(
-                              Icons.monetization_on_outlined,
-                              color: Colors.grey,
-                            ),
-                            suffixIcon: IconButton(
-                              onPressed: () => valorSaidaController.clear(),
-                              icon: Icon(Icons.clear),
-                            ),
-                            contentPadding:
-                                EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5.0)),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.purple[900]),
-                              gapPadding: 1,
-                              borderRadius: BorderRadius.circular(5.0),
-                            ),
-                          ),
-                          onEditingComplete: () => focus.nextFocus(),
-                          keyboardType:
-                              TextInputType.numberWithOptions(decimal: false),
-                          maxLength: 6,
+                              labelText: 'Valor entrada'),
+                          onChanged: (value) {
+                            value = valorEntradaController.text;
+                            print("Valor entrada: ${value}");
+                          },
+                          onSaved: (value) {
+                            valorEntradaController.updateValue(0);
+                          },
                         ),
                       ),
                       Container(
                         width: 500,
                         color: Colors.grey[200],
                         child: TextFormField(
-                          controller: valorTotalController,
-                          validator: validateValorTotal,
-                          onSaved: (value) {
-                            c.valorTotal = double.tryParse(value);
-                          },
+                          controller: valorEntradaController,
                           decoration: InputDecoration(
-                            labelText: "Valor total",
-                            hintText: "Valor total",
-                            prefixIcon: Icon(
-                              Icons.monetization_on_outlined,
-                              color: Colors.grey,
-                            ),
-                            suffixIcon: IconButton(
-                              onPressed: () => valorTotalController.clear(),
-                              icon: Icon(Icons.clear),
-                            ),
-                            contentPadding:
-                                EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5.0)),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.purple[900]),
-                              gapPadding: 1,
-                              borderRadius: BorderRadius.circular(5.0),
-                            ),
-                          ),
-                          onEditingComplete: () => focus.nextFocus(),
-                          keyboardType:
-                              TextInputType.numberWithOptions(decimal: false),
-                          maxLength: 6,
+                              labelText: 'Valor entrada'),
+                          onChanged: (value) {
+                            value = valorEntradaController.text;
+                            print("Valor entrada: ${value}");
+                          },
+                          onSaved: (value) {
+                            valorEntradaController.updateValue(0);
+                          },
                         ),
                       )
                     ],

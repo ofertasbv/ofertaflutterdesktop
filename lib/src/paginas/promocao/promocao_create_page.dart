@@ -8,6 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
@@ -19,7 +20,6 @@ import 'package:nosso/src/core/model/loja.dart';
 import 'package:nosso/src/core/model/promocao.dart';
 import 'package:nosso/src/core/model/promocaotipo.dart';
 import 'package:nosso/src/core/model/uploadFileResponse.dart';
-import 'package:nosso/src/paginas/promocao/promocao_page.dart';
 import 'package:nosso/src/paginas/promocao/promocao_table.dart';
 import 'package:nosso/src/util/componentes/image_source_sheet.dart';
 import 'package:nosso/src/util/dialogs/dialogs.dart';
@@ -58,7 +58,12 @@ class _PromocaoCreatePageState extends State<PromocaoCreatePage>
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
-  var descontoController = TextEditingController();
+  var descontoController = MoneyMaskedTextController(
+    decimalSeparator: ",",
+    thousandSeparator: ".",
+    initialValue: 0.00,
+    precision: 2,
+  );
 
   @override
   void initState() {
@@ -69,7 +74,6 @@ class _PromocaoCreatePageState extends State<PromocaoCreatePage>
       status = p.status;
       lojaSelecionada = p.loja;
       promocaoTipo = p.promocaoTipo;
-      descontoController.text = p.desconto.toStringAsFixed(2);
     }
 
     promocaoController.getAll();
@@ -507,22 +511,15 @@ class _PromocaoCreatePageState extends State<PromocaoCreatePage>
                         width: 500,
                         child: TextFormField(
                           controller: descontoController,
-                          onSaved: (value) =>
-                              p.desconto = double.tryParse(value),
-                          validator: validateDesconto,
                           decoration: InputDecoration(
-                            labelText: "Percentual de desconto",
-                            hintText: "deconto",
-                            prefixIcon: Icon(
-                              Icons.monetization_on,
-                              color: Colors.grey,
-                            ),
-                            suffixIcon: Icon(Icons.close),
-                          ),
-                          onEditingComplete: () => focus.nextFocus(),
-                          keyboardType:
-                              TextInputType.numberWithOptions(decimal: true),
-                          maxLength: 10,
+                              labelText: 'Valor do desconto'),
+                          onChanged: (value) {
+                            value = descontoController.text;
+                            print("Valor do desconto: ${value}");
+                          },
+                          onSaved: (value) {
+                            descontoController.updateValue(0);
+                          },
                         ),
                       ),
                       Container(

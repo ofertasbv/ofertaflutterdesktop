@@ -209,7 +209,7 @@ class _ConfigPageState extends State<ConfigPage> {
           child: Container(
             width: 150,
             height: 150,
-            color: Colors.grey[700],
+            color: Colors.grey[800],
             alignment: Alignment.center,
             child: ListTile(
               title: Icon(
@@ -241,7 +241,7 @@ class _ConfigPageState extends State<ConfigPage> {
           child: Container(
             width: 150,
             height: 150,
-            color: Colors.grey[700],
+            color: Colors.grey[800],
             alignment: Alignment.center,
             child: ListTile(
               title: Icon(
@@ -273,7 +273,7 @@ class _ConfigPageState extends State<ConfigPage> {
           child: Container(
             width: 150,
             height: 150,
-            color: Colors.grey[700],
+            color: Colors.grey[800],
             alignment: Alignment.center,
             child: ListTile(
               title: Icon(
@@ -305,7 +305,7 @@ class _ConfigPageState extends State<ConfigPage> {
           child: Container(
             width: 150,
             height: 150,
-            color: Colors.grey[700],
+            color: Colors.grey[800],
             alignment: Alignment.center,
             child: ListTile(
               title: Icon(
@@ -695,7 +695,7 @@ class _ConfigPageState extends State<ConfigPage> {
               title: Icon(
                 Icons.list_alt_sharp,
                 size: 40,
-                color: Theme.of(context).accentColor.withOpacity(1),
+                color: Theme.of(context).primaryColor.withOpacity(1),
               ),
               subtitle: Text(
                 "lista de marcas",
@@ -727,7 +727,7 @@ class _ConfigPageState extends State<ConfigPage> {
               title: Icon(
                 Icons.shop_outlined,
                 size: 40,
-                color: Theme.of(context).accentColor.withOpacity(1),
+                color: Theme.of(context).primaryColor.withOpacity(1),
               ),
               subtitle: Text(
                 "lista de itens",
@@ -919,7 +919,7 @@ class _ConfigPageState extends State<ConfigPage> {
               title: Icon(
                 Icons.favorite_border_outlined,
                 size: 40,
-                color: Theme.of(context).accentColor.withOpacity(1),
+                color: Theme.of(context).primaryColor.withOpacity(1),
               ),
               subtitle: Text(
                 "lista de favoritos",

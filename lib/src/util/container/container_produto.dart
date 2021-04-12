@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:nosso/src/api/constants/constant_api.dart';
 import 'package:nosso/src/core/controller/produto_controller.dart';
-import 'package:nosso/src/core/model/content.dart';
 import 'package:nosso/src/core/model/produto.dart';
-import 'package:nosso/src/paginas/produto/produto_create_page.dart';
 
 class ContainerProduto extends StatelessWidget {
   ProdutoController produtoController;
@@ -106,66 +104,6 @@ class ContainerProduto extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-
-  PopupMenuButton<String> buildPopupMenuButton(
-      BuildContext context, Produto p) {
-    return PopupMenuButton<String>(
-      padding: EdgeInsets.zero,
-      enabled: true,
-      elevation: 1,
-      icon: Icon(Icons.more_vert),
-      onSelected: (valor) {
-        if (valor == "novo") {
-          print("novo");
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (BuildContext context) {
-                return ProdutoCreatePage();
-              },
-            ),
-          );
-        }
-        if (valor == "editar") {
-          print("editar");
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (BuildContext context) {
-                return ProdutoCreatePage(
-                  produto: p,
-                );
-              },
-            ),
-          );
-        }
-        if (valor == "delete") {
-          print("delete");
-        }
-      },
-      itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-        const PopupMenuItem<String>(
-          value: 'novo',
-          child: ListTile(
-            leading: Icon(Icons.add),
-            title: Text('novo'),
-          ),
-        ),
-        const PopupMenuItem<String>(
-          value: 'editar',
-          child: ListTile(
-            leading: Icon(Icons.edit),
-            title: Text('editar'),
-          ),
-        ),
-        const PopupMenuItem<String>(
-          value: 'delete',
-          child: ListTile(
-            leading: Icon(Icons.delete),
-            title: Text('Delete'),
-          ),
-        )
-      ],
     );
   }
 }
