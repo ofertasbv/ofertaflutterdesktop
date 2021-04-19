@@ -15,19 +15,6 @@ class ContainerCategoria extends StatelessWidget {
       isThreeLine: false,
       leading: Container(
         padding: EdgeInsets.all(1),
-        decoration: new BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Theme.of(context).primaryColor,
-              Theme.of(context).primaryColor
-            ],
-          ),
-          border: Border.all(
-            color: Colors.black,
-            width: 1,
-          ),
-          borderRadius: BorderRadius.circular(35),
-        ),
         child: p.foto != null
             ? CircleAvatar(
                 backgroundColor: Colors.grey[100],
@@ -42,10 +29,10 @@ class ContainerCategoria extends StatelessWidget {
               ),
       ),
       title: Text(p.nome),
-      subtitle: Text("código ${p.id}"),
-      trailing: Container(
-        height: 80,
-        width: 50,
+      subtitle: Text("${p.seguimento.nome}"),
+      trailing: CircleAvatar(
+        backgroundColor: Colors.grey[100],
+        child: Text(p.subCategorias.length.toString()),
       ),
     );
   }

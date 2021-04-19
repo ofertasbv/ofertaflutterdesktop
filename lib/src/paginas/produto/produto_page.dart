@@ -23,7 +23,7 @@ class _ProdutoPageState extends State<ProdutoPage> {
   var produtoController = GetIt.I.get<ProdutoController>();
   var nomeController = TextEditingController();
 
-  ProdutoFilter filter = ProdutoFilter();
+  ProdutoFilter filter;
   String pagina = "";
 
   _ProdutoPageState({this.filter});

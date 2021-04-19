@@ -256,28 +256,28 @@ class _SubCategoriaProdutoState extends State<SubCategoriaProduto>
           child: Container(
             color: Colors.grey[200],
             child: ListTile(
-                isThreeLine: false,
-                leading: Container(
-                  padding: EdgeInsets.all(1),
-                  child: CircleAvatar(
-                    backgroundColor: Theme.of(context).accentColor,
-                    foregroundColor: Theme.of(context).primaryColor,
-                    radius: 20,
-                    child: Text(
-                      c.nome.substring(0, 1).toUpperCase(),
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
+              isThreeLine: false,
+              leading: Container(
+                padding: EdgeInsets.all(1),
+                child: CircleAvatar(
+                  backgroundColor: Colors.grey[100],
+                  radius: 20,
+                  child: Text(
+                    c.nome.substring(0, 1).toUpperCase(),
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
-                title: Text(c.nome),
-                subtitle: Text("${c.categoria.nome}"),
-                trailing: Chip(
-                  label: Text("${c.produtos.length}"),
-                  backgroundColor: Theme.of(context).accentColor,
-                )),
+              ),
+              title: Text(c.nome),
+              subtitle: Text("${c.categoria.nome}"),
+              trailing: CircleAvatar(
+                backgroundColor: Colors.grey[100],
+                child: Text(c.produtos.length.toString()),
+              ),
+            ),
           ),
           onTap: () {
             filter.subCategoria = c.id;

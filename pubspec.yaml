@@ -50,7 +50,7 @@ dependencies:
   geocoder: ^0.2.1
   location: ^4.1.1
 
-
+  barcode_flutter: ^1.1.2
   barcode_scan: ^1.0.0
   webview_flutter: ^1.0.7
   url_launcher: ^6.0.3

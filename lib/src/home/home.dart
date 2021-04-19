@@ -190,7 +190,7 @@ class HomePage extends StatelessWidget {
             padding: EdgeInsets.only(left: 50, right: 50),
             child: Container(
               height: 80,
-              color: Colors.transparent,
+              color: Colors.green,
               child: Column(
                 children: [
                   Container(
@@ -209,11 +209,12 @@ class HomePage extends StatelessWidget {
             padding: EdgeInsets.only(left: 50, right: 50),
             child: Container(
               height: 350,
-              color: Colors.transparent,
+              color: Colors.redAccent,
               child: Column(
                 children: [
                   Container(
                     height: 350,
+                    padding: EdgeInsets.only(left: 15, right: 15),
                     child: CategoriaListHome(),
                   )
                 ],
@@ -227,7 +228,7 @@ class HomePage extends StatelessWidget {
             padding: EdgeInsets.only(left: 50, right: 50),
             child: Container(
               height: 100,
-              color: Colors.transparent,
+              color: Colors.blue,
               child: Column(
                 children: [
                   Container(
@@ -246,12 +247,12 @@ class HomePage extends StatelessWidget {
             padding: EdgeInsets.only(left: 50, right: 50),
             child: Container(
               height: 550,
-              color: Colors.transparent,
+              color: Colors.yellow,
               child: Column(
                 children: [
                   Container(
                     height: 500,
-                    padding: EdgeInsets.only(top: 0),
+                    padding: EdgeInsets.only(left: 15, right: 15),
                     child: PromocaoListHome(),
                   )
                 ],
@@ -265,12 +266,12 @@ class HomePage extends StatelessWidget {
             padding: EdgeInsets.only(left: 50, right: 50),
             child: Container(
               height: 100,
-              color: Colors.transparent,
+              color: Colors.purple,
               child: Column(
                 children: [
                   Container(
                     height: 100,
-                    padding: EdgeInsets.only(top: 20),
+                    padding: EdgeInsets.only(left: 0, right: 0, top: 20),
                     child: buildContainerProdutoMenu(context),
                   )
                 ],
@@ -279,16 +280,16 @@ class HomePage extends StatelessWidget {
           ),
           Container(
             height: 200,
-            width: MediaQuery.of(context).size.width * 1,
             color: Colors.transparent,
             padding: EdgeInsets.only(left: 50, right: 50),
             child: Container(
               height: 200,
-              color: Colors.transparent,
+              color: Colors.green,
               child: Column(
                 children: [
                   Container(
                     height: 200,
+                    padding: EdgeInsets.only(left: 15, right: 15),
                     child: ProdutoListHome(),
                   )
                 ],

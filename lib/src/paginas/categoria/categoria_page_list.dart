@@ -117,7 +117,7 @@ class _CategoriaPageListState extends State<CategoriaPageList> {
               child: TextFormField(
                 controller: nomeController,
                 decoration: InputDecoration(
-                  hintText: "busca por promoções",
+                  hintText: "busca por departamento",
                   suffixIcon: IconButton(
                     onPressed: () => nomeController.clear(),
                     icon: Icon(Icons.clear),

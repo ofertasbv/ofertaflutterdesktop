@@ -102,11 +102,6 @@ class _CategoriaListHomeState extends State<CategoriaListHome>
               height: 350,
               alignment: Alignment.center,
               duration: Duration(seconds: 1),
-              decoration: BoxDecoration(
-                color: Colors.transparent,
-                border: Border.all(color: Colors.transparent),
-                borderRadius: BorderRadius.circular(0),
-              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
