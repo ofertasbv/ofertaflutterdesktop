@@ -249,6 +249,16 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
     controllerValorVenda.text = valor.toStringAsFixed(2);
   }
 
+  buscarByCodigoDeBarra(String codigoBarra) async {
+    p = await produtoController.getCodigoBarra(codigoBarra);
+    if (p != null) {
+      showSnackbar(context, "${p.nome}");
+      print("produto: ${p.nome}");
+    } else {
+      showSnackbar(context, "produto não encontrado!");
+    }
+  }
+
   // builderConteudoListCores2() {
   //   return Container(
   //     color: Colors.grey[200],
@@ -825,18 +835,38 @@ class _ProdutoCreatePageState extends State<ProdutoCreatePage>
                         maxLength: 20,
                       ),
                       SizedBox(height: 10),
-                      RaisedButton.icon(
-                        elevation: 0.0,
-                        icon: Icon(Icons.photo_camera_outlined),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(30),
-                          side: BorderSide(color: Colors.transparent),
-                        ),
-                        label: Text("Scanner"),
-                        onPressed: () {
-                          barcodeScanning();
-                        },
-                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          RaisedButton.icon(
+                            elevation: 0.0,
+                            icon: Icon(Icons.clear),
+                            color: Theme.of(context).accentColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(30),
+                              side: BorderSide(color: Colors.transparent),
+                            ),
+                            label: Text("limpar"),
+                            onPressed: () {
+                              controllerCodigoBarra.clear();
+                              p = new Produto();
+                            },
+                          ),
+                          RaisedButton.icon(
+                            elevation: 0.0,
+                            icon: Icon(Icons.photo_camera_outlined),
+                            color: Theme.of(context).primaryColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(30),
+                              side: BorderSide(color: Colors.transparent),
+                            ),
+                            label: Text("buscar"),
+                            onPressed: () {
+                              buscarByCodigoDeBarra(controllerCodigoBarra.text);
+                            },
+                          ),
+                        ],
+                      )
                     ],
                   ),
                 ),

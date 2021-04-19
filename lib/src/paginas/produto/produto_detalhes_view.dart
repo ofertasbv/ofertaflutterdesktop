@@ -185,7 +185,7 @@ class _ProdutoDetalhesViewState extends State<ProdutoDetalhesView>
                           ),
                         ),
                         subtitle: Text(
-                          "${p.loja.nome}",
+                          "${p.descricao}",
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
@@ -196,14 +196,14 @@ class _ProdutoDetalhesViewState extends State<ProdutoDetalhesView>
                     Container(
                       child: ListTile(
                         title: Text(
-                          p.nome,
+                          p.loja.nome,
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         subtitle: Text(
-                          "${p.loja.nome}",
+                          "${p.promocao.nome}",
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,

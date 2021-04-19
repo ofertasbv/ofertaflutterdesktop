@@ -1,48 +1,83 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:nosso/src/api/constants/constant_api.dart';
 
-class SobrePage extends StatelessWidget {
+class SobrePage extends StatefulWidget {
+  @override
+  _SobrePageState createState() => _SobrePageState();
+}
+
+class _SobrePageState extends State<SobrePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Sobre"),
-        elevation: 0.0,
+        elevation: 0,
+        title: Text("BOOKOFERTAS"),
       ),
       body: Container(
         child: Column(
-          children: <Widget>[
+          children: [
             Container(
+              height: 300,
+              width: double.infinity,
               color: Theme.of(context).primaryColor,
-              child: AspectRatio(
-                aspectRatio: 1,
-                child: Image.asset(
-                  ConstantApi.urlLogo,
-                  fit: BoxFit.fill,
+              child: Container(
+                height: 80,
+                width: 80,
+                child: Container(
+                  height: 80,
+                  width: 80,
+                  color: Colors.transparent,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              "BOOK",
+                              style: TextStyle(
+                                fontSize: 45,
+                                color: Theme.of(context).accentColor,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Icon(
+                              Icons.shopping_basket_outlined,
+                              size: 50,
+                              color: Colors.white,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        child: Text(
+                          "OFERTAS",
+                          style: TextStyle(
+                            fontSize: 40,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
-            Container(
-              padding: EdgeInsets.only(top: 10, left: 15),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Text(
-                    "U-NOSSO",
-                  ),
-                  SizedBox(height: 10),
-                  Text("Versão 1.0"),
-                  SizedBox(height: 10),
-                  Text(
-                    "Desenvolvido by gdados tecnologia",
-                  ),
-                  SizedBox(height: 10),
-                  Text("Todos os direitos resarvado a gdados tecnologia")
-                ],
+            Expanded(
+              child: Container(
+                height: 300,
+                width: double.infinity,
+                color: Colors.grey[200],
+                child: ListTile(
+                  title: Text("versão 1.0"),
+                  subtitle: Text("todos os direitos reservados"),
+                ),
               ),
-            ),
+            )
           ],
         ),
       ),

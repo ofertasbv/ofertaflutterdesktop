@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nosso/src/home/categoria_list_home.dart';
+import 'package:nosso/src/home/drawer_list.dart';
 import 'package:nosso/src/home/logo.dart';
 import 'package:nosso/src/home/produto_list_home.dart';
 import 'package:nosso/src/home/promocao_list_home.dart';
@@ -142,6 +143,7 @@ class HomePage extends StatelessWidget {
           }
         },
       ),
+      drawer: DrawerList(),
     );
   }
 
@@ -190,7 +192,7 @@ class HomePage extends StatelessWidget {
             padding: EdgeInsets.only(left: 50, right: 50),
             child: Container(
               height: 80,
-              color: Colors.green,
+              color: Colors.transparent,
               child: Column(
                 children: [
                   Container(
@@ -209,7 +211,7 @@ class HomePage extends StatelessWidget {
             padding: EdgeInsets.only(left: 50, right: 50),
             child: Container(
               height: 350,
-              color: Colors.redAccent,
+              color: Colors.transparent,
               child: Column(
                 children: [
                   Container(
@@ -228,7 +230,7 @@ class HomePage extends StatelessWidget {
             padding: EdgeInsets.only(left: 50, right: 50),
             child: Container(
               height: 100,
-              color: Colors.blue,
+              color: Colors.transparent,
               child: Column(
                 children: [
                   Container(
@@ -247,7 +249,7 @@ class HomePage extends StatelessWidget {
             padding: EdgeInsets.only(left: 50, right: 50),
             child: Container(
               height: 550,
-              color: Colors.yellow,
+              color: Colors.transparent,
               child: Column(
                 children: [
                   Container(
@@ -266,7 +268,7 @@ class HomePage extends StatelessWidget {
             padding: EdgeInsets.only(left: 50, right: 50),
             child: Container(
               height: 100,
-              color: Colors.purple,
+              color: Colors.transparent,
               child: Column(
                 children: [
                   Container(
@@ -284,7 +286,7 @@ class HomePage extends StatelessWidget {
             padding: EdgeInsets.only(left: 50, right: 50),
             child: Container(
               height: 200,
-              color: Colors.green,
+              color: Colors.transparent,
               child: Column(
                 children: [
                   Container(

@@ -18,6 +18,7 @@ import 'package:nosso/src/core/model/subcategoria.dart';
 import 'package:nosso/src/core/repository/produto_repository.dart';
 import 'package:nosso/src/paginas/produto/produto_create_page.dart';
 import 'package:nosso/src/paginas/produto/produto_detalhes_tab.dart';
+import 'package:nosso/src/paginas/produto/produto_filter_page.dart';
 import 'package:nosso/src/paginas/produto/produto_search.dart';
 import 'package:nosso/src/util/filter/produto_filter.dart';
 import 'package:dropdown_search/dropdown_search.dart';
@@ -131,7 +132,15 @@ class _ProdutoTableState extends State<ProdutoTable> {
               icon: Icon(
                 Icons.tune,
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (BuildContext context) {
+                      return ProdutoFilterPage();
+                    },
+                  ),
+                );
+              },
             ),
           ),
           SizedBox(width: 10),
