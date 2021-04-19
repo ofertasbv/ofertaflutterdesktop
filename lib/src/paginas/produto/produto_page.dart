@@ -4,6 +4,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:nosso/src/core/controller/produto_controller.dart';
 import 'package:nosso/src/core/model/produto.dart';
+import 'package:nosso/src/paginas/produto/produto_filter_page.dart';
 import 'package:nosso/src/paginas/produto/produto_grid.dart';
 import 'package:nosso/src/paginas/produto/produto_list.dart';
 import 'package:nosso/src/util/filter/produto_filter.dart';
@@ -131,7 +132,7 @@ class _ProdutoPageState extends State<ProdutoPage> {
             ),
             Container(
               height: 70,
-              width: 200,
+              width: 250,
               color: Colors.transparent,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -154,7 +155,27 @@ class _ProdutoPageState extends State<ProdutoPage> {
                       );
                     },
                   ),
-                  SizedBox(width: 10),
+                  SizedBox(width: 5),
+                  CircleAvatar(
+                    backgroundColor: Theme.of(context).accentColor,
+                    foregroundColor: Colors.black,
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.tune,
+                        color: Colors.grey[200],
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (BuildContext context) {
+                              return ProdutoFilterPage();
+                            },
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  SizedBox(width: 5),
                   CircleAvatar(
                     backgroundColor:
                         Theme.of(context).accentColor.withOpacity(1),
