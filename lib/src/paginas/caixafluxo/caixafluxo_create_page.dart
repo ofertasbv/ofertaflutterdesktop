@@ -45,7 +45,6 @@ class _CaixaFluxoCreatePageState extends State<CaixaFluxoCreatePage>
   var dialogs = Dialogs();
   var scaffoldKey = GlobalKey<ScaffoldState>();
 
-
   var saldoAnteriorController = MoneyMaskedTextController(
     decimalSeparator: ",",
     thousandSeparator: ".",
@@ -317,8 +316,8 @@ class _CaixaFluxoCreatePageState extends State<CaixaFluxoCreatePage>
                         color: Colors.grey[200],
                         child: TextFormField(
                           controller: valorEntradaController,
-                          decoration: InputDecoration(
-                              labelText: 'Valor entrada'),
+                          decoration:
+                              InputDecoration(labelText: 'Valor entrada'),
                           onChanged: (value) {
                             value = valorEntradaController.text;
                             print("Valor entrada: ${value}");
@@ -332,15 +331,14 @@ class _CaixaFluxoCreatePageState extends State<CaixaFluxoCreatePage>
                         width: 500,
                         color: Colors.grey[200],
                         child: TextFormField(
-                          controller: valorEntradaController,
-                          decoration: InputDecoration(
-                              labelText: 'Valor entrada'),
+                          controller: valorTotalController,
+                          decoration: InputDecoration(labelText: 'Valor total'),
                           onChanged: (value) {
-                            value = valorEntradaController.text;
-                            print("Valor entrada: ${value}");
+                            value = valorTotalController.text;
+                            print("Valor total: ${value}");
                           },
                           onSaved: (value) {
-                            valorEntradaController.updateValue(0);
+                            valorTotalController.updateValue(0);
                           },
                         ),
                       )
@@ -358,15 +356,15 @@ class _CaixaFluxoCreatePageState extends State<CaixaFluxoCreatePage>
                         width: 500,
                         color: Colors.grey[200],
                         child: TextFormField(
-                          controller: valorEntradaController,
-                          decoration: InputDecoration(
-                              labelText: 'Valor entrada'),
+                          controller: saldoAnteriorController,
+                          decoration:
+                              InputDecoration(labelText: 'Valor anterior'),
                           onChanged: (value) {
-                            value = valorEntradaController.text;
-                            print("Valor entrada: ${value}");
+                            value = saldoAnteriorController.text;
+                            print("Valor anterior: ${value}");
                           },
                           onSaved: (value) {
-                            valorEntradaController.updateValue(0);
+                            saldoAnteriorController.updateValue(0);
                           },
                         ),
                       ),
@@ -374,15 +372,14 @@ class _CaixaFluxoCreatePageState extends State<CaixaFluxoCreatePage>
                         width: 500,
                         color: Colors.grey[200],
                         child: TextFormField(
-                          controller: valorEntradaController,
-                          decoration: InputDecoration(
-                              labelText: 'Valor entrada'),
+                          controller: valorSaidaController,
+                          decoration: InputDecoration(labelText: 'Valor saida'),
                           onChanged: (value) {
-                            value = valorEntradaController.text;
-                            print("Valor entrada: ${value}");
+                            value = valorSaidaController.text;
+                            print("Valor saida: ${value}");
                           },
                           onSaved: (value) {
-                            valorEntradaController.updateValue(0);
+                            valorSaidaController.updateValue(0);
                           },
                         ),
                       )

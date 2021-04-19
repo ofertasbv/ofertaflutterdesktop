@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get_it/get_it.dart';
 import 'package:nosso/src/core/controller/arquivo_controller.dart';
 import 'package:nosso/src/core/controller/caixa_controller.dart';
@@ -34,6 +34,7 @@ import 'package:nosso/src/core/controller/tamanho_controller.dart';
 import 'package:nosso/src/core/controller/usuario_controller.dart';
 import 'package:nosso/src/core/controller/vendedor_controller.dart';
 import 'package:nosso/src/home/home.dart';
+import 'package:nosso/src/home/main_screen.dart';
 import 'package:nosso/src/util/config/config_page.dart';
 import 'package:nosso/src/util/themes/theme.dart';
 
@@ -78,7 +79,7 @@ void main() async {
       // cor da barra superior
       statusBarIconBrightness: Brightness.light,
       // ícones da barra superior
-      systemNavigationBarColor: Colors.orangeAccent,
+      systemNavigationBarColor: Colors.transparent,
       // cor da barra inferior
       systemNavigationBarIconBrightness: Brightness.dark,
       //
@@ -92,7 +93,6 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -106,5 +106,17 @@ class MyApp extends StatelessWidget {
       home: ConfigPage(),
     );
   }
-}
 
+  // @override
+  // Widget build(BuildContext context) {
+  //   return GetMaterialApp(
+  //     debugShowCheckedModeBanner: false,
+  //     title: 'Flutter Demo',
+  //     localizationsDelegates: [
+  //       GlobalMaterialLocalizations.delegate,
+  //       GlobalWidgetsLocalizations.delegate
+  //     ],
+  //     home: MainScreen(),
+  //   );
+  // }
+}

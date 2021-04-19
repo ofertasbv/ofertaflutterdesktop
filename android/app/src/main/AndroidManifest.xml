@@ -12,9 +12,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
 
-    <application
-        android:label="U-NOSSO"
-        android:icon="@mipmap/ic_launcher">
+    <application android:label="U-NOSSO" android:icon="@mipmap/ic_launcher">
 
         <meta-data android:name="com.google.android.maps.v2.API_KEY" android:value="AIzaSyAEHyA8-iuEmiK1Yz0RiIHKsJ5h5jwpA6A"/>
 

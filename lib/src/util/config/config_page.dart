@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:nosso/src/api/constants/constant_api.dart';
 import 'package:nosso/src/home/home.dart';
+import 'package:nosso/src/home/logo.dart';
 import 'package:nosso/src/paginas/arquivo/arquivo_page.dart';
 import 'package:nosso/src/paginas/caixa/caixa_page.dart';
 import 'package:nosso/src/paginas/caixacontrole/caixa_controle_page.dart';
@@ -64,41 +65,68 @@ class _ConfigPageState extends State<ConfigPage> {
                           width: 400,
                           color: Colors.transparent,
                           alignment: Alignment.center,
+                          padding: EdgeInsets.all(10),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              SizedBox(height: 30),
+                              SizedBox(height: 0),
                               Container(
-                                height: 170,
-                                width: double.infinity,
-                                color: Colors.transparent,
-                                padding:
-                                    EdgeInsets.only(left: 0, right: 0, top: 40),
-                                child: ListTile(
-                                  leading: CircleAvatar(
-                                    child: Icon(Icons.shopping_basket_outlined),
-                                    radius: 40,
-                                  ),
-                                  title: Text(
-                                    "OFERTASBV",
-                                    style: TextStyle(
-                                      fontSize: 40,
-                                      color: Colors.grey[400],
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  subtitle: Text(
-                                    "Painel de controle",
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.grey[400],
-                                      fontWeight: FontWeight.bold,
+                                color: Theme.of(context).primaryColor.withOpacity(0.5),
+                                height: 190,
+                                child: Container(
+                                  height: 80,
+                                  width: 80,
+                                  child: Container(
+                                    height: 80,
+                                    width: 80,
+                                    color: Colors.transparent,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                "BOOK",
+                                                style: TextStyle(
+                                                  fontSize: 30,
+                                                  color: Theme.of(context)
+                                                      .accentColor,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              Icon(
+                                                Icons.shopping_basket_outlined,
+                                                size: 45,
+                                                color: Colors.grey[100],
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
+                                          child: Text(
+                                            "OFERTAS",
+                                            style: TextStyle(
+                                              fontSize: 30,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.grey[100],
+                                            ),
+                                          ),
+                                        )
+                                      ],
                                     ),
                                   ),
                                 ),
                               ),
-                              SizedBox(height: 20),
+                              SizedBox(height: 10),
                               Container(
                                 child: ListTile(
                                   title: Text(
@@ -111,7 +139,7 @@ class _ConfigPageState extends State<ConfigPage> {
                                   ),
                                 ),
                               ),
-                              SizedBox(height: 30),
+                              SizedBox(height: 10),
                               Container(
                                 child: ListTile(
                                   title: Text(
@@ -132,7 +160,7 @@ class _ConfigPageState extends State<ConfigPage> {
                                   ),
                                 ),
                               ),
-                              SizedBox(height: 30),
+                              SizedBox(height: 10),
                               Container(
                                 padding: EdgeInsets.all(20),
                                 child: FlatButton.icon(

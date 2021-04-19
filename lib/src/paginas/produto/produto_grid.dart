@@ -169,8 +169,8 @@ class _ProdutoGridState extends State<ProdutoGrid>
                     Stack(
                       children: [
                         p.foto != null
-                            ? ClipRRect(
-                                borderRadius: BorderRadius.circular(0),
+                            ? Container(
+                                color: Colors.grey[300],
                                 child: Image.network(
                                   produtoController.arquivo + p.foto,
                                   fit: BoxFit.cover,
@@ -178,8 +178,8 @@ class _ProdutoGridState extends State<ProdutoGrid>
                                   height: 350,
                                 ),
                               )
-                            : ClipRRect(
-                                borderRadius: BorderRadius.circular(0),
+                            : Container(
+                                color: Colors.grey[300],
                                 child: Image.asset(
                                   ConstantApi.urlLogo,
                                   fit: BoxFit.cover,

@@ -390,9 +390,9 @@ class _CaixaPDVPageState extends State<CaixaPDVPage> with ValidadorPDV {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Container(
-              height: 50,
+              height: 10,
               width: double.infinity,
-              color: Theme.of(context).primaryColor.withOpacity(0.5),
+              color: Theme.of(context).primaryColor.withOpacity(0.8),
               padding: EdgeInsets.all(0),
             ),
             Expanded(
