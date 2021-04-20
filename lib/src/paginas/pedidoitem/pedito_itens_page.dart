@@ -9,16 +9,17 @@ import 'package:intl/intl.dart';
 import 'package:nosso/src/api/constants/constant_api.dart';
 import 'package:nosso/src/core/controller/pedidoItem_controller.dart';
 import 'package:nosso/src/core/model/pedidoitem.dart';
+import 'package:nosso/src/paginas/pedido/pedido_create_page.dart';
 import 'package:nosso/src/paginas/produto/produto_page.dart';
 import 'package:nosso/src/util/load/circular_progresso.dart';
 import 'package:nosso/src/util/snackbar/snackbar_global.dart';
 
-class PedidoItensList extends StatefulWidget {
+class PedidoItensListPage extends StatefulWidget {
   @override
-  _PedidoItensListState createState() => _PedidoItensListState();
+  _PedidoItensListPageState createState() => _PedidoItensListPageState();
 }
 
-class _PedidoItensListState extends State<PedidoItensList> {
+class _PedidoItensListPageState extends State<PedidoItensListPage> {
   var pedidoItemController = GetIt.I.get<PedidoItemController>();
   var formatMoeda = new NumberFormat("#,##0.00", "pt_BR");
 
@@ -36,7 +37,18 @@ class _PedidoItensListState extends State<PedidoItensList> {
 
   @override
   Widget build(BuildContext context) {
-    return builderConteudoList();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Meus pedidos"),
+      ),
+      body: Container(
+        padding: EdgeInsets.only(left: 50, right: 50),
+        child: Container(
+          child: builderConteudoList(),
+        ),
+      ),
+      bottomNavigationBar: buildBottomNavigationBar(context),
+    );
   }
 
   builderConteudoList() {
@@ -100,7 +112,6 @@ class _PedidoItensListState extends State<PedidoItensList> {
               ),
             );
           }
-
           return builderList(itens);
         },
       ),
@@ -115,8 +126,6 @@ class _PedidoItensListState extends State<PedidoItensList> {
       itemCount: itens.length,
       itemBuilder: (context, index) {
         PedidoItem p = itens[index];
-        p.valorUnitario = p.produto.estoque.valorUnitario;
-        p.valorTotal = (p.quantidade * p.valorUnitario);
 
         return GestureDetector(
           child: Column(
@@ -322,16 +331,10 @@ class _PedidoItensListState extends State<PedidoItensList> {
                                                 splashColor: Colors.black,
                                                 onPressed: () {
                                                   setState(() {
-                                                    print("removendo - ");
-                                                    print(
-                                                        "Quantidade: ${p.quantidade}");
                                                     pedidoItemController
                                                         .decremento(p);
                                                     pedidoItemController
                                                         .calculateTotal();
-                                                    print(
-                                                        "Total: ${pedidoItemController.total}");
-                                                    pedidoItemController.itens;
                                                   });
                                                 },
                                               ),
@@ -361,16 +364,10 @@ class _PedidoItensListState extends State<PedidoItensList> {
                                                 splashColor: Colors.black,
                                                 onPressed: () {
                                                   setState(() {
-                                                    print("adicionando + ");
-                                                    print(
-                                                        "Quantidade: ${p.quantidade}");
                                                     pedidoItemController
                                                         .incremento(p);
                                                     pedidoItemController
                                                         .calculateTotal();
-                                                    print(
-                                                        "Total: ${pedidoItemController.total}");
-                                                    pedidoItemController.itens;
                                                   });
                                                 },
                                               ),
@@ -395,6 +392,128 @@ class _PedidoItensListState extends State<PedidoItensList> {
           ),
         );
       },
+    );
+  }
+
+  buildBottomNavigationBar(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.only(left: 50, right: 50, top: 10),
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        height: 120,
+        child: Column(
+          children: [
+            Container(
+              color: Colors.white,
+              width: MediaQuery.of(context).size.width,
+              height: 60,
+              child: ListTile(
+                title: Text(
+                  "TOTAL ",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                ),
+                subtitle: Observer(
+                  builder: (context) {
+                    return Text(
+                      "R\$ ${formatMoeda.format(pedidoItemController.total)}",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                        color: Theme.of(context).accentColor,
+                      ),
+                    );
+                  },
+                ),
+                trailing: Text(
+                  "No boleto ou dinheiro",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              color: Colors.grey[100],
+              padding: EdgeInsets.all(0),
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Flexible(
+                    fit: FlexFit.tight,
+                    flex: 1,
+                    child: FlatButton.icon(
+                      icon: Icon(Icons.list_alt),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(0),
+                        side: BorderSide(color: Colors.blue),
+                      ),
+                      color: Colors.white,
+                      textColor: Colors.blue,
+                      padding: EdgeInsets.all(10),
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (BuildContext context) {
+                              return ProdutoPage();
+                            },
+                          ),
+                        );
+                      },
+                      label: Text(
+                        "VER MAIS".toUpperCase(),
+                        style: TextStyle(
+                          fontSize: 14.0,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 10),
+                  Flexible(
+                    fit: FlexFit.tight,
+                    flex: 1,
+                    child: FlatButton.icon(
+                      icon: Icon(Icons.shopping_basket),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(0),
+                        side: BorderSide(color: Colors.green),
+                      ),
+                      color: Colors.white,
+                      textColor: Colors.green,
+                      padding: EdgeInsets.all(10),
+                      onPressed: () {
+                        if (pedidoItemController.itens.isEmpty) {
+                          print("seu carrinho está vazio!");
+                        } else {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (BuildContext context) {
+                                return PedidoCreatePage();
+                              },
+                            ),
+                          );
+                        }
+                      },
+                      label: Text(
+                        "CONTINUAR PEDIDO".toUpperCase(),
+                        style: TextStyle(
+                          fontSize: 20,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -473,7 +592,6 @@ class _PedidoItensListState extends State<PedidoItensList> {
                   pedidoItemController.remove(p);
                   pedidoItemController.itens;
                 });
-
                 // showSnackbar(context, "Produto ${p.produto.nome} removido");
                 Navigator.of(context).pop();
               },

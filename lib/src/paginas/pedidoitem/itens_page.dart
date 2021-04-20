@@ -88,7 +88,7 @@ class _ItemPageState extends State<ItemPage> {
       ),
       body: Container(
         padding: EdgeInsets.only(left: 50, right: 50, top: 10),
-        child: PedidoItensList(),
+        child: PedidoItensListPage(),
       ),
       bottomNavigationBar: buildBottomNavigationBar(context),
     );

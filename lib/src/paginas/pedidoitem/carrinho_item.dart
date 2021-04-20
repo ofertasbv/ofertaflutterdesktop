@@ -4,17 +4,18 @@ import 'package:nosso/src/core/model/produto.dart';
 
 class CarrinhoItem extends ChangeNotifier {
   var itens = new List<PedidoItem>();
-  double total = 0;
+
+  double total = 0.0;
 
   int quantidade = 1;
 
-  double valorUnitario = 0;
+  double valorUnitario;
 
-  double valorTotal = 0;
+  double valorTotal;
 
-  double desconto = 0;
+  double desconto;
 
-  double totalDesconto = 0;
+  double totalDesconto;
 
   getItens() {
     return itens;
@@ -22,11 +23,14 @@ class CarrinhoItem extends ChangeNotifier {
 
   adicionar(PedidoItem item) {
     item.quantidade = quantidade;
-    print("Qunatidade: ${item.quantidade}");
     if (item.quantidade > 0) {
       item.valorUnitario = item.produto.estoque.valorUnitario;
       item.valorTotal = item.quantidade * item.valorUnitario;
       itens.add(item);
+      itens.map((p) {
+        print("Quantidade: ${p.quantidade}");
+        print("***************************");
+      });
       calculateTotal();
     }
   }
@@ -52,9 +56,9 @@ class CarrinhoItem extends ChangeNotifier {
   }
 
   incremento(PedidoItem item) {
-    item.quantidade;
     if (item.quantidade < 10) {
       item.quantidade++;
+      print("icrementando: ${item.quantidade}");
       calculateTotal();
     }
   }
@@ -62,21 +66,29 @@ class CarrinhoItem extends ChangeNotifier {
   decremento(PedidoItem item) {
     if (item.quantidade > 1) {
       item.quantidade--;
+      print("decrementando: ${item.quantidade}");
       calculateTotal();
     }
   }
 
   remove(PedidoItem item) {
     itens.remove(item);
+    print("icrementando: ${item.produto.nome}");
     calculateTotal();
   }
 
   calculateTotal() {
     this.total = 0.0;
     itens.forEach((p) {
+      p.valorTotal = p.quantidade * p.valorUnitario;
       total += p.valorTotal;
+      print("quantidade: ${p.quantidade}");
+      print("valorUnitário: ${p.valorUnitario}");
+      print("valorTotal: ${p.valorTotal}");
+      print("================================");
     });
-    notifyListeners();
+    print("Calculando total ....");
+    print("Total geral: ${total}");
     return total;
   }
 

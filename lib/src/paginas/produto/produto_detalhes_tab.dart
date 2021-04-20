@@ -6,6 +6,7 @@ import 'package:nosso/src/core/controller/produto_controller.dart';
 import 'package:nosso/src/core/model/pedidoitem.dart';
 import 'package:nosso/src/core/model/produto.dart';
 import 'package:nosso/src/paginas/pedidoitem/itens_page.dart';
+import 'package:nosso/src/paginas/pedidoitem/pedito_itens_page.dart';
 import 'package:nosso/src/paginas/produto/produto_detalhes_info.dart';
 import 'package:nosso/src/paginas/produto/produto_detalhes_view.dart';
 import 'package:nosso/src/paginas/produto/produto_page.dart';
@@ -141,24 +142,15 @@ class _ProdutoDetalhesTabState extends State<ProdutoDetalhesTab>
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ItemPage(),
+                    builder: (context) {
+                      return PedidoItensListPage();
+                    },
                   ),
                 );
               },
             ),
             SizedBox(width: 100),
           ],
-          // bottom: TabBar(
-          //   indicatorColor: Colors.grey,
-          //   tabs: <Widget>[
-          //     Tab(
-          //       child: Text("VISÃO GERAL"),
-          //     ),
-          //     Tab(
-          //       child: Text("INFORMAÇÕES"),
-          //     ),
-          //   ],
-          // ),
         ),
         body: DefaultTabController(
           length: 3,

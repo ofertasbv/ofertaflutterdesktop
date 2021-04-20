@@ -79,12 +79,8 @@ abstract class ProdutoControllerBase with Store {
 
   @action
   Future<List<Produto>> getFilter(ProdutoFilter filter) async {
-    try {
-      produtos = await produtoRepository.getFilter(filter);
-      return produtos;
-    } catch (e) {
-      error = e;
-    }
+    produtos = await produtoRepository.getFilter(filter);
+    return produtos;
   }
 
   @action

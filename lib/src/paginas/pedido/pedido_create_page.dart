@@ -236,7 +236,7 @@ class _PedidoCreatePageState extends State<PedidoCreatePage>
             children: [
               Container(
                 height: 400,
-                child: PedidoItensList(),
+                child: PedidoItensListPage(),
               ),
             ],
           ),
