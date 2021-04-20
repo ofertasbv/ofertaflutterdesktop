@@ -59,32 +59,65 @@ class ContainerPromocao extends StatelessWidget {
                         ),
                       ),
               ),
-              Container(
-                width: 500,
-                height: 150,
-                color: Colors.grey[200],
-                padding: EdgeInsets.all(0),
-                alignment: Alignment.center,
-                child: ListTile(
-                  title: Text(
-                    p.nome,
-                    style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Container(
+                    width: 500,
+                    height: 100,
+                    color: Colors.grey[200],
+                    padding: EdgeInsets.all(0),
+                    alignment: Alignment.center,
+                    child: ListTile(
+                      title: Text(
+                        p.nome,
+                        style: TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      subtitle: Text(
+                        "${p.loja.nome}",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      trailing: CircleAvatar(
+                        backgroundColor: Colors.grey[300],
+                        child: Text("${p.produtos.length}"),
+                      ),
                     ),
                   ),
-                  subtitle: Text(
-                    "${p.loja.nome}",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+                  Container(
+                    width: 500,
+                    height: 100,
+                    color: Colors.grey[200],
+                    padding: EdgeInsets.all(0),
+                    alignment: Alignment.center,
+                    child: ListTile(
+                      title: Text(
+                        p.descricao,
+                        style: TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      subtitle: Text(
+                        "de ${dateFormat.format(p.dataInicio)} á ${dateFormat.format(p.dataFinal)}",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      trailing: CircleAvatar(
+                        backgroundColor: Colors.grey[300],
+                        child: Icon(Icons.location_on_outlined),
+                      ),
                     ),
-                  ),
-                  trailing: CircleAvatar(
-                    backgroundColor: Theme.of(context).accentColor,
-                    child: Text("${p.produtos.length}"),
-                  ),
-                ),
+                  )
+                ],
               ),
               Container(
                 width: 400,
@@ -130,11 +163,14 @@ class ContainerPromocao extends StatelessWidget {
               Container(
                 color: Colors.grey[300],
                 width: 300,
+                padding: EdgeInsets.all(50),
                 child: Container(
-                  width: 300,
+                  width: 100,
                   height: 50,
-                  padding: EdgeInsets.all(50),
+                  color: Colors.transparent,
+                  padding: EdgeInsets.only(top: 30, bottom: 30),
                   child: RaisedButton.icon(
+                    padding: EdgeInsets.all(0),
                     onPressed: () {
                       filter.promocao = p.id;
                       Navigator.of(context).push(
@@ -146,7 +182,7 @@ class ContainerPromocao extends StatelessWidget {
                       );
                     },
                     icon: Icon(Icons.shopping_basket_outlined),
-                    label: Text("ESCOLHER PRODUTOS"),
+                    label: Text("MOSTRAR PRODUTOS"),
                   ),
                 ),
               ),
@@ -154,75 +190,6 @@ class ContainerPromocao extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-
-  PopupMenuButton<String> buildPopupMenuButton(
-      BuildContext context, Promocao p) {
-    return PopupMenuButton<String>(
-      padding: EdgeInsets.zero,
-      icon: Icon(Icons.more_vert),
-      onSelected: (valor) {
-        if (valor == "novo") {
-          print("novo");
-        }
-        if (valor == "editar") {
-          print("editar");
-          Navigator.of(context).pop();
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (BuildContext context) {
-                return PromocaoCreatePage(
-                  promocao: p,
-                );
-              },
-            ),
-          );
-        }
-        if (valor == "delete") {
-          print("delete");
-        }
-        if (valor == "produtos") {
-          filter.subCategoria = p.id;
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (BuildContext context) {
-                return ProdutoPage(filter: filter);
-              },
-            ),
-          );
-        }
-      },
-      itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-        const PopupMenuItem<String>(
-          value: 'novo',
-          child: ListTile(
-            leading: Icon(Icons.add),
-            title: Text('novo'),
-          ),
-        ),
-        const PopupMenuItem<String>(
-          value: 'editar',
-          child: ListTile(
-            leading: Icon(Icons.edit),
-            title: Text('editar'),
-          ),
-        ),
-        const PopupMenuItem<String>(
-          value: 'delete',
-          child: ListTile(
-            leading: Icon(Icons.delete),
-            title: Text('delete'),
-          ),
-        ),
-        const PopupMenuItem<String>(
-          value: 'produtos',
-          child: ListTile(
-            leading: Icon(Icons.add),
-            title: Text('produtos'),
-          ),
-        )
-      ],
     );
   }
 }

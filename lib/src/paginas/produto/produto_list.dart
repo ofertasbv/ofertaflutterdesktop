@@ -166,28 +166,65 @@ class _ProdutoListState extends State<ProdutoList>
                             ),
                           ),
                   ),
-                  Container(
-                    width: 500,
-                    height: 150,
-                    color: Colors.grey[200],
-                    padding: EdgeInsets.all(0),
-                    alignment: Alignment.center,
-                    child: ListTile(
-                      title: Text(
-                        p.nome,
-                        style: TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: 500,
+                        height: 100,
+                        color: Colors.grey[200],
+                        padding: EdgeInsets.all(0),
+                        alignment: Alignment.center,
+                        child: ListTile(
+                          title: Text(
+                            p.nome,
+                            style: TextStyle(
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          subtitle: Text(
+                            "${p.descricao}",
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          trailing: CircleAvatar(
+                            child: Icon(Icons.favorite_border_outlined),
+                            backgroundColor: Colors.grey[300],
+                          ),
                         ),
                       ),
-                      subtitle: Text(
-                        "${p.loja.nome}",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
+                      Container(
+                        width: 500,
+                        height: 100,
+                        color: Colors.grey[200],
+                        padding: EdgeInsets.all(0),
+                        alignment: Alignment.center,
+                        child: ListTile(
+                          title: Text(
+                            p.loja.nome,
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          subtitle: Text(
+                            "${p.promocao.nome}",
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          trailing: CircleAvatar(
+                            backgroundColor: Colors.grey[300],
+                            child: Icon(Icons.location_on_outlined),
+                          ),
                         ),
-                      ),
-                    ),
+                      )
+                    ],
                   ),
                   Container(
                     width: 400,
@@ -234,11 +271,14 @@ class _ProdutoListState extends State<ProdutoList>
                   Container(
                     color: Colors.grey[300],
                     width: 300,
+                    padding: EdgeInsets.all(50),
                     child: Container(
-                      width: 300,
+                      width: 100,
                       height: 50,
-                      padding: EdgeInsets.all(50),
+                      color: Colors.transparent,
+                      padding: EdgeInsets.only(top: 30, bottom: 30),
                       child: RaisedButton.icon(
+                        padding: EdgeInsets.all(0),
                         onPressed: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
@@ -248,8 +288,8 @@ class _ProdutoListState extends State<ProdutoList>
                             ),
                           );
                         },
-                        icon: Icon(Icons.add),
-                        label: Text("LISTA DE DESEJO"),
+                        icon: Icon(Icons.shopping_basket_outlined),
+                        label: Text("VER MAIS"),
                       ),
                     ),
                   ),

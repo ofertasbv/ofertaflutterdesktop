@@ -471,12 +471,12 @@ class _CaixaFluxoCreatePageState extends State<CaixaFluxoCreatePage>
 
                     verificaCaixaStatus(c.status);
 
-                    caixafluxoController.create(c).then((value) {
-                      print("cadastro : ${value}");
-                    });
+                    // caixafluxoController.create(c).then((value) {
+                    //   print("cadastro : ${value}");
+                    // });
 
                     Navigator.of(context).pop();
-                    buildPush(context);
+                    // buildPush(context);
                   });
                 } else {
                   dialogs.information(
@@ -495,10 +495,10 @@ class _CaixaFluxoCreatePageState extends State<CaixaFluxoCreatePage>
                     print("Operador: ${c.vendedor.nome}");
 
                     verificaCaixaStatus(c.status);
-                    caixafluxoController.update(c.id, c);
+                    // caixafluxoController.update(c.id, c);
 
                     Navigator.of(context).pop();
-                    buildPush(context);
+                    // buildPush(context);
                   });
                 }
               }

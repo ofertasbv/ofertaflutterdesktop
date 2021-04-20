@@ -61,8 +61,17 @@ class UsuarioRepository {
   }
 
   Future<int> loginToken(Map<String, dynamic> data) async {
-    var response = await dio.client
-        .post("/oauth/token", data: data, options: Options(headers: {}));
+    var response = await dio.client.post(
+      "/oauth/token",
+      data: data,
+      options: Options(
+        headers: {
+          'Content-type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer token'
+        },
+      ),
+    );
 
     print(response.data);
     print(response.headers);
