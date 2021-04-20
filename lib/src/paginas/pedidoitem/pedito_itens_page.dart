@@ -591,6 +591,7 @@ class _PedidoItensListPageState extends State<PedidoItensListPage> {
                 setState(() {
                   pedidoItemController.remove(p);
                   pedidoItemController.itens;
+                  pedidoItemController.calculateTotal();
                 });
                 // showSnackbar(context, "Produto ${p.produto.nome} removido");
                 Navigator.of(context).pop();
