@@ -312,6 +312,8 @@ class _ProdutoPageState extends State<ProdutoPage> {
                 controller: nomeController,
                 decoration: InputDecoration(
                   hintText: "busca por produtos",
+                  fillColor: Colors.deepPurpleAccent.withOpacity(1),
+                  hintStyle: TextStyle(color: Colors.white),
                   suffixIcon: IconButton(
                     onPressed: () => nomeController.clear(),
                     icon: Icon(Icons.clear),

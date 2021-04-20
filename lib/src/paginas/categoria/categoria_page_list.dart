@@ -118,6 +118,8 @@ class _CategoriaPageListState extends State<CategoriaPageList> {
                 controller: nomeController,
                 decoration: InputDecoration(
                   hintText: "busca por departamento",
+                  fillColor: Colors.deepPurpleAccent.withOpacity(1),
+                  hintStyle: TextStyle(color: Colors.white),
                   suffixIcon: IconButton(
                     onPressed: () => nomeController.clear(),
                     icon: Icon(Icons.clear),

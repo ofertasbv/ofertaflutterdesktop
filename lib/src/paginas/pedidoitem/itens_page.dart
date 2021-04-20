@@ -110,20 +110,21 @@ class _ItemPageState extends State<ItemPage> {
                 title: Text(
                   "TOTAL ",
                   style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 16,
-                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                    color: Theme.of(context).primaryColor,
                   ),
                 ),
                 subtitle: Observer(
                   builder: (context) {
                     return Text(
-                        "R\$ ${formatMoeda.format(pedidoItemController.total)}",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16,
-                          color: Colors.black,
-                        ));
+                      "R\$ ${formatMoeda.format(pedidoItemController.total)}",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                        color: Theme.of(context).accentColor,
+                      ),
+                    );
                   },
                 ),
                 trailing: Text(
@@ -202,7 +203,7 @@ class _ItemPageState extends State<ItemPage> {
                       label: Text(
                         "CONTINUAR PEDIDO".toUpperCase(),
                         style: TextStyle(
-                          fontSize: 14.0,
+                          fontSize: 20,
                         ),
                       ),
                     ),

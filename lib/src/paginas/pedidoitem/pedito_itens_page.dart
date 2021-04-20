@@ -109,7 +109,7 @@ class _PedidoItensListState extends State<PedidoItensList> {
 
   ListView builderList(List<PedidoItem> itens) {
     double containerWidth = 300;
-    double containerHeight = 20;
+    double containerHeight = 50;
 
     return ListView.builder(
       itemCount: itens.length,
@@ -126,203 +126,265 @@ class _PedidoItensListState extends State<PedidoItensList> {
                 child: Card(
                   child: Container(
                     color: Colors.white,
-                    padding: EdgeInsets.all(10),
+                    padding: EdgeInsets.all(0),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         p.produto.foto != null
-                            ? ClipRRect(
-                                borderRadius: BorderRadius.circular(0),
+                            ? Container(
+                                color: Colors.grey[500],
                                 child: Image.network(
                                   ConstantApi.urlArquivoProduto +
                                       p.produto.foto,
                                   fit: BoxFit.cover,
-                                  width: 150,
-                                  height: 150,
+                                  width: 200,
+                                  height: 200,
                                 ),
                               )
-                            : ClipRRect(
-                                borderRadius: BorderRadius.circular(0),
+                            : Container(
+                                color: Colors.grey[500],
                                 child: Image.asset(
                                   ConstantApi.urlLogo,
                                   fit: BoxFit.cover,
-                                  width: 150,
-                                  height: 150,
+                                  width: 200,
+                                  height: 200,
                                 ),
                               ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Container(
-                              height: 30,
-                              width: containerWidth,
-                              child: Text(
-                                p.produto.nome,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: 5),
-                            Container(
-                              height: containerHeight,
-                              width: containerWidth,
-                              //color: Colors.grey[300],
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  Text(
-                                    "Valor unitário ",
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Container(
+                                width: double.infinity,
+                                height: 100,
+                                color: Colors.grey[200],
+                                padding: EdgeInsets.all(0),
+                                alignment: Alignment.center,
+                                child: ListTile(
+                                  title: Text(
+                                    p.produto.nome,
                                     style: TextStyle(
-                                      color: Colors.grey,
+                                      fontSize: 25,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  Text(
-                                    "R\$ ${formatMoeda.format(p.valorUnitario)}",
+                                  subtitle: Text(
+                                    "${p.produto.descricao}",
                                     style: TextStyle(
-                                      color: Colors.green,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                ],
+                                  trailing: CircleAvatar(
+                                    child: Icon(Icons.favorite_border_outlined),
+                                    backgroundColor: Colors.grey[300],
+                                  ),
+                                ),
                               ),
-                            ),
-                            SizedBox(height: 5),
-                            Container(
-                              height: containerHeight,
-                              width: containerWidth,
-                              //color: Colors.grey[300],
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  Text(
-                                    "SubTotal ",
+                              Container(
+                                width: double.infinity,
+                                height: 100,
+                                color: Colors.grey[200],
+                                padding: EdgeInsets.all(0),
+                                alignment: Alignment.center,
+                                child: ListTile(
+                                  title: Text(
+                                    p.produto.loja.nome,
                                     style: TextStyle(
-                                      color: Colors.grey,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  Text(
-                                    "R\$ ${formatMoeda.format(p.valorTotal)}",
+                                  subtitle: Text(
+                                    "${p.produto.promocao.nome}",
                                     style: TextStyle(
-                                      color: Colors.green,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                ],
+                                  trailing: CircleAvatar(
+                                    backgroundColor: Colors.grey[300],
+                                    child: Icon(Icons.location_on_outlined),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                        Container(
+                          color: Colors.grey[100],
+                          padding: EdgeInsets.all(10),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Container(
+                                height: containerHeight,
+                                width: containerWidth,
+                                child: Row(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Text(
+                                      "Valor unitário ",
+                                      style: TextStyle(
+                                        color: Theme.of(context).primaryColor,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    Text(
+                                      "R\$ ${formatMoeda.format(p.valorUnitario)}",
+                                      style: TextStyle(
+                                        color: Theme.of(context).accentColor,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                            SizedBox(height: 5),
-                            Container(
-                              width: containerWidth,
-                              height: 40,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: <Widget>[
-                                  CircleAvatar(
-                                    backgroundColor: Colors.grey[200],
-                                    foregroundColor: Colors.redAccent,
-                                    radius: 20,
-                                    child: IconButton(
-                                      icon: Icon(Icons.delete_forever),
-                                      splashColor: Colors.black,
-                                      onPressed: () {
-                                        showDialogAlert(context, p);
-                                      },
+                              SizedBox(height: 20),
+                              Container(
+                                height: containerHeight,
+                                width: containerWidth,
+                                //color: Colors.grey[300],
+                                child: Row(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Text(
+                                      "SubTotal ",
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        color: Theme.of(context).primaryColor,
+                                      ),
                                     ),
-                                  ),
-                                  Container(
-                                    width: 200,
-                                    height: 30,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(0),
-                                      color: Colors.grey[300],
+                                    Text(
+                                      "R\$ ${formatMoeda.format(p.valorTotal)}",
+                                      style: TextStyle(
+                                        color: Theme.of(context).accentColor,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.stretch,
-                                      children: <Widget>[
-                                        SizedBox(
-                                          child: CircleAvatar(
-                                            backgroundColor: Colors.grey[200],
-                                            foregroundColor: Colors.black,
-                                            child: IconButton(
-                                              icon: Icon(Icons
-                                                  .indeterminate_check_box_outlined),
-                                              splashColor: Colors.black,
-                                              onPressed: () {
-                                                setState(() {
-                                                  print("removendo - ");
-                                                  print(
-                                                      "Quantidade: ${p.quantidade}");
-                                                  pedidoItemController
-                                                      .decremento(p);
-                                                  pedidoItemController
-                                                      .calculateTotal();
-                                                  print(
-                                                      "Total: ${pedidoItemController.total}");
-                                                  pedidoItemController.itens;
-                                                });
-                                              },
+                                  ],
+                                ),
+                              ),
+                              SizedBox(height: 10),
+                              Container(
+                                width: containerWidth,
+                                height: 50,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  children: <Widget>[
+                                    CircleAvatar(
+                                      backgroundColor: Colors.grey[200],
+                                      foregroundColor: Colors.redAccent,
+                                      radius: 20,
+                                      child: IconButton(
+                                        icon: Icon(Icons.delete_forever),
+                                        splashColor: Colors.black,
+                                        onPressed: () {
+                                          showDialogAlert(context, p);
+                                        },
+                                      ),
+                                    ),
+                                    Container(
+                                      width: 200,
+                                      height: 50,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(0),
+                                        color: Colors.grey[300],
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.stretch,
+                                        children: <Widget>[
+                                          SizedBox(
+                                            child: CircleAvatar(
+                                              backgroundColor: Colors.grey[200],
+                                              foregroundColor: Colors.black,
+                                              child: IconButton(
+                                                icon: Icon(Icons
+                                                    .indeterminate_check_box_outlined),
+                                                splashColor: Colors.black,
+                                                onPressed: () {
+                                                  setState(() {
+                                                    print("removendo - ");
+                                                    print(
+                                                        "Quantidade: ${p.quantidade}");
+                                                    pedidoItemController
+                                                        .decremento(p);
+                                                    pedidoItemController
+                                                        .calculateTotal();
+                                                    print(
+                                                        "Total: ${pedidoItemController.total}");
+                                                    pedidoItemController.itens;
+                                                  });
+                                                },
+                                              ),
                                             ),
+                                            width: 38,
                                           ),
-                                          width: 38,
-                                        ),
-                                        Container(
-                                          width: 30,
-                                          height: 30,
-                                          color: Colors.grey[100],
-                                          child: Center(
-                                            child: Text(
-                                              "${p.quantidade}",
-                                              style: TextStyle(
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.bold,
+                                          Container(
+                                            width: 30,
+                                            height: 30,
+                                            color: Colors.grey[100],
+                                            child: Center(
+                                              child: Text(
+                                                "${p.quantidade}",
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
                                               ),
                                             ),
                                           ),
-                                        ),
-                                        SizedBox(
-                                          child: CircleAvatar(
-                                            backgroundColor: Colors.grey[200],
-                                            foregroundColor: Colors.black,
-                                            child: IconButton(
-                                              icon: Icon(Icons.add),
-                                              splashColor: Colors.black,
-                                              onPressed: () {
-                                                setState(() {
-                                                  print("adicionando + ");
-                                                  print(
-                                                      "Quantidade: ${p.quantidade}");
-                                                  pedidoItemController
-                                                      .incremento(p);
-                                                  pedidoItemController
-                                                      .calculateTotal();
-                                                  print(
-                                                      "Total: ${pedidoItemController.total}");
-                                                  pedidoItemController.itens;
-                                                });
-                                              },
+                                          SizedBox(
+                                            child: CircleAvatar(
+                                              backgroundColor: Colors.grey[200],
+                                              foregroundColor: Colors.black,
+                                              child: IconButton(
+                                                icon: Icon(Icons.add),
+                                                splashColor: Colors.black,
+                                                onPressed: () {
+                                                  setState(() {
+                                                    print("adicionando + ");
+                                                    print(
+                                                        "Quantidade: ${p.quantidade}");
+                                                    pedidoItemController
+                                                        .incremento(p);
+                                                    pedidoItemController
+                                                        .calculateTotal();
+                                                    print(
+                                                        "Total: ${pedidoItemController.total}");
+                                                    pedidoItemController.itens;
+                                                  });
+                                                },
+                                              ),
                                             ),
+                                            width: 38,
                                           ),
-                                          width: 38,
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         )
                       ],
                     ),
@@ -347,25 +409,28 @@ class _PedidoItensListState extends State<PedidoItensList> {
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           content: Container(
-            height: 200,
+            height: 300,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text("${p.produto.nome}"),
                 Text("Cod: ${p.produto.id}"),
-                SizedBox(
-                  height: 20,
-                ),
+                SizedBox(height: 20),
                 Center(
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: Image.network(
-                      ConstantApi.urlArquivoProduto + p.produto.foto,
-                      fit: BoxFit.cover,
-                      width: 100,
-                      height: 100,
-                    ),
-                  ),
+                  child: p.produto.foto != null
+                      ? Container(
+                          child: Image.network(
+                            ConstantApi.urlArquivoProduto + p.produto.foto,
+                            fit: BoxFit.cover,
+                            width: 200,
+                            height: 200,
+                          ),
+                        )
+                      : Container(
+                          width: 200,
+                          height: 200,
+                          color: Colors.grey[500],
+                        ),
                 ),
               ],
             ),

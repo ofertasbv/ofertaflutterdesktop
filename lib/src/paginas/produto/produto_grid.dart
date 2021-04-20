@@ -192,7 +192,7 @@ class _ProdutoGridState extends State<ProdutoGrid>
                           child: Align(
                             alignment: Alignment.centerRight,
                             child: CircleAvatar(
-                              backgroundColor: Colors.grey[300],
+                              backgroundColor: Colors.grey[100],
                               foregroundColor: Colors.redAccent,
                               radius: 15,
                               child: IconButton(

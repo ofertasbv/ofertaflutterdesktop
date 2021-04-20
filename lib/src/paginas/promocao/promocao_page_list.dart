@@ -119,6 +119,8 @@ class _PromocaoPageListState extends State<PromocaoPageList> {
                 controller: nomeController,
                 decoration: InputDecoration(
                   hintText: "busca por promoções",
+                  fillColor: Colors.deepPurpleAccent.withOpacity(1),
+                  hintStyle: TextStyle(color: Colors.white),
                   suffixIcon: IconButton(
                     onPressed: () => nomeController.clear(),
                     icon: Icon(Icons.clear),

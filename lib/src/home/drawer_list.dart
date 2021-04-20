@@ -6,10 +6,12 @@ import 'package:nosso/src/core/controller/usuario_controller.dart';
 import 'package:nosso/src/core/model/usuario.dart';
 import 'package:nosso/src/home/home.dart';
 import 'package:nosso/src/paginas/categoria/categoria_page.dart';
+import 'package:nosso/src/paginas/categoria/categoria_page_list.dart';
 import 'package:nosso/src/paginas/loja/loja_page.dart';
 import 'package:nosso/src/paginas/pedido/pedido_page.dart';
 import 'package:nosso/src/paginas/produto/produto_search.dart';
 import 'package:nosso/src/paginas/promocao/promocao_page.dart';
+import 'package:nosso/src/paginas/promocao/promocao_page_list.dart';
 import 'package:nosso/src/paginas/usuario/usuario_login_page.dart';
 import 'package:nosso/src/util/config/config_page.dart';
 import 'package:nosso/src/util/sobre/sobre_page.dart';
@@ -144,7 +146,7 @@ class DrawerList extends StatelessWidget {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (BuildContext context) {
-                  return CategoriaPage();
+                  return CategoriaPageList();
                 },
               ),
             );
@@ -160,7 +162,7 @@ class DrawerList extends StatelessWidget {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (BuildContext context) {
-                  return PromocaoPage();
+                  return PromocaoPageList();
                 },
               ),
             );
