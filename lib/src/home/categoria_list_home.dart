@@ -100,7 +100,6 @@ class _CategoriaListHomeState extends State<CategoriaListHome>
             child: AnimatedContainer(
               width: 250,
               height: 350,
-              alignment: Alignment.center,
               duration: Duration(seconds: 1),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -108,7 +107,7 @@ class _CategoriaListHomeState extends State<CategoriaListHome>
                 children: <Widget>[
                   Container(
                     padding: EdgeInsets.all(1),
-                    color: Colors.grey[600].withOpacity(1),
+                    color: Colors.grey[100].withOpacity(1),
                     width: double.infinity,
                     height: 200,
                     child: c.foto != null
@@ -129,16 +128,16 @@ class _CategoriaListHomeState extends State<CategoriaListHome>
                     padding: EdgeInsets.all(0),
                     height: 80,
                     width: containerWidth,
-                    color: Colors.white,
+                    color: Colors.transparent,
                     alignment: Alignment.center,
-                    child: ListTile(
-                      title: Text("${c.nome}",
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.grey[800],
-                          ),
-                          overflow: TextOverflow.ellipsis),
+                    child: Text(
+                      "${c.nome}",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.grey[800],
+                      ),
+                      overflow: TextOverflow.visible,
                     ),
                   )
                 ],

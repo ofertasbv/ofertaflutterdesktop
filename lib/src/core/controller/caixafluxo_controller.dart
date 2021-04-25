@@ -16,6 +16,12 @@ abstract class CaixafluxoControllerBase with Store {
   }
 
   @observable
+  double totalEntrada;
+
+  @observable
+  double totalSaida;
+
+  @observable
   List<CaixaFluxo> caixaFluxos;
 
   @observable
@@ -41,10 +47,30 @@ abstract class CaixafluxoControllerBase with Store {
   }
 
   @action
+  Future<double> getSomaTotalEntrada(int id) async {
+    try {
+      totalSaida = await caixaFluxoRepository.getSomaTotalEntrada(id);
+      return totalSaida;
+    } catch (e) {
+      error = e;
+    }
+  }
+
+  @action
+  Future<double> getSomaTotalSaida(int id) async {
+    try {
+      totalSaida = await caixaFluxoRepository.getSomaTotalSaida(id);
+      return totalSaida;
+    } catch (e) {
+      error = e;
+    }
+  }
+
+  @action
   Future<int> create(CaixaFluxo p) async {
     // try {
-      caixaFluxo = await caixaFluxoRepository.create(p.toJson());
-      return caixaFluxo;
+    caixaFluxo = await caixaFluxoRepository.create(p.toJson());
+    return caixaFluxo;
     //   if (caixaFluxo == null) {
     //     mensagem = "sem dados";
     //   } else {

@@ -11,6 +11,7 @@ class ConstantApi {
   static String urlArquivoArquivo = urlList + "/arquivos/download/";
 
   static String urlLogo = "assets/images/ofertasbv.png";
+  static String urlBanner = "assets/images/banner.png";
   static String urlUpload = "assets/images/upload.jpg";
 
   static String urlNormal = "assets/images/normal.png";

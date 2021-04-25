@@ -482,7 +482,7 @@ class _PedidoItensListPageState extends State<PedidoItensListPage> {
                   pedidoItemController.itens;
                   pedidoItemController.calculateTotal();
                 });
-                showSnackbar(context, "Produto ${p.produto.nome} removido");
+                print("Produto ${p.produto.nome} removido");
                 Navigator.of(context).pop();
               },
             ),

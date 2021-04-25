@@ -500,7 +500,9 @@ class DataSource extends DataTableSource {
                     "${promocaoController.arquivo + p.foto}",
                   ),
                 )
-              : CircleAvatar(),
+              : CircleAvatar(
+                  child: Icon(Icons.photo),
+                ),
         ),
         DataCell(Text(p.nome)),
         DataCell(Text(p.loja.nome)),

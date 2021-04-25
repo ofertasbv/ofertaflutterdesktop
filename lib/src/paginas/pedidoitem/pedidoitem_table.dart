@@ -268,7 +268,7 @@ class DataSource extends DataTableSource {
                       "${produtoController.arquivo + p.produto.foto}"),
                 )
               : CircleAvatar(
-                  radius: 20,
+                  child: Icon(Icons.photo),
                 ),
         ),
         DataCell(Text("${p.produto.nome}")),

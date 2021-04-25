@@ -124,6 +124,7 @@ class _EnderecoTableState extends State<EnderecoTable>
             DataColumn(label: Text("Bairro")),
             DataColumn(label: Text("Cep")),
             DataColumn(label: Text("Cidade")),
+            DataColumn(label: Text("Estado")),
             DataColumn(label: Text("Visualisar")),
             DataColumn(label: Text("Editar")),
           ],
@@ -160,6 +161,7 @@ class DataSource extends DataTableSource {
         DataCell(Text(p.bairro)),
         DataCell(Text(p.cep)),
         DataCell(Text(p.cidade.nome)),
+        DataCell(Text(p.cidade.estado.sigla)),
         DataCell(CircleAvatar(
           child: IconButton(
             icon: Icon(Icons.search),

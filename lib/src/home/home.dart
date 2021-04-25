@@ -15,8 +15,10 @@ import 'package:nosso/src/paginas/categoria/categoria_page_list.dart';
 import 'package:nosso/src/paginas/pedidoitem/pedito_itens_page.dart';
 import 'package:nosso/src/paginas/produto/produto_page.dart';
 import 'package:nosso/src/paginas/produto/produto_search.dart';
+import 'package:nosso/src/paginas/promocao/promocao_banner.dart';
 import 'package:nosso/src/paginas/promocao/promocao_page.dart';
 import 'package:nosso/src/paginas/promocao/promocao_page_list.dart';
+import 'package:nosso/src/paginas/usuario/usuario_login_page.dart';
 import 'package:nosso/src/util/Examples/teste_mapa.dart';
 import 'package:nosso/src/util/config/config_page.dart';
 // import 'package:gscarousel/gscarousel.dart';
@@ -71,7 +73,8 @@ class HomePage extends StatelessWidget {
           SizedBox(width: 5),
           GestureDetector(
             child: CircleAvatar(
-              foregroundColor: Theme.of(context).accentColor,
+              backgroundColor: Theme.of(context).accentColor,
+              foregroundColor: Theme.of(context).primaryColor,
               child: Stack(
                 alignment: Alignment.topRight,
                 children: <Widget>[
@@ -128,7 +131,26 @@ class HomePage extends StatelessWidget {
               },
             ),
           ),
-          SizedBox(width: 50),
+          SizedBox(width: 5),
+          CircleAvatar(
+            backgroundColor: Theme.of(context).accentColor,
+            foregroundColor: Colors.black,
+            child: IconButton(
+              icon: Icon(
+                Icons.person_outline,
+                color: Colors.grey[200],
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) {
+                    return UsuarioLoginPage();
+                  }),
+                );
+              },
+            ),
+          ),
+          SizedBox(width: 60),
         ],
       ),
       body: LayoutBuilder(
@@ -195,6 +217,16 @@ class HomePage extends StatelessWidget {
       child: ListView(
         children: [
           Container(
+            height: 300,
+            color: Colors.transparent,
+            padding: EdgeInsets.only(top: 0, left: 65, right: 65),
+            child: Container(
+              height: 300,
+              color: Colors.grey[400],
+              child: PromocaoBanner(),
+            ),
+          ),
+          Container(
             height: 80,
             width: MediaQuery.of(context).size.width * 1,
             color: Colors.transparent,
@@ -232,11 +264,13 @@ class HomePage extends StatelessWidget {
               ),
             ),
           ),
+          SizedBox(height: 20),
           Container(
             height: 200,
             padding: EdgeInsets.only(left: 65, right: 65),
             child: CartaoCreditoHome(),
           ),
+          SizedBox(height: 20),
           Container(
             height: 100,
             width: MediaQuery.of(context).size.width * 1,
@@ -275,6 +309,7 @@ class HomePage extends StatelessWidget {
               ),
             ),
           ),
+          SizedBox(height: 20),
           Container(
             height: 200,
             padding: EdgeInsets.only(left: 65, right: 65),
@@ -366,7 +401,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Container buildContainerPromocaoMenu(BuildContext context) {
+  buildContainerPromocaoMenu(BuildContext context) {
     return Container(
       height: 80,
       padding: EdgeInsets.all(0),
@@ -374,7 +409,6 @@ class HomePage extends StatelessWidget {
         leading: Text(
           "Promoçõe em destaque",
           style: TextStyle(
-            color: Theme.of(context).accentColor,
             fontSize: 30,
             fontWeight: FontWeight.bold,
           ),
@@ -408,7 +442,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Container buildContainerProdutoMenu(BuildContext context) {
+  buildContainerProdutoMenu(BuildContext context) {
     return Container(
       height: 80,
       padding: EdgeInsets.all(0),
@@ -416,7 +450,6 @@ class HomePage extends StatelessWidget {
         leading: Text(
           "Produtos em destaque",
           style: TextStyle(
-            color: Theme.of(context).accentColor,
             fontSize: 30,
             fontWeight: FontWeight.bold,
           ),
@@ -424,7 +457,6 @@ class HomePage extends StatelessWidget {
         title: Text(
           "veja todos produtos",
           style: TextStyle(
-            color: Theme.of(context).primaryColor,
             fontSize: 25,
             fontWeight: FontWeight.bold,
           ),
@@ -450,7 +482,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Container buildContainerCategoriaMenu(BuildContext context) {
+  buildContainerCategoriaMenu(BuildContext context) {
     return Container(
       height: 80,
       padding: EdgeInsets.all(0),
@@ -458,7 +490,6 @@ class HomePage extends StatelessWidget {
         leading: Text(
           "Departamentos em destaque",
           style: TextStyle(
-            color: Theme.of(context).accentColor,
             fontSize: 30,
             fontWeight: FontWeight.bold,
           ),

@@ -67,7 +67,7 @@ class _CategoriaListState extends State<CategoriaList>
           Container(
             height: 60,
             width: double.infinity,
-            color: Colors.grey[100],
+            color: Colors.grey[200],
             padding: EdgeInsets.all(0),
             child: ListTile(
               subtitle: TextFormField(
@@ -94,7 +94,7 @@ class _CategoriaListState extends State<CategoriaList>
           ),
           Expanded(
             child: Container(
-              color: Colors.transparent,
+              color: Colors.white,
               child: builderConteudoList(),
             ),
           ),

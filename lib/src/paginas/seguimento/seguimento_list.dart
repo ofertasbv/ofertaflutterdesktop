@@ -58,7 +58,7 @@ class _SeguimentoListState extends State<SeguimentoList>
               subtitle: TextFormField(
                 controller: nomeController,
                 decoration: InputDecoration(
-                  labelText: "busca por departamentos",
+                  labelText: "busca por seguimentos",
                   prefixIcon: Icon(Icons.search_outlined),
                   suffixIcon: IconButton(
                     onPressed: () => nomeController.clear(),
@@ -80,7 +80,7 @@ class _SeguimentoListState extends State<SeguimentoList>
           SizedBox(height: 0),
           Expanded(
             child: Container(
-              color: Colors.transparent,
+              color: Colors.white,
               child: builderConteudoList(),
             ),
           ),

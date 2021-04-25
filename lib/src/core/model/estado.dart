@@ -3,7 +3,11 @@ class Estado {
   String nome;
   String sigla;
 
-  Estado({this.id, this.nome, this.sigla});
+  Estado({
+    this.id,
+    this.nome,
+    this.sigla,
+  });
 
   Estado.fromJson(Map<String, dynamic> json) {
     id = json['id'];

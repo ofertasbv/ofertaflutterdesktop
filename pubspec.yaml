@@ -39,6 +39,7 @@ dependencies:
   search_choices: ^2.0.3
   multiselect_dropdown: ^2.0.0+1
   skeleton_loader: ^1.0.2+3
+  carousel_slider: ^3.0.0
 
   geolocator: ^7.0.1
   geocoding: ^2.0.0
