@@ -41,6 +41,17 @@ class CategoriaRepository {
     return null;
   }
 
+  Future<List<Categoria>> getAllBySeguimento(int id) async {
+    try {
+      print("carregando categorias by seguimento id");
+      var response = await dio.client.get("/categorias/seguimento/${id}");
+      return (response.data as List).map((c) => Categoria.fromJson(c)).toList();
+    } on DioError catch (e) {
+      print(e.message);
+    }
+    return null;
+  }
+
   Future<int> create(Map<String, dynamic> data) async {
     var response = await dio.client.post("/categorias/create", data: data);
     return response.statusCode;

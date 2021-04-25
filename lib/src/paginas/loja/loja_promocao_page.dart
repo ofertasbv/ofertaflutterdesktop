@@ -4,7 +4,6 @@ import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:nosso/src/core/controller/promocao_controller.dart';
 import 'package:nosso/src/core/model/promocao.dart';
-import 'package:nosso/src/paginas/produto/produto_page.dart';
 import 'package:nosso/src/paginas/promocao/promocao_create_page.dart';
 import 'package:nosso/src/paginas/promocao/promocao_detalhes_tab.dart';
 import 'package:nosso/src/util/container/container_promocao.dart';
@@ -118,75 +117,6 @@ class _LojaPromocaoPageState extends State<LojaPromocaoPage> {
           },
         );
       },
-    );
-  }
-
-  PopupMenuButton<String> buildPopupMenuButton(
-      BuildContext context, Promocao p) {
-    return PopupMenuButton<String>(
-      padding: EdgeInsets.zero,
-      icon: Icon(Icons.more_vert),
-      onSelected: (valor) {
-        if (valor == "novo") {
-          print("novo");
-        }
-        if (valor == "editar") {
-          print("editar");
-          Navigator.of(context).pop();
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (BuildContext context) {
-                return PromocaoCreatePage(
-                  promocao: p,
-                );
-              },
-            ),
-          );
-        }
-        if (valor == "delete") {
-          print("delete");
-        }
-        if (valor == "produtos") {
-          print("produtos");
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (BuildContext context) {
-                return ProdutoPage();
-              },
-            ),
-          );
-        }
-      },
-      itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-        const PopupMenuItem<String>(
-          value: 'novo',
-          child: ListTile(
-            leading: Icon(Icons.add),
-            title: Text('novo'),
-          ),
-        ),
-        const PopupMenuItem<String>(
-          value: 'editar',
-          child: ListTile(
-            leading: Icon(Icons.edit),
-            title: Text('editar'),
-          ),
-        ),
-        const PopupMenuItem<String>(
-          value: 'delete',
-          child: ListTile(
-            leading: Icon(Icons.delete),
-            title: Text('delete'),
-          ),
-        ),
-        const PopupMenuItem<String>(
-          value: 'produtos',
-          child: ListTile(
-            leading: Icon(Icons.add),
-            title: Text('produtos'),
-          ),
-        )
-      ],
     );
   }
 }

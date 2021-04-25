@@ -2,12 +2,15 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:nosso/src/core/controller/pedidoItem_controller.dart';
 import 'package:nosso/src/home/categoria_list_home.dart';
 import 'package:nosso/src/home/drawer_list.dart';
 import 'package:nosso/src/home/logo.dart';
 import 'package:nosso/src/home/produto_list_home.dart';
 import 'package:nosso/src/home/promocao_list_home.dart';
 import 'package:nosso/src/paginas/categoria/categoria_page_list.dart';
+import 'package:nosso/src/paginas/pedidoitem/pedito_itens_page.dart';
 import 'package:nosso/src/paginas/produto/produto_page.dart';
 import 'package:nosso/src/paginas/produto/produto_search.dart';
 import 'package:nosso/src/paginas/promocao/promocao_page.dart';
@@ -19,6 +22,7 @@ import 'package:nosso/src/util/config/config_page.dart';
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var pedidoItemController = GetIt.I.get<PedidoItemController>();
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -65,8 +69,7 @@ class HomePage extends StatelessWidget {
           SizedBox(width: 5),
           GestureDetector(
             child: CircleAvatar(
-              backgroundColor: Theme.of(context).accentColor,
-              foregroundColor: Colors.black,
+              foregroundColor: Theme.of(context).accentColor,
               child: Stack(
                 alignment: Alignment.topRight,
                 children: <Widget>[
@@ -82,7 +85,13 @@ class HomePage extends StatelessWidget {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(25),
                         border: Border.all(color: Colors.black, width: 1),
-                        color: Colors.white.withOpacity(.7),
+                        color: Colors.white.withOpacity(0.7),
+                      ),
+                      child: Center(
+                        child: Text(
+                          (pedidoItemController.itens.length ?? 0).toString(),
+                          style: TextStyle(color: Colors.black87),
+                        ),
                       ),
                     ),
                   )
@@ -93,8 +102,8 @@ class HomePage extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    // builder: (context) => ItemPage(),
-                    ),
+                  builder: (context) => PedidoItensListPage(),
+                ),
               );
             },
           ),
@@ -110,11 +119,9 @@ class HomePage extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return ConfigPage();
-                    }
-                  ),
+                  MaterialPageRoute(builder: (context) {
+                    return ConfigPage();
+                  }),
                 );
               },
             ),

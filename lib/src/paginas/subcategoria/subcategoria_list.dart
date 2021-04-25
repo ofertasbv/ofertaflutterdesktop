@@ -5,22 +5,40 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:nosso/src/core/controller/subcategoria_controller.dart';
+import 'package:nosso/src/core/model/categoria.dart';
 import 'package:nosso/src/core/model/subcategoria.dart';
-import 'package:nosso/src/paginas/subcategoria/subcategoria_create_page.dart';
-import 'package:nosso/src/util/load/circular_progresso.dart';
+import 'package:nosso/src/paginas/produto/produto_page.dart';
+import 'package:nosso/src/util/container/container_subcategoria.dart';
+import 'package:nosso/src/util/filter/produto_filter.dart';
+import 'package:nosso/src/util/load/circular_progresso_mini.dart';
 
 class SubCategoriaList extends StatefulWidget {
+  Categoria categoria;
+
+  SubCategoriaList({Key key, this.categoria}) : super(key: key);
+
   @override
-  _SubCategoriaListState createState() => _SubCategoriaListState();
+  _SubCategoriaListState createState() =>
+      _SubCategoriaListState(categoria: this.categoria);
 }
 
 class _SubCategoriaListState extends State<SubCategoriaList>
     with AutomaticKeepAliveClientMixin<SubCategoriaList> {
+  _SubCategoriaListState({this.categoria});
+
   var subCategoriaController = GetIt.I.get<SubCategoriaController>();
+  var nomeController = TextEditingController();
+
+  Categoria categoria;
+  ProdutoFilter filter = ProdutoFilter();
 
   @override
   void initState() {
-    subCategoriaController.getAll();
+    if (categoria == null) {
+      subCategoriaController.getAll();
+    } else {
+      subCategoriaController.getAllByCategoriaById(categoria.id);
+    }
     super.initState();
   }
 
@@ -28,28 +46,85 @@ class _SubCategoriaListState extends State<SubCategoriaList>
     return subCategoriaController.getAll();
   }
 
+  bool isLoading = true;
+
+  filterByNome(String nome) {
+    if (nome.trim().isEmpty) {
+      subCategoriaController.getAll();
+    } else {
+      nome = nomeController.text;
+      subCategoriaController.getAllByNome(nome);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return builderConteudoList();
+    return Container(
+      width: double.infinity,
+      height: double.infinity,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          SizedBox(height: 0),
+          Container(
+            height: 60,
+            width: double.infinity,
+            color: Colors.grey[100],
+            padding: EdgeInsets.all(0),
+            child: ListTile(
+              subtitle: TextFormField(
+                controller: nomeController,
+                decoration: InputDecoration(
+                  labelText: "busca por subcategorias",
+                  prefixIcon: Icon(Icons.search_outlined),
+                  suffixIcon: IconButton(
+                    onPressed: () => nomeController.clear(),
+                    icon: Icon(Icons.clear),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(0)),
+                    borderSide: BorderSide(color: Colors.transparent, width: 2),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(0)),
+                    borderSide: BorderSide(color: Colors.transparent, width: 2),
+                  ),
+                ),
+                onChanged: filterByNome,
+              ),
+            ),
+          ),
+          Expanded(
+            child: Container(
+              color: Colors.transparent,
+              child: builderConteudoList(),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   builderConteudoList() {
-    return Observer(
-      builder: (context) {
-        List<SubCategoria> categorias = subCategoriaController.subCategorias;
-        if (subCategoriaController.error != null) {
-          return Text("Não foi possível carregados dados");
-        }
+    return Container(
+      padding: EdgeInsets.only(top: 0),
+      child: Observer(
+        builder: (context) {
+          List<SubCategoria> categorias = subCategoriaController.subCategorias;
+          if (subCategoriaController.error != null) {
+            return Text("Não foi possível carregados dados");
+          }
 
-        if (categorias == null) {
-          return CircularProgressor();
-        }
+          if (categorias == null) {
+            return CircularProgressorMini();
+          }
 
-        return RefreshIndicator(
-          onRefresh: onRefresh,
-          child: builderList(categorias),
-        );
-      },
+          return RefreshIndicator(
+            onRefresh: onRefresh,
+            child: builderList(categorias),
+          );
+        },
+      ),
     );
   }
 
@@ -58,102 +133,27 @@ class _SubCategoriaListState extends State<SubCategoriaList>
     double containerHeight = 20;
 
     return ListView.builder(
-      scrollDirection: Axis.vertical,
       itemCount: categorias.length,
       itemBuilder: (context, index) {
         SubCategoria c = categorias[index];
 
         return GestureDetector(
-          child: ListTile(
-            isThreeLine: true,
-            leading: Container(
-              padding: EdgeInsets.all(1),
-              decoration: new BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [Theme.of(context).primaryColor, Theme.of(context).primaryColor],
-                ),
-                border: Border.all(
-                  color: Colors.black,
-                  width: 1,
-                ),
-                borderRadius: BorderRadius.circular(35),
-              ),
-              child: CircleAvatar(
-                backgroundColor: Colors.grey[100],
-                radius: 20,
-                child: Text(
-                  c.nome.substring(0, 1).toUpperCase(),
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-            title: Text(c.nome),
-            subtitle: Text("${c.categoria.nome}"),
-            trailing: Container(
-              height: 80,
-              width: 50,
-              child: buildPopupMenuButton(context, c),
-            ),
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 0),
+            child: ContainerSubCategoria(subCategoriaController, c),
           ),
-          onTap: () {},
+          onTap: () {
+            filter.subCategoria = c.id;
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return ProdutoPage(filter: filter);
+                },
+              ),
+            );
+          },
         );
       },
-    );
-  }
-
-  PopupMenuButton<String> buildPopupMenuButton(
-      BuildContext context, SubCategoria c) {
-    return PopupMenuButton<String>(
-      padding: EdgeInsets.zero,
-      icon: Icon(Icons.more_vert),
-      onSelected: (valor) {
-        if (valor == "novo") {
-          print("novo");
-        }
-        if (valor == "editar") {
-          print("editar");
-          Navigator.of(context).pop();
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (BuildContext context) {
-                return SubCategoriaCreatePage(
-                  subCategoria: c,
-                );
-              },
-            ),
-          );
-        }
-        if (valor == "delete") {
-          print("delete");
-        }
-      },
-      itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-        const PopupMenuItem<String>(
-          value: 'novo',
-          child: ListTile(
-            leading: Icon(Icons.add),
-            title: Text('novo'),
-          ),
-        ),
-        const PopupMenuItem<String>(
-          value: 'editar',
-          child: ListTile(
-            leading: Icon(Icons.edit),
-            title: Text('editar'),
-          ),
-        ),
-        const PopupMenuItem<String>(
-          value: 'delete',
-          child: ListTile(
-            leading: Icon(Icons.delete),
-            title: Text('Delete'),
-          ),
-        )
-      ],
     );
   }
 

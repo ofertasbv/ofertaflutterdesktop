@@ -63,6 +63,11 @@ abstract class CategoriaControllerBase with Store {
   }
 
   @action
+  Future<List<Categoria>> getAllBySeguimento(int id) async {
+    categorias = await categoriaRepository.getAllBySeguimento(id);
+  }
+
+  @action
   Future<int> create(Categoria p) async {
     try {
       categoria = await categoriaRepository.create(p.toJson());

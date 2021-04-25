@@ -66,11 +66,15 @@ class UsuarioRepository {
       data: data,
       options: Options(
         headers: {
-          'Content-type': 'application/json',
-          'Accept': 'application/json',
-          'Authorization': 'Bearer token'
+          "Content-type": "application/x-www-form-urlencoded",
+          "Authorization": "Bearer bW9iaWxlOm0wYjFsMzA="
         },
       ),
+      queryParameters: {
+        "grant_type": "ApiUtils.GRANT_TYPE",
+        "username": "AppConstants.LOGIN",
+        "password": "AppConstants.PASSWORD"
+      },
     );
 
     print(response.data);

@@ -4,54 +4,40 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
-import 'package:nosso/src/core/controller/categoria_controller.dart';
-import 'package:nosso/src/core/model/categoria.dart';
+import 'package:nosso/src/core/controller/seguimento_controller.dart';
 import 'package:nosso/src/core/model/seguimento.dart';
-import 'package:nosso/src/paginas/subcategoria/subcategoria_list.dart';
-import 'package:nosso/src/paginas/subcategoria/subcategoria_list_page.dart';
-import 'package:nosso/src/paginas/subcategoria/subcategoria_page.dart';
-import 'package:nosso/src/util/container/container_categoria.dart';
+import 'package:nosso/src/paginas/categoria/categoria_page.dart';
+import 'package:nosso/src/util/container/container_seguimento.dart';
 import 'package:nosso/src/util/load/circular_progresso_mini.dart';
 
-class CategoriaList extends StatefulWidget {
-  Seguimento s;
-
-  CategoriaList({Key key, this.s}) : super(key: key);
-
+class SeguimentoList extends StatefulWidget {
   @override
-  _CategoriaListState createState() => _CategoriaListState(seguimento: this.s);
+  _SeguimentoListState createState() => _SeguimentoListState();
 }
 
-class _CategoriaListState extends State<CategoriaList>
-    with AutomaticKeepAliveClientMixin<CategoriaList> {
-  var categoriaController = GetIt.I.get<CategoriaController>();
+class _SeguimentoListState extends State<SeguimentoList>
+    with AutomaticKeepAliveClientMixin<SeguimentoList> {
+  var seguimentoController = GetIt.I.get<SeguimentoController>();
   var nomeController = TextEditingController();
-
-  _CategoriaListState({this.seguimento});
-
-  Seguimento seguimento;
 
   @override
   void initState() {
-    if (seguimento == null) {
-      categoriaController.getAll();
-    } else {
-      categoriaController.getAllBySeguimento(seguimento.id);
-    }
+    seguimentoController.getAll();
+    super.initState();
   }
 
   Future<void> onRefresh() {
-    return categoriaController.getAll();
+    return seguimentoController.getAll();
   }
 
   bool isLoading = true;
 
   filterByNome(String nome) {
     if (nome.trim().isEmpty) {
-      categoriaController.getAll();
+      seguimentoController.getAll();
     } else {
       nome = nomeController.text;
-      categoriaController.getAllByNome(nome);
+      seguimentoController.getAllByNome(nome);
     }
   }
 
@@ -63,11 +49,10 @@ class _CategoriaListState extends State<CategoriaList>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          SizedBox(height: 0),
           Container(
             height: 60,
             width: double.infinity,
-            color: Colors.grey[100],
+            color: Colors.grey[200],
             padding: EdgeInsets.all(0),
             child: ListTile(
               subtitle: TextFormField(
@@ -92,6 +77,7 @@ class _CategoriaListState extends State<CategoriaList>
               ),
             ),
           ),
+          SizedBox(height: 0),
           Expanded(
             child: Container(
               color: Colors.transparent,
@@ -108,43 +94,43 @@ class _CategoriaListState extends State<CategoriaList>
       padding: EdgeInsets.only(top: 0),
       child: Observer(
         builder: (context) {
-          List<Categoria> categorias = categoriaController.categorias;
-          if (categoriaController.error != null) {
+          List<Seguimento> seguimentos = seguimentoController.seguimentos;
+          if (seguimentoController.error != null) {
             return Text("Não foi possível carregados dados");
           }
 
-          if (categorias == null) {
+          if (seguimentos == null) {
             return CircularProgressorMini();
           }
 
           return RefreshIndicator(
             onRefresh: onRefresh,
-            child: builderList(categorias),
+            child: builderList(seguimentos),
           );
         },
       ),
     );
   }
 
-  builderList(List<Categoria> categorias) {
+  builderList(List<Seguimento> seguimentos) {
     double containerWidth = 160;
     double containerHeight = 20;
 
     return ListView.builder(
-      itemCount: categorias.length,
+      itemCount: seguimentos.length,
       itemBuilder: (context, index) {
-        Categoria c = categorias[index];
+        Seguimento c = seguimentos[index];
 
         return GestureDetector(
           child: Padding(
             padding: EdgeInsets.symmetric(vertical: 0),
-            child: ContainerCategoria(categoriaController, c),
+            child: ContainerSeguimento(seguimentoController, c),
           ),
           onTap: () {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (BuildContext context) {
-                  return SubcategoriaListPage(c: c);
+                  return CategoriaPage(s: c);
                 },
               ),
             );

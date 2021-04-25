@@ -1,19 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:get_it/get_it.dart';
-import 'package:nosso/src/core/controller/usuario_controller.dart';
-import 'package:nosso/src/core/model/usuario.dart';
-import 'package:nosso/src/home/home.dart';
-import 'package:nosso/src/paginas/categoria/categoria_page.dart';
-import 'package:nosso/src/paginas/categoria/categoria_page_list.dart';
-import 'package:nosso/src/paginas/loja/loja_page.dart';
-import 'package:nosso/src/paginas/pedido/pedido_page.dart';
+import 'package:nosso/src/paginas/loja/loja_list_page.dart';
 import 'package:nosso/src/paginas/produto/produto_search.dart';
-import 'package:nosso/src/paginas/promocao/promocao_page.dart';
 import 'package:nosso/src/paginas/promocao/promocao_page_list.dart';
+import 'package:nosso/src/paginas/seguimento/seguimento_page.dart';
 import 'package:nosso/src/paginas/usuario/usuario_login_page.dart';
-import 'package:nosso/src/util/config/config_page.dart';
+import 'package:nosso/src/util/Examples/teste_mapa.dart';
 import 'package:nosso/src/util/sobre/sobre_page.dart';
 
 class DrawerList extends StatelessWidget {
@@ -35,8 +27,8 @@ class DrawerList extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            Colors.grey[200].withOpacity(0.2),
-            Colors.grey[600].withOpacity(0.9)
+            Colors.grey[100].withOpacity(0.2),
+            Colors.grey[200].withOpacity(0.9)
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
@@ -46,67 +38,44 @@ class DrawerList extends StatelessWidget {
   }
 
   menuLateral(BuildContext context) {
-    var usuarioController = GetIt.I.get<UsuarioController>();
     return ListView(
       children: <Widget>[
         Container(
           padding: EdgeInsets.only(left: 10),
-          color: Colors.transparent,
+          color: Theme.of(context).primaryColor,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               CircleAvatar(
                 backgroundColor: Colors.grey[300],
-                foregroundColor: Theme.of(context).primaryColor,
+                foregroundColor: Theme.of(context).accentColor,
                 child: Icon(
                   Icons.account_circle,
-                  size: 25,
+                  size: 35,
                 ),
-                maxRadius: 15,
+                maxRadius: 20,
               ),
-              Container(
-                padding: EdgeInsets.all(5),
-                height: 50,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Observer(
-                      builder: (context) {
-                        Usuario u = usuarioController.usuarioSelecionado;
-                        if (u == null) {
-                          return Text("Minha conta");
-                        }
-                        return Text(
-                          "${u.email}",
-                          style: TextStyle(
-                            color: Colors.grey[900],
-                          ),
-                        );
-                      },
+              Expanded(
+                child: Container(
+                  padding: EdgeInsets.all(0),
+                  height: 55,
+                  color: Colors.transparent,
+                  child: ListTile(
+                    title: Text(
+                      "BOOKOFERTAS",
+                      style: TextStyle(
+                        color: Colors.grey[100],
+                      ),
                     ),
-                  ],
+                  ),
                 ),
               ),
             ],
           ),
         ),
-        Divider(),
         ListTile(
           selected: false,
-          leading: Icon(Icons.search_outlined),
-          title: Text("Buscar"),
-          trailing: Icon(Icons.arrow_forward),
-          onTap: () {
-            showSearch(
-              context: context,
-              delegate: ProdutoSearchDelegate(),
-            );
-          },
-        ),
-        ListTile(
-          selected: false,
-          leading: Icon(Icons.account_circle_outlined),
+          leading: Icon(Icons.supervisor_account),
           title: Text("Minha conta"),
           trailing: Icon(Icons.arrow_forward),
           onTap: () {
@@ -122,17 +91,13 @@ class DrawerList extends StatelessWidget {
         ),
         ListTile(
           selected: false,
-          leading: Icon(Icons.shopping_basket),
-          title: Text("Meus pedidos"),
+          leading: Icon(Icons.search_outlined),
+          title: Text("Buscar"),
           trailing: Icon(Icons.arrow_forward),
           onTap: () {
-            Navigator.pop(context);
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return PedidoPage();
-                },
-              ),
+            showSearch(
+              context: context,
+              delegate: ProdutoSearchDelegate(),
             );
           },
         ),
@@ -146,7 +111,7 @@ class DrawerList extends StatelessWidget {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (BuildContext context) {
-                  return CategoriaPageList();
+                  return SeguimentoPage();
                 },
               ),
             );
@@ -178,7 +143,7 @@ class DrawerList extends StatelessWidget {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (BuildContext context) {
-                  return LojaPage();
+                  return LojaListPage();
                 },
               ),
             );
@@ -186,14 +151,16 @@ class DrawerList extends StatelessWidget {
         ),
         ListTile(
           selected: false,
-          leading: Icon(Icons.apps),
-          title: Text("Apps"),
+          leading: Icon(Icons.location_on_outlined),
+          title: Text("Encontrar lojas"),
           trailing: Icon(Icons.arrow_forward),
           onTap: () {
-            Navigator.push(
-              context,
+            Navigator.pop(context);
+            Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (context) => ConfigPage(),
+                builder: (BuildContext context) {
+                  return TesteMapa();
+                },
               ),
             );
           },

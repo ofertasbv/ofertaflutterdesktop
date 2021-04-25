@@ -1,21 +1,16 @@
 import 'dart:async';
 import 'dart:core';
-import 'dart:io';
 
 import 'package:file/file.dart';
 import 'package:file/memory.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
 import 'package:nosso/src/core/controller/arquivo_controller.dart';
 import 'package:nosso/src/core/model/arquivo.dart';
 import 'package:nosso/src/core/model/uploadFileResponse.dart';
 import 'package:nosso/src/paginas/arquivo/arquivo_page.dart';
-import 'package:nosso/src/util/componentes/image_source_sheet.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:nosso/src/util/dialogs/dialogs.dart';
 import 'package:nosso/src/util/upload/upload_response.dart';
@@ -37,8 +32,6 @@ class _ArquivoCreatePageState extends State<ArquivoCreatePage> {
   File arquivo;
   var picker = ImagePicker();
   PickedFile pickedFile;
-  FilePickerResult result;
-  PlatformFile file;
   bool isButtonDesable = false;
 
   var uploadFileResponse = UploadFileResponse();
@@ -146,16 +139,7 @@ class _ArquivoCreatePageState extends State<ArquivoCreatePage> {
       //     }
       //   },
       // ),
-      body: Container(
-        child: file != null
-            ? Image.network(
-                arquivo.path,
-                fit: BoxFit.fitWidth,
-                width: double.infinity,
-                height: 340,
-              )
-            : Text("arquivo vazio"),
-      ),
+      body: Text("arquivo vazio"),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () async {

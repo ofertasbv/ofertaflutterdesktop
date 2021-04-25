@@ -67,6 +67,7 @@ abstract class SubCategoriaControllerBase with Store {
     }
   }
 
+
   @action
   Future<int> create(SubCategoria p) async {
     try {
