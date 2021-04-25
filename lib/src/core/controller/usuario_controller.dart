@@ -78,7 +78,7 @@ abstract class UsuarioControllerBase with Store {
   @action
   Future<int> loginToken(Usuario p) async {
     try {
-      usuario = await usuarioRepository.login(p.toJson());
+      usuario = await usuarioRepository.loginToken(p);
       if (usuario == null) {
         mensagem = "usuário vazio";
       } else {

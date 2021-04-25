@@ -74,11 +74,11 @@ class _PedidoItensListPageState extends State<PedidoItensListPage> {
               },
             ),
           ),
-          SizedBox(width: 50)
+          SizedBox(width: 100)
         ],
       ),
       body: Container(
-        padding: EdgeInsets.only(left: 50, right: 50),
+        padding: EdgeInsets.only(left: 100, right: 100),
         child: Container(
           child: builderConteudoList(),
         ),
@@ -280,7 +280,7 @@ class _PedidoItensListPageState extends State<PedidoItensListPage> {
 
   buildBottomNavigationBar(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(left: 50, right: 50, top: 0, bottom: 0),
+      padding: EdgeInsets.only(left: 100, right: 100, top: 0, bottom: 0),
       child: Container(
         width: MediaQuery.of(context).size.width,
         height: 110,

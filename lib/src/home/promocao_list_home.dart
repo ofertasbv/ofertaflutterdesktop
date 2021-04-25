@@ -139,7 +139,7 @@ class _PromocaoListHomeState extends State<PromocaoListHome>
                     ),
                     SizedBox(height: 0),
                     Container(
-                      height: 95,
+                      height: 146,
                       width: containerWidth,
                       decoration: BoxDecoration(
                         color: Colors.white,

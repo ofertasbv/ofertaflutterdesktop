@@ -100,7 +100,7 @@ class _CatalogoHomeState extends State<CatalogoHome> {
     );
   }
 
-  Container buildContainerTituloProduto(BuildContext context) {
+  buildContainerTituloProduto(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(0),
       child: Row(
@@ -138,7 +138,7 @@ class _CatalogoHomeState extends State<CatalogoHome> {
     );
   }
 
-  Container buildContainerTtituloPromocao(BuildContext context) {
+  buildContainerTtituloPromocao(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(0),
       child: Row(
@@ -176,7 +176,7 @@ class _CatalogoHomeState extends State<CatalogoHome> {
     );
   }
 
-  Container buildContainerTituloCategoria(BuildContext context) {
+  buildContainerTituloCategoria(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(0),
       child: Row(

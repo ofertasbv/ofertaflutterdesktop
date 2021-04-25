@@ -9,6 +9,7 @@ import 'package:nosso/src/paginas/cliente/cliente_create_page.dart';
 import 'package:nosso/src/paginas/usuario/usuario_create_page.dart';
 import 'package:nosso/src/paginas/usuario/usuario_recuperar_senha.dart';
 import 'package:nosso/src/util/dialogs/dialogs.dart';
+import 'package:nosso/src/util/snackbar/snackbar_global.dart';
 
 class UsuarioEditCliente extends StatefulWidget {
   @override
@@ -31,6 +32,7 @@ class _UsuarioEditClienteState extends State<UsuarioEditCliente> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: GlobalScaffold.instance.scaffkey,
       appBar: AppBar(
         title: Text("Perfil de cliente"),
       ),

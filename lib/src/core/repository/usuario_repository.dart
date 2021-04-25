@@ -60,58 +60,29 @@ class UsuarioRepository {
     return response.statusCode;
   }
 
-  Future<int> loginToken(Map<String, dynamic> data) async {
+  Future<int> loginToken(Usuario usuario) async {
+    var body = {
+      "client": "mobile",
+      "username": usuario.email,
+      "password": usuario.senha,
+      "grant_type": "password",
+    };
+
     var response = await dio.client.post(
       "/oauth/token",
-      data: data,
       options: Options(
         headers: {
           "Content-type": "application/x-www-form-urlencoded",
-          "Authorization": "Bearer bW9iaWxlOm0wYjFsMzA="
+          "Authorization": "Basic bW9iaWxlOm0wYjFsMzA="
         },
       ),
-      queryParameters: {
-        "grant_type": "ApiUtils.GRANT_TYPE",
-        "username": "AppConstants.LOGIN",
-        "password": "AppConstants.PASSWORD"
-      },
+      data: body,
     );
 
     print(response.data);
     print(response.headers);
-    // print(response.request);
     print(response.statusCode);
 
     return response.statusCode;
-  }
-
-  Future<int> login(Map<String, dynamic> data) async {
-    // Dio dio = Dio();
-    Map<String, String> headers = {
-      "Content-type": "application/x-www-form-urlencoded",
-      // "Accept": "application/json",
-      "Authorization": "Basic bW9iaWxlOm0wYjFsMzA=",
-    };
-
-    var data = {
-      // "client" : "mobile",
-      "username": "projetogdados@gmail.com",
-      "password": "frctads",
-      "grant_type": "password"
-    };
-
-    var response = await dio.client.post(
-      "/oauth/token",
-      data: data,
-      options: Options(headers: headers),
-    );
-
-    return response.statusCode;
-    //     .then((res) async {
-    //   SharedPreferences prefs = await SharedPreferences.getInstance();
-    //   await prefs.setString('token', res.data['token']);
-    // }).catchError((err) {
-    //   throw Exception('Login ou senha inválidos');
-    // });
   }
 }

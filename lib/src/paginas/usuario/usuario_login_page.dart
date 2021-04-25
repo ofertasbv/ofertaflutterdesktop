@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nosso/src/paginas/usuario/usuario_login.dart';
+import 'package:nosso/src/util/snackbar/snackbar_global.dart';
 
 class UsuarioLoginPage extends StatefulWidget {
   @override
