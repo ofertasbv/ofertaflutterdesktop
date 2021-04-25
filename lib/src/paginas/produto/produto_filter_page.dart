@@ -197,75 +197,79 @@ class _ProdutoFilterPageState extends State<ProdutoFilterPage> {
         children: [
           Container(
             padding: EdgeInsets.only(left: 50, right: 50, top: 50),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Container(
-                  height: 50,
-                  width: 300,
-                  color: Colors.grey[200],
-                  child: builderConteudoListLojas(),
-                ),
-                SizedBox(height: 20),
-                Container(
-                  height: 50,
-                  width: 300,
-                  color: Colors.grey[200],
-                  child: builderConteudoListPromocaoes(),
-                ),
-                SizedBox(height: 20),
-                Container(
-                  height: 50,
-                  width: 300,
-                  color: Colors.grey[200],
-                  child: builderConteudoListSubCategorias(),
-                ),
-                SizedBox(height: 20),
-                Container(
-                  height: 50,
-                  width: 400,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      // ignore: deprecated_member_use
-                      Container(
-                        height: 50,
-                        width: 150,
-                        child: RaisedButton.icon(
-                          color: Theme.of(context).accentColor,
-                          onPressed: () {
-                            filter = ProdutoFilter();
-                            Navigator.of(context).pop();
-                          },
-                          icon: Icon(Icons.check),
-                          label: Text("CANCELAR"),
-                        ),
-                      ),
-                      // ignore: deprecated_member_use
-                      Container(
-                        height: 50,
-                        width: 150,
-                        child: RaisedButton.icon(
-                          color: Theme.of(context).primaryColor,
-                          onPressed: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (BuildContext context) {
-                                  return ProdutoPage(filter: filter);
-                                },
-                              ),
-                            );
-                          },
-                          icon: Icon(Icons.check),
-                          label: Text("APLICAR"),
-                        ),
-                      )
-                    ],
+            child: Container(
+              color: Colors.white,
+              padding: EdgeInsets.all(20),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Container(
+                    height: 50,
+                    width: 300,
+                    color: Colors.grey[200],
+                    child: builderConteudoListLojas(),
                   ),
-                )
-              ],
+                  SizedBox(height: 20),
+                  Container(
+                    height: 50,
+                    width: 300,
+                    color: Colors.grey[200],
+                    child: builderConteudoListPromocaoes(),
+                  ),
+                  SizedBox(height: 20),
+                  Container(
+                    height: 50,
+                    width: 300,
+                    color: Colors.grey[200],
+                    child: builderConteudoListSubCategorias(),
+                  ),
+                  SizedBox(height: 20),
+                  Container(
+                    height: 50,
+                    width: 400,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        // ignore: deprecated_member_use
+                        Container(
+                          height: 50,
+                          width: 150,
+                          child: RaisedButton.icon(
+                            color: Theme.of(context).accentColor,
+                            onPressed: () {
+                              filter = ProdutoFilter();
+                              Navigator.of(context).pop();
+                            },
+                            icon: Icon(Icons.check),
+                            label: Text("CANCELAR"),
+                          ),
+                        ),
+                        // ignore: deprecated_member_use
+                        Container(
+                          height: 50,
+                          width: 150,
+                          child: RaisedButton.icon(
+                            color: Theme.of(context).primaryColor,
+                            onPressed: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (BuildContext context) {
+                                    return ProdutoPage(filter: filter);
+                                  },
+                                ),
+                              );
+                            },
+                            icon: Icon(Icons.check),
+                            label: Text("APLICAR"),
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ],

@@ -112,14 +112,14 @@ class _CategoriaListHomeState extends State<CategoriaListHome>
                     height: 200,
                     child: c.foto != null
                         ? CircleAvatar(
-                            backgroundColor: Colors.grey[100],
+                            backgroundColor: Colors.white,
                             radius: 50,
                             backgroundImage: NetworkImage(
                               "${categoriaController.arquivo + c.foto}",
                             ),
                           )
                         : CircleAvatar(
-                            backgroundColor: Colors.grey[100],
+                            backgroundColor: Colors.white,
                             radius: 50,
                           ),
                   ),

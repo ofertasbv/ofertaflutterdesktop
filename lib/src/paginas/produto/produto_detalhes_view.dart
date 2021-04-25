@@ -141,13 +141,13 @@ class _ProdutoDetalhesViewState extends State<ProdutoDetalhesView>
               Container(
                 width: 400,
                 height: 150,
-                color: Colors.grey,
+                color: Colors.grey[300],
                 padding: EdgeInsets.all(0),
                 child: p.foto != null
                     ? Container(
                         width: 400,
                         height: 150,
-                        color: Colors.grey[400],
+                        color: Colors.grey[300],
                         child: Image.network(
                           "${produtoController.arquivo + p.foto}",
                           width: 400,
@@ -158,11 +158,10 @@ class _ProdutoDetalhesViewState extends State<ProdutoDetalhesView>
                     : Container(
                         width: 400,
                         height: 150,
-                        color: Colors.grey[600],
-                        child: Image.asset(
-                          ConstantApi.urlLogo,
-                          width: 200,
-                          height: 150,
+                        color: Colors.grey[300],
+                        child: Icon(
+                          Icons.photo,
+                          size: 200,
                         ),
                       ),
               ),

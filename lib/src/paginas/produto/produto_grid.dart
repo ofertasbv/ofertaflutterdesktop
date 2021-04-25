@@ -179,34 +179,31 @@ class _ProdutoGridState extends State<ProdutoGrid>
                                 ),
                               )
                             : Container(
-                                color: Colors.grey[300],
-                                child: Image.asset(
-                                  ConstantApi.urlLogo,
-                                  fit: BoxFit.cover,
-                                  width: double.infinity,
-                                  height: 350,
-                                ),
+                                width: double.infinity,
+                                height: 350,
+                                color: Colors.grey[200],
+                                child: Icon(Icons.photo, size: 100),
                               ),
                         Padding(
                           padding: EdgeInsets.only(top: 10, right: 10),
                           child: Align(
                             alignment: Alignment.centerRight,
                             child: CircleAvatar(
-                              backgroundColor: Colors.grey[100],
+                              backgroundColor: Colors.white,
                               foregroundColor: Colors.redAccent,
-                              radius: 15,
+                              radius: 20,
                               child: IconButton(
                                 splashColor: Colors.black,
                                 icon: (this.isFavorito == false
                                     ? Icon(
                                         Icons.favorite_border,
                                         color: Colors.redAccent,
-                                        size: 15,
+                                        size: 20,
                                       )
                                     : Icon(
                                         Icons.favorite_outlined,
                                         color: Colors.redAccent,
-                                        size: 15,
+                                        size: 20,
                                       )),
                                 onPressed: () {
                                   setState(() {

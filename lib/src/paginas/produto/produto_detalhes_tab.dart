@@ -157,7 +157,7 @@ class _ProdutoDetalhesTabState extends State<ProdutoDetalhesTab>
           child: Column(
             children: <Widget>[
               Container(
-                color: Colors.grey[400],
+                color: Colors.grey[200],
                 constraints: BoxConstraints.expand(height: 50),
                 child: TabBar(tabs: [
                   Tab(

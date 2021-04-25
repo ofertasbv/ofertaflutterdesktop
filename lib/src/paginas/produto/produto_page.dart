@@ -212,10 +212,10 @@ class _ProdutoPageState extends State<ProdutoPage> {
             padding: EdgeInsets.only(left: 50, right: 50, top: 0),
             color: Colors.transparent,
             child: Container(
-              color: Colors.grey[500],
+              color: Colors.white,
               child: Container(
                 padding: EdgeInsets.all(0),
-                color: Colors.grey[300],
+                color: Colors.white,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -223,19 +223,19 @@ class _ProdutoPageState extends State<ProdutoPage> {
                     Container(
                       height: 50,
                       width: 300,
-                      color: Colors.grey[100],
+                      color: Colors.white,
                       child: builderConteudoListLojas(),
                     ),
                     Container(
                       height: 50,
                       width: 300,
-                      color: Colors.grey[100],
+                      color: Colors.white,
                       child: builderConteudoListPromocaoes(),
                     ),
                     Container(
                       height: 50,
                       width: 300,
-                      color: Colors.grey[100],
+                      color: Colors.white,
                       child: builderConteudoListSubCategorias(),
                     ),
                     Container(
