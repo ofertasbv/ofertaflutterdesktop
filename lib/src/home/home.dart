@@ -4,7 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:nosso/src/core/controller/pedidoItem_controller.dart';
+import 'package:nosso/src/home/cartao_credito_home.dart';
 import 'package:nosso/src/home/categoria_list_home.dart';
+import 'package:nosso/src/home/club_vantagens_home.dart';
 import 'package:nosso/src/home/drawer_list.dart';
 import 'package:nosso/src/home/logo.dart';
 import 'package:nosso/src/home/produto_list_home.dart';
@@ -231,6 +233,11 @@ class HomePage extends StatelessWidget {
             ),
           ),
           Container(
+            height: 200,
+            padding: EdgeInsets.only(left: 65, right: 65),
+            child: CartaoCreditoHome(),
+          ),
+          Container(
             height: 100,
             width: MediaQuery.of(context).size.width * 1,
             color: Colors.transparent,
@@ -267,6 +274,11 @@ class HomePage extends StatelessWidget {
                 ],
               ),
             ),
+          ),
+          Container(
+            height: 200,
+            padding: EdgeInsets.only(left: 65, right: 65),
+            child: ClubVantagensHome(),
           ),
           Container(
             height: 100,

@@ -3,7 +3,9 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:nosso/src/home/cartao_credito_home.dart';
 import 'package:nosso/src/home/categoria_list_home.dart';
+import 'package:nosso/src/home/club_vantagens_home.dart';
 import 'package:nosso/src/home/promocao_list_home.dart';
 import 'package:nosso/src/paginas/produto/produto_page.dart';
 import 'package:nosso/src/paginas/promocao/promocao_page_list.dart';
@@ -68,6 +70,12 @@ class _CatalogoHomeState extends State<CatalogoHome> {
               ],
             ),
             SizedBox(height: 10),
+            Container(
+              height: 200,
+              padding: EdgeInsets.all(2),
+              child: ClubVantagensHome(),
+            ),
+            SizedBox(height: 10),
             Column(
               children: <Widget>[
                 buildContainerTtituloPromocao(context),
@@ -81,6 +89,13 @@ class _CatalogoHomeState extends State<CatalogoHome> {
                 ),
               ],
             ),
+            SizedBox(height: 10),
+            Container(
+              height: 200,
+              padding: EdgeInsets.all(2),
+              child: CartaoCreditoHome(),
+            ),
+            SizedBox(height: 10),
             SizedBox(height: 10),
             Column(
               children: <Widget>[
