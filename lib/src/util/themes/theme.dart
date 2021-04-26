@@ -7,7 +7,7 @@ ThemeData getTheme(BuildContext context) {
     brightness: Brightness.light,
     primaryColor: Colors.deepPurple,
     accentColor: Colors.yellow[800],
-    primarySwatch: Colors.deepPurple,
+    primarySwatch: Colors.purple,
     scaffoldBackgroundColor: Colors.grey[100],
     textTheme: GoogleFonts.robotoTextTheme(
       Theme.of(context).textTheme,

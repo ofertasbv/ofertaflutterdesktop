@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:nosso/src/paginas/produto/produto_search.dart';
 
 class Logo extends StatelessWidget {
   @override
@@ -48,7 +47,7 @@ class Logo extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

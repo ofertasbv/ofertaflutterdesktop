@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nosso/src/paginas/cliente/cliente_create_page.dart';
 import 'package:nosso/src/paginas/promocao/promocao_page_list.dart';
@@ -8,6 +9,7 @@ class CartaoCreditoHome extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: 200,
+      padding: EdgeInsets.all(20),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(2),
         gradient: LinearGradient(

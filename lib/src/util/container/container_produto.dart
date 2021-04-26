@@ -41,12 +41,8 @@ class ContainerProduto extends StatelessWidget {
                 : Container(
                     width: 200,
                     height: 150,
-                    color: Colors.grey[600].withOpacity(1),
-                    child: Image.asset(
-                      ConstantApi.urlLogo,
-                      width: 200,
-                      height: 150,
-                    ),
+                    color: Colors.grey[200],
+                    child: Icon(Icons.photo, size: 100),
                   ),
           ),
           Container(

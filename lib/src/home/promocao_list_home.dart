@@ -108,64 +108,50 @@ class _PromocaoListHomeState extends State<PromocaoListHome>
                         borderRadius: BorderRadius.circular(0),
                       ),
                       child: p.foto != null
-                          ? ClipRRect(
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(0),
-                                topRight: Radius.circular(0),
-                                bottomRight: Radius.circular(0),
-                                bottomLeft: Radius.circular(0),
-                              ),
+                          ? Container(
+                              color: Colors.grey[300],
                               child: Image.network(
                                 promocaoController.arquivo + p.foto,
                                 fit: BoxFit.cover,
-                                width: containerWidth,
+                                width: double.infinity,
                                 height: 350,
                               ),
                             )
-                          : ClipRRect(
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(0),
-                                topRight: Radius.circular(0),
-                                bottomRight: Radius.circular(0),
-                                bottomLeft: Radius.circular(0),
-                              ),
-                              child: Image.asset(
-                                ConstantApi.urlLogo,
-                                fit: BoxFit.cover,
-                                width: containerWidth,
-                                height: 350,
-                              ),
+                          : Container(
+                              width: double.infinity,
+                              height: 350,
+                              color: Colors.grey[200],
+                              child: Icon(Icons.photo, size: 150),
                             ),
                     ),
                     SizedBox(height: 0),
                     Container(
-                      height: 146,
-                      width: containerWidth,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(0),
-                      ),
-                      padding: EdgeInsets.all(20),
-                      alignment: Alignment.center,
-                      child: ListTile(
-                        title: Text(
-                          p.nome.toUpperCase(),
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.grey[800],
-                          ),
+                        height: 146,
+                        width: containerWidth,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(0),
                         ),
-                        subtitle: Text(
-                          p.loja.nome.toUpperCase(),
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.grey[800],
+                        padding: EdgeInsets.all(20),
+                        alignment: Alignment.center,
+                        child: ListTile(
+                          title: Text(
+                            p.nome.toUpperCase(),
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey[800],
+                            ),
                           ),
-                        ),
-                      )
-                    ),
+                          subtitle: Text(
+                            p.loja.nome.toUpperCase(),
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.grey[800],
+                            ),
+                          ),
+                        )),
                   ],
                 ),
               ),

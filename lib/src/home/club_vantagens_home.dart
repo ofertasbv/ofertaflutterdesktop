@@ -9,6 +9,7 @@ class ClubVantagensHome extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: 200,
+      padding: EdgeInsets.all(20),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(2),
         gradient: LinearGradient(

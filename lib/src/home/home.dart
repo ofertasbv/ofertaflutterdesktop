@@ -16,7 +16,6 @@ import 'package:nosso/src/paginas/pedidoitem/pedito_itens_page.dart';
 import 'package:nosso/src/paginas/produto/produto_page.dart';
 import 'package:nosso/src/paginas/produto/produto_search.dart';
 import 'package:nosso/src/paginas/promocao/promocao_banner.dart';
-import 'package:nosso/src/paginas/promocao/promocao_page.dart';
 import 'package:nosso/src/paginas/promocao/promocao_page_list.dart';
 import 'package:nosso/src/paginas/usuario/usuario_login_page.dart';
 import 'package:nosso/src/util/Examples/teste_mapa.dart';
@@ -28,10 +27,44 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     var pedidoItemController = GetIt.I.get<PedidoItemController>();
     Size size = MediaQuery.of(context).size;
+
     return Scaffold(
       appBar: AppBar(
         titleSpacing: 0,
-        title: Logo(),
+        title: Container(
+          width: 700,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Logo(),
+              Container(
+                child: Container(
+                  height: 70,
+                  width: 500,
+                  color: Colors.transparent,
+                  alignment: Alignment.center,
+                  child: TextFormField(
+                    // controller: nomeController,
+                    decoration: InputDecoration(
+                      hintText: "busca por produtos",
+                      fillColor: Colors.deepPurpleAccent,
+                      hintStyle: TextStyle(color: Colors.white),
+                      suffixIcon: IconButton(
+                        color: Colors.white,
+                        onPressed: () {},
+                        icon: Icon(
+                          Icons.search,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    // onChanged: filterByNome,
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
         actions: [
           CircleAvatar(
             backgroundColor: Theme.of(context).accentColor,
@@ -349,6 +382,33 @@ class HomePage extends StatelessWidget {
                     child: ProdutoListHome(),
                   )
                 ],
+              ),
+            ),
+          ),
+          SizedBox(height: 20),
+          Container(
+            height: 100,
+            color: Colors.transparent,
+            padding: EdgeInsets.only(left: 65, right: 65),
+            child: Container(
+              height: 100,
+              color: Colors.grey[200],
+              padding: EdgeInsets.all(10),
+              child: ListTile(
+                leading: Logo(),
+                title: Text(
+                  "BOOKOFERTAS - Marketplace",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                subtitle: Text(
+                  "Todos os direitos reservados",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                trailing: Text("Avenida Brasil - Novo Repartimento - PÁ"),
               ),
             ),
           ),
